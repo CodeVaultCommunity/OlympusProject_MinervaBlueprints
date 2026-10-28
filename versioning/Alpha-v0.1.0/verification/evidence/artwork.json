@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-28T12:55:48.227536+00:00",
+  "render_count": 8,
+  "svg_count": 8,
+  "changed_visuals_reviewed": [
+    "minerva-model-en.png",
+    "minerva-model-pt-br.png"
+  ],
+  "unchanged_render_hashes": "verified against supplied metadata",
+  "icon_bytes": "original/display/embedded payloads match",
+  "changed_renderer_sha256": "205f39024e70e030a7207b5ab3c2526faa615a269482c9702d866873de51e644",
+  "render_environment": "Python 3.12.14, CairoSVG 2.8.2, bundled Cairo DLL on Windows; font rendering may differ from other platforms.",
+  "limits": "Only the two changed PNGs received a new visual inspection; all eight PNGs decoded and SVGs parsed."
+}

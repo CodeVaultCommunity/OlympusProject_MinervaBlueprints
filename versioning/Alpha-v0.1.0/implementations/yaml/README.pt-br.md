@@ -1,6 +1,6 @@
 # Minerva YAML · perfil 0.1.0
 
-[English](README.md) · Português brasileiro · [Regras do modelo](../../README.pt-br.md#reference-rules)
+[English](README.md) · Português brasileiro · [Regras do modelo](../../specification/model.pt-br.md#reference-rules)
 
 Esta representação implementa Minerva Blueprints `Alpha-v0.1.0`, dirigido ao OAL `Stable-v1.0.0`. O [JSON Schema canônico](../../minerva_blueprints/schemas/minerva.schema.json) acompanha o validador. Verificar a representação estabelece dados legíveis e suportados, não suficiência semântica.
 
@@ -10,7 +10,7 @@ Dois tipos compartilham `format: minerva-yaml`, `model_version: Alpha-v0.1.0` e 
 
 | Tipo | Papel | Grupos obrigatórios no primeiro nível |
 | --- | --- | --- |
-| `blueprint` | Instância integrada de programa/verificação com escopo e procedência | `oal_edition`, `document`, `source_l1`, `adpm`, `advs`, `mirror` |
+| `blueprint` | Instância integrada de programa/verificação com escopo e procedência | `oal_edition`, `document`, `source_l1`, `adpm`, `advs`, `mirror`, `traceability` |
 | `source` | Ficha descritiva de vínculo por arquivo; várias unidades podem ocupar uma fonte | `document_id`, `source`, `units`, `graphs`, `dependencies`, `limitations` |
 
 `--root` identifica a raiz do ecossistema. Todo caminho de artefato dentro dos documentos é resolvido por essa raiz. O documento passado na linha de comando é um caminho comum do sistema de arquivos. A raiz recomendada do espelho é `docs/L2_MinervaBlueprints`; alternativas como `design/program` são válidas. Dados raiz `R` e caminho de fonte `P`, a ficha fica exatamente em **`R/P.yaml`**. Assim, `apps/Billing/Task.go` corresponde a `docs/L2_MinervaBlueprints/apps/Billing/Task.go.yaml`, preservando diretórios e extensão.
@@ -25,7 +25,7 @@ Caminhos usam `/`, são relativos e não contêm `..`, prefixo de unidade ou bar
 | Estado elaborado | `document.status`: `draft` ou `reviewed`; autoridade de revisão e aprovação pendente permanecem explícitas |
 | Procedência | `document.nature`: `designed`, `reconstructed` ou `mixed` |
 | Decisões e observações | `document.decisions[]`: ID próprio, tipo, declaração, origem e revisão |
-| Fonte versionada | `source_l1`: modelo/versão, caminho, identidade/revisão, casos selecionados e hash opcional |
+| Fonte versionada | `source_l1`: modelo/versão, caminho, identidade/revisão, casos selecionados, catálogo elaborado no Minerva e hash (obrigatório para blueprints revisados) |
 | Entidades | `adpm.entities[]`: campos, significado, construção canônica, invariantes, comportamento e dependências |
 | Refinamentos de primitivos | `adpm.types[]`: ID, base primitiva e restrições textuais |
 | Capacidades de ferramentas | `adpm.tools[].operations[]`: contrato semântico independente do mecanismo |
@@ -42,7 +42,6 @@ Caminhos usam `/`, são relativos e não contêm `..`, prefixo de unidade ou bar
 | Lacunas | `advs.unverified_risks[]` e limitações; ausência de cenário não se torna aprovação |
 | Interação | `advs.channel_obligations[]`: declaração, origem e casos; cenários usam `obligation_refs` |
 | Vínculo com fonte | `source.path`, app, linguagem, estado, hash, objetivo e observação; `units[].model_refs` preserva identidade lógica |
-| Estruturas legadas | Várias `units[]` na mesma ficha, cada uma identificada e descrita |
 
 Todos os objetos têm campos fechados no perfil `0.1.0`; campos desconhecidos são erros. Não há namespace arbitrário de extensões neste perfil YAML. Uma extensão futura exige perfil/mapeamento explicitamente suportado. Não disfarce semântica desconhecida como campo ausente. Essa restrição é do perfil entregue, não da possibilidade abstrata de outra representação Minerva.
 
@@ -78,15 +77,17 @@ Obrigatoriedade e nulabilidade diferem: obrigatório significa integrar o contra
 
 `source.state: planned` registra estrutura pretendida antes do código e exige `sha256: null`. `observed` registra observação; alegar correspondência atual exige bytes iguais e SHA-256 não nulo. Nenhum estado afirma execução de testes. Um blueprint `designed` pode conter fontes planejadas; `reconstructed` registra reconstrução intencional de realização observada; `mixed` exige decisões explicando a divisão. Pendências ficam em decisões `open_issue`, rascunho ou limitações, sem estados observacionais inventados.
 
-Cada unidade identifica `code_name`, `kind`, `role`, `model_refs`, descrição, atributos e operações. `class`, `struct`, `function` e `module` descrevem unidades físicas. Os papéis incluem caso, entidade, value object, ferramenta, boundary, composição, teste, apoio e legado. Funções associadas a uma struct C/Go podem ser descritas nessa unidade; a inspeção Python só suporta as formas Python declaradas.
+Cada unidade identifica `code_name`, `kind`, `role`, `model_refs`, descrição, atributos e operações. `class`, `struct`, `function` e `module` descrevem unidades físicas. Os papéis incluem caso, entidade, value object, ferramenta, boundary, composição, teste e apoio. Funções associadas a uma struct C/Go podem ser descritas nessa unidade; a inspeção Python só suporta as formas Python declaradas.
 
 Uma operação registra contrato de dados e comportamento; operações técnicas descrevem colaboradores separadamente. `dependencies[].from_unit` aponta uma unidade local; `target` textual descreve importação, chamada ou recurso, sem implementar resolvedor universal entre linguagens. O grafo lógico de dependências ADPM resolve IDs tipados separadamente.
 
-## Adaptador L1 e critérios
+## Catálogo de origem e rastreabilidade
 
-O leitor suporta **JSON de Atlas Specifications Stable-v1.0.0** em `source_l1.artifact`. Confere identidade fixada, revisão, casos selecionados, critérios e atores. Não substitui o validador semântico completo Atlas. Outros modelos podem ter mapeamento L2 abstrato válido, mas esta ferramenta informa adaptador não suportado.
+`source_l1` identifica modelo, revisão, arquivo, hash e casos selecionados. `catalog` é uma lista elaborada no próprio Minerva: cada entrada contém `ref`, `kind`, `statement` e, quando pertinente, `case_refs`, `actor_refs` e um `source_pointer` editorial. As identidades da fonte usam espaço separado dos IDs L2. Nenhum reader Atlas é incluído e o arquivo L1 é lido apenas como bytes para conferir o hash.
 
-Uma extensão Atlas explicitamente selecionada, `atlas.extensions.minerva_shared_criteria`, pode conter registros `{id, case_ids, statement}`. Cada critério compartilhado precisa de declaração canônica não vazia e de todos os casos participantes no escopo. Cada teste afetado lista o critério; a verificação comum vincula todos esses testes reciprocamente. Isso é uma **convenção do adaptador**, não campo normativo novo do Atlas nem outro caso UCS. A suíte demonstra vínculos compartilhados completos e incompletos.
+`traceability` contém `source_ref`, `target_refs`, `relation` (`preserves`, `refines` ou `verifies`) e `rationale`. Requisitos e critérios declarados no escopo exigem vínculos. `source_entity_id` resolve uma entidade declarada; `origin_refs` resolve uma origem tipada ou decisão explícita; atores são conferidos contra o conjunto do caso declarado. Esses controles não provam que o catálogo foi transcrito corretamente. A revisão independente deve comparar fonte, catálogo e oráculos.
+
+Obrigações compartilhadas preservam uma definição canônica e os vínculos recíprocos dos apoios com os testes afetados. A [integração Atlas](../../integrations/atlas/mapping.pt-br.md) explica o mapeamento documental das referências nativas, sem alterar o Atlas.
 
 ## Semântica dos grafos
 
@@ -103,7 +104,7 @@ O leitor aceita subconjunto escalar restrito: `true`, `false`, `null` minúsculo
 ```bash
 # A partir da pasta da edição
 python validator/minerva_validate.py examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml --root examples/minimal --json
-python examples/counterexamples/check.py
+python tests/fixtures/counterexamples/check.py
 ```
 
 Valide primeiro a estrutura. Depois examine vínculos de origem, cardinalidade caso/teste, cobertura de critérios, referências tipadas, propriedade e grafos. Revise semântica e pendências. Solicite `--verify-code` somente contra realização fornecida e examine hashes e símbolos. Execute testes da aplicação separadamente e registre resultados reais com revisão e ambiente avaliados. O perfil não escreve nem aprova código, não realiza derivação de camada e não converte inspeção de fonte em relatório de execução.

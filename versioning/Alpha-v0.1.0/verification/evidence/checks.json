@@ -1,0 +1,307 @@
+{
+  "observed_at": "2026-10-28T13:05:35.158069+00:00",
+  "scope": "Local tool, source and packaging checks; no domain application tests or hosted CI execution.",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": {
+    "PyYAML": "6.0.3",
+    "jsonschema": "4.25.1",
+    "pytest": "9.2.0",
+    "build": "1.6.1",
+    "setuptools": "84.2.1",
+    "wheel": "0.48.0"
+  },
+  "environment": {
+    "PYTHONUTF8": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "safe.directory",
+    "GIT_CONFIG_VALUE_0": "E:/Alkimim/Projetos/CodeVault/ProjectOlympus/L2-MinervaBlueprints"
+  },
+  "checks": [
+    {
+      "name": "validator-tests",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\run_examples.py",
+        "--test"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:01.147895+00:00",
+      "finished_at": "2026-10-28T13:05:15.663934+00:00",
+      "exit_code": 0,
+      "stdout": "validator-tests.stdout.txt",
+      "stderr": "validator-tests.stderr.txt"
+    },
+    {
+      "name": "model-examples",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\run_examples.py",
+        "--all",
+        "--json"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:15.663934+00:00",
+      "finished_at": "2026-10-28T13:05:17.604825+00:00",
+      "exit_code": 0,
+      "stdout": "model-examples.stdout.txt",
+      "stderr": "model-examples.stderr.txt"
+    },
+    {
+      "name": "counterexamples",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\tests\\fixtures\\counterexamples\\check.py",
+        "--json"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:17.604825+00:00",
+      "finished_at": "2026-10-28T13:05:20.757316+00:00",
+      "exit_code": 0,
+      "stdout": "counterexamples.stdout.txt",
+      "stderr": "counterexamples.stderr.txt"
+    },
+    {
+      "name": "repository-tests",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\scripts\\tests",
+        "--basetemp",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\root-tests-yax4fm7c"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:20.759289+00:00",
+      "finished_at": "2026-10-28T13:05:24.386569+00:00",
+      "exit_code": 0,
+      "stdout": "repository-tests.stdout.txt",
+      "stderr": "repository-tests.stderr.txt"
+    },
+    {
+      "name": "atlas-source-1",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L1-AtlasSpecifications\\versioning\\Stable-v1.0.0\\translator\\atlas_translate.py",
+        "validate",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\composition\\docs\\L1_AtlasSpecifications\\example.atlas.json",
+        "--resources",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\composition\\docs\\L1_AtlasSpecifications"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:24.388159+00:00",
+      "finished_at": "2026-10-28T13:05:24.919266+00:00",
+      "exit_code": 0,
+      "stdout": "atlas-source-1.stdout.txt",
+      "stderr": "atlas-source-1.stderr.txt"
+    },
+    {
+      "name": "atlas-source-2",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L1-AtlasSpecifications\\versioning\\Stable-v1.0.0\\translator\\atlas_translate.py",
+        "validate",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\minimal\\docs\\L1_AtlasSpecifications\\example.atlas.json",
+        "--resources",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\minimal\\docs\\L1_AtlasSpecifications"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:24.920271+00:00",
+      "finished_at": "2026-10-28T13:05:25.469567+00:00",
+      "exit_code": 0,
+      "stdout": "atlas-source-2.stdout.txt",
+      "stderr": "atlas-source-2.stderr.txt"
+    },
+    {
+      "name": "atlas-source-3",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L1-AtlasSpecifications\\versioning\\Stable-v1.0.0\\translator\\atlas_translate.py",
+        "validate",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\docs\\L1_AtlasSpecifications\\example.atlas.json",
+        "--resources",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\docs\\L1_AtlasSpecifications"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:25.469567+00:00",
+      "finished_at": "2026-10-28T13:05:26.417100+00:00",
+      "exit_code": 0,
+      "stdout": "atlas-source-3.stdout.txt",
+      "stderr": "atlas-source-3.stderr.txt"
+    },
+    {
+      "name": "atlas-source-4",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L1-AtlasSpecifications\\versioning\\Stable-v1.0.0\\translator\\atlas_translate.py",
+        "validate",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\revisions\\revision-2\\docs\\L1_AtlasSpecifications\\example.atlas.json",
+        "--resources",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\revisions\\revision-2\\docs\\L1_AtlasSpecifications"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:26.417100+00:00",
+      "finished_at": "2026-10-28T13:05:27.190295+00:00",
+      "exit_code": 0,
+      "stdout": "atlas-source-4.stdout.txt",
+      "stderr": "atlas-source-4.stderr.txt"
+    },
+    {
+      "name": "atlas-source-5",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L1-AtlasSpecifications\\versioning\\Stable-v1.0.0\\translator\\atlas_translate.py",
+        "validate",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\revisions\\revision-3\\docs\\L1_AtlasSpecifications\\example.atlas.json",
+        "--resources",
+        "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints\\versioning\\Alpha-v0.1.0\\examples\\task-board\\revisions\\revision-3\\docs\\L1_AtlasSpecifications"
+      ],
+      "cwd": "E:\\Alkimim\\Projetos\\CodeVault\\ProjectOlympus\\L2-MinervaBlueprints",
+      "started_at": "2026-10-28T13:05:27.190295+00:00",
+      "finished_at": "2026-10-28T13:05:28.154810+00:00",
+      "exit_code": 0,
+      "stdout": "atlas-source-5.stdout.txt",
+      "stderr": "atlas-source-5.stderr.txt"
+    },
+    {
+      "name": "isolated-examples",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\edition-isolation-6ww9k135\\Alpha-v0.1.0\\run_examples.py",
+        "--all",
+        "--json"
+      ],
+      "cwd": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work",
+      "started_at": "2026-10-28T13:05:28.297830+00:00",
+      "finished_at": "2026-10-28T13:05:29.708416+00:00",
+      "exit_code": 0,
+      "stdout": "isolated-examples.stdout.txt",
+      "stderr": "isolated-examples.stderr.txt"
+    },
+    {
+      "name": "isolated-counterexamples",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\edition-isolation-6ww9k135\\Alpha-v0.1.0\\tests\\fixtures\\counterexamples\\check.py",
+        "--json"
+      ],
+      "cwd": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work",
+      "started_at": "2026-10-28T13:05:29.708416+00:00",
+      "finished_at": "2026-10-28T13:05:32.962021+00:00",
+      "exit_code": 0,
+      "stdout": "isolated-counterexamples.stdout.txt",
+      "stderr": "isolated-counterexamples.stderr.txt"
+    },
+    {
+      "name": "wheel-build",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\wheel-h1n_4gnx"
+      ],
+      "cwd": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\edition-isolation-6ww9k135\\Alpha-v0.1.0",
+      "started_at": "2026-10-28T13:05:32.962021+00:00",
+      "finished_at": "2026-10-28T13:05:34.633894+00:00",
+      "exit_code": 0,
+      "stdout": "wheel-build.stdout.txt",
+      "stderr": "wheel-build.stderr.txt"
+    },
+    {
+      "name": "wheel-install",
+      "command": [
+        "C:\\Users\\Douglas\\.local\\bin\\uv.exe",
+        "pip",
+        "install",
+        "--python",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "--no-deps",
+        "--target",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\wheel-h1n_4gnx\\installed",
+        "--cache-dir",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\uv-cache",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\wheel-h1n_4gnx\\olympus_minerva_blueprints-0.1.0a0-py3-none-any.whl"
+      ],
+      "cwd": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work",
+      "started_at": "2026-10-28T13:05:34.633894+00:00",
+      "finished_at": "2026-10-28T13:05:34.706940+00:00",
+      "exit_code": 0,
+      "stdout": "wheel-install.stdout.txt",
+      "stderr": "wheel-install.stderr.txt"
+    },
+    {
+      "name": "wheel-smoke",
+      "command": [
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\venv\\Scripts\\python.exe",
+        "-B",
+        "-c",
+        "import sys,json,pathlib\nsys.path.insert(0,sys.argv[1])\nimport minerva_blueprints\nfrom minerva_blueprints.validation import validate\npackage=pathlib.Path(minerva_blueprints.__file__).resolve()\nassert package.is_relative_to(pathlib.Path(sys.argv[1]).resolve()),package\nassert (package.parent/'schemas/minerva.schema.json').is_file()\nroot=pathlib.Path(sys.argv[2]);result=validate(root/'docs/L2_MinervaBlueprints/blueprint.yaml',root)\nprint(json.dumps({'installed_package':str(package),'result':result},indent=2));raise SystemExit(result['exit_code'])\n",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\wheel-h1n_4gnx\\installed",
+        "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\edition-isolation-6ww9k135\\Alpha-v0.1.0\\examples\\minimal"
+      ],
+      "cwd": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work",
+      "started_at": "2026-10-28T13:05:34.706940+00:00",
+      "finished_at": "2026-10-28T13:05:35.138621+00:00",
+      "exit_code": 0,
+      "stdout": "wheel-smoke.stdout.txt",
+      "stderr": "wheel-smoke.stderr.txt"
+    }
+  ],
+  "checked_input_sha256": {
+    "versioning/Alpha-v0.1.0/examples/composition/docs/L1_AtlasSpecifications/example.atlas.json": "63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96",
+    "versioning/Alpha-v0.1.0/examples/composition/docs/L2_MinervaBlueprints/blueprint.yaml": "89f0703fc85e995c1a4c4ce65a90351861f590dca56c2d359d117a668ccc94d5",
+    "versioning/Alpha-v0.1.0/examples/composition/provenance.json": "62f7f082228ed582c39909c916b244eeb9fa7e81adaa9740525f22b9995ab31b",
+    "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/example.atlas.json": "731ef7e7f9e0dcda1b9dea1cae45a51a43bd16083948dae121d18fdd77bc746e",
+    "versioning/Alpha-v0.1.0/examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml": "4d17ef6a82b0761836828e0d92f0428910090de46be6101ad0dec971071bc3f4",
+    "versioning/Alpha-v0.1.0/examples/minimal/provenance.json": "b594bf6c61bbc93aa05364752db0eec11107998fc82f1a54f9f230ede2fe9bd5",
+    "versioning/Alpha-v0.1.0/examples/task-board/docs/L1_AtlasSpecifications/example.atlas.json": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8",
+    "versioning/Alpha-v0.1.0/examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8",
+    "versioning/Alpha-v0.1.0/examples/task-board/provenance.json": "5b4b2b18875701bcdd040e9501eedfa02a197264b22ca36e69d8cbe75876bd22",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/docs/L1_AtlasSpecifications/example.atlas.json": "b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/docs/L2_MinervaBlueprints/blueprint.yaml": "85ea0240f8b875ee16a97a441eb4d1ae64dfcc7ccfacdb12ecdddc8456ac8f60",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/provenance.json": "94d4c019e30dd84bf1d33828eb65b54bc0087391b3c013aaca8f53522e84ec1c",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/docs/L1_AtlasSpecifications/example.atlas.json": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/docs/L2_MinervaBlueprints/blueprint.yaml": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8",
+    "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/provenance.json": "4c4a205387d318670e409a25306d62bd1eaa439de567e6b7046ac5a26128c214",
+    "versioning/Alpha-v0.1.0/implementations/yaml/starter.minerva.yaml": "c6da162f6bc7d343d4d77de3468098ae5b9d1b5d7a87e820c9f1d6544d07c78f",
+    "versioning/Alpha-v0.1.0/integrations/atlas/compatibility.json": "af08c3c006a914318eabf9afd4d70d38c521bd672605bb2f5cc0acf55b6c69b5",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/__init__.py": "45c0e1759eee5ba51d28082fde87321e7293cc3eed99d99e5021ca10d2aa6e59",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/__main__.py": "568f3cedf2a498b1e1a9d349e6008e2bd8fed30c9bec43926b69c1ad83247353",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/code_inspection.py": "3cb0a35f816cfbf58063d9196656845f3d85717595a81ed38f2d96022731d61d",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/loading.py": "a7fd5a7dd4ae2970d29c6be6ed75e6e094aa9f52dc2f7a2d4cb5e2d0d938ce58",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/schemas/minerva.schema.json": "25f3406368387da26f245665b375bb2f96108729c0966dbb42de2b01176296e5",
+    "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py": "7e98f4e5636cb9707ccaf73c31c1b07e7009401398561caecd4161ff796c9f82",
+    "versioning/Alpha-v0.1.0/run_examples.py": "95e55b83fc541f4a6087e8891f4b3d072407387a2bc07192fe3f8a245f667d85",
+    "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/check.py": "c3f13508b573c83f1fdae4bd91bda66e38ff5db3fd461dbd9428cd98c7e81ca1",
+    "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/expected-results.json": "1ef5dcf72d58f5503dce12a89b4d05f8ee158eacb7275004e6050c57a67921b2",
+    "versioning/Alpha-v0.1.0/tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml": "4a57f73cd54281a468078fefe0d3876e9a5d9f3cec2ab303fa2f207b488f1431",
+    "versioning/Alpha-v0.1.0/tests/test_validation.py": "5f5413f8d2c405e61ccac94d3ef5e13c575ce8e0d6a242ac4862c364297fde35",
+    "versioning/Alpha-v0.1.0/validator/minerva_validate.py": "cc9ca81f07cbd01c76514bb58d2c97a0b52d725c42900e019e614da6afe4e70e"
+  },
+  "wheel_sha256": "019ba05008eed0a1677a4a3c1024df9a5b0c70ef566f4f7bad2cd76afa825581",
+  "limits": [
+    "Windows and Python 3.12.14 only; declared Python 3.11+ support is not all exercised here.",
+    "Wheel installed with --no-deps into a fresh target; dependencies already existed in the external environment.",
+    "Atlas tooling was invoked from the pinned sibling source checkout only for this review; it is not a Minerva runtime dependency or distributed reader.",
+    "The isolated copy used an external environment and working directory; no user deployment or remote publication occurred."
+  ]
+}

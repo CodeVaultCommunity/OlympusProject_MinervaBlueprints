@@ -192,10 +192,10 @@ def minerva_model(pt=False):
     b += text(100,974,'Natureza do documento' if pt else 'Document nature',22,BLUE,700)
     b += text(100,1009,'designed  ·  reconstructed  ·  mixed',21)
     b += text(760,901,'Unidades identificadas' if pt else 'Identified units',22,TEAL,700)
-    b += lines(760,936,['Uma classe/struct ou várias unidades legadas.','Contratos, dependências e comportamento.','Vínculos com ADPM, ADVS e fontes.'] if pt else ['One class/struct, or several legacy units.','Contracts, dependencies and behavior.','Links to ADPM, ADVS and source files.'],21,INK,35)
+    b += lines(760,936,['Classes, funções, structs e módulos.','Contratos, dependências e comportamento.','Vínculos com ADPM, ADVS e fontes.'] if pt else ['Classes, functions, structs and modules.','Contracts, dependencies and behavior.','Links to ADPM, ADVS and source files.'],21,INK,35)
     b += rect(60,1090,1280,60,'#f8fcff','#c4dfed',14,2)
     b += text(700,1128,'docs/ é recomendada; Shared/ reúne apoio transversal e não constitui uma camada OAL.' if pt else 'docs/ is recommended; Shared/ provides cross-cutting support, not a new OAL layer.',21,MUTED,anchor='middle')
-    desc = ('ADPM e ADVS formam o modelo L2. Um blueprint identifica contratos e cenários. O perfil YAML espelha arquivos em L2, identifica estado e origem e suporta múltiplas unidades legadas.' if pt else 'ADPM and ADVS form the L2 model. A blueprint identifies contracts and scenarios. The YAML profile mirrors files in L2, records state and origin, and supports several legacy units.')
+    desc = ('ADPM e ADVS formam o modelo L2. Um blueprint identifica contratos e cenários. O perfil YAML espelha arquivos em L2, identifica estado e origem e descreve classes, funções, structs e módulos.' if pt else 'ADPM and ADVS form the L2 model. A blueprint identifies contracts and scenarios. The YAML profile mirrors files in L2, records state and origin, and describes classes, functions, structs and modules.')
     return svg(1400,1180,b,'Minerva Blueprints · '+('conteúdo do modelo' if pt else 'model content'),desc)
 
 

@@ -1,0 +1,1 @@
+valid: E:\Alkimim\Projetos\CodeVault\ProjectOlympus\L2-MinervaBlueprints\versioning\Alpha-v0.1.0\examples\task-board\revisions\revision-3\docs\L1_AtlasSpecifications\example.atlas.json (json, Stable-v1.0.0, document_id=DOC-TASK-BOARD, title='Task board — create, complete, and list')

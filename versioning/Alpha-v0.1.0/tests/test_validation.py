@@ -1,4 +1,5 @@
-"""Meaningful positive, negative, portability and read-only checks for this edition."""
+"""Regression checks for Minerva declarations and their assessment limits."""
+import ast
 import copy
 import hashlib
 import json
@@ -8,336 +9,291 @@ import subprocess
 import sys
 import tempfile
 import unittest
-
 import yaml
-
-from minerva_blueprints.validation import read_yaml, validate
+from minerva_blueprints.loading import InputError, read_yaml, safe_path
+from minerva_blueprints.validation import validate
+from minerva_blueprints.code_inspection import resolve_python_symbol
 
 EDITION = Path(__file__).resolve().parents[1]
 
 
-class TestBlueprintValidation(unittest.TestCase):
+class TestBlueprint(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='minerva-test-')
         self.root = Path(self.tmp.name) / 'ecosystem'
-        shutil.copytree(EDITION / 'examples/task-board-ecosystem', self.root)
+        shutil.copytree(EDITION / 'examples/minimal', self.root)
         self.path = self.root / 'docs/L2_MinervaBlueprints/blueprint.yaml'
         self.data = read_yaml(self.path)
 
     def tearDown(self):
         self.tmp.cleanup()
 
-    def write(self):
+    def result(self, code=None, exit_code=1, **options):
         self.path.write_text(yaml.safe_dump(self.data, sort_keys=False, allow_unicode=True), encoding='utf-8')
-
-    def result(self, code=None, exit_code=1, **kwargs):
-        self.write()
-        report = validate(self.path, self.root, **kwargs)
-        self.assertEqual(exit_code, report['exit_code'], report['diagnostics'])
+        result = validate(self.path, self.root, **options)
+        self.assertEqual(exit_code, result['exit_code'], result['diagnostics'])
         if code:
-            self.assertIn(code, {x['code'] for x in report['diagnostics']}, report['diagnostics'])
-        return report
+            self.assertIn(code, {item['code'] for item in result['diagnostics']}, result['diagnostics'])
+        return result
 
-    def test_full_blueprint_has_three_cases_and_eleven_criteria(self):
+    def test_minimal_covers_official_request_case(self):
         report = self.result(exit_code=0)
-        self.assertEqual(3, report['counts']['cases'])
-        self.assertEqual(3, report['counts']['behavioral_tests'])
-        self.assertEqual(11, report['counts']['criteria'])
-        self.assertEqual(16, report['counts']['documents'])
-        self.assertEqual('not_requested', report['code_check'])
+        self.assertEqual(1, report['counts']['cases'])
+        self.assertEqual(7, report['counts']['criteria'])
+        self.assertEqual('UC-REQUEST-SUBMIT', self.data['adpm']['cases'][0]['id'])
+        self.assertEqual('opaque_bytes_and_declared_catalog', report['source_check'])
 
-    def test_minimal_and_planned_validate_before_code(self):
-        for name in ('minimal', 'planned'):
+    def test_all_official_examples_and_revisions(self):
+        from run_examples import EXAMPLES
+        for name, (directory, filename) in EXAMPLES.items():
             with self.subTest(name=name):
-                root = EDITION / 'examples' / name
-                report = validate(root / 'docs/L2_MinervaBlueprints/blueprint.yaml', root)
+                root = EDITION / directory
+                report = validate(root / filename, root)
                 self.assertEqual(0, report['exit_code'], report['diagnostics'])
-                self.assertEqual(1, report['counts']['cases'])
 
-    def test_starter_is_draft_not_full_model(self):
-        path = EDITION / 'implementations/yaml/starter.minerva.yaml'
-        self.assertEqual(4, validate(path, EDITION)['exit_code'])
-        self.assertEqual(0, validate(path, EDITION, structure_only=True)['exit_code'])
+    def test_unknown_source_entity(self):
+        self.data['adpm']['entities'][0]['source_entity_id'] = 'ENT-NOT-DECLARED'
+        self.result('SOURCE_REF_UNRESOLVED')
 
-    def test_reviewed_empty_model_is_not_coverage(self):
-        self.data['source_l1']['case_ids'] = []
-        self.data['adpm']['cases'] = []
-        self.data['advs']['behavioral_tests'] = []
-        self.result('ADMV_EMPTY')
+    def test_entity_invariants_have_correct_kind_and_owner(self):
+        rule = self.data['adpm']['rules'][0]
+        rule['kind'] = 'transition'
+        self.result('ENTITY_INVARIANT')
+        rule['kind'] = 'invariant'
+        rule['owner_ref'] = 'ENT-CALLER-CONTEXT'
+        self.result('ENTITY_INVARIANT')
 
-    def test_missing_advs(self):
-        del self.data['advs']
-        self.result('SCHEMA_INVALID')
+    def test_wrong_source_entity_kind(self):
+        self.data['adpm']['entities'][0]['source_entity_id'] = 'ACT-REQUESTER'
+        self.result('SOURCE_REF_WRONG_TYPE')
 
-    def test_duplicate_direct_behavioral_test(self):
-        duplicate = copy.deepcopy(self.data['advs']['behavioral_tests'][0])
-        duplicate['id'] = 'BT-TASK-DUPLICATE'
-        self.data['advs']['behavioral_tests'].append(duplicate)
-        self.result('TEST_BIJECTION')
+    def test_unknown_rule_origin(self):
+        self.data['adpm']['rules'][0]['origin_refs'] = ['VLD-NOT-DECLARED']
+        self.result('SOURCE_REF_UNRESOLVED')
 
-    def test_extra_program_case(self):
-        duplicate = copy.deepcopy(self.data['adpm']['cases'][0])
-        duplicate['id'] = 'UC-TASK-EXTRA'
-        self.data['adpm']['cases'].append(duplicate)
+    def test_rule_origin_cannot_be_empty(self):
+        self.data['adpm']['rules'][0]['origin_refs'] = []
+        self.result('RULE_ORIGIN_MISSING')
+
+    def test_added_rule_can_reference_a_decision(self):
+        self.data['adpm']['rules'][0]['origin_refs'] = ['DEC-CALLER-CONTEXT']
+        self.result(exit_code=0)
+
+    def test_actor_must_be_permitted_for_source_case(self):
+        self.data['source_l1']['catalog'].append({'ref': 'ACT-OTHER', 'kind': 'actor', 'statement': 'Another role.'})
+        self.data['adpm']['cases'][0]['permission']['allowed_actor_refs'] = ['ACT-OTHER']
+        self.result('ACTOR_CASE_PERMISSION')
+
+    def test_unknown_actor(self):
+        self.data['adpm']['cases'][0]['permission']['allowed_actor_refs'] = ['ACT-MISSING']
+        self.result('ACTOR_REF')
+
+    def test_source_case_actor_reference_is_typed(self):
+        item = next(x for x in self.data['source_l1']['catalog'] if x['kind'] == 'case')
+        item['actor_refs'] = ['ENT-REQUEST']
+        self.result('SOURCE_REF_WRONG_TYPE')
+
+    def test_duplicate_source_identity(self):
+        self.data['source_l1']['catalog'].append(copy.deepcopy(self.data['source_l1']['catalog'][0]))
+        self.result('L1_DUPLICATE')
+
+    def test_catalogue_namespace_is_distinct(self):
+        self.assertIn(self.data['adpm']['cases'][0]['id'], [x['ref'] for x in self.data['source_l1']['catalog']])
+        self.result(exit_code=0)
+
+    def test_source_model_is_not_interpreted(self):
+        source = self.root / 'source.bin'
+        source.write_bytes(b'\x00\xffopaque source format; no Atlas reader')
+        self.data['source_l1'].update(model='Another L1 model', model_version='draft-3', artifact='source.bin', sha256=hashlib.sha256(source.read_bytes()).hexdigest())
+        report = self.result(exit_code=0)
+        self.assertTrue(any('fidelity' in text for text in report['limitations']))
+
+    def test_missing_source_is_operational(self):
+        self.data['source_l1']['artifact'] = 'missing.bin'
+        self.result('L1_IO', exit_code=3)
+
+    def test_changed_source_bytes(self):
+        source = self.root / self.data['source_l1']['artifact']
+        source.write_bytes(source.read_bytes() + b'\n')
+        self.result('L1_HASH')
+
+    def test_reviewed_source_requires_hash(self):
+        self.data['source_l1']['sha256'] = None
+        self.result('L1_HASH_REQUIRED')
+
+    def test_unknown_trace_source(self):
+        self.data['traceability'][0]['source_ref'] = 'RF-MISSING'
+        self.result('SOURCE_REF_UNRESOLVED')
+
+    def test_unknown_trace_target(self):
+        self.data['traceability'][0]['target_refs'] = ['UC-MISSING']
+        self.result('REF_UNRESOLVED')
+
+    def test_unmapped_obligation(self):
+        self.data['traceability'] = [x for x in self.data['traceability'] if x['source_ref'] != 'RF-REQUEST-01']
+        self.result('SOURCE_OBLIGATION_UNMAPPED')
+
+    def test_one_program_case_per_source_case(self):
+        extra = copy.deepcopy(self.data['adpm']['cases'][0]); extra['id'] = 'UC-EXTRA'
+        self.data['adpm']['cases'].append(extra)
         self.result('CASE_BIJECTION')
 
-    def test_duplicate_identity(self):
+    def test_missing_behavioral_test(self):
+        self.data['advs']['behavioral_tests'] = []
+        self.result('TEST_BIJECTION')
+
+    def test_duplicate_behavioral_test(self):
+        extra = copy.deepcopy(self.data['advs']['behavioral_tests'][0]); extra['id'] = 'BT-EXTRA'
+        self.data['advs']['behavioral_tests'].append(extra)
+        self.result('TEST_BIJECTION')
+
+    def test_wrong_case_test_reference(self):
+        self.data['advs']['behavioral_tests'][0]['case_ref'] = 'ENT-REQUEST'
+        self.result('REF_WRONG_TYPE')
+
+    def test_duplicate_model_identity(self):
         self.data['adpm']['entities'].append(copy.deepcopy(self.data['adpm']['entities'][0]))
         self.result('ID_DUPLICATE')
 
-    def test_unknown_criterion(self):
-        self.data['advs']['behavioral_tests'][0]['scenarios'][0]['criteria_refs'].append('AC-DOES-NOT-EXIST')
-        self.result('CRITERION_REF')
+    def test_missing_advs_is_structural_error(self):
+        del self.data['advs']
+        self.result('SCHEMA_INVALID')
 
     def test_uncovered_criterion(self):
-        criterion = 'AC-TASK-001-PERSISTENCE'
-        for bt in self.data['advs']['behavioral_tests']:
-            for scenario in bt['scenarios']:
-                scenario['criteria_refs'] = [x for x in scenario['criteria_refs'] if x != criterion]
-        for support in self.data['advs']['supporting_checks']:
-            support['criteria_refs'] = [x for x in support['criteria_refs'] if x != criterion]
+        for scenario in self.data['advs']['behavioral_tests'][0]['scenarios']:
+            scenario['criteria_refs'] = [ref for ref in scenario['criteria_refs'] if ref != 'AC-REQUEST-06']
         self.result('CRITERION_UNCOVERED')
 
-    def test_wrong_case_criterion(self):
-        self.data['advs']['behavioral_tests'][0]['scenarios'][0]['criteria_refs'].append('AC-TASK-002-EMPTY')
-        self.result('CRITERION_OWNER')
+    def test_nonapplicable_scenario_does_not_count(self):
+        for scenario in self.data['advs']['behavioral_tests'][0]['scenarios']:
+            if 'AC-REQUEST-06' in scenario['criteria_refs']:
+                scenario['applicability'] = 'not_applicable'
+                scenario['rationale'] = 'Disabled by this negative fixture.'
+        self.result('CRITERION_UNCOVERED')
 
-    def test_missing_denial_scenario(self):
-        bt = self.data['advs']['behavioral_tests'][0]
-        bt['scenarios'] = [s for s in bt['scenarios'] if s['actor_context'] != 'unresolved']
+    def test_all_denial_categories_required(self):
+        for scenario in self.data['advs']['behavioral_tests'][0]['scenarios']:
+            if scenario['actor_context'] == 'unknown': scenario['actor_context'] = 'unresolved'
         self.result('AUTH_COVERAGE')
 
-    def test_unknown_actor(self):
-        self.data['adpm']['cases'][0]['permission']['allowed_actor_refs'] = ['ACT-UNKNOWN']
-        self.result('ACTOR_REF')
+    def test_repeated_denial_category(self):
+        self.data['adpm']['cases'][0]['permission']['deny_contexts'].append('unknown')
+        self.result('AUTH_DENIALS')
 
-    def test_context_input_must_be_declared(self):
+    def test_context_input_must_exist(self):
         self.data['adpm']['cases'][0]['permission']['context_input'] = 'missing'
         self.result('AUTH_INPUT')
 
-    def test_entity_reference_cannot_resolve_to_tool(self):
-        self.data['adpm']['cases'][0]['outputs'][0]['type'] = {'kind': 'entity', 'ref': 'TOL-TASK-STORE'}
+    def test_entities_cannot_consume_tools(self):
+        self.data['adpm']['entities'][0]['dependencies'] = ['TOL-REQUEST-STORE']
         self.result('REF_WRONG_TYPE')
 
-    def test_entity_cannot_depend_on_tool(self):
-        self.data['adpm']['entities'][0]['dependencies'].append('TOL-TASK-STORE')
-        self.result('REF_WRONG_TYPE')
-
-    def test_tool_cannot_repeat_entity_invariants(self):
-        self.data['adpm']['tools'][0]['operations'][0]['revalidates_rule_refs'] = ['RULE-TASK-TITLE']
+    def test_tool_cannot_revalidate_entity_invariants(self):
+        self.data['adpm']['tools'][0]['operations'][0]['revalidates_rule_refs'] = ['VLD-REQUEST-QUANTITY']
         self.result('ENTITY_REVALIDATION')
 
-    def test_case_composition_requires_forwarded_context(self):
-        dep = copy.deepcopy(self.data['adpm']['dependencies'][0])
-        dep.update(id='DEP-COMPOSE-NEGATIVE', consumer_ref='UC-TASK-001', provider_ref='UC-TASK-002', context_forwarding=None)
-        self.data['adpm']['dependencies'].append(dep)
-        self.result('CASE_CONTEXT')
-
-    def test_case_composition_preserves_independent_permissions(self):
-        dep = copy.deepcopy(self.data['adpm']['dependencies'][0])
-        dep.update(id='DEP-COMPOSE-POSITIVE', consumer_ref='UC-TASK-001', provider_ref='UC-TASK-002',
-                   context_forwarding='Forward the same trusted actor_context; called list case still requires tasks:read.')
-        self.data['adpm']['dependencies'].append(dep)
-        self.result(exit_code=0)
-
-    def test_graph_edge_requires_declared_node(self):
-        self.data['adpm']['graphs'][0]['edges'][0]['to'] = 'NODE-NOT-DECLARED'
+    def test_graph_edge_must_resolve_locally(self):
+        self.data['adpm']['graphs'][0]['edges'][0]['to'] = 'N-MISSING'
         self.result('GRAPH_EDGE')
 
-    def test_legitimate_state_machine_self_loop(self):
-        graph = next(g for g in self.data['adpm']['graphs'] if g['kind'] == 'state_machine')
-        self.assertTrue(any(e['from'] == e['to'] for e in graph['edges']))
-        self.result(exit_code=0)
-
-    def test_unreachable_node_is_reported(self):
-        self.data['adpm']['graphs'][0]['nodes'].append({'id': 'NODE-UNREACHABLE', 'kind': 'state', 'description': 'Unreachable declaration.'})
+    def test_unreachable_graph_node(self):
+        self.data['adpm']['graphs'][0]['nodes'].append({'id':'N-UNREACHABLE','kind':'action','description':'Disconnected.'})
         self.result('GRAPH_UNREACHABLE')
 
-    def test_uncovered_channel_obligation(self):
-        self.data['advs']['channel_obligations'].append({'id': 'CHANNEL-HTTP-NEW', 'case_refs': ['UC-TASK-001'],
-            'source': 'L4 interaction design review', 'statement': 'Successful request produces declared HTTP representation.'})
-        self.result('CHANNEL_UNCOVERED')
-
-    def test_observed_execution_needs_evidence(self):
-        self.data['advs']['executions'].append({'id': 'EXEC-UNSUPPORTED-CLAIM', 'check_refs': ['BT-TASK-001'],
-            'implementation_revision': 'unknown', 'environment': 'test', 'result': 'passed',
-            'observed_at': None, 'report': None, 'limitations': []})
-        self.result('EXECUTION_EVIDENCE')
-
-    def test_unsupported_l1_adapter_is_distinct(self):
-        self.data['source_l1']['model_version'] = 'Stable-v9.0.0'
-        self.result('L1_PROFILE_UNSUPPORTED', exit_code=2)
-
-    def test_unsupported_yaml_profile_is_distinct(self):
-        self.data['profile_version'] = '9.0.0'
-        self.result('PROFILE_UNSUPPORTED', exit_code=2)
-
-    def test_source_content_pin(self):
-        self.data['source_l1']['sha256'] = '0' * 64
-        self.result('L1_HASH')
-
-    def test_source_identity_pin(self):
-        self.data['source_l1']['revision'] = '999'
-        self.result('L1_IDENTITY')
-
-    def test_missing_l1_is_operational_error(self):
-        self.data['source_l1']['artifact'] = 'missing.json'
-        self.result('L1_IO', exit_code=3)
-
-    def test_malformed_l1_is_validation_error(self):
-        source_path = self.root / self.data['source_l1']['artifact']
-        origin = json.loads(source_path.read_text())
-        origin['atlas']['use_cases'] = ['malformed']
-        source_path.write_text(json.dumps(origin))
-        self.data['source_l1']['sha256'] = None
-        self.result('L1_FORMAT')
-
-    def test_escaping_path_is_rejected(self):
-        self.data['source_l1']['artifact'] = '../escape.json'
-        self.result('SCHEMA_INVALID')
-
-    def test_mirror_preserves_source_extension(self):
-        relative = self.data['mirror']['documents'][0]
-        changed = relative.replace('.py.yaml', '.yaml')
-        (self.root / relative).rename(self.root / changed)
-        self.data['mirror']['documents'][0] = changed
-        self.result('MIRROR_PATH')
-
-    def test_duplicate_yaml_keys(self):
-        self.path.write_text(self.path.read_text() + '\nkind: blueprint\n')
-        report = validate(self.path, self.root)
-        self.assertEqual(1, report['exit_code'])
-        self.assertIn('YAML_INVALID', {x['code'] for x in report['diagnostics']})
-
-    def test_tags_and_aliases_are_data_errors(self):
-        for text in ('value: !!python/object/apply:os.system [echo forbidden]', 'value: &anchor text\ncopy: *anchor'):
-            with self.subTest(text=text):
-                self.path.write_text(text)
-                report = validate(self.path, self.root)
-                self.assertEqual(1, report['exit_code'])
-                self.assertEqual('YAML_INVALID', report['diagnostics'][0]['code'])
-
-    def test_predictable_scalar_subset(self):
-        self.path.write_text('a: true\nb: false\nc: null\nd: yes\ne: 2026-10-28\nf: 1e3\ng: 012\n')
-        data = read_yaml(self.path)
-        self.assertIs(data['a'], True)
-        self.assertIs(data['b'], False)
-        self.assertIsNone(data['c'])
-        self.assertEqual('yes', data['d'])
-        self.assertEqual('2026-10-28', data['e'])
-        self.assertEqual(1000.0, data['f'])
-        self.assertEqual('012', data['g'])
-
-    def test_code_absence_is_explicitly_inconclusive_when_requested(self):
-        self.result('CODE_UNAVAILABLE', exit_code=4, verify_code=True)
+    def test_legitimate_graph_cycle(self):
+        graph = self.data['adpm']['graphs'][0]; node = graph['entry']
+        graph['edges'].append({'id':'E-REPEAT','from':node,'to':node,'condition':'Wait for another input event.','action':''})
         self.result(exit_code=0)
 
-    def test_legacy_multi_unit_record_is_not_admv_claim(self):
-        root = EDITION / 'examples/legacy'
-        path = root / 'docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml'
-        self.assertGreater(len(read_yaml(path)['units']), 1)
-        report = validate(path, root)
-        self.assertEqual(0, report['exit_code'], report['diagnostics'])
-        self.assertEqual('source_record_only', report['layer_coverage'])
+    def test_composition_requires_forwarding(self):
+        root = EDITION / 'examples/composition'
+        self.data = read_yaml(root / 'docs/L2_MinervaBlueprints/blueprint.yaml')
+        shutil.copyfile(root / self.data['source_l1']['artifact'], self.root / self.data['source_l1']['artifact'])
+        dep = next(x for x in self.data['adpm']['dependencies'] if x['provider_ref'] == 'UC-BOOKING-LOOKUP')
+        dep['context_forwarding'] = None
+        self.result('CASE_CONTEXT')
 
-    def test_qualified_support_symbol_requires_correct_owner(self):
-        self.data = read_yaml(EDITION / 'examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml')
-        code = self.root / 'apps/Support/Test.py'
-        code.parent.mkdir(parents=True)
-        code.write_text('class Expected:\n    pass\n\nclass Other:\n    def testRun(self):\n        pass\n')
-        self.data['advs']['supporting_checks'][0]['reference'] = {
-            'path': 'apps/Support/Test.py', 'symbol': 'Expected.testRun', 'status': 'observed'}
-        self.result('CHECK_SYMBOL', verify_code=True)
-        self.data['advs']['supporting_checks'][0]['reference']['symbol'] = 'Other.testRun'
-        self.result(exit_code=0, verify_code=True)
+    def test_shared_quality_support_is_canonical(self):
+        root = EDITION / 'examples/composition'; data = read_yaml(root / 'docs/L2_MinervaBlueprints/blueprint.yaml')
+        check = next(x for x in data['advs']['supporting_checks'] if x['id'] == 'CHK-RNF-BOOKING-CREATE-RESPONSE')
+        self.assertEqual({'UC-BOOKING-CREATE','UC-BOOKING-CANCEL'}, set(check['case_refs']))
+        self.assertEqual(2, len(check['behavioral_test_refs']))
+        self.assertNotIn('minerva_shared_criteria', (root / data['source_l1']['artifact']).read_text(encoding='utf-8'))
 
-    def test_alternative_document_root_preserves_mirror_mapping(self):
-        old_root = self.root / 'docs/L2_MinervaBlueprints'
-        new_root = self.root / 'design/program'
-        new_root.parent.mkdir(parents=True)
-        old_root.rename(new_root)
-        self.path = new_root / 'blueprint.yaml'
-        self.data['mirror']['root'] = 'design/program'
-        self.data['mirror']['documents'] = [x.replace('docs/L2_MinervaBlueprints/', 'design/program/', 1) for x in self.data['mirror']['documents']]
-        self.result(exit_code=0)
+    def test_missing_support_reciprocity(self):
+        self.data['advs']['supporting_checks'][0]['behavioral_test_refs'] = []
+        self.result('SUPPORT_RECIPROCITY')
 
-    def test_shared_criterion_links_existing_behavioral_tests(self):
-        source_path = self.root / self.data['source_l1']['artifact']
-        source = json.loads(source_path.read_text())
-        source['atlas'].setdefault('extensions', {})['minerva_shared_criteria'] = [
-            {'id': 'AC-SHARED-ROUNDTRIP', 'case_ids': ['UC-TASK-001', 'UC-TASK-002'],
-             'statement': 'A created task is readable by a permitted listing call in the same store.'}]
-        source_path.write_text(json.dumps(source))
-        self.data['source_l1']['sha256'] = hashlib.sha256(source_path.read_bytes()).hexdigest()
-        support = copy.deepcopy(self.data['advs']['supporting_checks'][0])
-        support.update(id='CHECK-SHARED-ROUNDTRIP', behavioral_test_refs=['BT-TASK-001', 'BT-TASK-002'],
-                       criteria_refs=['AC-SHARED-ROUNDTRIP'], case_refs=['UC-TASK-001', 'UC-TASK-002'])
-        self.data['advs']['supporting_checks'].append(support)
-        for bt in self.data['advs']['behavioral_tests'][:2]:
-            bt['criteria_refs'].append('AC-SHARED-ROUNDTRIP')
-            bt['supporting_check_refs'].append('CHECK-SHARED-ROUNDTRIP')
-        report = self.result(exit_code=0)
-        self.assertEqual(3, report['counts']['behavioral_tests'])
-        self.assertEqual(12, report['counts']['criteria'])
-        support['behavioral_test_refs'].remove('BT-TASK-002')
-        self.result('SHARED_CRITERION_LINK')
+    def test_execution_requires_report(self):
+        self.data['advs']['executions'] = [{'id':'EXEC-FAKE','check_refs':['BT-REQUEST-SUBMIT'],'implementation_revision':'unavailable','environment':'test','result':'passed','observed_at':'2026-10-28T12:00:00Z','report':'missing.txt','limitations':[]}]
+        self.result('EVIDENCE_MISSING')
 
-    def test_public_counterexamples_match_documented_expectations(self):
-        process = subprocess.run([sys.executable, str(EDITION / 'examples/counterexamples/check.py'), '--json'], capture_output=True, text=True)
-        self.assertEqual(0, process.returncode, process.stderr)
-        report = json.loads(process.stdout)
-        self.assertTrue(report['passed'])
-        self.assertEqual(13, report['fixture_count'])
+    def test_empty_reviewed_model(self):
+        self.data['source_l1']['case_ids'] = []; self.data['adpm']['cases'] = []; self.data['advs']['behavioral_tests'] = []
+        self.result('ADMV_EMPTY')
 
-    def test_source_behavior_can_reference_its_local_graph(self):
-        relative = next(p for p in self.data['mirror']['documents'] if p.endswith('/Entity_Task.py.yaml'))
-        path = self.root / relative
-        source = read_yaml(path)
-        unit = source['units'][0]
-        source['graphs'].append({'id': 'GRAPH-LOCAL-TASK', 'owner_ref': unit['id'], 'kind': 'flow',
-            'summary': 'Local terminal result for this source unit.', 'entry': 'NODE-LOCAL-RETURN',
-            'nodes': [{'id': 'NODE-LOCAL-RETURN', 'kind': 'end', 'description': 'Return the described local result.'}], 'edges': []})
-        unit['operations'][0]['behavior']['graph_refs'].append('GRAPH-LOCAL-TASK')
-        path.write_text(yaml.safe_dump(source, sort_keys=False))
-        report = self.result(exit_code=0)
-        self.assertEqual(5, report['counts']['graphs'])
+    def test_draft_is_inconclusive(self):
+        self.data['document']['status'] = 'draft'
+        self.result('DRAFT_INCOMPLETE',exit_code=4)
 
-    def test_cli_json_distinguishes_success_draft_and_operational_error(self):
-        targets = ((self.path, 0), (EDITION / 'implementations/yaml/starter.minerva.yaml', 4), (self.root / 'missing.yaml', 3))
-        for path, expected in targets:
-            with self.subTest(expected=expected):
-                completed = subprocess.run([sys.executable, str(EDITION / 'validator/minerva_validate.py'), str(path), '--root', str(self.root), '--json'], capture_output=True, text=True)
-                self.assertEqual(expected, completed.returncode, completed.stderr)
-                report = json.loads(completed.stdout)
-                self.assertEqual(expected, report['exit_code'])
-                self.assertIn('diagnostics', report)
+    def test_unsupported_profile(self):
+        self.data['profile_version'] = '2.0.0'
+        self.result('PROFILE_UNSUPPORTED',exit_code=2)
+
+    def test_json_cli_and_structure_scope(self):
+        proc = subprocess.run([sys.executable,'-B',str(EDITION/'validator/minerva_validate.py'),str(self.path),'--root',str(self.root),'--structure-only','--json'],capture_output=True,text=True)
+        self.assertEqual(0,proc.returncode,proc.stderr)
+        self.assertEqual('not_assessed',json.loads(proc.stdout)['layer_coverage'])
+
+    def test_task_board_revision_delta(self):
+        base=EDITION/'examples/task-board/revisions'
+        earlier=read_yaml(base/'revision-2/docs/L2_MinervaBlueprints/blueprint.yaml')
+        later=read_yaml(base/'revision-3/docs/L2_MinervaBlueprints/blueprint.yaml')
+        self.assertEqual(earlier['source_l1']['case_ids'],later['source_l1']['case_ids'])
+        def criterion(data): return next(x for x in data['source_l1']['catalog'] if x['ref']=='AC-TASK-LIST-EMPTY')['statement']
+        self.assertNotEqual(criterion(earlier),criterion(later))
+        self.assertIn('revision',criterion(later))
 
 
-class TestReadOnlyCodeInspection(unittest.TestCase):
-    def test_inspection_never_imports_and_detects_changed_bytes(self):
-        with tempfile.TemporaryDirectory(prefix='minerva-read-only-') as folder:
-            root = Path(folder)
-            code = root / 'apps/Demo/Example.py'
-            code.parent.mkdir(parents=True)
-            code.write_text("raise RuntimeError('must never run')\n\nclass Example:\n    def run(self):\n        return 1\n")
-            path = root / 'docs/L2_MinervaBlueprints/apps/Demo/Example.py.yaml'
-            path.parent.mkdir(parents=True)
-            behavior = {'summary': 'Return the integer one.', 'steps': ['Return one.'], 'preconditions': [], 'postconditions': ['Result is one.'], 'effects': [], 'graph_refs': []}
-            document = {'format': 'minerva-yaml', 'model_version': 'Alpha-v0.1.0', 'profile_version': '0.1.0', 'kind': 'source',
-                'document_id': 'FILE-DEMO-EXAMPLE', 'source': {'path': 'apps/Demo/Example.py', 'app': 'Demo', 'language': 'python',
-                'state': 'observed', 'sha256': hashlib.sha256(code.read_bytes()).hexdigest(), 'purpose': 'Read-only inspection fixture.', 'observation': 'Bytes created by this test.'},
-                'units': [{'id': 'UNIT-DEMO-EXAMPLE', 'code_name': 'Example', 'kind': 'class', 'role': 'support', 'model_refs': [],
-                'description': 'A class behind top-level code that would raise if imported.', 'attributes': [], 'operations': [{'id': 'OP-DEMO-RUN', 'code_name': 'run',
-                'contract_scope': 'operational', 'native_signature': 'run(self)', 'description': 'Return one.', 'inputs': [], 'outputs': [{'name': 'result', 'description': 'The integer one.', 'type': {'kind': 'primitive', 'name': 'integer'}, 'required': True}],
-                'technical_parameters': [], 'behavior': behavior}]}], 'graphs': [], 'dependencies': [], 'limitations': ['Inspection does not establish runtime behavior.']}
-            path.write_text(yaml.safe_dump(document, sort_keys=False))
-            report = validate(path, root, verify_code=True)
-            self.assertEqual(0, report['exit_code'], report['diagnostics'])
-            self.assertEqual(1, report['counts']['code_files'])
-            code.write_text(code.read_text() + '\n# changed bytes\n')
-            report = validate(path, root, verify_code=True)
-            self.assertEqual(1, report['exit_code'])
-            self.assertIn('CODE_HASH_MISMATCH', {x['code'] for x in report['diagnostics']})
+class TestLoadingAndCode(unittest.TestCase):
+    def test_restricted_yaml_loader(self):
+        with tempfile.TemporaryDirectory(prefix='minerva-yaml-') as directory:
+            path=Path(directory)/'input.yaml'
+            for text in ['a: 1\na: 2\n','a: &alias 1\nb: *alias\n','a: !!python/object:builtins.object {}\n','1: value\n','a: 1e999\n']:
+                with self.subTest(text=text):
+                    path.write_text(text,encoding='utf-8')
+                    with self.assertRaises((InputError,yaml.YAMLError)):read_yaml(path)
+            path.write_text('a: yes\nb: 012\nc: 2026-10-28\nd: true\ne: null\n',encoding='utf-8')
+            self.assertEqual({'a':'yes','b':'012','c':'2026-10-28','d':True,'e':None},read_yaml(path))
+
+    def test_paths_cannot_escape(self):
+        with tempfile.TemporaryDirectory(prefix='minerva-path-') as directory:
+            for value in ['../outside','C:/outside','folder\\file','/outside']:
+                with self.subTest(value=value),self.assertRaises(InputError):safe_path(Path(directory),value)
+
+    def test_starter_and_planned_source(self):
+        starter=EDITION/'implementations/yaml/starter.minerva.yaml'
+        self.assertEqual(0,validate(starter,EDITION,structure_only=True)['exit_code'])
+        self.assertEqual(4,validate(starter,EDITION)['exit_code'])
+        planned=EDITION/'tests/fixtures/planned'; path=planned/'docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml'
+        self.assertEqual(0,validate(path,planned)['exit_code'])
+        self.assertEqual(4,validate(path,planned,verify_code=True)['exit_code'])
+
+    def test_code_inspection_does_not_import(self):
+        data=read_yaml(EDITION/'tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml')
+        with tempfile.TemporaryDirectory(prefix='minerva-code-') as directory:
+            root=Path(directory);code=root/'apps/RequestRegister/submit.py';code.parent.mkdir(parents=True)
+            code.write_text("raise RuntimeError('must not execute')\n\ndef submit(actor_context, code, quantity):\n    return None\n",encoding='utf-8')
+            data['source'].update(state='observed',sha256=hashlib.sha256(code.read_bytes()).hexdigest())
+            path=root/'source.yaml';path.write_text(yaml.safe_dump(data),encoding='utf-8')
+            self.assertEqual(0,validate(path,root,verify_code=True)['exit_code'])
+            code.write_text(code.read_text(encoding='utf-8')+'\n# drift\n',encoding='utf-8')
+            self.assertIn('CODE_HASH_MISMATCH',{x['code'] for x in validate(path,root,verify_code=True)['diagnostics']})
+
+    def test_qualified_symbol_ownership(self):
+        tree=ast.parse('class Other:\n def test_run(self): pass\nclass Expected: pass\n')
+        self.assertFalse(resolve_python_symbol(tree,'Expected.test_run'))
+        self.assertTrue(resolve_python_symbol(tree,'Other.test_run'))
 
 
 if __name__ == '__main__':

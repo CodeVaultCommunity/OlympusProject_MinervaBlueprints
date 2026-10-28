@@ -1,0 +1,185 @@
+{
+  "results": [
+    {
+      "example": "minimal",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 1,
+        "behavioral_tests": 1,
+        "criteria": 7,
+        "scenarios": 12,
+        "graphs": 3,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior.",
+        "Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review."
+      ],
+      "source_check": "opaque_bytes_and_declared_catalog"
+    },
+    {
+      "example": "task-board",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 3,
+        "behavioral_tests": 3,
+        "criteria": 16,
+        "scenarios": 31,
+        "graphs": 6,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior.",
+        "Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review."
+      ],
+      "source_check": "opaque_bytes_and_declared_catalog"
+    },
+    {
+      "example": "composition",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 3,
+        "behavioral_tests": 3,
+        "criteria": 18,
+        "scenarios": 33,
+        "graphs": 7,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior.",
+        "Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review."
+      ],
+      "source_check": "opaque_bytes_and_declared_catalog"
+    },
+    {
+      "example": "task-board-revision-2",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 3,
+        "behavioral_tests": 3,
+        "criteria": 16,
+        "scenarios": 31,
+        "graphs": 6,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior.",
+        "Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review."
+      ],
+      "source_check": "opaque_bytes_and_declared_catalog"
+    },
+    {
+      "example": "task-board-revision-3",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 3,
+        "behavioral_tests": 3,
+        "criteria": 16,
+        "scenarios": 31,
+        "graphs": 6,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior.",
+        "Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review."
+      ],
+      "source_check": "opaque_bytes_and_declared_catalog"
+    },
+    {
+      "example": "starter-structure-only",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "structure",
+      "layer_coverage": "not_assessed",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 0,
+        "behavioral_tests": 0,
+        "criteria": 0,
+        "scenarios": 0,
+        "graphs": 0,
+        "code_files": 0
+      },
+      "diagnostics": [
+        {
+          "code": "STRUCTURE_ONLY",
+          "severity": "info",
+          "document": "C:\\Users\\Douglas\\.codex\\visualizations\\2026\\10\\28\\01a18248-1144-7a00-8654-34fe3a09a40d\\minerva-work\\edition-isolation-6ww9k135\\Alpha-v0.1.0\\implementations\\yaml\\starter.minerva.yaml",
+          "element": "$",
+          "message": "Only the representation schema was checked; ADMV consistency was not evaluated."
+        }
+      ],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    }
+  ],
+  "passed": true
+}

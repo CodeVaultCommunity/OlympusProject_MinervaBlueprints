@@ -1,125 +1,15 @@
-"""Read-only validation. This module never imports or executes project code."""
+"""Validate Minerva declarations; never interpret a source model or execute code."""
 from __future__ import annotations
-
 import ast
-import copy
 import fnmatch
 import hashlib
-import json
-import math
 from pathlib import Path
-import re
 from typing import Any
-
 import yaml
 from jsonschema import Draft202012Validator
-
 from . import MODEL_VERSION, PROFILE_VERSION
-
-MAX_DOCUMENT_BYTES = 8 * 1024 * 1024
-
-
-class UnsupportedDocument(ValueError):
-    pass
-
-
-class InputError(ValueError):
-    pass
-
-
-class UniqueKeyLoader(yaml.SafeLoader):
-    """JSON scalar subset of YAML, without aliases or implicit timestamps."""
-    yaml_implicit_resolvers = copy.deepcopy(yaml.SafeLoader.yaml_implicit_resolvers)
-
-
-for first, resolvers in list(UniqueKeyLoader.yaml_implicit_resolvers.items()):
-    UniqueKeyLoader.yaml_implicit_resolvers[first] = [
-        (tag, pattern) for tag, pattern in resolvers
-        if tag not in {'tag:yaml.org,2002:bool', 'tag:yaml.org,2002:int',
-                       'tag:yaml.org,2002:float', 'tag:yaml.org,2002:timestamp',
-                       'tag:yaml.org,2002:null'}
-    ]
-UniqueKeyLoader.add_implicit_resolver('tag:yaml.org,2002:bool', re.compile(r'^(?:true|false)$'), list('tf'))
-UniqueKeyLoader.add_implicit_resolver('tag:yaml.org,2002:null', re.compile(r'^null$'), ['n'])
-UniqueKeyLoader.add_implicit_resolver('tag:yaml.org,2002:int', re.compile(r'^-?(?:0|[1-9][0-9]*)$'), list('-0123456789'))
-UniqueKeyLoader.add_implicit_resolver('tag:yaml.org,2002:float', re.compile(r'^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+(?:[eE][+-]?[0-9]+)?|[eE][+-]?[0-9]+)$'), list('-0123456789'))
-
-
-def unique_mapping(loader, node, deep=False):
-    result = {}
-    for key_node, value_node in node.value:
-        key = loader.construct_object(key_node, deep=deep)
-        if not isinstance(key, str):
-            raise InputError('Mapping keys must be strings.')
-        if key in result:
-            raise InputError(f'Duplicate mapping key {key!r} at line {key_node.start_mark.line + 1}.')
-        result[key] = loader.construct_object(value_node, deep=deep)
-    return result
-
-
-UniqueKeyLoader.add_constructor('tag:yaml.org,2002:map', unique_mapping)
-
-
-def read_yaml(path: Path) -> dict:
-    raw = path.read_bytes()
-    if len(raw) > MAX_DOCUMENT_BYTES:
-        raise InputError('Document exceeds the 8 MiB supported limit.')
-    text = raw.decode('utf-8')
-    for token in yaml.scan(text):
-        if isinstance(token, (yaml.tokens.AliasToken, yaml.tokens.AnchorToken, yaml.tokens.TagToken)):
-            raise InputError('Aliases, anchors and explicit tags are outside the Minerva YAML profile.')
-    data = yaml.load(text, Loader=UniqueKeyLoader)
-    if not isinstance(data, dict):
-        raise InputError('The document root must be a mapping.')
-    def finite(value):
-        if isinstance(value, float) and not math.isfinite(value):
-            raise InputError('Non-finite numbers are not supported.')
-        if isinstance(value, dict):
-            for item in value.values(): finite(item)
-        elif isinstance(value, list):
-            for item in value: finite(item)
-    finite(data)
-    return data
-
-
-def read_json(path: Path) -> dict:
-    def pairs(items):
-        result = {}
-        for key, value in items:
-            if key in result: raise InputError(f'Duplicate JSON key {key!r}.')
-            result[key] = value
-        return result
-    def invalid_constant(value): raise InputError('Non-finite JSON number ' + value)
-    raw = path.read_bytes()
-    if len(raw) > MAX_DOCUMENT_BYTES: raise InputError('Document exceeds the 8 MiB supported limit.')
-    return json.loads(raw.decode('utf-8'), object_pairs_hook=pairs, parse_constant=invalid_constant)
-
-
-def safe_path(root: Path, relative: str) -> Path:
-    if not isinstance(relative, str) or not relative or '\\' in relative:
-        raise InputError('A nonempty portable relative path is required.')
-    part = Path(relative)
-    if part.is_absolute() or '..' in part.parts or re.match(r'^[A-Za-z]:', relative):
-        raise InputError('Paths must stay within the declared project root.')
-    target = (root / part).resolve()
-    if not target.is_relative_to(root.resolve()):
-        raise InputError('A path or symlink escapes the declared project root.')
-    return target
-
-
-def resolve_python_symbol(tree, symbol):
-    """Resolve a qualified class/function path through lexical AST ownership."""
-    current = tree
-    for segment in symbol.split('.'):
-        if not segment.isidentifier():
-            return False
-        current = next((node for node in getattr(current, 'body', [])
-            if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name == segment), None)
-        if current is None:
-            return False
-    return True
-
+from .loading import InputError, read_yaml, read_json, safe_path
+from .code_inspection import CodeInspectionMixin, resolve_python_symbol
 
 def schema() -> dict:
     path = Path(__file__).resolve().parent / 'schemas' / 'minerva.schema.json'
@@ -135,7 +25,7 @@ def walk(value: Any, path='$'):
         for index, child in enumerate(value): yield from walk(child, path + '/' + str(index))
 
 
-class Inspection:
+class Inspection(CodeInspectionMixin):
     def __init__(self, root, *, structure_only=False, verify_code=False):
         self.root = Path(root).resolve()
         self.structure_only = structure_only
@@ -185,7 +75,7 @@ class Inspection:
         return data
 
     def collect(self, document, data):
-        for value, path in walk(data):
+        for value, path in walk({key: value for key, value in data.items() if key != 'source_l1'}):
             if 'id' in value:
                 identity = value['id']
                 if identity in self.all_ids:
@@ -233,102 +123,66 @@ class Inspection:
         for dependency in data['dependencies']:
             self.target(dependency['from_unit'], path, 'dependencies/from_unit', units)
 
-    def source_code(self, path, data):
-        source = data['source']
-        try: code = safe_path(self.root, source['path'])
-        except InputError as error:
-            self.add('PATH_INVALID', path, 'source/path', str(error)); return
-        if source['state'] == 'planned' and source['sha256'] is not None:
-            self.add('PLANNED_HASH', path, 'source/sha256', 'A planned source has no observed hash.')
-        if not self.verify_code: return
-        self.report['code_check'] = 'requested'
-        if not code.is_file():
-            self.add('CODE_UNAVAILABLE', path, 'source/path', 'Source unavailable for the requested code check.', 'inconclusive'); return
-        self.report['counts']['code_files'] += 1
-        digest = hashlib.sha256(code.read_bytes()).hexdigest()
-        if source['state'] != 'observed' or source['sha256'] is None:
-            self.add('CODE_NOT_OBSERVED', path, 'source', 'Present source is not covered by an observed snapshot.', 'inconclusive')
-        elif digest != source['sha256']:
-            self.add('CODE_HASH_MISMATCH', path, 'source/sha256', 'Current bytes differ from the observed snapshot.')
-        if source['language'] != 'python':
-            self.add('CODE_LANGUAGE_UNSUPPORTED', path, 'source/language', 'Hash checked; symbol inspection supports Python only.', 'warning'); return
-        try: tree = ast.parse(code.read_text(encoding='utf-8'))
-        except (OSError, SyntaxError, UnicodeError) as error:
-            self.add('CODE_PARSE', path, 'source/path', str(error)); return
-        declared = {unit['code_name'] for unit in data['units'] if unit['kind'] in ('class', 'function')}
-        actual = {node.name for node in tree.body if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef))}
-        if declared != actual:
-            self.add('CODE_UNITS', path, 'units', f'Declared top-level names {sorted(declared)} differ from {sorted(actual)}.')
-        for unit in data['units']:
-            if unit['kind'] != 'class': continue
-            node = next((node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == unit['code_name']), None)
-            if node:
-                methods = {n.name for n in node.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
-                described = {op['code_name'] for op in unit['operations']}
-                if methods != described:
-                    self.add('CODE_METHODS', path, unit['id'], f'Declared methods {sorted(described)} differ from {sorted(methods)}.')
-
     def source_l1(self, path, data):
+        """Inspect the authored Minerva source catalogue, not the L1 file format.
+
+        The artifact is opaque bytes. Catalogue fidelity to that artifact is a
+        separate documented review, even when the SHA-256 matches.
+        """
         source = data['source_l1']
         if source['artifact'] is None:
-            self.add('L1_MISSING', path, 'source_l1', 'A reviewed blueprint requires a pinned source L1 artifact.'); return {}, {}, {}
-        try:
-            origin = safe_path(self.root, source['artifact'])
-            document = read_json(origin)
-        except InputError as error:
-            self.add('L1_INVALID', path, 'source_l1', str(error)); return {}, {}, {}
-        except (OSError, UnicodeError) as error:
-            self.add('L1_IO', path, 'source_l1', str(error)); self.report['exit_code'] = 3; return {}, {}, {}
-        except json.JSONDecodeError as error:
-            self.add('L1_INVALID', path, 'source_l1', str(error)); return {}, {}, {}
-        if source['model'] != 'Atlas Specifications' or source['model_version'] != 'Stable-v1.0.0':
-            self.add('L1_PROFILE_UNSUPPORTED', path, 'source_l1', 'The supplied adapter supports Atlas Specifications Stable-v1.0.0 JSON only.')
-            self.report['exit_code'] = 2; return {}, {}, {}
-        atlas = document.get('atlas') if isinstance(document, dict) else None
-        if not isinstance(atlas, dict) or not isinstance(atlas.get('use_cases'), list):
-            self.add('L1_FORMAT', path, 'source_l1', 'Expected an Atlas JSON artifact; full Atlas validation is a separate tool.'); return {}, {}, {}
-        if atlas.get('document_id') != source['document_id'] or atlas.get('revision') != source['revision'] or atlas.get('spec_version') != source['model_version']:
-            self.add('L1_IDENTITY', path, 'source_l1', 'Pinned Atlas identity, revision or model version differs.')
-        if source['sha256'] and hashlib.sha256(origin.read_bytes()).hexdigest() != source['sha256']:
-            self.add('L1_HASH', path, 'source_l1/sha256', 'Pinned L1 content hash differs.')
-        for case in atlas['use_cases']:
-            if not isinstance(case, dict) or not isinstance(case.get('id'), str) or not isinstance(case.get('acceptance_criteria'), list):
-                self.add('L1_FORMAT', path, 'source_l1', 'Cases require IDs and acceptance-criteria lists.'); return {}, {}, {}
-            if any(not isinstance(c, dict) or not isinstance(c.get('id'), str) for c in case['acceptance_criteria']):
-                self.add('L1_FORMAT', path, 'source_l1', 'Acceptance criteria require IDs.'); return {}, {}, {}
-        all_cases = {case['id']: case for case in atlas['use_cases']}
-        if len(all_cases) != len(atlas['use_cases']): self.add('L1_DUPLICATE', path, 'source_l1', 'L1 case identities are duplicated.')
+            self.add('L1_MISSING', path, 'source_l1', 'A reviewed blueprint requires a pinned source artifact.')
+        else:
+            try:
+                origin = safe_path(self.root, source['artifact'])
+                if source['sha256'] is None:
+                    self.add('L1_HASH_REQUIRED', path, 'source_l1/sha256', 'Reviewed source references require a SHA-256.')
+                elif hashlib.sha256(origin.read_bytes()).hexdigest() != source['sha256']:
+                    self.add('L1_HASH', path, 'source_l1/sha256', 'Pinned source bytes differ.')
+            except InputError as error:
+                self.add('PATH_INVALID', path, 'source_l1/artifact', str(error))
+            except OSError as error:
+                self.add('L1_IO', path, 'source_l1/artifact', str(error))
+                self.report['exit_code'] = 3
+        self.source_elements = {}
+        for element in source['catalog']:
+            ref = element['ref']
+            if ref in self.source_elements:
+                self.add('L1_DUPLICATE', path, ref, 'Duplicate source-catalogue identity.')
+            self.source_elements[ref] = element
+        all_cases = {ref: item for ref, item in self.source_elements.items() if item['kind'] == 'case'}
+        actors = {ref: item for ref, item in self.source_elements.items() if item['kind'] == 'actor'}
         selected = source['case_ids']
-        if len(selected) != len(set(selected)): self.add('L1_SELECTION', path, 'source_l1/case_ids', 'Selected L1 cases are duplicated.')
+        if len(selected) != len(set(selected)):
+            self.add('L1_SELECTION', path, 'source_l1/case_ids', 'Selected source cases are duplicated.')
         for identity in selected:
-            if identity not in all_cases: self.add('L1_CASE', path, 'source_l1/case_ids', f'Missing source case {identity}.')
-        cases = {identity: all_cases[identity] for identity in selected if identity in all_cases}
-        criteria = {}
-        for identity, case in cases.items():
-            for criterion in case.get('acceptance_criteria', []):
-                if criterion['id'] in criteria: self.add('L1_CRITERION_DUPLICATE', path, criterion['id'], 'Criterion IDs must be unique for this adapter.')
-                criteria[criterion['id']] = {identity}
-        # Optional explicit adapter extension, retained as opaque content by Atlas.
-        extensions = atlas.get('extensions') or {}
-        if not isinstance(extensions, dict):
-            self.add('L1_FORMAT', path, 'source_l1', 'Atlas extensions must be an object.'); extensions = {}
-        shared = extensions.get('minerva_shared_criteria', [])
-        if not isinstance(shared, list):
-            self.add('L1_FORMAT', path, 'source_l1', 'Shared criteria must be a list.'); shared = []
-        for criterion in shared:
-            if not isinstance(criterion, dict) or not isinstance(criterion.get('id'), str) or not isinstance(criterion.get('case_ids'), list) or any(not isinstance(c, str) for c in criterion['case_ids']):
-                self.add('L1_SHARED_CRITERION', path, 'source_l1', 'Shared criteria require ID and a list of case IDs.'); continue
-            participants = set(criterion.get('case_ids', []))
-            if not participants or not participants.issubset(cases) or not criterion.get('statement'):
-                self.add('L1_SHARED_CRITERION', path, 'source_l1', 'Shared criterion needs its full statement and in-scope case_ids.'); continue
-            if criterion.get('id') in criteria: self.add('L1_CRITERION_DUPLICATE', path, criterion['id'], 'Duplicate criterion ID.'); continue
-            criteria[criterion['id']] = participants
-        actor_list = atlas.get('actors', [])
-        if not isinstance(actor_list, list) or any(not isinstance(a, dict) or not isinstance(a.get('id'), str) for a in actor_list):
-            self.add('L1_FORMAT', path, 'source_l1', 'Actors require identifiable records.'); actor_list = []
-        actors = {a['id']: a for a in actor_list}
+            self.source_target(identity, path, 'source_l1/case_ids', {'case'})
+        for ref, item in self.source_elements.items():
+            for owner in item.get('case_refs', []):
+                self.source_target(owner, path, ref, {'case'})
+            for actor in item.get('actor_refs', []):
+                self.source_target(actor, path, ref, {'actor'})
+            if item['kind'] == 'case' and not item.get('actor_refs'):
+                self.add('L1_CASE_ACTORS', path, ref, 'Declare the source case permitted actor set.')
+            if item['kind'] == 'criterion' and not item.get('case_refs'):
+                self.add('L1_CRITERION_SCOPE', path, ref, 'Declare criterion ownership.')
+        cases = {ref: all_cases[ref] for ref in selected if ref in all_cases}
+        criteria = {ref: set(item['case_refs']) & set(cases)
+                    for ref, item in self.source_elements.items()
+                    if item['kind'] == 'criterion' and set(item.get('case_refs', [])) & set(cases)}
         self.report['counts']['criteria'] = len(criteria)
+        self.report['source_check'] = 'opaque_bytes_and_declared_catalog'
+        self.report['limitations'].append('Source catalogue and mappings are authored Minerva declarations. No source-model reader is included; fidelity to the pinned L1 content requires separate review.')
         return cases, criteria, actors
+
+    def source_target(self, identity, document, element, kinds=None):
+        item = self.source_elements.get(identity)
+        if item is None:
+            self.add('SOURCE_REF_UNRESOLVED', document, element, f'Unknown declared source element {identity}.')
+        elif kinds is not None and item['kind'] not in kinds:
+            self.add('SOURCE_REF_WRONG_TYPE', document, element, f'{identity} has source kind {item["kind"]}; expected {sorted(kinds)}.')
+            return None
+        return item
 
     def consistency(self, path, data):
         if data['kind'] == 'source':
@@ -379,16 +233,27 @@ class Inspection:
         if sorted(case_sources) != sorted(cases_l1): self.add('CASE_BIJECTION', path, 'adpm/cases', 'Exactly one program case is required for each selected source case, with no extras.')
         if sorted(test_sources) != sorted(cases_l1): self.add('TEST_BIJECTION', path, 'advs/behavioral_tests', 'Exactly one directly linked behavioral test is required for each selected source case, with no extras.')
         for document, structure in self.documents:
-            for item, location in walk(structure):
+            for item, location in walk({key: value for key, value in structure.items() if key != 'source_l1'}):
                 if item.get('kind') == 'entity' and 'ref' in item: self.target(item['ref'], document, location, entities)
                 if item.get('kind') == 'type' and 'ref' in item: self.target(item['ref'], document, location, types)
                 if 'graph_refs' in item:
                     for identity in item['graph_refs']: self.target(identity, document, location, graph_ids)
         for entity in entities.values():
-            for identity in entity['invariant_refs']: self.target(identity, path, entity['id'], rules)
+            if entity['source_entity_id'] is not None:
+                self.source_target(entity['source_entity_id'], path, entity['id'], {'entity'})
+            for identity in entity['invariant_refs']:
+                rule = self.target(identity, path, entity['id'], rules)
+                if rule and (rule['kind'] != 'invariant' or rule['owner_ref'] != entity['id']):
+                    self.add('ENTITY_INVARIANT', path, entity['id'], 'An invariant reference must identify an invariant owned by this entity; transition rules belong to behavior.')
             for identity in entity['dependencies']:
                 self.target(identity, path, entity['id'], set(entities)|set(types))
         for rule in rules.values():
+            if not rule['origin_refs']:
+                self.add('RULE_ORIGIN_MISSING', path, rule['id'], 'An inherited rule or added decision needs an explicit origin.')
+            for origin in rule['origin_refs']:
+                if origin in {d['id'] for d in data['document']['decisions']}:
+                    continue
+                self.source_target(origin, path, rule['id'], {'validation', 'requirement', 'field', 'entity', 'case'})
             self.target(rule['owner_ref'], path, rule['id'], set(entities)|set(cases))
         for tool in tools.values():
             for identity in tool['dependencies']: self.target(identity, path, tool['id'], set(tools)|set(entities)|set(types))
@@ -401,12 +266,15 @@ class Inspection:
             for identity in case['rule_refs']: self.target(identity, path, case['id'], rules)
             if case['domain_ref'] is not None: self.target(case['domain_ref'], path, case['id'], domains)
             permission = case['permission']
-            if set(permission['deny_contexts']) != {'absent','unresolved','unknown','insufficient'}:
+            if len(permission['deny_contexts']) != 4 or set(permission['deny_contexts']) != {'absent','unresolved','unknown','insufficient'}:
                 self.add('AUTH_DENIALS', path, case['id'], 'All four denial categories must be declared exactly once.')
             if permission['context_input'] not in {item['name'] for item in case['inputs']}:
                 self.add('AUTH_INPUT', path, case['id'], 'Context input must name a declared case input.')
             for actor in permission['allowed_actor_refs']:
-                if actor not in actors: self.add('ACTOR_REF', path, case['id'], f'Unknown L1 actor {actor}.')
+                if actor not in actors:
+                    self.add('ACTOR_REF', path, case['id'], f'Unknown declared source actor {actor}.')
+                elif actor not in cases_l1.get(case['source_case_id'], {}).get('actor_refs', []):
+                    self.add('ACTOR_CASE_PERMISSION', path, case['id'], f'{actor} is not permitted by the declared source case.')
         for case in cases.values():
             domain = domains.get(case['domain_ref'])
             if domain and case['id'] not in domain['case_refs']:
@@ -499,6 +367,16 @@ class Inspection:
                     relative=candidate.relative_to(self.root).as_posix()
                     if candidate.is_file() and not any(fnmatch.fnmatch(relative,x['pattern']) for x in data['mirror']['exclusions']): actual.add(relative)
             if actual-expected: self.add('MIRROR_COVERAGE',path,'mirror', 'Missing source records: '+', '.join(sorted(actual-expected)))
+        for link in data['traceability']:
+            self.source_target(link['source_ref'], path, 'traceability')
+            for target in link['target_refs']:
+                self.target(target, path, 'traceability')
+        mapped = {link['source_ref'] for link in data['traceability']}
+        required_sources = {ref for ref, item in self.source_elements.items()
+                            if item['kind'] in {'requirement', 'criterion'}
+                            and set(item.get('case_refs', [])) & set(cases_l1)}
+        for missing in sorted(required_sources - mapped):
+            self.add('SOURCE_OBLIGATION_UNMAPPED', path, missing, 'An in-scope declared obligation needs an explicit L2 mapping.')
         self.report['layer_coverage']='declared_adpm_and_advs'
 
     def finish(self):

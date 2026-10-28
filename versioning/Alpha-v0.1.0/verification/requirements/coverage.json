@@ -1,1110 +1,593 @@
 {
-  "format": "olympus-requirement-coverage/1",
-  "project": "Minerva Blueprints",
+  "format": "minerva-requirement-coverage/1",
+  "catalog_revision": "0.2",
   "edition": "Alpha-v0.1.0",
-  "catalog_revision": "0.1",
-  "status": "delivery_mapping_for_review",
-  "assessment_author": "AI-assisted technical preparation and review",
+  "path_base": "edition_directory",
   "owner_approval": "not_asserted",
-  "path_base": "repository_root",
-  "counts": {
-    "catalog": 80,
-    "primary_model": 30,
-    "shared_delivery": 20,
-    "companion_model": 30
-  },
-  "meaning": "This is an artifact and assessment-scope mapping, not a blanket pass/fail verdict on all requirements. Tests establish only their recorded observations. Original proposal statuses remain in the source catalog.",
+  "meaning": "Artifact availability and review scope, not universal pass/fail certification.",
   "requirements": [
     {
       "id": "MIN-001",
-      "title": "Cobertura integrada de modelagem e verificação",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "ADPM e ADVS integram o blueprint; o validador distingue escopo completo, incompleto e leitura apenas estrutural.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-002",
-      "title": "Modelo semântico independente da representação",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "representation"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md",
-        "versioning/Alpha-v0.1.0/references/OAL-ALIGNMENT.md",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/schemas/minerva.schema.json"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py"
       ],
-      "scope_and_limits_pt_br": "O manual define conceitos e relações; o perfil YAML e o schema são uma representação selecionada, não a identidade do modelo.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-003",
-      "title": "Identidade e versões do blueprint",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Identidade, revisão, modelo, perfil, edição OAL e fonte L1 fixada são distintos e verificados dentro do perfil suportado.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-004",
-      "title": "Elementos lógicos independentes dos arquivos",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml",
-        "versioning/Alpha-v0.1.0/examples/planned/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml"
       ],
-      "scope_and_limits_pt_br": "IDs lógicos independem do caminho; uma ficha pode conter múltiplas unidades e vínculos de fontes planejadas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-005",
-      "title": "Contrato e comportamento de cada caso de programa",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/task-board.atlas.json",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Os três casos mantêm IDs L1, entradas, colaboradores, decisões, efeitos e falhas. Equivalência de comportamento requer a revisão indicada no contrato.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-006",
-      "title": "Entradas e saídas semanticamente tipadas",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/schemas/minerva.schema.json"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Tipos operacionais e coleções são declarados; contexto é dado explícito e colaboradores técnicos ficam separados. Referências de tipos são verificadas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-007",
-      "title": "Propriedade das regras das entidades",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Regras possuem responsáveis; entidades não dependem de casos ou ferramentas. A ferramenta diagnostica relações declaradas, sem provar pureza arbitrária de código.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-008",
-      "title": "Contratos de ferramentas sem abstração de linguagem obrigatória",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Contrato da capacidade de persistência inclui resultados, garantias e falhas; a realização companheira usa ferramenta concreta sem classe abstrata.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-009",
-      "title": "Validação canônica e condições contextuais",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Hidratação usa construção canônica. A referência explícita a revalidação redundante de regra é diagnosticada; redundância escondida em prosa requer revisão.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-010",
-      "title": "Garantias observáveis da persistência",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Resultados de escrita desconhecidos são representáveis; o exemplo não transforma falha em prova de ausência de efeito. Não há teste de falha distribuída.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-011",
-      "title": "Dependências e composição explícitas",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Colaboradores, composição, domínio e dependências são explícitos. Seleção concreta e vida dos recursos são realizados e documentados no Vulcan.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-012",
-      "title": "Contexto de ator e autorização por caso",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Contexto confiável, recusa por padrão e variantes ausente/não resolvido/desconhecido/insuficiente são modelados. Confiança efetiva requer avaliação da realização.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-013",
-      "title": "Composição entre casos com preservação do contrato",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "illustration"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md",
-        "versioning/Alpha-v0.1.0/references/REVIEW-EXAMPLES.md"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/composition/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "O recorte de composição documenta propagação do contexto e autorização de cada caso. Os três casos TaskBoard não compõem outros casos em execução.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-014",
-      "title": "Descrição semântica recuperável do comportamento",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Contratos e passos textuais têm grafos complementares. Imagens não substituem a descrição do comportamento.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-015",
-      "title": "Grafos com semântica e identidade",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Grafos estruturados têm nós, arestas, proprietário e tipo; a origem L1 é preservada quando referenciada.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-016",
-      "title": "Decisões acrescentadas e pendências explícitas",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/examples/counterexamples/expected-results.json"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/revisions/README.md"
       ],
-      "scope_and_limits_pt_br": "Natureza do documento, decisões e observações são distinguidas. Divergência não modifica automaticamente o contrato projetado.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-017",
-      "title": "Identidade dos testes comportamentais",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Há uma identidade lógica de teste comportamental por caso; duplicidade ou ausência direta é diagnosticada. Múltiplos cenários não criam casos artificiais.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-018",
-      "title": "Contrato completo dos cenários de verificação",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Cenários identificam preparação, ação, configuração, limite observado, resultado e efeitos esperados; omissões estruturais são recusadas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-019",
-      "title": "Cobertura rastreável dos critérios de aceite",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "consistency",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Critérios Atlas são ligados aos cenários. Lacunas e referências inválidas são diagnosticadas; suficiência dos cenários continua sujeita a revisão.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-020",
-      "title": "Verificação de autorização e ausência de efeitos proibidos",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Cenários de recusa observam efeitos protegidos e chamadas a colaboradores. A execução correspondente é evidência da realização Vulcan.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-021",
-      "title": "Alternativas e falhas pertinentes ao contrato",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Alternativas e falhas têm cenários/apoios e riscos não verificados explícitos. Automação não infere todas as falhas possíveis de um sistema real.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-022",
-      "title": "Distinção entre plano realização e execução da verificação",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/verification/RELEASE.md"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Plano, referência de implementação e observação de execução têm registros distintos. Presença de teste não é registrada como execução.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-023",
-      "title": "Verificação de obrigações de interação referenciadas",
-      "priority": "P0",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/Shared/interaction.md"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "Obrigações de canal têm origem identificada como L4 e referências de verificação. Não se introduz um caso de domínio por rota ou comando.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-024",
-      "title": "Perfil YAML e espelho documental em L2",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/implementations/yaml/README.md",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/schemas/minerva.schema.json",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml"
       ],
-      "scope_and_limits_pt_br": "Espelho L2 preserva pasta e extensão, descreve unidades e membros, semântica, entradas/saídas e dependências. Seu escopo e exclusões são declarados.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-025",
-      "title": "Raiz do blueprint referências e empacotamento",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "representation",
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/planned/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml"
       ],
-      "scope_and_limits_pt_br": "Raiz declarada e caminhos portáveis resolvem referências. Fonte planejada pode faltar; conferência de código ausente é inconclusiva, não aprovada.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-026",
-      "title": "Leitura YAML previsível",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "implementation",
-        "negative-tests"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "minerva_blueprints/loading.py"
       ],
-      "scope_and_limits_pt_br": "Leitura segura e previsível recusa chaves duplicadas, aliases/tags e tipos incompatíveis. Texto de comando nunca é executado pelo validador.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-027",
-      "title": "Validação estrutural e de consistência",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "implementation",
-        "negative-tests"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py"
       ],
-      "scope_and_limits_pt_br": "Validação estrutural e consistência têm diagnósticos separados de correção comportamental. Testes cobrem IDs, referências, casos, critérios e símbolos qualificados.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-028",
-      "title": "Validação dos grafos suportados",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "implementation",
-        "negative-tests"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py"
       ],
-      "scope_and_limits_pt_br": "Grafos recusam nós/arestas inválidos e permitem ciclos compatíveis com sua semântica. Isso não prova terminação de algoritmo arbitrário.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-029",
-      "title": "Diagnósticos utilizáveis em revisão e automação",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "implementation",
-        "negative-tests"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/minerva_blueprints/__main__.py",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py"
       ],
-      "scope_and_limits_pt_br": "CLI produz texto ou JSON, localiza documento/elemento e diferencia inválido, incompatível, erro operacional e incompleto.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "MIN-030",
-      "title": "Exemplos válidos e contraexemplos do modelo",
-      "priority": "P1",
-      "scope": "primary_model",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "examples",
-        "negative-tests"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/run_examples.py",
-        "versioning/Alpha-v0.1.0/examples/counterexamples/expected-results.json",
-        "versioning/Alpha-v0.1.0/tests/test_validation.py"
+        "specification/model.md",
+        "minerva_blueprints/schemas/minerva.schema.json",
+        "minerva_blueprints/validation.py",
+        "tests/test_validation.py",
+        "examples/README.md",
+        "tests/fixtures/counterexamples/expected-results.json"
       ],
-      "scope_and_limits_pt_br": "Exemplos completo, mínimo, planejado, legado, starter e contraexemplos têm finalidades e resultados esperados explícitos.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
-    },
-    {
-      "id": "VUL-001",
-      "title": "Identidade e escopo do modelo L3",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-002",
-      "title": "Organização da raiz e aplicativos",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-003",
-      "title": "Inventário e conformidade por aplicativo",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-004",
-      "title": "Participação fiel de aplicativos legados",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-005",
-      "title": "Áreas do perfil Vulcan Architecture",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-006",
-      "title": "Domínios dos casos de uso",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-007",
-      "title": "Uma estrutura principal por arquivo",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-008",
-      "title": "Convenções de nomes",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-009",
-      "title": "Adaptações de linguagem declaradas",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-010",
-      "title": "Value objects encapsulados",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-011",
-      "title": "Entidades e validade canônica",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-012",
-      "title": "Ferramentas concretas e garantias",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-013",
-      "title": "Núcleo invocável por caso",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-014",
-      "title": "Dados operacionais e injeção separados",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-015",
-      "title": "Autorização antes de efeitos",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-016",
-      "title": "Composição explícita e biblioteca opcional",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-017",
-      "title": "Dependências e chamadas entre componentes",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-018",
-      "title": "Resultados falhas e efeitos",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-019",
-      "title": "Vida útil e liberação de recursos",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-020",
-      "title": "Separação das interfaces de interação",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-021",
-      "title": "Comunicação por contratos públicos",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-022",
-      "title": "Inicialização completa e seletiva",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-023",
-      "title": "Contrato de execução por modo",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-024",
-      "title": "Política de dependências de inicialização",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-025",
-      "title": "Prontidão e recursos pertencentes à execução",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-026",
-      "title": "Integração dos testes derivados da ADVS",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-027",
-      "title": "Evidência observada e limites de verificação",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-028",
-      "title": "Versões das fontes e impacto de mudanças",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-029",
-      "title": "Documentação da organização e realização em L3",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
-    },
-    {
-      "id": "VUL-030",
-      "title": "Avaliação estrutural com escopo explícito",
-      "scope": "companion_model",
-      "delivery": "outside_primary_model_scope",
-      "companion_distribution": "OlympusProject_VulcanEcosystem_Alpha-v0.1.0.zip",
-      "note": "Requisito próprio do modelo companheiro. Sua presença no catálogo não cria obrigação arquitetural adicional neste modelo."
+      "assessment": "model_and_declared_consistency; source semantics reviewed separately",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-001",
-      "title": "Fixar versões e escopo da integração",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/source-baselines.json",
-        "versioning/Alpha-v0.1.0/verification/contract-review.json"
+        "verification/source-baselines.json",
+        "integrations/atlas/compatibility.json"
       ],
-      "scope_and_limits_pt_br": "Versões e escopo são fixados. O validador recusa perfis não suportados e verifica pins L1 no perfil selecionado.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-002",
-      "title": "Preservar identidades dos casos entre camadas",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "consistency",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/task-board.atlas.json",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "integrations/atlas/mapping.md",
+        "examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml"
       ],
-      "scope_and_limits_pt_br": "IDs dos três casos são preservados; mapeamento direto duplicado, extra ou ausente é diagnosticado.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-003",
-      "title": "Verificar preservação dos contratos",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "review"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/contract-review.json"
+        "verification/reviews/contract-review.md",
+        "integrations/atlas/mapping.md"
       ],
-      "scope_and_limits_pt_br": "Matriz por obrigação identifica contrato, realização, teste e limite. A instância Atlas própria não é confundida com o TaskBoard publicado no Atlas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-004",
-      "title": "Registrar proveniência e responsabilidade da derivação",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "provenance"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/task-board.atlas.json",
-        "versioning/Alpha-v0.1.0/verification/contract-review.json"
+        "integrations/atlas/mapping.md",
+        "examples/minimal/provenance.json"
       ],
-      "scope_and_limits_pt_br": "Derivação e revisão são assistidas por IA; aprovação do responsável do projeto está pendente. Não se alega transformação automática determinística.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-005",
-      "title": "Definir vínculo independente da disposição física",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "example",
-        "consistency"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "tests/fixtures/planned/README.md"
       ],
-      "scope_and_limits_pt_br": "Espelho L2 liga arquivo e unidades sem prender identidade ao caminho; legado mantém múltiplas estruturas e escopo próprio.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-006",
-      "title": "Separar decisões projetadas de observações do código",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "review"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-        "versioning/Alpha-v0.1.0/verification/contract-review.json"
+        "specification/model.md",
+        "specification/conformance.md"
       ],
-      "scope_and_limits_pt_br": "Contrato projetado, reconstrução e observação são distinguidos. Shared é apoio transversal e hashes não equivalem a aprovação semântica.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-007",
-      "title": "Manter análise de impacto entre modelos",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "illustration"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/MIGRATION.md",
-        "versioning/Alpha-v0.1.0/references/REVIEW-EXAMPLES.md"
+        "examples/task-board/revisions/README.md"
       ],
-      "scope_and_limits_pt_br": "Análise de impacto liga fontes, blueprint, realização e verificações; material pendente não é promovido a conforme por herança.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-008",
-      "title": "Identificar a responsabilidade dos contratos de interação",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "example"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/Shared/interaction.md",
-        "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml"
+        "specification/model.md",
+        "integrations/atlas/mapping.md"
       ],
-      "scope_and_limits_pt_br": "Mapeamentos de HTTP/CLI são identificados L4 e ligados a casos, resultados e verificações.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-009",
-      "title": "Permitir adoção independente mediante perfil explícito",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md"
+        "specification/model.md",
+        "implementations/yaml/README.md"
       ],
-      "scope_and_limits_pt_br": "Adoção independente e perfis explícitos preservam liberdade de linguagem/arquitetura e não impõem biblioteca ou repositório separado por camada do produto.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-010",
-      "title": "Entregar demonstração integrada com escopo verificado",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "review",
-        "evidence"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/contract-review.json",
-        "versioning/Alpha-v0.1.0/verification/RELEASE.md"
+        "examples/README.md",
+        "verification/reviews/contract-review.md"
       ],
-      "scope_and_limits_pt_br": "Exemplo fixa instâncias L1/L2/L3. Verificação estrutural, revisão semântica e execução observada são relatadas separadamente.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-011",
-      "title": "Migrar a proposta anterior com correspondência explícita",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "migration"
-      ],
-      "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/MIGRATION.md",
-        "versioning/Alpha-v0.1.0/verification/requirements/migration.json"
-      ],
-      "scope_and_limits_pt_br": "As 40 regras anteriores e famílias de artefatos têm destino explícito; a migração classifica conteúdo por responsabilidade.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "status": "not_applicable",
+      "artifacts": [],
+      "assessment": "withdrawn",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "INT-012",
-      "title": "Delimitar conformidade por app e por perfil",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "model",
-        "review"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/contract-review.json"
+        "specification/conformance.md",
+        "verification/VALIDATION.md"
       ],
-      "scope_and_limits_pt_br": "TaskBoard e legado têm escopos distintos. Participação no ecossistema não implica adesão à Vulcan Architecture.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-001",
-      "title": "Publicar identidades e escopos dos dois projetos",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "editorial"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md"
+        "README.md"
       ],
-      "scope_and_limits_pt_br": "Nome, Olympus, OAL e objeto normativo são explícitos. Edição, representação e ferramenta mantêm identidades próprias.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-002",
-      "title": "Manter documentação bilíngue e por edição",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "editorial"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md",
-        "versioning/Alpha-v0.1.0/README.pt-br.md",
-        "README.md",
-        "README.pt-br.md"
+        "specification/model.md",
+        "specification/model.pt-br.md"
       ],
-      "scope_and_limits_pt_br": "Manual normativo EN e tradução PT preservam IDs; apresentação ilustrada fica na raiz e manual de edição é textual.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-003",
-      "title": "Distribuir edições autossuficientes",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "isolation",
-        "evidence"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/run_examples.py",
-        "versioning/Alpha-v0.1.0/requirements.txt",
-        "versioning/Alpha-v0.1.0/verification/RELEASE.md"
+        "pyproject.toml",
+        "run_examples.py",
+        "requirements.txt"
       ],
-      "scope_and_limits_pt_br": "Edição contém recursos locais; cópia isolada é verificada. Dependências externas são declaradas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-004",
-      "title": "Manter imagens verificáveis e fontes editáveis",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "artwork"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md",
-        "assets/README.md",
-        "assets/asset-metadata.json"
+        "../../assets/asset-metadata.json"
       ],
-      "scope_and_limits_pt_br": "Headers e diagramas bilíngues têm fontes SVG, instruções, origem e integridade dos ícones; imagens não são fonte exclusiva de regras.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-005",
-      "title": "Organizar entradas para adoção e revisão",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "examples"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/README.md",
-        "versioning/Alpha-v0.1.0/run_examples.py"
+        "README.md",
+        "examples/README.md",
+        "tests/fixtures/counterexamples/README.md"
       ],
-      "scope_and_limits_pt_br": "Exemplos, entradas iniciais, recortes e contraexemplos têm objetivos e comandos distintos.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-006",
-      "title": "Publicar verificações e evidências com limites",
-      "priority": "P0",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "evidence"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/RELEASE.md"
+        "verification/VALIDATION.md",
+        "verification/evidence/checks.json"
       ],
-      "scope_and_limits_pt_br": "Registros distinguem estrutura, consistência, revisão e execução; limites e itens não executados permanecem visíveis.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-007",
-      "title": "Preservar autoria licença e integridade da distribuição",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "integrity"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/LICENSE",
-        "versioning/Alpha-v0.1.0/verification/source-baselines.json",
-        "ACKNOWLEDGEMENTS.md",
-        "CITATION.cff",
-        "scripts/content_inventory.py",
-        "scripts/check_archive.py"
+        "../../scripts/content_inventory.py",
+        "../../docs/releasing.md"
       ],
-      "scope_and_limits_pt_br": "Licenças e créditos são preservados; inventário único na raiz cobre arquivos finais, e digest do ZIP fica no recibo externo.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     },
     {
       "id": "REP-008",
-      "title": "Registrar evolução e preservar edições históricas",
-      "priority": "P1",
-      "scope": "shared_delivery",
-      "delivery": "provided_for_alpha_review",
-      "assessment_facets": [
-        "migration"
-      ],
+      "status": "provided_for_technical_review",
       "artifacts": [
-        "versioning/Alpha-v0.1.0/verification/MIGRATION.md",
-        "versioning/Alpha-v0.1.0/verification/requirements/catalog.json"
+        "../../docs/releasing.md",
+        "verification/RELEASE.md"
       ],
-      "scope_and_limits_pt_br": "Histórico da proposta anterior, mudanças e compatibilidade são preservados sem reescrever as evidências antigas.",
-      "acceptance_verdict": "not_independent_certification; see linked execution records and stated review scope"
+      "assessment": "documentation_and_scoped_evidence",
+      "limitation": "No application-domain execution or owner acceptance is asserted."
     }
   ]
 }

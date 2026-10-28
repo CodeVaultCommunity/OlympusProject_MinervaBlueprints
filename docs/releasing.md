@@ -23,10 +23,9 @@ From `versioning/Alpha-v0.1.0/`, install `requirements.txt` and execute the edit
 ```bash
 python -m pip install -r requirements.txt
 python run_examples.py --all
+python tests/fixtures/counterexamples/check.py
 python run_examples.py --test
 ```
-
-`run_examples.py verify` in Vulcan includes its tests; a second `test` execution is useful only when independently assessing that command. The Minerva commands validate examples and run its validator suite separately. Follow the edition manual for alternative entrypoints and declared limitations.
 
 After artwork changes, follow `assets/README.md`, regenerate the derived files and inspect them. Runtime commands do not depend on the root artwork. Record only checks actually executed, including commands, environments, counts and limits. A configured workflow is not evidence that hosted CI ran.
 
@@ -70,4 +69,4 @@ Verify the extracted edition using an environment outside its directory. For edi
 
 Record the local commit ID, final ZIP filename, byte size, SHA-256, inventory/file counts, audit results and relevant limits in an external receipt. The receipt must stay outside the commit and ZIP it identifies. The inventory protects distributed file bytes; the external ZIP digest protects the package including the inventory.
 
-The initial Alpha delivery is local and reviewable. It does not imply a GitHub repository, pushed branch, tag, release, hosted CI result or independent approval. A later authorized publication should use the same checked commit and archive and verify its hosted checks before announcing a remote release.
+This unpublished Alpha revision is local and reviewable. It does not imply a GitHub repository, pushed branch, tag, release, hosted CI result or independent approval. A later authorized publication should use the same checked commit and archive and verify its hosted checks before announcing a remote release.

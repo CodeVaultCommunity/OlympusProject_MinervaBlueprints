@@ -8,9 +8,10 @@ import sys
 EDITION=Path(__file__).resolve().parent
 EXAMPLES={
  'minimal':('examples/minimal','docs/L2_MinervaBlueprints/blueprint.yaml'),
- 'task-board-ecosystem':('examples/task-board-ecosystem','docs/L2_MinervaBlueprints/blueprint.yaml'),
- 'planned':('examples/planned','docs/L2_MinervaBlueprints/blueprint.yaml'),
- 'legacy':('examples/legacy','docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml'),
+ 'task-board':('examples/task-board','docs/L2_MinervaBlueprints/blueprint.yaml'),
+ 'composition':('examples/composition','docs/L2_MinervaBlueprints/blueprint.yaml'),
+ 'task-board-revision-2':('examples/task-board/revisions/revision-2','docs/L2_MinervaBlueprints/blueprint.yaml'),
+ 'task-board-revision-3':('examples/task-board/revisions/revision-3','docs/L2_MinervaBlueprints/blueprint.yaml'),
 }
 
 
@@ -25,7 +26,7 @@ def main():
  if args.list:
   print('\n'.join(EXAMPLES)); return 0
  if args.test:
-  return subprocess.call([sys.executable,'-m','unittest','discover','-s',str(EDITION/'tests'),'-p','test_*.py','-v'],cwd=EDITION)
+  return subprocess.call([sys.executable,'-B','-m','unittest','discover','-s',str(EDITION/'tests'),'-p','test_*.py','-v'],cwd=EDITION)
  if args.example is None and not args.all: parser.error('select an example, --all, --list or --test')
  from minerva_blueprints.validation import validate
  selected=list(EXAMPLES) if args.all else [args.example]

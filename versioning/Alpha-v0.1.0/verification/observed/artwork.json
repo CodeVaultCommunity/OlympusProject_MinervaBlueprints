@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "rendered_assets": 8,
-  "editable_svg_sources": 8,
-  "source_icon_integrity": "byte-for-byte against supplied originals",
-  "metadata_checks": [],
-  "visual_review": "All bilingual renders inspected by the artwork authoring agent; root also inspected both Portuguese headers and one technical diagram per project.",
-  "limits": "Text remains editable; fonts are not embedded. Install the listed fonts for matching layout. Rendering is reproducible from the retained inputs. Different font or Cairo versions can alter pixels."
-}

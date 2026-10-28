@@ -1414,8 +1414,7 @@
             "boundary",
             "composition",
             "test",
-            "support",
-            "legacy"
+            "support"
           ]
         },
         "model_refs": {
@@ -1698,6 +1697,12 @@
                   "type": "null"
                 }
               ]
+            },
+            "catalog": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/source_element"
+              }
             }
           },
           "required": [
@@ -1707,7 +1712,8 @@
             "document_id",
             "revision",
             "case_ids",
-            "sha256"
+            "sha256",
+            "catalog"
           ],
           "additionalProperties": false
         },
@@ -2033,6 +2039,12 @@
             "exclusions"
           ],
           "additionalProperties": false
+        },
+        "traceability": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trace_link"
+          }
         }
       },
       "required": [
@@ -2045,9 +2057,97 @@
         "source_l1",
         "adpm",
         "advs",
-        "mirror"
+        "mirror",
+        "traceability"
       ],
       "additionalProperties": false
+    },
+    "source_element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "kind",
+        "statement"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "case",
+            "actor",
+            "entity",
+            "field",
+            "validation",
+            "tool",
+            "operation",
+            "requirement",
+            "criterion",
+            "interaction",
+            "graph",
+            "outcome",
+            "source"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "case_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "actor_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "source_pointer": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "trace_link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "target_refs",
+        "relation",
+        "rationale"
+      ],
+      "properties": {
+        "source_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "target_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "relation": {
+          "enum": [
+            "preserves",
+            "refines",
+            "verifies"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     }
   }
 }

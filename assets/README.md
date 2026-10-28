@@ -46,4 +46,4 @@ Text remains editable. Fonts are not embedded and must be installed for matching
 
 ## Review
 
-Full PNG decoding, transparency, original-icon integrity and standalone SVGs are checked. Visual review covers every header and diagram in both languages, including text, connectors, clipping and readability. This review checks asset presentation; it does not certify conformity of any application.
+Full PNG decoding, transparency, original-icon integrity and standalone SVGs are checked. The current revision visually reviewed the two changed model diagrams in both languages, including text, connectors, clipping and readability. The other six renders retain their baseline bytes; the metadata records this scope. This review checks asset presentation; it does not certify conformity of any application.

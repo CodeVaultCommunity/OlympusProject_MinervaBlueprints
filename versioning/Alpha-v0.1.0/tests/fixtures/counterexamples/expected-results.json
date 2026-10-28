@@ -1,0 +1,126 @@
+{
+  "base_example": "minimal",
+  "cases": [
+    {
+      "name": "unknown-source-entity",
+      "patches": [
+        {
+          "path": "/adpm/entities/0/source_entity_id",
+          "value": "ENT-MISSING"
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "SOURCE_REF_UNRESOLVED"
+    },
+    {
+      "name": "unknown-rule-origin",
+      "patches": [
+        {
+          "path": "/adpm/rules/0/origin_refs",
+          "value": [
+            "VLD-MISSING"
+          ]
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "SOURCE_REF_UNRESOLVED"
+    },
+    {
+      "name": "wrong-source-kind",
+      "patches": [
+        {
+          "path": "/adpm/entities/0/source_entity_id",
+          "value": "ACT-REQUESTER"
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "SOURCE_REF_WRONG_TYPE"
+    },
+    {
+      "name": "missing-behavioral-test",
+      "patches": [
+        {
+          "path": "/advs/behavioral_tests",
+          "value": []
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "TEST_BIJECTION"
+    },
+    {
+      "name": "wrong-reference-kind",
+      "patches": [
+        {
+          "path": "/advs/behavioral_tests/0/case_ref",
+          "value": "ENT-REQUEST"
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "REF_WRONG_TYPE"
+    },
+    {
+      "name": "entity-revalidation",
+      "patches": [
+        {
+          "path": "/adpm/tools/0/operations/0/revalidates_rule_refs",
+          "value": [
+            "VLD-REQUEST-QUANTITY"
+          ]
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "ENTITY_REVALIDATION"
+    },
+    {
+      "name": "broken-graph",
+      "patches": [
+        {
+          "path": "/adpm/graphs/0/edges/0/to",
+          "value": "N-MISSING"
+        }
+      ],
+      "expected_exit_code": 1,
+      "expected_diagnostic": "GRAPH_EDGE"
+    },
+    {
+      "name": "unsupported-profile",
+      "patches": [
+        {
+          "path": "/profile_version",
+          "value": "2.0.0"
+        }
+      ],
+      "expected_exit_code": 2,
+      "expected_diagnostic": "PROFILE_UNSUPPORTED"
+    },
+    {
+      "name": "draft-is-inconclusive",
+      "patches": [
+        {
+          "path": "/document/status",
+          "value": "draft"
+        }
+      ],
+      "expected_exit_code": 4,
+      "expected_diagnostic": "DRAFT_INCOMPLETE"
+    },
+    {
+      "name": "duplicate-yaml-key",
+      "raw": "format: minerva-yaml\nformat: other\n",
+      "expected_exit_code": 1,
+      "expected_diagnostic": "YAML_INVALID"
+    },
+    {
+      "name": "unsafe-tag",
+      "raw": "value: !!python/object:builtins.object {}\n",
+      "expected_exit_code": 1,
+      "expected_diagnostic": "YAML_INVALID"
+    },
+    {
+      "name": "valid-model",
+      "patches": [],
+      "expected_exit_code": 0,
+      "expected_diagnostic": null
+    }
+  ]
+}

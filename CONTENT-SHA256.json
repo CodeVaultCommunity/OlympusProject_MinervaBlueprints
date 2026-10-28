@@ -13,8 +13,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "size_bytes": 828,
-      "sha256": "8234f38b43314cec217396045e19c4dfc0667e666baa0df2f8902dc5f7b6b549"
+      "size_bytes": 834,
+      "sha256": "f8d0c980b7df7b4cb251e1bf0a656dd9a71400472196708f3b8ffba3e91ebcf3"
     },
     {
       "path": ".gitignore",
@@ -23,18 +23,18 @@
     },
     {
       "path": "ACKNOWLEDGEMENTS.md",
-      "size_bytes": 1240,
-      "sha256": "02717fdc2ceb7dcf96c2f6ccb015a40a0a7c68467d94367b09b4df7381633794"
+      "size_bytes": 1449,
+      "sha256": "e23393420103f9b3c491547f5d524bee4f5e43aa6eb4aa101e7d83928a5b211f"
     },
     {
       "path": "AGENTS.md",
-      "size_bytes": 1963,
-      "sha256": "f6c6cee1623b22edca8cd0bf6f1a2017943a47fa2b0e917b294d14c5d3e219eb"
+      "size_bytes": 2244,
+      "sha256": "736bde5a2baae7cf349ae6def91a2702cf37e7f9badf821c9b4ee741062816b4"
     },
     {
       "path": "CHANGELOG.md",
-      "size_bytes": 612,
-      "sha256": "00aa411660b5f417f3a70ad031ba43c564d6f5bfb4e5e14d305e62d6eeef958d"
+      "size_bytes": 1015,
+      "sha256": "de7b6bfe6c25551fc11847691f6c05db760ea4afd0ee0643cadfbe1604cdcb7e"
     },
     {
       "path": "CITATION.cff",
@@ -43,18 +43,18 @@
     },
     {
       "path": "CLAUDE.md",
-      "size_bytes": 357,
-      "sha256": "78937b7c08f67923a387952a9c64b2157c3a4359f398f75415f52c49b4938f8a"
+      "size_bytes": 531,
+      "sha256": "c3f70103c6f3cee3efee82ac7988a401e721f80e47f47bcc99f0a44ae9a0dd38"
     },
     {
       "path": "CONTRIBUTING.md",
-      "size_bytes": 536,
-      "sha256": "241865230050523f0b1ebd494c4bd67a0dfacd9a69e9f0977bf57353838e8c8b"
+      "size_bytes": 973,
+      "sha256": "3dc6a862ff3c6f08416c4dd34e0720725354f2a5d06eae38a23656788a529271"
     },
     {
       "path": "CONTRIBUTING.pt-br.md",
-      "size_bytes": 465,
-      "sha256": "0b74a47b2166f0487ac96d40218e3c66c89a34dedf0f619be49bbd1c7e24dd5d"
+      "size_bytes": 1038,
+      "sha256": "92953c0343ce1d255c5c116822c3d1d7cffdeb1ff0e292daaa433fbd0699d731"
     },
     {
       "path": "LICENSE",
@@ -63,13 +63,13 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 7650,
-      "sha256": "61ea57ff5efe024a485e5cd78090759abf44a2628138c99b24212bc012735a14"
+      "size_bytes": 2755,
+      "sha256": "ce1088a23a817bfb5312e17a8ea5dda5cbfc14f8b0792d058c1e078bf50fde27"
     },
     {
       "path": "README.pt-br.md",
-      "size_bytes": 7988,
-      "sha256": "73ac8426337a69482ab8ca4ba33d4866a51103beab2afc635cbfb597b87132e8"
+      "size_bytes": 2986,
+      "sha256": "b3e3143e77c1a2a486c58bbae4854d5e3c2907892a568c1484e3a35d7498f725"
     },
     {
       "path": "VERSION",
@@ -78,18 +78,18 @@
     },
     {
       "path": "assets/README.md",
-      "size_bytes": 4575,
-      "sha256": "28ff45387946154c2c11919990158837e0b014078e4cec9795f5eabb63428aef"
+      "size_bytes": 4683,
+      "sha256": "04fa7ebee95fb7744729bf26d59abb3e6277cc20cf1421a787f7987e52b53f03"
     },
     {
       "path": "assets/README.pt-br.md",
-      "size_bytes": 4914,
-      "sha256": "4d59566f1e080e16c3df8ca45dee8c97db52132e575d6396dc27aeccf0f48b4c"
+      "size_bytes": 4996,
+      "sha256": "2097ac7b0752a00349ca677adfef7ca88ce31af993c50247c760a6a9804c20e8"
     },
     {
       "path": "assets/asset-metadata.json",
-      "size_bytes": 10437,
-      "sha256": "ab0c3bbe4a9e594ac39628f6b87742536a7debd9c62ce15e028e66e5d532f800"
+      "size_bytes": 10211,
+      "sha256": "243f41a17842096733bea716e817649d73c9d9f88416c54f96478a9cf3afe95f"
     },
     {
       "path": "assets/minerva-banner-en.png",
@@ -108,13 +108,13 @@
     },
     {
       "path": "assets/minerva-model-en.png",
-      "size_bytes": 148579,
-      "sha256": "8729ff096ed2926e392af01d4cabaabf2032369ab9790ae97097f7dc7ee97e85"
+      "size_bytes": 162495,
+      "sha256": "7b7ec0c48a854ec11134406f96f84c036108311baadb73e773b887971429f812"
     },
     {
       "path": "assets/minerva-model-pt-br.png",
-      "size_bytes": 149182,
-      "sha256": "e7e06010352c3d2eda7365533da116e20efba501e2693940a265abd7b8743019"
+      "size_bytes": 170689,
+      "sha256": "98cf974e29d5f4217eac9d363f16ffae36b8ac1a5cefc3d1377b6a5579862e27"
     },
     {
       "path": "assets/minerva-oal-position-en.png",
@@ -173,13 +173,13 @@
     },
     {
       "path": "assets/sources/minerva-model-en.svg",
-      "size_bytes": 6758,
-      "sha256": "a9bf367cd00874f91a0749f139a717b8269a02fc8c4f143ec6babee8dd4443c0"
+      "size_bytes": 6776,
+      "sha256": "50a5730d5ee11f431e0a12ca45a4b7fc4185d70b30622292976f2ab27a7312e6"
     },
     {
       "path": "assets/sources/minerva-model-pt-br.svg",
-      "size_bytes": 6812,
-      "sha256": "5e92c8dad1697e9ce91c47770747c46070595dbf402ae9d98af78bda85e8385d"
+      "size_bytes": 6817,
+      "sha256": "9ad9d16a2323eb97fc087c043650fd55412e58087b8797c053d9a649eb2e5500"
     },
     {
       "path": "assets/sources/minerva-oal-position-en.svg",
@@ -208,13 +208,23 @@
     },
     {
       "path": "assets/sources/render_images.py",
-      "size_bytes": 24875,
-      "sha256": "a6a8e2583c3a0bef96c1872dc1dffc7bd9b56629ebd3b25cd636b3fb875880b7"
+      "size_bytes": 24898,
+      "sha256": "205f39024e70e030a7207b5ab3c2526faa615a269482c9702d866873de51e644"
+    },
+    {
+      "path": "docs/getting-started.md",
+      "size_bytes": 2241,
+      "sha256": "40009373082c4372ab97a278980e2fe8719a2b63da57714359fa96a52455aaea"
+    },
+    {
+      "path": "docs/getting-started.pt-br.md",
+      "size_bytes": 2343,
+      "sha256": "35c6cc6bd0c1afb792a4d1ea108d98dfa1906cfa4ba010b4cdd33693a14db9c4"
     },
     {
       "path": "docs/releasing.md",
-      "size_bytes": 5248,
-      "sha256": "151809495f8c158a8304c5c59f4e4c19c057b955c21d6bb391c3e8a16dff7242"
+      "size_bytes": 5001,
+      "sha256": "977004d17bd0f61992309eb12333a80395a705f3145c6c30cc1a2d702e483149"
     },
     {
       "path": "docs/releasing.pt-br.md",
@@ -263,308 +273,283 @@
     },
     {
       "path": "versioning/Alpha-v0.1.0/README.md",
-      "size_bytes": 25344,
-      "sha256": "d4966139b93a522c6722afb9d8aa80b84186384eb0849caa7d306568f5932184"
+      "size_bytes": 2817,
+      "sha256": "0704a479738be82b58f295506e983e8e6782287349e5be482b0f799e42ee7aab"
     },
     {
       "path": "versioning/Alpha-v0.1.0/README.pt-br.md",
-      "size_bytes": 26751,
-      "sha256": "994291b32c3f5beb34d45bfa7ae6bab8c202c118b922a59e594031cfd68b0eb3"
+      "size_bytes": 3034,
+      "sha256": "e95c343505347342af57ab369bc6d034cb7eb7cd21e1fabad066622a1502189d"
     },
     {
       "path": "versioning/Alpha-v0.1.0/examples/README.md",
-      "size_bytes": 1737,
-      "sha256": "b303e5b6207130180e1cf88230053f87fe160e1d16e4f237ea3ee6d674d6da76"
+      "size_bytes": 769,
+      "sha256": "8dd19beec8d52d4bd04fb34139780b424842e74a4d50ca0c4214caee72a1821e"
     },
     {
       "path": "versioning/Alpha-v0.1.0/examples/README.pt-br.md",
-      "size_bytes": 1779,
-      "sha256": "c13471b8058295ff04a72de57655b919c1f6e2cba2dfdabc654ae6e3fcfcf43a"
+      "size_bytes": 808,
+      "sha256": "c11eeda371eb065735eeb225b7538efe9571680f26564f0ff6823c8017d9ca29"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/README.md",
-      "size_bytes": 2203,
-      "sha256": "a6d77ffb7e79702e8ee83169fc640de24f83a2f49254ce3313950e34a5f9d6de"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/README.md",
+      "size_bytes": 1108,
+      "sha256": "b4887b72b62dbec47683d770005f790dcbf88af576f016c9eabd0cf48068ddff"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/README.pt-br.md",
-      "size_bytes": 2238,
-      "sha256": "f83fc9a1bbd3283ec340fc81b287e7e127ac7726e423d3393fd55ce1ca419fb8"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/README.pt-br.md",
+      "size_bytes": 1170,
+      "sha256": "4de36b2db0df5b54eb0740e9d79a798f60acfe1bec9939c09a6c1728371998c5"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/apps/Drift/Example.py",
-      "size_bytes": 30,
-      "sha256": "e3ea91908ec6e2f8bab7ea7270c8a6ea6fa2bb3ae04d0a32c602b53a02deeacd"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/docs/L1_AtlasSpecifications/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/broken-graph.yaml",
-      "size_bytes": 24030,
-      "sha256": "091ba417bfbee1df6ccd41754f6842072053b127cf97816b20876b3311b57f15"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 114924,
+      "sha256": "63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/check.py",
-      "size_bytes": 1612,
-      "sha256": "1d3254270fb4179863d2100c797b51e958529bc3448acd9d8c7a5573d2fa0b9f"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/docs/L2_MinervaBlueprints/blueprint.yaml",
+      "size_bytes": 108191,
+      "sha256": "89f0703fc85e995c1a4c4ce65a90351861f590dca56c2d359d117a668ccc94d5"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/docs/L1_AtlasSpecifications/task-board.atlas.json",
-      "size_bytes": 72965,
-      "sha256": "e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/provenance.json",
+      "size_bytes": 790,
+      "sha256": "62f7f082228ed582c39909c916b244eeb9fa7e81adaa9740525f22b9995ab31b"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/draft-is-inconclusive.yaml",
-      "size_bytes": 24036,
-      "sha256": "f654d3753866359b73782e02986e206d95dc184ba51156fca2b39e3cec4c097c"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/traceability.md",
+      "size_bytes": 4316,
+      "sha256": "4e0e2eaa5c97537cd8472276302d51820fad9ed1bba58dacac5f8d1ff361462a"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/duplicate-behavioral-test.yaml",
-      "size_bytes": 29383,
-      "sha256": "4a0072fa1b71d7cfefbdaf822fea38e98cf7c26c0f71ed913eb241a0527bcfa3"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/duplicate-id.yaml",
-      "size_bytes": 25162,
-      "sha256": "6612bb2c1a2e77cd822903aa61e7739d0093f5d217b4cafa80a4e9e528068478"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/duplicate-yaml-key.yaml",
-      "size_bytes": 24162,
-      "sha256": "ccca05deb7459912715957fd1ce4eb4e9080cbe20ebdc09061b0679865ac15ac"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/entity-revalidation.yaml",
-      "size_bytes": 24060,
-      "sha256": "78568c0a9a2c464ca83c39c0d17ae9fb5af69ecd6ba5105a7f1c71c71554d853"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/expected-results.json",
-      "size_bytes": 3826,
-      "sha256": "6b2748fb35b46362e817f9261e0c872f0bb030b4c1708ef5d3efb9cd7854c7d0"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/legitimate-cycle.yaml",
-      "size_bytes": 24048,
-      "sha256": "6e7bf9e7b5607084ce13ba25e4d5724a47dfe158ec8aa71f61a22bd98987595c"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/missing-behavioral-test.yaml",
-      "size_bytes": 18704,
-      "sha256": "d28127f1f1edd5b50e6f4434684b6169f8bcc1c84ad5cc660382906b259f5102"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/observed-drift.yaml",
-      "size_bytes": 1453,
-      "sha256": "7a8c47a17e856220a8d972a05dfcae35d6f690f983a57acbe42e358d39a65141"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/uncovered-criterion.yaml",
-      "size_bytes": 24016,
-      "sha256": "a616dfbbf43a8472c8cff53b8e8cdb69d6e1c0b56d602a6394411401d8f458bd"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/unsafe-tag.yaml",
-      "size_bytes": 56,
-      "sha256": "604634d4a90009165d6b5ce70880095a55522bcbbd91c01b3d7054cd59dc9e6b"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/unsupported-profile.yaml",
-      "size_bytes": 24039,
-      "sha256": "c839ee3f69d3edc358782afda41729badd9f859a4d5113a88b233ee7887efba0"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/counterexamples/wrong-reference-kind.yaml",
-      "size_bytes": 24006,
-      "sha256": "647cf9cc7f58935f7bc16ec6831686b9d706be3c8e2e69e2e2593574dd941967"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/legacy/README.md",
-      "size_bytes": 1308,
-      "sha256": "750ac62297875877b6a918ed77477b0f4ef1fa2990d3883898db225a91da5f2f"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/legacy/README.pt-br.md",
-      "size_bytes": 1242,
-      "sha256": "bc43e57d439f0cf0c1a694a309e0589a9a9d81fe8e7b3148b0c04951500293bd"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/examples/legacy/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml",
-      "size_bytes": 13411,
-      "sha256": "0405aa12a0a43e7d14dadc2da91d3bb5fbcc31f5ab0633fe53c25b65f41870d4"
+      "path": "versioning/Alpha-v0.1.0/examples/composition/traceability.pt-br.md",
+      "size_bytes": 4377,
+      "sha256": "8e3a46333b9b59c11fd37aef5189d6016fe5805353db4da79159b8333e97005c"
     },
     {
       "path": "versioning/Alpha-v0.1.0/examples/minimal/README.md",
-      "size_bytes": 1423,
-      "sha256": "24cd887d9849e33ca3ec9769e0380d23ccd7eda722e1d687cb3bdc40ca712c50"
+      "size_bytes": 1004,
+      "sha256": "afa184b3a968e9135778bb7531e9dd3f004a8fc6fe9743470783e2a430d6234f"
     },
     {
       "path": "versioning/Alpha-v0.1.0/examples/minimal/README.pt-br.md",
-      "size_bytes": 1385,
-      "sha256": "cf9aaeca77c56ac1c2bc7611a08f6372bf2b1129189c0be930b5ead1d383786e"
+      "size_bytes": 1076,
+      "sha256": "f144e89964f4ad096084fad96004c5ec1035241e6e50e8ede981bdd5953fdca1"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/task-board.atlas.json",
-      "size_bytes": 72965,
-      "sha256": "e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886"
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/assets/request-flow.png",
+      "size_bytes": 73547,
+      "sha256": "53545111afdda2bcf5b113667ef14dc2233ca3f7e5e730749d3f50473ed81f8b"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/assets/request-flow.svg",
+      "size_bytes": 10124,
+      "sha256": "71f3a97b667a88041cc5812da8c8e7e1ddaced2f9c835e56c2c7d6d1b4252206"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/assets/request-form.png",
+      "size_bytes": 22242,
+      "sha256": "5dd57bf8bccc9bcd9b68e1be1ea50163777caf93d83f6fbfec1a099eb1d84347"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/assets/request-form.svg",
+      "size_bytes": 1663,
+      "sha256": "f5a97fb7cb43af9681b2083fe1deebe38bb3eda24adb947c3314317fc8a24de9"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 59472,
+      "sha256": "731ef7e7f9e0dcda1b9dea1cae45a51a43bd16083948dae121d18fdd77bc746e"
     },
     {
       "path": "versioning/Alpha-v0.1.0/examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml",
-      "size_bytes": 26537,
-      "sha256": "68c1c897ef0e9e12902e42c501d6039230897e52daae309d821d8c181552f1bb"
+      "size_bytes": 48101,
+      "sha256": "4d17ef6a82b0761836828e0d92f0428910090de46be6101ad0dec971071bc3f4"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/planned/README.md",
-      "size_bytes": 1085,
-      "sha256": "33c94876e6ff451507b43b90941e6efff9f4f5af8da983c98e46b348f92c4cf9"
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/provenance.json",
+      "size_bytes": 731,
+      "sha256": "b594bf6c61bbc93aa05364752db0eec11107998fc82f1a54f9f230ede2fe9bd5"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/planned/README.pt-br.md",
-      "size_bytes": 1051,
-      "sha256": "ae43047c0e2500d9f008581b0f6d69d0e701cc2bb7222c933c063ac1ceaebdae"
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/traceability.md",
+      "size_bytes": 1868,
+      "sha256": "6d3410d8be989a6e904b26e09be61b3808df5bd90823c436f0cffbccb7e03ed3"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/planned/docs/L1_AtlasSpecifications/task-board.atlas.json",
-      "size_bytes": 72965,
-      "sha256": "e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886"
+      "path": "versioning/Alpha-v0.1.0/examples/minimal/traceability.pt-br.md",
+      "size_bytes": 1929,
+      "sha256": "67eda09b29a2bc4bcbac7e1ea46865f186de09bd75cc1dba8f14220a6ff9b56e"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/planned/docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_ListTasks.py.yaml",
-      "size_bytes": 4268,
-      "sha256": "a3634c0ade8c205ae242ea891a73f034674fc79887737bf7464728a2361744f5"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/README.md",
+      "size_bytes": 1099,
+      "sha256": "1fc5868e13778658cd373b111acf42b591348e36e45ace892b445361567a14e2"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/planned/docs/L2_MinervaBlueprints/blueprint.yaml",
-      "size_bytes": 26563,
-      "sha256": "bf5c752261c6df42c0132e53f286a5132151a6465ba7d92140e6bd6ab8637e98"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/README.pt-br.md",
+      "size_bytes": 1161,
+      "sha256": "77a1c93215731419806589fc0c62e8800b95601c594dda7c3af54982240a4f0d"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/README.md",
-      "size_bytes": 3237,
-      "sha256": "d63f22406a374091e7adf1c0910f9b2a4f0bbe0e304ea5a1db2cc329adbc4209"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/docs/L1_AtlasSpecifications/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/README.pt-br.md",
-      "size_bytes": 3269,
-      "sha256": "6e58c4df2bc3a02b75d48fd29cfd56f21a560c151250b930179c206b30ea40aa"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 130253,
+      "sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/README.md",
-      "size_bytes": 1367,
-      "sha256": "468fea8f9625359e44de912ed90435b63fd923e5373d1b00506e8d48859ba468"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/docs/L2_MinervaBlueprints/blueprint.yaml",
+      "size_bytes": 125064,
+      "sha256": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/README.pt-br.md",
-      "size_bytes": 871,
-      "sha256": "615b448258db34aff2e4a69bfce3bfadf0c2b6275c6eb6be79c2bf8f3021a44f"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/provenance.json",
+      "size_bytes": 774,
+      "sha256": "5b4b2b18875701bcdd040e9501eedfa02a197264b22ca36e69d8cbe75876bd22"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L1_AtlasSpecifications/task-board.atlas.json",
-      "size_bytes": 72965,
-      "sha256": "e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/README.md",
+      "size_bytes": 436,
+      "sha256": "3f5b48743e61dbf369b527eb2d962de36d7bd619d926a24b9a967814578539a8"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml",
-      "size_bytes": 13269,
-      "sha256": "ddbe848fe650e879e1e93311e2e41629c72d5368c1fb668892130aeb06c0bf81"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/README.pt-br.md",
+      "size_bytes": 464,
+      "sha256": "02b3e5e410990ff20de0ce5d514076969f7352c2f86dc1543a0073463b090f8d"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/boundaries/Boundary_Cli.py.yaml",
-      "size_bytes": 8194,
-      "sha256": "478a575ac94adab38b04dfedff30c8eb1584606c504fe627e13471f2dcf4d73c"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/README.md",
+      "size_bytes": 1141,
+      "sha256": "b0976b4c6bb2f2d6a6b4f6edd10b9ca32a84ea90e1c7780412fe62fdeb996e0e"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/boundaries/Boundary_Http.py.yaml",
-      "size_bytes": 12147,
-      "sha256": "8be1d2a68125f999f7c1821783013c0b59324a07546ffd9344a85a8cf2f8b2cf"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/README.pt-br.md",
+      "size_bytes": 1203,
+      "sha256": "5cbd5f7a59e16ecd57cb2b8ab39f5644c913a7dd8553dcc330e1cbb131b2a018"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/composition/AppComposition.py.yaml",
-      "size_bytes": 6212,
-      "sha256": "93670afcd283b3754ad391dd0effab6d3ab13685fd527d5d2e1c2c8194301b00"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/docs/L1_AtlasSpecifications/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/entities/Entity_ActorContext.py.yaml",
-      "size_bytes": 3793,
-      "sha256": "2a407f62befb87c8f8c5c87a9dfadd6c6e0ac857b649442e74e12293d4047441"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 129459,
+      "sha256": "b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/entities/Entity_Task.py.yaml",
-      "size_bytes": 5729,
-      "sha256": "82fa3876a465fa70331bc30418b6e8b4e549f89f462db3a3cbdb2bccee507681"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/docs/L2_MinervaBlueprints/blueprint.yaml",
+      "size_bytes": 124856,
+      "sha256": "85ea0240f8b875ee16a97a441eb4d1ae64dfcc7ccfacdb12ecdddc8456ac8f60"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/main.py.yaml",
-      "size_bytes": 4892,
-      "sha256": "939fc2f42f5e39bc9b78581eb9b027845e41b91adcefcca35d89cf6b908a3435"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/provenance.json",
+      "size_bytes": 787,
+      "sha256": "94d4c019e30dd84bf1d33828eb65b54bc0087391b3c013aaca8f53522e84ec1c"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_Boundaries.py.yaml",
-      "size_bytes": 14716,
-      "sha256": "4e6d45dd7ebf22cbbfb93567e1aef54076d032201db6ed7e988722dabcf19f56"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/traceability.md",
+      "size_bytes": 4237,
+      "sha256": "9eb49fdaa6a7d47b6f3be5780dabe744993f9fcea176da8b169bb3dfd766aa8b"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_Launcher.py.yaml",
-      "size_bytes": 11612,
-      "sha256": "adb60718efa48c5bfbad2d247da13477d6dcc161d5bef36f457bb54c942c19cb"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-2/traceability.pt-br.md",
+      "size_bytes": 4298,
+      "sha256": "0e380a7e1d5209e3dc0f5efccd480255ace9aef5bf39b2062ec758990632e833"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_TaskCases.py.yaml",
-      "size_bytes": 10546,
-      "sha256": "943d20d5cb08d107ae23a4975c5626b487b0233f7a1c79a0ee8bba51a5e73618"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/README.md",
+      "size_bytes": 1141,
+      "sha256": "90f81eca7968340089e36b3f7c8629d6dc2e4762528e72a45a99a7c1e677f125"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/tools/Tool_SqliteTaskStore.py.yaml",
-      "size_bytes": 7784,
-      "sha256": "95af40509edbf209654a3c0da2f2a64ff4763a77214d82a09493288891368dc2"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/README.pt-br.md",
+      "size_bytes": 1203,
+      "sha256": "ee0d5e45bb00f947faadc764e8615c89b477a819626256472d2dc3411b381478"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_CompleteTask.py.yaml",
-      "size_bytes": 4824,
-      "sha256": "586b8ad61e62e6112679e46af77c630e2db7284981097438ac38d489cae7060a"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/docs/L1_AtlasSpecifications/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml",
-      "size_bytes": 4744,
-      "sha256": "e51ed7a68a6ebc7b076ff4ac9134e8093a474a2cf9667fc8e6f851458f5e79d3"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 130253,
+      "sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_ListTasks.py.yaml",
-      "size_bytes": 4430,
-      "sha256": "cbb9a100e136373a325e462b5b5bda6141cbbd1d5466f7e3303874564c734de8"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/docs/L2_MinervaBlueprints/blueprint.yaml",
+      "size_bytes": 125064,
+      "sha256": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/apps/TaskBoard/value_objects/ValueObject_TaskTitle.py.yaml",
-      "size_bytes": 3178,
-      "sha256": "efb49f3d582cd8ca3f3780fe5994bb336db09fdf3970ff28e797de7755fd0d8f"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/provenance.json",
+      "size_bytes": 787,
+      "sha256": "4c4a205387d318670e409a25306d62bd1eaa439de567e6b7046ac5a26128c214"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/L2_MinervaBlueprints/blueprint.yaml",
-      "size_bytes": 61412,
-      "sha256": "6688bcffd600b62ea8e8a950aa48137535942ee41a23a5f7fdb378435df59151"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/traceability.md",
+      "size_bytes": 4237,
+      "sha256": "9eb49fdaa6a7d47b6f3be5780dabe744993f9fcea176da8b169bb3dfd766aa8b"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/Shared/interaction.md",
-      "size_bytes": 3489,
-      "sha256": "55c13a98fa01d7f2cba95c848a42c853b1c3c59d5c97be618e22408b41c630ef"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/revisions/revision-3/traceability.pt-br.md",
+      "size_bytes": 4298,
+      "sha256": "0e380a7e1d5209e3dc0f5efccd480255ace9aef5bf39b2062ec758990632e833"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/examples/task-board-ecosystem/docs/Shared/interaction.pt-br.md",
-      "size_bytes": 3449,
-      "sha256": "7fbd07824f25cd1e4e4025c85ac5d2695a30032c45ee6774745fc7766dba743b"
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/traceability.md",
+      "size_bytes": 4237,
+      "sha256": "9eb49fdaa6a7d47b6f3be5780dabe744993f9fcea176da8b169bb3dfd766aa8b"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/examples/task-board/traceability.pt-br.md",
+      "size_bytes": 4298,
+      "sha256": "0e380a7e1d5209e3dc0f5efccd480255ace9aef5bf39b2062ec758990632e833"
     },
     {
       "path": "versioning/Alpha-v0.1.0/implementations/yaml/README.md",
-      "size_bytes": 11533,
-      "sha256": "f0bf9d2ef4eacdf4b4ec01f8cd0fbfd8c9e6487f15e040291219bba5f159c6b8"
+      "size_bytes": 11707,
+      "sha256": "91fae3a36281c8d578c84ccf6c45293d0791794581552cea45e8d79615f03432"
     },
     {
       "path": "versioning/Alpha-v0.1.0/implementations/yaml/README.pt-br.md",
-      "size_bytes": 11305,
-      "sha256": "178c9948ca488a5358b6bcc57b7cd9167b6d972266f0d14dc4384373be531446"
+      "size_bytes": 11635,
+      "sha256": "be7c41c4b27611f76751f4ff7303b1dd8e1f8fd3f245eddf3d214df2572ead0e"
     },
     {
       "path": "versioning/Alpha-v0.1.0/implementations/yaml/starter.minerva.yaml",
-      "size_bytes": 1182,
-      "sha256": "051a7526d13766f0db2155d79fc78382b3b7417722894ffa9e636d5c83c98188"
+      "size_bytes": 1213,
+      "sha256": "c6da162f6bc7d343d4d77de3468098ae5b9d1b5d7a87e820c9f1d6544d07c78f"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/integrations/atlas/compatibility.json",
+      "size_bytes": 930,
+      "sha256": "af08c3c006a914318eabf9afd4d70d38c521bd672605bb2f5cc0acf55b6c69b5"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/integrations/atlas/mapping.md",
+      "size_bytes": 5063,
+      "sha256": "17d9e82ed0872cebbfe81cad15c1dfb6bfae49195f0d7f96489d146c18aa302c"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/integrations/atlas/mapping.pt-br.md",
+      "size_bytes": 5457,
+      "sha256": "4f0bf4ec3eba090a76504e0c2dde10246b39963b7977fbe082724798cdd2b1d3"
     },
     {
       "path": "versioning/Alpha-v0.1.0/minerva_blueprints/__init__.py",
@@ -577,39 +562,29 @@
       "sha256": "568f3cedf2a498b1e1a9d349e6008e2bd8fed30c9bec43926b69c1ad83247353"
     },
     {
+      "path": "versioning/Alpha-v0.1.0/minerva_blueprints/code_inspection.py",
+      "size_bytes": 3222,
+      "sha256": "3cb0a35f816cfbf58063d9196656845f3d85717595a81ed38f2d96022731d61d"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/minerva_blueprints/loading.py",
+      "size_bytes": 3995,
+      "sha256": "a7fd5a7dd4ae2970d29c6be6ed75e6e094aa9f52dc2f7a2d4cb5e2d0d938ce58"
+    },
+    {
       "path": "versioning/Alpha-v0.1.0/minerva_blueprints/schemas/minerva.schema.json",
-      "size_bytes": 49452,
-      "sha256": "eec3ddd2e09a2e4cebad8e5286ef93f890f336b72c865a32f27fb623f2865be3"
+      "size_bytes": 51597,
+      "sha256": "25f3406368387da26f245665b375bb2f96108729c0966dbb42de2b01176296e5"
     },
     {
       "path": "versioning/Alpha-v0.1.0/minerva_blueprints/validation.py",
-      "size_bytes": 35140,
-      "sha256": "633d7f8b7fe8026d1d08841062ca17d0e722dd676c9289701f6c4234f0b9189e"
+      "size_bytes": 28963,
+      "sha256": "7e98f4e5636cb9707ccaf73c31c1b07e7009401398561caecd4161ff796c9f82"
     },
     {
       "path": "versioning/Alpha-v0.1.0/pyproject.toml",
       "size_bytes": 635,
       "sha256": "91d56716c92cc8efd0ae6ed380144a0f9685db9b83f3bb06f18f1b787e8c4319"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/references/OAL-ALIGNMENT.md",
-      "size_bytes": 5470,
-      "sha256": "c2be2e47b6a498810dafe151e67d5dca7cfb7a783ca75eab57c95751822ae7bb"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/references/OAL-ALIGNMENT.pt-br.md",
-      "size_bytes": 5531,
-      "sha256": "a10dea6db8c0121537e75fc3801b36b65eba331b638fda0391b458d4905073ac"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/references/REVIEW-EXAMPLES.md",
-      "size_bytes": 5727,
-      "sha256": "8350bdb4fe4ffba167ba5fcd0e966f3eb24d8fe74fb6b1767e1feecc4883d4db"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/references/REVIEW-EXAMPLES.pt-br.md",
-      "size_bytes": 5675,
-      "sha256": "46dca92ae3f2a98253ff15e423e8f69edf5a8bf03b9a61c10384c88712c7d860"
     },
     {
       "path": "versioning/Alpha-v0.1.0/requirements.txt",
@@ -618,13 +593,78 @@
     },
     {
       "path": "versioning/Alpha-v0.1.0/run_examples.py",
-      "size_bytes": 2136,
-      "sha256": "f905006e9ee3f2515d236b866161c65d0d7ff6cf26001fee51776d93874b7dd4"
+      "size_bytes": 2263,
+      "sha256": "95e55b83fc541f4a6087e8891f4b3d072407387a2bc07192fe3f8a245f667d85"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/conformance.md",
+      "size_bytes": 2093,
+      "sha256": "898f4e9b4a69a1541a6432333f49824e728d012e7359a4ccb39c518fcdcf07a0"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/conformance.pt-br.md",
+      "size_bytes": 2316,
+      "sha256": "f8693e7cba3aea140598f940b435de3af873e5063d915eb4cfecae0274b9dcd4"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/model.md",
+      "size_bytes": 15933,
+      "sha256": "9505170094fe94c1dd510fd6eade0d799ccb9fe9d94a66b22ff803f28f72ff2b"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/model.pt-br.md",
+      "size_bytes": 17064,
+      "sha256": "645ce0f2a4b27b39e4bc3cf45da582e3a8ef4941d1ae64fa748434c91306e156"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/oal-correspondence.md",
+      "size_bytes": 1102,
+      "sha256": "a7c699ca38cbd672bdd5f7091b05378d528c82a3b958b942632730a9da28a04d"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/specification/oal-correspondence.pt-br.md",
+      "size_bytes": 1160,
+      "sha256": "d667d6b581a19da672e78f2d2504a082f992f8a3187ecced9d98bbd587da2698"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/README.md",
+      "size_bytes": 392,
+      "sha256": "47d0feca8dd0048eb9da3c9c7ef3bfee6bd220996ba822ed5e3b0835a7c338ae"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/README.pt-br.md",
+      "size_bytes": 398,
+      "sha256": "542e3f1a5ed8742fafe9225ca89b9c8a6bc6690f669f3926262f2b4a7c20fbcb"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/check.py",
+      "size_bytes": 2387,
+      "sha256": "c3f13508b573c83f1fdae4bd91bda66e38ff5db3fd461dbd9428cd98c7e81ca1"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/counterexamples/expected-results.json",
+      "size_bytes": 2919,
+      "sha256": "1ef5dcf72d58f5503dce12a89b4d05f8ee158eacb7275004e6050c57a67921b2"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/planned/README.md",
+      "size_bytes": 338,
+      "sha256": "024e2a8c219da73ecc0d255e96b0b6ae83fb945f541a7c8df35369b78578718f"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/planned/README.pt-br.md",
+      "size_bytes": 352,
+      "sha256": "5a5e6221ddb8176b478f4bf7ef682d240971ad5f436b2fd79a565627e71b3a89"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/tests/fixtures/planned/docs/L2_MinervaBlueprints/apps/RequestRegister/submit.py.yaml",
+      "size_bytes": 4381,
+      "sha256": "4a57f73cd54281a468078fefe0d3876e9a5d9f3cec2ab303fa2f207b488f1431"
     },
     {
       "path": "versioning/Alpha-v0.1.0/tests/test_validation.py",
-      "size_bytes": 18261,
-      "sha256": "bd614de1dfde403f98b88e6fdf5c3cdc25a541b74c1fc8726f1bbe86568b9eae"
+      "size_bytes": 15105,
+      "sha256": "5f5413f8d2c405e61ccac94d3ef5e13c575ce8e0d6a242ac4862c364297fde35"
     },
     {
       "path": "versioning/Alpha-v0.1.0/validator/minerva_validate.py",
@@ -632,174 +672,219 @@
       "sha256": "cc9ca81f07cbd01c76514bb58d2c97a0b52d725c42900e019e614da6afe4e70e"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/CONTRACT-REVIEW.md",
-      "size_bytes": 3840,
-      "sha256": "a3e51c3d3cdde71993cc01dd5372e8f2427ab8d1488b18a86e7f0203cb5b8a25"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/CONTRACT-REVIEW.pt-br.md",
-      "size_bytes": 3989,
-      "sha256": "b535b7b42c3bbedb9cf6ce0ce150bb2ceacf63f634e960e362bbecb3a75e670d"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/MIGRATION.md",
-      "size_bytes": 3338,
-      "sha256": "cf35eff12ae7e8e855824362f4949f7705e2b9fae9f65bea2084eccea94baf24"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/MIGRATION.pt-br.md",
-      "size_bytes": 13111,
-      "sha256": "c27f3cf67b2f25f4c1ef92d50a5a8f9cadd4f638ec74f011be5c3064336ef216"
-    },
-    {
       "path": "versioning/Alpha-v0.1.0/verification/RELEASE.md",
-      "size_bytes": 5078,
-      "sha256": "3ec8719dff7332b53a498dab987e03aff3271f96a02a99a12bd463b44166d8a2"
+      "size_bytes": 1870,
+      "sha256": "6ac01b524e3d9df02ef7f51bb31f0236748e0ac67fff0e42719a84a38415cfb3"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/RELEASE.pt-br.md",
-      "size_bytes": 5541,
-      "sha256": "20664a352c764c02fa83aa12f23240b1e74f1f689c0323d31be45fce48bb22c8"
+      "size_bytes": 2048,
+      "sha256": "aaca6e12c6ce1e2fdcad7e75c9b29a4d0974063c6916eeb5a48d5e85ddbe9f00"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/REQUIREMENTS.md",
-      "size_bytes": 18517,
-      "sha256": "4584b97de21e0c0f5f56d8ed51509f2121a1ed337ec5de1f01867c7ceae45530"
+      "size_bytes": 13895,
+      "sha256": "2bccf8082821b085c84d0ad2eb314d42bfededf1373ddccdd66b35ffdb01bfec"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/REQUIREMENTS.pt-br.md",
-      "size_bytes": 18473,
-      "sha256": "a6a744a5914b7267cea86119e58faa14cfd21306562181472b445e13465a911c"
+      "size_bytes": 14187,
+      "sha256": "4d47fcc51cb3c4ed862af2c8f7e1ea5374a0d49e8896892373ef9bd26285f203"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/VALIDATION.md",
-      "size_bytes": 5476,
-      "sha256": "f20cf8c6b6d7d3e0e830179c1fe7f16439088390f807d4ac5318b1487e53b2ad"
+      "size_bytes": 3496,
+      "sha256": "4f12470cd9805a41bf7001f044fd94451b16beb0837a24dc57dd4b7779588020"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/VALIDATION.pt-br.md",
-      "size_bytes": 5228,
-      "sha256": "dfd9d322982b802819713538e8458914afea7e595eddbc189ae7a88417aa2f3e"
+      "size_bytes": 3764,
+      "sha256": "9e3dfb8c6d551678985fa96e1314c30970b8cb7d10cdff12cf47baf897c7c9be"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/contract-review.json",
-      "size_bytes": 25102,
-      "sha256": "2e17b160470c4cbb73a7a8052359e6325d46aae2a183c7565eb38d4bf883f0cf"
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/artwork.json",
+      "size_bytes": 666,
+      "sha256": "f6522f06772b5db312abc28581e5e8361b61d316bc72cdd21507d1d3b015ca44"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/artwork.json",
-      "size_bytes": 554,
-      "sha256": "d3e489557888466ef176b4b87dcd76bd04c77d61d5d0423c65b6dc8b74143c76"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/atlas-validation.json",
-      "size_bytes": 1395,
-      "sha256": "8c8e7750e82a27cdaaf7280a7d4bc5faa3d65aff9a4eeacf4604456d8a26e459"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/checks.json",
-      "size_bytes": 4229,
-      "sha256": "23e86c1e6b7574b143d030ec5ba0ce8fdb7fff2c9ac4357f3d84e47e0331d79e"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/counterexamples.stderr.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-1.stderr.txt",
       "size_bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/counterexamples.stdout.txt",
-      "size_bytes": 527,
-      "sha256": "21d39b2a49bcaddf4f0563c7e8ef73af7f9004a59508b9ad11f62c00736b067c"
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-1.stdout.txt",
+      "size_bytes": 255,
+      "sha256": "ca03847dba66923ce13b653b7a6bb0f9a5b7721207deb1374d0c57167c1e2386"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/distribution-tools.stderr.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-2.stderr.txt",
       "size_bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/distribution-tools.stdout.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-2.stdout.txt",
+      "size_bytes": 247,
+      "sha256": "0672d14eb2f581b88220e913254f5bb68e9860bc7c364de35a2f924c808fa11a"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-3.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-3.stdout.txt",
+      "size_bytes": 265,
+      "sha256": "adea65fef6b5a754544155b84ab2539f979c4569c4ffe7675f730392c5ae9317"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-4.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-4.stdout.txt",
+      "size_bytes": 286,
+      "sha256": "8240c054d40f37d7ef59875f0f50c4f3009fe7e81c593dac0ff83b1605eeb673"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-5.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/atlas-source-5.stdout.txt",
+      "size_bytes": 286,
+      "sha256": "d852ca7afa1fbc3d1018cca93db18f36e3485aae60abea9fb9a78ac4bcaafdd6"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/checks.json",
+      "size_bytes": 19330,
+      "sha256": "84e3b1b60af0a74cf510ae3dc210a4406660d9dc918c85c079d02699f667454c"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/counterexamples.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/counterexamples.stdout.txt",
+      "size_bytes": 3156,
+      "sha256": "fd72a92e3a386630740d88abb711cfda8e9abf30ab4442fde3db47b2f96a9421"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/isolated-counterexamples.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/isolated-counterexamples.stdout.txt",
+      "size_bytes": 3156,
+      "sha256": "fd72a92e3a386630740d88abb711cfda8e9abf30ab4442fde3db47b2f96a9421"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/isolated-examples.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/isolated-examples.stdout.txt",
+      "size_bytes": 7739,
+      "sha256": "679db2994a7cee1c9c178d42e284027bbd18751f216181f6f07c81921d6b8c0c"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/model-examples.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/model-examples.stdout.txt",
+      "size_bytes": 7685,
+      "sha256": "2137b0f3146b5b6641d8d9a47009ced50fdf79015a5f669355f8e6bc23d31bb4"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/repository-check.json",
+      "size_bytes": 625,
+      "sha256": "74ecbf0eadfa8a6716f1b55dbad3a1dda55129c7aa33ac1bc50b25a08ac58502"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/repository-tests.stderr.txt",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/repository-tests.stdout.txt",
       "size_bytes": 99,
-      "sha256": "8c7e6beddb6d831ddde19d2d00b67b9acaf0bee2cdbe8ed3c0fd7f5c52253004"
+      "sha256": "0fc8285ffc3f37e3159a484289a96889bc82e505742dc2ae6b2515f2b065c1c4"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/final-document-check.json",
-      "size_bytes": 9076,
-      "sha256": "0b42954c127d51ea6b217d49d3afffa5f6a838fc214ce882c0b6a22fd2a4e34e"
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/validator-tests.stderr.txt",
+      "size_bytes": 5371,
+      "sha256": "17a43379a90da47d00e177fb650b6e5402f38fc6a52b1c5807b7fe3041f74c3a"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/isolation-1.stderr.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/validator-tests.stdout.txt",
       "size_bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/isolation-1.stdout.txt",
-      "size_bytes": 5781,
-      "sha256": "f2496178b08f4faeb54b0083694357cb3ba45c62056691bcc88cc709066bc9e3"
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-build.stderr.txt",
+      "size_bytes": 1501,
+      "sha256": "900132554f0539b6a159042a062feae5b638809587a07c1251d1fbdb40ffcc3d"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/isolation-2.stderr.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-build.stdout.txt",
+      "size_bytes": 3979,
+      "sha256": "3730156f0445b09d1fc85ee15fb7fc9f2c1f0bb3509b16e8e4a45483e8ea9a2e"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-install.stderr.txt",
+      "size_bytes": 363,
+      "sha256": "d2d0ee5b77a8bdc893d11715ccbbedddcaa2ba923fbc00bee9f3d8cc20490d09"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-install.stdout.txt",
       "size_bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/isolation-2.stdout.txt",
-      "size_bytes": 527,
-      "sha256": "21d39b2a49bcaddf4f0563c7e8ef73af7f9004a59508b9ad11f62c00736b067c"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/isolation.json",
-      "size_bytes": 2699,
-      "sha256": "1c623bebcde301d7901905d7c7b77cd0d4bae593faf0942bdb6fc20fc61dbdd9"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/model-examples.stderr.txt",
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-smoke.stderr.txt",
       "size_bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/model-examples.stdout.txt",
-      "size_bytes": 5899,
-      "sha256": "cd18c0cd31f46ef75a84003577a9b9b5def3ef5dc23c9a994287d093815c96a1"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/repository-check.json",
-      "size_bytes": 245,
-      "sha256": "2d31b63445c7d16ad9fd9846abd3eb0f64071e041c934b5b05a8fc3ca42dab72"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/validator-tests.stderr.txt",
-      "size_bytes": 5709,
-      "sha256": "85fbaea070a64a8dde71cda44170595f51c424e266007f6f0746c412753cd1ff"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/observed/validator-tests.stdout.txt",
-      "size_bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/packaging.json",
-      "size_bytes": 3596,
-      "sha256": "f69c642f933baa40d5c48ec8ca0cfd700799a680b33b708000e67aebae338bd1"
+      "path": "versioning/Alpha-v0.1.0/verification/evidence/wheel-smoke.stdout.txt",
+      "size_bytes": 1365,
+      "sha256": "590ac8c9403a7c43fb780f1efc981987f231ba9491f416ef9ebecae02f8a3cd5"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/requirements/catalog.json",
-      "size_bytes": 147257,
-      "sha256": "fc9fba5d2fcb4862511d71c8b647dcf573b7396ba70312e357630a357e1068e4"
+      "size_bytes": 55758,
+      "sha256": "a892d2f903e0c3546249b9bf9c21f867332dd19dff6306e0db941a193c0ff24d"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/requirements/coverage.json",
-      "size_bytes": 50388,
-      "sha256": "80bd007584b453fffb4db0ea18f7ae7634f34f18527974c765ec8cba3e3311b9"
+      "size_bytes": 22733,
+      "sha256": "01927512b47b45646c313267e93587de144c0eb7f80638aea898498a2d632516"
     },
     {
-      "path": "versioning/Alpha-v0.1.0/verification/requirements/migration.json",
-      "size_bytes": 20143,
-      "sha256": "789cd581b8d486e809aad13b989c144f9074b7f1fe07b1030504752ef3c67c76"
+      "path": "versioning/Alpha-v0.1.0/verification/reviews/contract-review.json",
+      "size_bytes": 22857,
+      "sha256": "377f7ad9a0ba6c7ade274a85e421dff1f50d164391ef330ca8ff83ae9f48aeaa"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/reviews/contract-review.md",
+      "size_bytes": 3946,
+      "sha256": "ab149175d162786594b7c39aa5ec03d97b858b5542aee0b5e95ce8e627669a19"
+    },
+    {
+      "path": "versioning/Alpha-v0.1.0/verification/reviews/contract-review.pt-br.md",
+      "size_bytes": 4406,
+      "sha256": "5c0e3344621217e2472c9530a78135ed8afd783ba47cfba0b802f697745e293f"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/source-baselines.json",
-      "size_bytes": 4908,
-      "sha256": "b558de742017648c6be4d8aeb690557f6e5ec3ac6d7cfdeb992d9058521961f0"
+      "size_bytes": 8503,
+      "sha256": "7513149360a76a68ab3ba94a8a64c5ec5c74878427935081c0117dc78fd9f9b8"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/sources/atlas/LICENSE",
@@ -820,21 +905,6 @@
       "path": "versioning/Alpha-v0.1.0/verification/sources/atlas/atlas.schema.json",
       "size_bytes": 55891,
       "sha256": "c695b889a86ca51942559fb2d88c7d4e192f312eff8dfb3fa2e1e74a92c8cb8f"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/sources/legacy-vulcan/LICENSE",
-      "size_bytes": 1084,
-      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/sources/legacy-vulcan/README.pt-br.md.txt",
-      "size_bytes": 42411,
-      "sha256": "3d4c0571bb1ea9218cf2250d93a7a76a0c7bf4a8f270926eba3f4628e5c8d04b"
-    },
-    {
-      "path": "versioning/Alpha-v0.1.0/verification/sources/legacy-vulcan/YAML-FORMAT.pt-br.md.txt",
-      "size_bytes": 14504,
-      "sha256": "9e69d0e04cc220bf89f8b23927b1bebda00bbf6525bfc868aba9061f6e9148c3"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/sources/oal/LICENSE",

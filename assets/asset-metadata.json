@@ -71,7 +71,7 @@
     "network_required": false,
     "project_runtime_dependency": false,
     "bitmap_output_note": "Rendering is reproducible from the retained inputs. Different font or Cairo versions can alter pixels.",
-    "renderer_sha256": "a6a8e2583c3a0bef96c1872dc1dffc7bd9b56629ebd3b25cd636b3fb875880b7"
+    "renderer_sha256": "205f39024e70e030a7207b5ab3c2526faa615a269482c9702d866873de51e644"
   },
   "attribution": {
     "atlas_visual_source": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications/tree/b5941830515d9968bb7f313301f1abe25fb6f8aa/assets",
@@ -150,8 +150,8 @@
         1180
       ],
       "has_transparency": true,
-      "svg_sha256": "a9bf367cd00874f91a0749f139a717b8269a02fc8c4f143ec6babee8dd4443c0",
-      "png_sha256": "8729ff096ed2926e392af01d4cabaabf2032369ab9790ae97097f7dc7ee97e85"
+      "svg_sha256": "50a5730d5ee11f431e0a12ca45a4b7fc4185d70b30622292976f2ab27a7312e6",
+      "png_sha256": "7b7ec0c48a854ec11134406f96f84c036108311baadb73e773b887971429f812"
     },
     {
       "id": "minerva-model-pt-br",
@@ -164,8 +164,8 @@
         1180
       ],
       "has_transparency": true,
-      "svg_sha256": "5e92c8dad1697e9ce91c47770747c46070595dbf402ae9d98af78bda85e8385d",
-      "png_sha256": "e7e06010352c3d2eda7365533da116e20efba501e2693940a265abd7b8743019"
+      "svg_sha256": "9ad9d16a2323eb97fc087c043650fd55412e58087b8797c053d9a649eb2e5500",
+      "png_sha256": "98cf974e29d5f4217eac9d363f16ffae36b8ac1a5cefc3d1377b6a5579862e27"
     },
     {
       "id": "minerva-workflow-en",
@@ -197,22 +197,16 @@
     }
   ],
   "quality_review": {
+    "reviewed_on": "2026-10-28",
     "png_full_decode": true,
     "original_icon_integrity": true,
     "embedded_icon_integrity": true,
     "svg_well_formed": true,
-    "all_rendered_pngs_visually_reviewed": true,
     "reviewed_assets": [
-      "minerva-banner-en.png",
-      "minerva-banner-pt-br.png",
-      "minerva-oal-position-en.png",
-      "minerva-oal-position-pt-br.png",
       "minerva-model-en.png",
-      "minerva-model-pt-br.png",
-      "minerva-workflow-en.png",
-      "minerva-workflow-pt-br.png"
+      "minerva-model-pt-br.png"
     ],
     "unresolved_visual_findings": [],
-    "note": "All eight rendered assets were visually inspected in both languages at native resolution. The PT Vulcan integration label was shortened to preserve padding, and complete PNG byte writes were verified after the renderer adopted atomic replacement. This review concerns presentation and source integrity, not application conformance."
+    "note": "The two changed model diagrams were rendered with CairoSVG 2.8.2 on Windows and visually inspected for bilingual text, spacing and connectors. The other six renders remain byte-identical to the supplied baseline and passed decoding and recorded-hash checks. This is presentation/source-integrity review, not application conformance."
   }
 }

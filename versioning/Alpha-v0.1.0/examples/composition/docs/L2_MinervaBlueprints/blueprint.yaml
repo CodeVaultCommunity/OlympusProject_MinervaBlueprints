@@ -1,0 +1,1772 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: blueprint
+oal_edition: Stable-v1.0.0
+document:
+  id: MINERVA-COMPOSITION
+  revision: '2'
+  status: reviewed
+  nature: designed
+  title: Booking desk composition â€” program and verification model
+  responsible: 'Project author: Douglas de Oliveira Alkimim. AI-assisted preparation and technical review; project-owner
+    semantic acceptance is pending.'
+  scope: All 3 source cases, their contracts and acceptance criteria. No realization or channel implementation is
+    claimed.
+  limitations: ['Source remains the canonical L1 package; the catalogue is a manually checked Minerva declaration,
+      not independently parsed by the validator.', 'L1 boundary illustrations remain proposals; no web form, CLI
+      or HTTP protocol is mandated by this L2.', 'No application code, source observation, test execution or stakeholder
+      approval is asserted.']
+  decisions:
+  - {id: DEC-CALLER-CONTEXT, kind: decision, statement: Represent the required trusted caller context as an explicit
+      L2 entity and nullable case input so denial can be specified. No identity provider or channel mechanism is
+      selected., source: Source case context and authorization contracts., review_status: reviewed}
+  - {id: DEC-MANUAL-DERIVATION, kind: decision, statement: AI-assisted editorial derivation of the pinned Atlas
+      example into Minerva. Exact source text extraction and authored scenario design were reviewed together; no
+      reusable translator or source-model reader is delivered., source: User-authorized revision of unpublished
+      Alpha-v0.1.0., review_status: reviewed}
+  - {id: DEC-OWNER-REVIEW, kind: open_issue, statement: Project-owner acceptance of the resulting model and examples
+      remains pending; authorization to edit is not semantic acceptance., source: Current candidate preparation.,
+    review_status: draft}
+  - {id: DEC-QUALITY-SCOPE, kind: open_issue, statement: The cancellation RNF references the canonical creation
+      RNF. Its inherited procedure still measures 30 creation requests and starts at the creation stimulus. Preserve
+      that exact procedure; do not infer a separate cancellation latency guarantee. Clarification of cancellation-specific
+      measurement requires source-owner review., source: RNF-BOOKING-CANCEL-RESPONSE reference_to RNF-BOOKING-CREATE-RESPONSE
+      in the pinned official source., review_status: draft}
+source_l1:
+  model: Atlas Specifications
+  model_version: Stable-v1.0.0
+  artifact: docs/L1_AtlasSpecifications/example.atlas.json
+  document_id: ATLAS-EX-COMPOSITION
+  revision: '2'
+  case_ids: [UC-BOOKING-LOOKUP, UC-BOOKING-CREATE, UC-BOOKING-CANCEL]
+  sha256: 63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96
+  catalog:
+  - {ref: ACT-BOOKING-CLERK, kind: actor, statement: Booking clerk, source_pointer: /atlas/actors/0}
+  - {ref: ENT-BOOKING, kind: entity, statement: Booking, source_pointer: /atlas/entities/0}
+  - {ref: FLD-BOOKING-CODE, kind: field, statement: Booking code, source_pointer: /atlas/entities/0/fields/0}
+  - {ref: FLD-BOOKING-TITLE, kind: field, statement: Title, source_pointer: /atlas/entities/0/fields/1}
+  - {ref: FLD-BOOKING-STATUS, kind: field, statement: Status, source_pointer: /atlas/entities/0/fields/2}
+  - {ref: FLD-BOOKING-VERSION, kind: field, statement: Version, source_pointer: /atlas/entities/0/fields/3}
+  - {ref: VLD-BOOKING-CODE, kind: validation, statement: 'The code is valid when it has 1 to 12 characters, all
+      uppercase letters or digits.', source_pointer: /atlas/entities/0/validations/0}
+  - {ref: VLD-BOOKING-CANCEL, kind: validation, statement: A cancellation transition is valid only when the booking's
+      current status is active., source_pointer: /atlas/entities/0/validations/1}
+  - {ref: VLD-BOOKING-TITLE, kind: validation, statement: The title is text with at least one non-whitespace character.
+      Preserve valid text exactly., source_pointer: /atlas/entities/0/validations/2}
+  - {ref: TOL-BOOKING-STORE, kind: tool, statement: Booking store, source_pointer: /atlas/tools/0}
+  - {ref: OP-BOOKING-LOAD, kind: operation, statement: Load booking, source_pointer: /atlas/tools/0/operations/0}
+  - {ref: OP-BOOKING-SAVE, kind: operation, statement: Save booking, source_pointer: /atlas/tools/0/operations/1}
+  - ref: UC-BOOKING-LOOKUP
+    kind: case
+    statement: Locate booking
+    source_pointer: /atlas/use_cases/0
+    actor_refs: [ACT-BOOKING-CLERK]
+  - ref: RF-BOOKING-LOOKUP-01
+    kind: requirement
+    statement: The case applies VLD-BOOKING-CODE and refuses an invalid code without loading.
+    source_pointer: /atlas/use_cases/0/functional_requirements/0
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: RF-BOOKING-LOOKUP-02
+    kind: requirement
+    statement: The case calls OP-BOOKING-LOAD and returns the loaded booking when found.
+    source_pointer: /atlas/use_cases/0/functional_requirements/1
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: RF-BOOKING-LOOKUP-03
+    kind: requirement
+    statement: NOT_FOUND is reported as a distinct refusal with no effect.
+    source_pointer: /atlas/use_cases/0/functional_requirements/2
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: RF-BOOKING-LOOKUP-04
+    kind: requirement
+    statement: STORE_UNAVAILABLE is reported as a failure, not as not found.
+    source_pointer: /atlas/use_cases/0/functional_requirements/3
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: RF-BOOKING-LOOKUP-AUTH
+    kind: requirement
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    source_pointer: /atlas/use_cases/0/functional_requirements/4
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: AC-BOOKING-LOOKUP-01
+    kind: criterion
+    statement: A retained code returns the booking and its current status.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/0
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: AC-BOOKING-LOOKUP-02
+    kind: criterion
+    statement: An unknown code returns not found, not an empty booking.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/1
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: AC-BOOKING-LOOKUP-03
+    kind: criterion
+    statement: An unavailable store is distinguished from not found.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/2
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: AC-BOOKING-LOOKUP-INVALID
+    kind: criterion
+    statement: A lowercase or punctuated code fails the canonical code rule and no load is invoked.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/3
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: AC-BOOKING-LOOKUP-AUTH
+    kind: criterion
+    statement: Missing, unresolved, expired or insufficient caller context produces denial with no validation, tool
+      call, composed call or data disclosure.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/4
+    case_refs: [UC-BOOKING-LOOKUP]
+  - ref: UC-BOOKING-CREATE
+    kind: case
+    statement: Create booking
+    source_pointer: /atlas/use_cases/1
+    actor_refs: [ACT-BOOKING-CLERK]
+  - ref: RF-BOOKING-CREATE-01
+    kind: requirement
+    statement: The case applies VLD-BOOKING-CODE and refuses an invalid code without saving.
+    source_pointer: /atlas/use_cases/1/functional_requirements/0
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RF-BOOKING-CREATE-02
+    kind: requirement
+    statement: The case creates an active booking and calls OP-BOOKING-SAVE with version 0.
+    source_pointer: /atlas/use_cases/1/functional_requirements/1
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RF-BOOKING-CREATE-03
+    kind: requirement
+    statement: VERSION_CONFLICT and STORE_UNAVAILABLE are reported as failures, never as a created booking.
+    source_pointer: /atlas/use_cases/1/functional_requirements/2
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RF-BOOKING-CREATE-04
+    kind: requirement
+    statement: A successful result returns the created active booking.
+    source_pointer: /atlas/use_cases/1/functional_requirements/3
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RF-BOOKING-CREATE-TITLE
+    kind: requirement
+    statement: After a valid code, apply VLD-BOOKING-TITLE. Refuse invalid title before creating a ready active
+      Booking or invoking save.
+    source_pointer: /atlas/use_cases/1/functional_requirements/4
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RF-BOOKING-CREATE-AUTH
+    kind: requirement
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    source_pointer: /atlas/use_cases/1/functional_requirements/5
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: RNF-BOOKING-CREATE-RESPONSE
+    kind: requirement
+    statement: The boundary presents the result of a creation within 2 seconds of the stimulus for inputs within
+      the declared limits.
+    source_pointer: /atlas/use_cases/1/nonfunctional_requirements/0
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-01
+    kind: criterion
+    statement: A valid code creates an active booking and a later lookup returns it.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/0
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-02
+    kind: criterion
+    statement: An invalid code is refused with no retained booking.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/1
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-03
+    kind: criterion
+    statement: A version conflict is never presented as a created booking.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/2
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-TITLE
+    kind: criterion
+    statement: A whitespace-only title is refused and OP-BOOKING-SAVE is not invoked.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/3
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-AUTH
+    kind: criterion
+    statement: Missing, unresolved, expired or insufficient caller context produces denial with no validation, tool
+      call, composed call or data disclosure.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/4
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: AC-BOOKING-CREATE-QUALITY
+    kind: criterion
+    statement: In the declared didactic configuration, demonstrate the canonical quality criterion and its stated
+      verification procedure; preserve its status as a teaching assumption, not a measured production claim.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/5
+    case_refs: [UC-BOOKING-CREATE]
+  - ref: UC-BOOKING-CANCEL
+    kind: case
+    statement: Cancel booking
+    source_pointer: /atlas/use_cases/2
+    actor_refs: [ACT-BOOKING-CLERK]
+  - ref: RF-BOOKING-CANCEL-01
+    kind: requirement
+    statement: 'The case calls UC-BOOKING-LOOKUP and preserves its not-found and invalid-code refusals.
+
+      Preserve the caller context and propagate lookup denial before any save.'
+    source_pointer: /atlas/use_cases/2/functional_requirements/0
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RF-BOOKING-CANCEL-02
+    kind: requirement
+    statement: The case applies VLD-BOOKING-CANCEL to the located booking before any save.
+    source_pointer: /atlas/use_cases/2/functional_requirements/1
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RF-BOOKING-CANCEL-03
+    kind: requirement
+    statement: An already-cancelled booking produces the already-cancelled refusal with no save and no effect.
+    source_pointer: /atlas/use_cases/2/functional_requirements/2
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RF-BOOKING-CANCEL-04
+    kind: requirement
+    statement: A passing transition sets status cancelled and calls OP-BOOKING-SAVE with the observed version.
+    source_pointer: /atlas/use_cases/2/functional_requirements/3
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RF-BOOKING-CANCEL-05
+    kind: requirement
+    statement: A store failure is reported distinctly and does not claim cancellation.
+    source_pointer: /atlas/use_cases/2/functional_requirements/4
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RF-BOOKING-CANCEL-AUTH
+    kind: requirement
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    source_pointer: /atlas/use_cases/2/functional_requirements/5
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: RNF-BOOKING-CANCEL-RESPONSE
+    kind: requirement
+    statement: The boundary presents the result of a creation within 2 seconds of the stimulus for inputs within
+      the declared limits.
+    source_pointer: /atlas/use_cases/2/nonfunctional_requirements/0
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-01
+    kind: criterion
+    statement: Cancelling an active booking returns cancelled and retains the code.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/0
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-02
+    kind: criterion
+    statement: Cancelling an already-cancelled booking is refused with no data change.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/1
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-03
+    kind: criterion
+    statement: A lookup not-found is distinguishable from an already-cancelled refusal.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/2
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-FAILURE
+    kind: criterion
+    statement: An unavailable lookup or save remains a failure; an unknown write is not reported as no change, success,
+      or retried automatically.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/3
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-CONTEXT
+    kind: criterion
+    statement: A caller allowed to cancel but not to locate is denied by the composed lookup, with the same principal
+      preserved and no save.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/4
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-AUTH
+    kind: criterion
+    statement: Missing, unresolved, expired or insufficient caller context produces denial with no validation, tool
+      call, composed call or data disclosure.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/5
+    case_refs: [UC-BOOKING-CANCEL]
+  - ref: AC-BOOKING-CANCEL-QUALITY
+    kind: criterion
+    statement: In the declared didactic configuration, demonstrate the canonical quality criterion and its stated
+      verification procedure; preserve its status as a teaching assumption, not a measured production claim.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/6
+    case_refs: [UC-BOOKING-CANCEL]
+adpm:
+  types:
+  - id: TYP-BOOKING-STATUS
+    base: string
+    constraints: [Known values are active and cancelled.]
+  entities:
+  - id: ENT-BOOKING
+    source_entity_id: ENT-BOOKING
+    name: Booking
+    meaning: A booking records a named reservation and has a lifecycle status.
+    fields:
+    - name: booking_code
+      description: 'A stable uppercase code that identifies the booking. Constraints: 1 to 12 uppercase letters
+        or digits.'
+      type: {kind: primitive, name: string}
+      required: true
+      cardinality: '1'
+    - name: title
+      description: 'A short human-readable title. Constraints: At least one non-whitespace character.'
+      type: {kind: primitive, name: string}
+      required: true
+      cardinality: '1'
+    - name: status
+      description: 'The lifecycle state of the booking. Constraints: One of active or cancelled.'
+      type: {kind: type, ref: TYP-BOOKING-STATUS}
+      required: true
+      cardinality: '1'
+    - name: version
+      description: 'Concurrency token: zero for a new ready Booking, positive for a retained Booking. Constraints:
+        A non-negative integer; successful save increments it.'
+      type: {kind: primitive, name: integer}
+      required: true
+      cardinality: '1'
+    invariant_refs: [VLD-BOOKING-CODE, VLD-BOOKING-TITLE]
+    construction: Canonical construction/hydration enforces all field constraints and state coherence once. Named
+      transition rules apply only to their declared transition, not to every hydrated entity.
+    behavior:
+      summary: Preserve identity, exact data and the declared lifecycle.
+      steps: ['The code is valid when it has 1 to 12 characters, all uppercase letters or digits.', A cancellation
+          transition is valid only when the booking's current status is active., The title is text with at least
+          one non-whitespace character. Preserve valid text exactly.]
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: [GRAPH-VLD-BOOKING-CODE, GRAPH-VLD-BOOKING-CANCEL, GRAPH-VLD-BOOKING-TITLE]
+    dependencies: []
+  - id: ENT-CALLER-CONTEXT
+    source_entity_id: null
+    name: Caller context
+    meaning: L2 invocation data, distinct from business inputs and injected tools.
+    fields:
+    - name: principal
+      description: Authenticated concrete caller identity.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: issuer
+      description: Trusted context issuer.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: valid
+      description: Context is resolved, known and unexpired.
+      type: {kind: primitive, name: boolean}
+      required: true
+    - name: permissions
+      description: Case permissions from the trusted authority.
+      type:
+        kind: array
+        items: {kind: primitive, name: string}
+      required: true
+    invariant_refs: [RULE-CALLER-CONTEXT]
+    construction: Created by the selected trusted authority; a matching request shape does not establish trust.
+    behavior:
+      summary: Carry caller identity and grants; each case decides its own authorization.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+    dependencies: []
+  tools:
+  - id: TOL-BOOKING-STORE
+    name: Booking store
+    purpose: Load and retain bookings. The contract is shared by creation, lookup, and cancellation and does not
+      select a database.
+    operations:
+    - id: OP-BOOKING-LOAD
+      name: Load booking
+      purpose: Read one retained booking by code.
+      inputs:
+      - name: booking_code
+        description: The exact code to locate.
+        type: {kind: primitive, name: string}
+        required: true
+      outputs:
+      - name: booking
+        description: The retained booking with its current status.
+        type: {kind: entity, ref: ENT-BOOKING}
+        required: true
+      conditions: [The store is available., 'Inputs described as ready entities already satisfy canonical entity
+          invariants. Do not duplicate those validations inside this tool. When constructing entities from raw retained
+          records, use the canonical entity hydration rules; operation-specific external conditions remain this
+          tool''s responsibility.']
+      guarantees: [A successful load returns one current booking., The result reflects the stored record at read
+          time.]
+      effects: [No persisted change.]
+      failures:
+      - {id: FAIL-OP-BOOKING-LOAD-NOT-FOUND, condition: No retained booking has the code., result: 'NOT_FOUND: Distinct
+          from an invalid code and from an unavailable store.', effects: Distinct from an invalid code and from
+          an unavailable store., outcome_certainty: not_applicable}
+      - {id: FAIL-OP-BOOKING-LOAD-STORE-UNAVAILABLE, condition: The store could not complete the read., result: 'STORE_UNAVAILABLE:
+          Must not be reported as not found.', effects: Must not be reported as not found., outcome_certainty: not_applicable}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: [ENT-BOOKING]
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    - id: OP-BOOKING-SAVE
+      name: Save booking
+      purpose: Persist the current data of one booking.
+      inputs:
+      - name: booking
+        description: The booking to persist, including its status.
+        type: {kind: entity, ref: ENT-BOOKING}
+        required: true
+      - name: expected_version
+        description: The version observed by the caller.
+        type: {kind: primitive, name: integer}
+        required: true
+      outputs:
+      - name: saved_booking
+        description: The booking with an incremented version.
+        type: {kind: entity, ref: ENT-BOOKING}
+        required: true
+      conditions: [The store is available., 'Inputs described as ready entities already satisfy canonical entity
+          invariants. Do not duplicate those validations inside this tool. When constructing entities from raw retained
+          records, use the canonical entity hydration rules; operation-specific external conditions remain this
+          tool''s responsibility.']
+      guarantees: [A successful save confirms one updated retained booking., Expected version zero means insert
+          only if the identifier is absent. A positive expected version means replace only the matching retained
+          version. Comparison and write are atomic; success increments the version by one., VERSION_CONFLICT guarantees
+          this operation made no change; another concurrent operation may have changed the stored record., A successful
+          save confirms the new data.]
+      effects: [The retained booking is replaced with the supplied data.]
+      failures:
+      - {id: FAIL-OP-BOOKING-SAVE-VERSION-CONFLICT, condition: The expected version is no longer current., result: 'VERSION_CONFLICT:
+          This operation made no write. The existing or concurrently updated record is not overwritten.', effects: This
+          operation made no write. The existing or concurrently updated record is not overwritten., outcome_certainty: not_applied}
+      - {id: FAIL-OP-BOOKING-SAVE-STORE-UNAVAILABLE, condition: The store did not confirm the write., result: 'STORE_UNAVAILABLE:
+          Distinguish write_outcome=not_applied, when supported by a no-write guarantee, from unknown. Do not report
+          success or automatically retry an unknown write.', effects: 'Distinguish write_outcome=not_applied, when
+          supported by a no-write guarantee, from unknown. Do not report success or automatically retry an unknown
+          write.', outcome_certainty: unknown}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: []
+      revalidates_rule_refs: []
+      contextual_conditions:
+      - {id: CTX-OP-BOOKING-SAVE, condition: 'A successful save confirms one updated retained booking.
+
+          Expected version zero means insert only if the identifier is absent. A positive expected version means
+          replace only the matching retained version. Comparison and write are atomic; success increments the version
+          by one.
+
+          VERSION_CONFLICT guarantees this operation made no change; another concurrent operation may have changed
+          the stored record.', object: The persisted identifier and any expected version., purpose: Enforce atomic
+          external storage conditions without repeating ready-entity validity., responsibility: OP-BOOKING-SAVE}
+    dependencies: [ENT-BOOKING]
+    technical_selection: Unselected; the future realization must meet this contract.
+  cases:
+  - id: UC-BOOKING-LOOKUP
+    source_case_id: UC-BOOKING-LOOKUP
+    app: BookingDesk
+    name: Locate booking
+    objective: Return the current data of one retained booking.
+    inputs:
+    - name: actor_context
+      description: 'The lookup is used directly by the desk and by cancellation.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: booking_code
+      description: The code to locate.
+      type: {kind: primitive, name: string}
+      required: true
+    outputs:
+    - name: result
+      description: The booking is returned.
+      type: {kind: entity, ref: ENT-BOOKING}
+      required: true
+    collaborators: [ENT-BOOKING, TOL-BOOKING-STORE, OP-BOOKING-LOAD]
+    rule_refs: [RULE-BOOKING-LOOKUP-AUTH, VLD-BOOKING-CODE]
+    permission:
+      context_input: actor_context
+      trust_source: 'The lookup is used directly by the desk and by cancellation.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      required_permissions: [Permitted to locate bookings.]
+      allowed_actor_refs: [ACT-BOOKING-CLERK]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Return the current data of one retained booking.
+      steps: [Resolve and authorize the initiating caller first (RF-BOOKING-LOOKUP-AUTH). Denial terminates before
+          any subsequent step., Validate the code (RF-BOOKING-LOOKUP-01). An invalid code is refused before load.,
+        Load through OP-BOOKING-LOAD (RF-BOOKING-LOOKUP-02). NOT_FOUND is a refusal (RF-BOOKING-LOOKUP-03); STORE_UNAVAILABLE
+          is a failure (RF-BOOKING-LOOKUP-04).]
+      preconditions: [Requests may arrive without valid caller context; the explicit denial path handles them before
+          any collaborator is invoked.]
+      postconditions: ['On OUT-BOOKING-LOOKUP-FOUND: The booking is returned.', 'On OUT-BOOKING-LOOKUP-NOTFOUND:
+          No booking has the code.', 'On OUT-BOOKING-LOOKUP-FAILURE: The store is unavailable.', 'On OUT-BOOKING-LOOKUP-INVALID:
+          The booking code is invalid.', 'On OUT-BOOKING-LOOKUP-DENIED: The trusted caller context does not authorize
+          this case.']
+      effects: ['On OUT-BOOKING-LOOKUP-FOUND: No persisted change.', 'On OUT-BOOKING-LOOKUP-NOTFOUND: No persisted
+          change.', 'On OUT-BOOKING-LOOKUP-FAILURE: No persisted change.', 'On OUT-BOOKING-LOOKUP-INVALID: No load
+          or data change.', 'On OUT-BOOKING-LOOKUP-DENIED: No validation, collaborator call, persisted change, or
+          disclosure of booking existence.']
+      graph_refs: [GRAPH-BOOKING-LOOKUP]
+    failures:
+    - {id: OUT-BOOKING-LOOKUP-NOTFOUND, condition: No booking has the code., result: OUT-BOOKING-LOOKUP-NOTFOUND,
+      effects: No persisted change., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-LOOKUP-FAILURE, condition: The store is unavailable., result: OUT-BOOKING-LOOKUP-FAILURE,
+      effects: No persisted change., outcome_certainty: not_applicable}
+    - {id: OUT-BOOKING-LOOKUP-INVALID, condition: The booking code is invalid., result: OUT-BOOKING-LOOKUP-INVALID,
+      effects: No load or data change., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-LOOKUP-DENIED, condition: The trusted caller context does not authorize this case., result: OUT-BOOKING-LOOKUP-DENIED,
+      effects: 'No validation, collaborator call, persisted change, or disclosure of booking existence.', outcome_certainty: not_applied}
+    domain_ref: null
+  - id: UC-BOOKING-CREATE
+    source_case_id: UC-BOOKING-CREATE
+    app: BookingDesk
+    name: Create booking
+    objective: Create one active booking and confirm its stored state.
+    inputs:
+    - name: actor_context
+      description: 'The desk creates a booking in the shared store.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: booking_code
+      description: The code to create.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: title
+      description: The booking title.
+      type: {kind: primitive, name: string}
+      required: true
+    outputs:
+    - name: result
+      description: The active booking is created.
+      type: {kind: entity, ref: ENT-BOOKING}
+      required: true
+    collaborators: [ENT-BOOKING, TOL-BOOKING-STORE, OP-BOOKING-SAVE]
+    rule_refs: [RULE-BOOKING-CREATE-AUTH, VLD-BOOKING-CODE, VLD-BOOKING-TITLE]
+    permission:
+      context_input: actor_context
+      trust_source: 'The desk creates a booking in the shared store.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      required_permissions: [Permitted to create bookings.]
+      allowed_actor_refs: [ACT-BOOKING-CLERK]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Create one active booking and confirm its stored state.
+      steps: [Resolve and authorize the initiating caller first (RF-BOOKING-CREATE-AUTH). Denial terminates before
+          any subsequent step., Validate the code with VLD-BOOKING-CODE (RF-BOOKING-CREATE-01)., Apply title validity
+          after code validity; refuse invalid title without saving (RF-BOOKING-CREATE-TITLE)., Create the active
+          booking and save through OP-BOOKING-SAVE (RF-BOOKING-CREATE-02)., A save failure is reported as failure
+          (RF-BOOKING-CREATE-03); a success returns the created booking (RF-BOOKING-CREATE-04).]
+      preconditions: [Requests may arrive without valid caller context; the explicit denial path handles them before
+          any collaborator is invoked.]
+      postconditions: ['On OUT-BOOKING-CREATE-DONE: The active booking is created.', 'On OUT-BOOKING-CREATE-INVALID:
+          The code or title is invalid.', 'On OUT-BOOKING-CREATE-CONFLICT: The store reports a version conflict
+          or unavailability.', 'On OUT-BOOKING-CREATE-DENIED: The trusted caller context does not authorize this
+          case.']
+      effects: ['On OUT-BOOKING-CREATE-DONE: One new booking is retained.', 'On OUT-BOOKING-CREATE-INVALID: No save
+          and no retained booking.', 'On OUT-BOOKING-CREATE-CONFLICT: No created booking is reported.', 'On OUT-BOOKING-CREATE-DENIED:
+          No validation, collaborator call, persisted change, or disclosure of booking existence.']
+      graph_refs: [GRAPH-BOOKING-CREATE]
+    failures:
+    - {id: OUT-BOOKING-CREATE-INVALID, condition: The code or title is invalid., result: OUT-BOOKING-CREATE-INVALID,
+      effects: No save and no retained booking., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-CREATE-CONFLICT, condition: The store reports a version conflict or unavailability., result: OUT-BOOKING-CREATE-CONFLICT,
+      effects: No created booking is reported., outcome_certainty: unknown}
+    - {id: OUT-BOOKING-CREATE-DENIED, condition: The trusted caller context does not authorize this case., result: OUT-BOOKING-CREATE-DENIED,
+      effects: 'No validation, collaborator call, persisted change, or disclosure of booking existence.', outcome_certainty: not_applied}
+    domain_ref: null
+  - id: UC-BOOKING-CANCEL
+    source_case_id: UC-BOOKING-CANCEL
+    app: BookingDesk
+    name: Cancel booking
+    objective: Retain the booking and change its status to cancelled when cancellation is allowed.
+    inputs:
+    - name: actor_context
+      description: 'Cancellation reuses lookup and the shared store.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: booking_code
+      description: The booking to cancel.
+      type: {kind: primitive, name: string}
+      required: true
+    outputs:
+    - name: result
+      description: The booking is cancelled and retained.
+      type: {kind: entity, ref: ENT-BOOKING}
+      required: true
+    collaborators: [ENT-BOOKING, TOL-BOOKING-STORE, OP-BOOKING-SAVE, UC-BOOKING-LOOKUP]
+    rule_refs: [RULE-BOOKING-CANCEL-AUTH, VLD-BOOKING-CANCEL]
+    permission:
+      context_input: actor_context
+      trust_source: 'Cancellation reuses lookup and the shared store.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-BOOKING-CLERK. The actor is a role; the caller is the concrete principal. The
+        identity/authentication mechanism and channel encoding remain later design decisions.'
+      required_permissions: [Permitted to cancel bookings.]
+      allowed_actor_refs: [ACT-BOOKING-CLERK]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Retain the booking and change its status to cancelled when cancellation is allowed.
+      steps: [Resolve and authorize the initiating caller first (RF-BOOKING-CANCEL-AUTH). Denial terminates before
+          any subsequent step., Call UC-BOOKING-LOOKUP (RF-BOOKING-CANCEL-01). Its refusals and failures remain
+          observable., Apply VLD-BOOKING-CANCEL to the located booking (RF-BOOKING-CANCEL-02)., An already-cancelled
+          booking reaches the refusal subflow (RF-BOOKING-CANCEL-03) with no save., 'On pass, set status cancelled
+          and save with the observed version (RF-BOOKING-CANCEL-04). A save failure is reported (RF-BOOKING-CANCEL-05).',
+        'A composed lookup denial terminates cancellation before save. A lookup failure is propagated as failure,
+          never collapsed into not found.']
+      preconditions: [Requests may arrive without valid caller context; the explicit denial path handles them before
+          any collaborator is invoked.]
+      postconditions: ['On OUT-BOOKING-CANCEL-DONE: The booking is cancelled and retained.', 'On OUT-BOOKING-CANCEL-ALREADY:
+          The booking is already cancelled.', 'On OUT-BOOKING-CANCEL-NOTFOUND: The lookup did not find the booking.',
+        'On OUT-BOOKING-CANCEL-FAILURE: The store or lookup failed.', 'On OUT-BOOKING-CANCEL-INVALID: Lookup refused
+          an invalid code.', 'On OUT-BOOKING-CANCEL-DENIED: The trusted caller context does not authorize this case.']
+      effects: ['On OUT-BOOKING-CANCEL-DONE: The booking status becomes cancelled.', 'On OUT-BOOKING-CANCEL-ALREADY:
+          No save and no data change.', 'On OUT-BOOKING-CANCEL-NOTFOUND: No save and no data change.', 'On OUT-BOOKING-CANCEL-FAILURE:
+          No cancellation is claimed.', 'On OUT-BOOKING-CANCEL-INVALID: No save or data change.', 'On OUT-BOOKING-CANCEL-DENIED:
+          No validation, collaborator call, persisted change, or disclosure of booking existence.']
+      graph_refs: [GRAPH-BOOKING-CANCEL, GRAPH-BOOKING-CANCEL-REFUSAL]
+    failures:
+    - {id: OUT-BOOKING-CANCEL-ALREADY, condition: The booking is already cancelled., result: OUT-BOOKING-CANCEL-ALREADY,
+      effects: No save and no data change., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-CANCEL-NOTFOUND, condition: The lookup did not find the booking., result: OUT-BOOKING-CANCEL-NOTFOUND,
+      effects: No save and no data change., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-CANCEL-FAILURE, condition: The store or lookup failed., result: OUT-BOOKING-CANCEL-FAILURE,
+      effects: No cancellation is claimed., outcome_certainty: unknown}
+    - {id: OUT-BOOKING-CANCEL-INVALID, condition: Lookup refused an invalid code., result: OUT-BOOKING-CANCEL-INVALID,
+      effects: No save or data change., outcome_certainty: not_applied}
+    - {id: OUT-BOOKING-CANCEL-DENIED, condition: The trusted caller context does not authorize this case., result: OUT-BOOKING-CANCEL-DENIED,
+      effects: 'No validation, collaborator call, persisted change, or disclosure of booking existence.', outcome_certainty: not_applied}
+    domain_ref: null
+  rules:
+  - id: VLD-BOOKING-CODE
+    statement: 'The code is valid when it has 1 to 12 characters, all uppercase letters or digits. Conditions: The
+      code is non-empty.; The length is between 1 and 12.; Every character is A-Z or 0-9.'
+    owner_ref: ENT-BOOKING
+    origin_refs: [VLD-BOOKING-CODE]
+    kind: invariant
+  - id: VLD-BOOKING-CANCEL
+    statement: 'A cancellation transition is valid only when the booking''s current status is active. Conditions:
+      The current status is active.'
+    owner_ref: ENT-BOOKING
+    origin_refs: [VLD-BOOKING-CANCEL]
+    kind: transition
+  - id: VLD-BOOKING-TITLE
+    statement: 'The title is text with at least one non-whitespace character. Preserve valid text exactly. Conditions:
+      The title has at least one non-whitespace character.'
+    owner_ref: ENT-BOOKING
+    origin_refs: [VLD-BOOKING-TITLE]
+    kind: invariant
+  - id: RULE-CALLER-CONTEXT
+    statement: Context fields preserve the declared principal, issuer, validity and permissions. Trust is an external
+      premise; cases deny absent, unresolved, unknown, expired or insufficient context.
+    owner_ref: ENT-CALLER-CONTEXT
+    origin_refs: [DEC-CALLER-CONTEXT]
+    kind: invariant
+  - id: RULE-BOOKING-LOOKUP-AUTH
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    owner_ref: UC-BOOKING-LOOKUP
+    origin_refs: [RF-BOOKING-LOOKUP-AUTH]
+    kind: authorization
+  - id: RULE-BOOKING-CREATE-AUTH
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    owner_ref: UC-BOOKING-CREATE
+    origin_refs: [RF-BOOKING-CREATE-AUTH]
+    kind: authorization
+  - id: RULE-BOOKING-CANCEL-AUTH
+    statement: Require this case's permission in the trusted authenticated caller context. Deny missing, unresolved,
+      expired or insufficient context before any validation, tool call, composed use-case call or effect. Anonymous
+      execution is forbidden.
+    owner_ref: UC-BOOKING-CANCEL
+    origin_refs: [RF-BOOKING-CANCEL-AUTH]
+    kind: authorization
+  dependencies:
+  - {id: DEP-BOOKING-LOOKUP-ENT-BOOKING, consumer_ref: UC-BOOKING-LOOKUP, provider_ref: ENT-BOOKING, relation: uses_type,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-LOOKUP-TOL-BOOKING-STORE, consumer_ref: UC-BOOKING-LOOKUP, provider_ref: TOL-BOOKING-STORE,
+    relation: calls, purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-LOOKUP-OP-BOOKING-LOAD, consumer_ref: UC-BOOKING-LOOKUP, provider_ref: OP-BOOKING-LOAD, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CREATE-ENT-BOOKING, consumer_ref: UC-BOOKING-CREATE, provider_ref: ENT-BOOKING, relation: uses_type,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CREATE-TOL-BOOKING-STORE, consumer_ref: UC-BOOKING-CREATE, provider_ref: TOL-BOOKING-STORE,
+    relation: calls, purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CREATE-OP-BOOKING-SAVE, consumer_ref: UC-BOOKING-CREATE, provider_ref: OP-BOOKING-SAVE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CANCEL-ENT-BOOKING, consumer_ref: UC-BOOKING-CANCEL, provider_ref: ENT-BOOKING, relation: uses_type,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CANCEL-TOL-BOOKING-STORE, consumer_ref: UC-BOOKING-CANCEL, provider_ref: TOL-BOOKING-STORE,
+    relation: calls, purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CANCEL-OP-BOOKING-SAVE, consumer_ref: UC-BOOKING-CANCEL, provider_ref: OP-BOOKING-SAVE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-BOOKING-CANCEL-UC-BOOKING-LOOKUP, consumer_ref: UC-BOOKING-CANCEL, provider_ref: UC-BOOKING-LOOKUP,
+    relation: calls, purpose: Declared collaborator in the source case contract., context_forwarding: 'The cancellation
+      actor must also be permitted to locate bookings.
+
+      Preserve the concrete principal and trusted caller context in the lookup invocation. Lookup independently
+      checks its own permission; cancellation permission never bypasses it. Contract: Receives the located booking
+      or the lookup refusal/failure.'}
+  domains: []
+  composition:
+    selection_location: Application composition root selected by the future L3 realization.
+    description: Inject contracted tools and composed cases explicitly. No concrete database, framework or global
+      service lookup is prescribed.
+    lifetimes:
+    - {element_ref: UC-BOOKING-LOOKUP, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: UC-BOOKING-CREATE, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: UC-BOOKING-CANCEL, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: TOL-BOOKING-STORE, scope: Managed by the chosen L3 scope; persistence outlives a case call and
+        satisfies stated restart guarantees., ownership: Composition root closes concrete resources; no singleton
+        is prescribed.}
+  graphs:
+  - id: GRAPH-VLD-BOOKING-CODE
+    owner_ref: VLD-BOOKING-CODE
+    kind: flow
+    summary: Booking code validation Source graph retained from L1; representation here does not reclassify its
+      origin.
+    entry: N-VLD-BOOK-CODE-START
+    nodes:
+    - {id: N-VLD-BOOK-CODE-START, kind: start, description: Start}
+    - {id: N-VLD-BOOK-CODE-READ, kind: action, description: Read code}
+    - {id: N-VLD-BOOK-CODE-EMPTY, kind: decision, description: 'Non-empty?'}
+    - {id: N-VLD-BOOK-CODE-LENGTH, kind: decision, description: '1 to 12 characters?'}
+    - {id: N-VLD-BOOK-CODE-CHARS, kind: decision, description: 'Uppercase letters or digits?'}
+    - {id: N-VLD-BOOK-CODE-PASS, kind: end, description: Valid}
+    - {id: N-VLD-BOOK-CODE-FAIL, kind: failure, description: Invalid code}
+    edges:
+    - {id: E-VLD-BOOK-CODE-1, from: N-VLD-BOOK-CODE-START, to: N-VLD-BOOK-CODE-READ, condition: Unconditional passage,
+      action: ''}
+    - {id: E-VLD-BOOK-CODE-2, from: N-VLD-BOOK-CODE-READ, to: N-VLD-BOOK-CODE-EMPTY, condition: Unconditional passage,
+      action: ''}
+    - {id: E-VLD-BOOK-CODE-3, from: N-VLD-BOOK-CODE-EMPTY, to: N-VLD-BOOK-CODE-FAIL, condition: 'no', action: ''}
+    - {id: E-VLD-BOOK-CODE-4, from: N-VLD-BOOK-CODE-EMPTY, to: N-VLD-BOOK-CODE-LENGTH, condition: 'yes', action: ''}
+    - {id: E-VLD-BOOK-CODE-5, from: N-VLD-BOOK-CODE-LENGTH, to: N-VLD-BOOK-CODE-FAIL, condition: 'no', action: ''}
+    - {id: E-VLD-BOOK-CODE-6, from: N-VLD-BOOK-CODE-LENGTH, to: N-VLD-BOOK-CODE-CHARS, condition: 'yes', action: ''}
+    - {id: E-VLD-BOOK-CODE-7, from: N-VLD-BOOK-CODE-CHARS, to: N-VLD-BOOK-CODE-FAIL, condition: 'no', action: ''}
+    - {id: E-VLD-BOOK-CODE-8, from: N-VLD-BOOK-CODE-CHARS, to: N-VLD-BOOK-CODE-PASS, condition: 'yes', action: ''}
+  - id: GRAPH-VLD-BOOKING-CANCEL
+    owner_ref: VLD-BOOKING-CANCEL
+    kind: flow
+    summary: Cancellation transition validation Source graph retained from L1; representation here does not reclassify
+      its origin.
+    entry: N-VLD-BOOK-CANCEL-START
+    nodes:
+    - {id: N-VLD-BOOK-CANCEL-START, kind: start, description: Start}
+    - {id: N-VLD-BOOK-CANCEL-READ, kind: action, description: Read booking status}
+    - {id: N-VLD-BOOK-CANCEL-ACTIVE, kind: decision, description: 'Status active?'}
+    - {id: N-VLD-BOOK-CANCEL-PASS, kind: end, description: Transition allowed}
+    - {id: N-VLD-BOOK-CANCEL-FAIL, kind: failure, description: Already cancelled}
+    edges:
+    - {id: E-VLD-BOOK-CANCEL-1, from: N-VLD-BOOK-CANCEL-START, to: N-VLD-BOOK-CANCEL-READ, condition: Unconditional
+        passage, action: ''}
+    - {id: E-VLD-BOOK-CANCEL-2, from: N-VLD-BOOK-CANCEL-READ, to: N-VLD-BOOK-CANCEL-ACTIVE, condition: Unconditional
+        passage, action: ''}
+    - {id: E-VLD-BOOK-CANCEL-3, from: N-VLD-BOOK-CANCEL-ACTIVE, to: N-VLD-BOOK-CANCEL-FAIL, condition: 'no', action: ''}
+    - {id: E-VLD-BOOK-CANCEL-4, from: N-VLD-BOOK-CANCEL-ACTIVE, to: N-VLD-BOOK-CANCEL-PASS, condition: 'yes', action: ''}
+  - id: GRAPH-BOOKING-LOOKUP
+    owner_ref: UC-BOOKING-LOOKUP
+    kind: flow
+    summary: Locate booking Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-BOOK-LOOK-START
+    nodes:
+    - {id: N-BOOK-LOOK-START, kind: start, description: Start}
+    - {id: N-BOOKING-LOOKUP-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-BOOKING-LOOKUP-DENIED, kind: failure, description: Denied; no collaborator}
+    - {id: N-BOOK-LOOK-CODE, kind: action, description: Apply VLD-BOOKING-CODE}
+    - {id: N-BOOK-LOOK-CODEC, kind: decision, description: 'Code valid?'}
+    - {id: N-BOOK-LOOK-INVALID, kind: failure, description: 'Refuse: invalid code'}
+    - {id: N-BOOK-LOOK-LOAD, kind: action, description: Load booking}
+    - {id: N-BOOK-LOOK-NOTFOUND, kind: failure, description: 'Refuse: not found'}
+    - {id: N-BOOK-LOOK-FAIL, kind: failure, description: Report store unavailable}
+    - {id: N-BOOK-LOOK-FOUND, kind: end, description: Booking found}
+    edges:
+    - {id: E-BOOK-LOOK-1, from: N-BOOK-LOOK-START, to: N-BOOKING-LOOKUP-AUTH, condition: Unconditional passage,
+      action: ''}
+    - {id: E-BOOK-LOOK-2, from: N-BOOK-LOOK-CODE, to: N-BOOK-LOOK-CODEC, condition: Unconditional passage, action: ''}
+    - {id: E-BOOK-LOOK-3, from: N-BOOK-LOOK-CODEC, to: N-BOOK-LOOK-INVALID, condition: fail, action: ''}
+    - {id: E-BOOK-LOOK-4, from: N-BOOK-LOOK-CODEC, to: N-BOOK-LOOK-LOAD, condition: pass, action: ''}
+    - {id: E-BOOK-LOOK-5, from: N-BOOK-LOOK-LOAD, to: N-BOOK-LOOK-NOTFOUND, condition: NOT_FOUND, action: ''}
+    - {id: E-BOOK-LOOK-6, from: N-BOOK-LOOK-LOAD, to: N-BOOK-LOOK-FAIL, condition: STORE_UNAVAILABLE, action: ''}
+    - {id: E-BOOK-LOOK-7, from: N-BOOK-LOOK-LOAD, to: N-BOOK-LOOK-FOUND, condition: loaded, action: ''}
+    - {id: E-BOOKING-LOOKUP-ALLOW, from: N-BOOKING-LOOKUP-AUTH, to: N-BOOK-LOOK-CODE, condition: authorized, action: ''}
+    - {id: E-BOOKING-LOOKUP-DENY, from: N-BOOKING-LOOKUP-AUTH, to: N-BOOKING-LOOKUP-DENIED, condition: missing /
+        unresolved / insufficient, action: ''}
+  - id: GRAPH-BOOKING-CREATE
+    owner_ref: UC-BOOKING-CREATE
+    kind: flow
+    summary: Create booking Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-BOOK-CREATE-START
+    nodes:
+    - {id: N-BOOK-CREATE-START, kind: start, description: Start}
+    - {id: N-BOOKING-CREATE-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-BOOKING-CREATE-DENIED, kind: failure, description: Denied; no collaborator}
+    - {id: N-BOOK-CREATE-CODE, kind: action, description: Apply VLD-BOOKING-CODE}
+    - {id: N-BOOK-CREATE-CODEC, kind: decision, description: 'Code valid?'}
+    - {id: N-BOOK-CREATE-INVALID, kind: failure, description: Invalid code or title}
+    - {id: N-BOOK-CREATE-SAVE, kind: action, description: Save active booking}
+    - {id: N-BOOK-CREATE-DUP, kind: failure, description: Report VERSION_CONFLICT}
+    - {id: N-BOOK-CREATE-FAIL, kind: failure, description: Report STORE_UNAVAILABLE}
+    - {id: N-BOOK-CREATE-DONE, kind: end, description: Booking created}
+    - {id: N-BOOK-CREATE-TITLE, kind: action, description: Apply title validity}
+    - {id: N-BOOK-CREATE-TITLEVALID, kind: decision, description: 'Title valid?'}
+    edges:
+    - {id: E-BOOK-CREATE-1, from: N-BOOK-CREATE-START, to: N-BOOKING-CREATE-AUTH, condition: Unconditional passage,
+      action: ''}
+    - {id: E-BOOK-CREATE-2, from: N-BOOK-CREATE-CODE, to: N-BOOK-CREATE-CODEC, condition: Unconditional passage,
+      action: ''}
+    - {id: E-BOOK-CREATE-3, from: N-BOOK-CREATE-CODEC, to: N-BOOK-CREATE-INVALID, condition: fail, action: ''}
+    - {id: E-BOOK-CREATE-4, from: N-BOOK-CREATE-CODEC, to: N-BOOK-CREATE-TITLE, condition: pass, action: ''}
+    - {id: E-BOOK-CREATE-5, from: N-BOOK-CREATE-SAVE, to: N-BOOK-CREATE-DUP, condition: VERSION_CONFLICT, action: ''}
+    - {id: E-BOOK-CREATE-6, from: N-BOOK-CREATE-SAVE, to: N-BOOK-CREATE-FAIL, condition: STORE_UNAVAILABLE, action: ''}
+    - {id: E-BOOK-CREATE-7, from: N-BOOK-CREATE-SAVE, to: N-BOOK-CREATE-DONE, condition: saved, action: ''}
+    - {id: E-BOOK-CREATE-TITLE-1, from: N-BOOK-CREATE-TITLE, to: N-BOOK-CREATE-TITLEVALID, condition: Unconditional
+        passage, action: ''}
+    - {id: E-BOOK-CREATE-TITLE-2, from: N-BOOK-CREATE-TITLEVALID, to: N-BOOK-CREATE-INVALID, condition: fail, action: ''}
+    - {id: E-BOOK-CREATE-TITLE-3, from: N-BOOK-CREATE-TITLEVALID, to: N-BOOK-CREATE-SAVE, condition: pass, action: ''}
+    - {id: E-BOOKING-CREATE-ALLOW, from: N-BOOKING-CREATE-AUTH, to: N-BOOK-CREATE-CODE, condition: authorized, action: ''}
+    - {id: E-BOOKING-CREATE-DENY, from: N-BOOKING-CREATE-AUTH, to: N-BOOKING-CREATE-DENIED, condition: missing /
+        unresolved / insufficient, action: ''}
+  - id: GRAPH-BOOKING-CANCEL
+    owner_ref: UC-BOOKING-CANCEL
+    kind: flow
+    summary: Cancel booking Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-BOOK-CANCEL-START
+    nodes:
+    - {id: N-BOOK-CANCEL-START, kind: start, description: Start}
+    - {id: N-BOOKING-CANCEL-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-BOOKING-CANCEL-DENIED, kind: failure, description: Denied; no collaborator}
+    - {id: N-BOOK-CANCEL-LOOK, kind: action, description: Call UC-BOOKING-LOOKUP}
+    - {id: N-BOOK-CANCEL-FOUND, kind: decision, description: 'Booking found?'}
+    - {id: N-BOOK-CANCEL-NOTFOUND, kind: failure, description: 'Refuse: not found'}
+    - {id: N-BOOK-CANCEL-VALIDATE, kind: action, description: Apply VLD-BOOKING-CANCEL}
+    - {id: N-BOOK-CANCEL-VALID, kind: decision, description: 'Transition allowed?'}
+    - {id: N-BOOK-CANCEL-ALREADY, kind: failure, description: 'Refuse: already cancelled'}
+    - {id: N-BOOK-CANCEL-SAVE, kind: action, description: Save cancelled booking}
+    - {id: N-BOOK-CANCEL-ERROR, kind: failure, description: Report store failure}
+    - {id: N-BOOK-CANCEL-DONE, kind: end, description: Booking cancelled}
+    - {id: N-BOOK-CANCEL-INVALID, kind: failure, description: Invalid code; no write}
+    - {id: N-BOOK-CANCEL-LOOKDENIED, kind: failure, description: Lookup denied; no write}
+    edges:
+    - {id: E-BOOK-CANCEL-1, from: N-BOOK-CANCEL-START, to: N-BOOKING-CANCEL-AUTH, condition: Unconditional passage,
+      action: ''}
+    - {id: E-BOOK-CANCEL-2, from: N-BOOK-CANCEL-LOOK, to: N-BOOK-CANCEL-FOUND, condition: found / not found, action: ''}
+    - {id: E-BOOK-CANCEL-3, from: N-BOOK-CANCEL-FOUND, to: N-BOOK-CANCEL-NOTFOUND, condition: 'no', action: ''}
+    - {id: E-BOOK-CANCEL-4, from: N-BOOK-CANCEL-FOUND, to: N-BOOK-CANCEL-VALIDATE, condition: 'yes', action: ''}
+    - {id: E-BOOK-CANCEL-5, from: N-BOOK-CANCEL-VALIDATE, to: N-BOOK-CANCEL-VALID, condition: Unconditional passage,
+      action: ''}
+    - {id: E-BOOK-CANCEL-6, from: N-BOOK-CANCEL-VALID, to: N-BOOK-CANCEL-ALREADY, condition: fail, action: ''}
+    - {id: E-BOOK-CANCEL-7, from: N-BOOK-CANCEL-VALID, to: N-BOOK-CANCEL-SAVE, condition: pass, action: ''}
+    - {id: E-BOOK-CANCEL-8, from: N-BOOK-CANCEL-SAVE, to: N-BOOK-CANCEL-ERROR, condition: failure, action: ''}
+    - {id: E-BOOK-CANCEL-9, from: N-BOOK-CANCEL-SAVE, to: N-BOOK-CANCEL-DONE, condition: saved, action: ''}
+    - {id: E-BOOK-CANCEL-INVALID, from: N-BOOK-CANCEL-LOOK, to: N-BOOK-CANCEL-INVALID, condition: invalid code,
+      action: ''}
+    - {id: E-BOOK-CANCEL-LOOKERROR, from: N-BOOK-CANCEL-LOOK, to: N-BOOK-CANCEL-ERROR, condition: lookup failure,
+      action: ''}
+    - {id: E-BOOK-CANCEL-LOOKDENIED, from: N-BOOK-CANCEL-LOOK, to: N-BOOK-CANCEL-LOOKDENIED, condition: lookup denied,
+      action: ''}
+    - {id: E-BOOKING-CANCEL-ALLOW, from: N-BOOKING-CANCEL-AUTH, to: N-BOOK-CANCEL-LOOK, condition: authorized, action: ''}
+    - {id: E-BOOKING-CANCEL-DENY, from: N-BOOKING-CANCEL-AUTH, to: N-BOOKING-CANCEL-DENIED, condition: missing /
+        unresolved / insufficient, action: ''}
+  - id: GRAPH-BOOKING-CANCEL-REFUSAL
+    owner_ref: UC-BOOKING-CANCEL
+    kind: flow
+    summary: Cancellation refusal subflow Source graph retained from L1; representation here does not reclassify
+      its origin.
+    entry: N-BOOK-REFUSE-START
+    nodes:
+    - {id: N-BOOK-REFUSE-START, kind: start, description: Refusal}
+    - {id: N-BOOK-REFUSE-ALREADY, kind: failure, description: 'Already cancelled: no effect'}
+    - {id: N-BOOK-REFUSE-NOTFOUND, kind: failure, description: 'Not found: no effect'}
+    edges:
+    - {id: E-BOOK-REFUSE-1, from: N-BOOK-REFUSE-START, to: N-BOOK-REFUSE-ALREADY, condition: already cancelled,
+      action: ''}
+    - {id: E-BOOK-REFUSE-2, from: N-BOOK-REFUSE-START, to: N-BOOK-REFUSE-NOTFOUND, condition: not found, action: ''}
+  - id: GRAPH-VLD-BOOKING-TITLE
+    owner_ref: VLD-BOOKING-TITLE
+    kind: flow
+    summary: Booking title validity Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-BOOK-TITLE-START
+    nodes:
+    - {id: N-VLD-BOOK-TITLE-START, kind: start, description: Receive title}
+    - {id: N-VLD-BOOK-TITLE-CHECK, kind: decision, description: 'Meaningful text?'}
+    - {id: N-VLD-BOOK-TITLE-PASS, kind: end, description: Pass unchanged}
+    - {id: N-VLD-BOOK-TITLE-FAIL, kind: failure, description: Invalid title}
+    edges:
+    - {id: E-VLD-BOOK-TITLE-1, from: N-VLD-BOOK-TITLE-START, to: N-VLD-BOOK-TITLE-CHECK, condition: Unconditional
+        passage, action: ''}
+    - {id: E-VLD-BOOK-TITLE-2, from: N-VLD-BOOK-TITLE-CHECK, to: N-VLD-BOOK-TITLE-PASS, condition: 'yes', action: ''}
+    - {id: E-VLD-BOOK-TITLE-3, from: N-VLD-BOOK-TITLE-CHECK, to: N-VLD-BOOK-TITLE-FAIL, condition: 'no', action: ''}
+advs:
+  behavioral_tests:
+  - id: BT-BOOKING-LOOKUP
+    case_ref: UC-BOOKING-LOOKUP
+    source_case_id: UC-BOOKING-LOOKUP
+    criteria_refs: [AC-BOOKING-LOOKUP-01, AC-BOOKING-LOOKUP-02, AC-BOOKING-LOOKUP-03, AC-BOOKING-LOOKUP-INVALID,
+      AC-BOOKING-LOOKUP-AUTH]
+    scenarios:
+    - id: SC-BOOKING-LOOKUP-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-BOOKING-LOOKUP directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-LOOKUP-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-01
+      category: success
+      preparation: BOOK001 is retained active at version 1; caller has lookup permission.
+      actor_context: allowed
+      action: Look up BOOK001.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A retained code returns the booking and its current status.
+      expected_effects: No persistence write; exact booking and current version returned.
+      criteria_refs: [AC-BOOKING-LOOKUP-01]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-02
+      category: alternative
+      preparation: Valid uppercase code BOOK999 is absent.
+      actor_context: allowed
+      action: Look up BOOK999.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An unknown code returns not found, not an empty booking.
+      expected_effects: Confirmed not-found; no fabricated empty booking or write.
+      criteria_refs: [AC-BOOKING-LOOKUP-02]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-03
+      category: failure
+      preparation: Load capability returns STORE_UNAVAILABLE.
+      actor_context: allowed
+      action: Look up valid BOOK001.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An unavailable store is distinguished from not found.
+      expected_effects: Failure stays distinct from not-found; no write.
+      criteria_refs: [AC-BOOKING-LOOKUP-03]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-LOOKUP-INVALID
+      category: limit
+      preparation: Codes book001 and BOOK-001; load spy enabled.
+      actor_context: allowed
+      action: Look up each invalid code.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A lowercase or punctuated code fails the canonical code rule and no load is invoked.
+      expected_effects: Canonical code refusal; load not called.
+      criteria_refs: [AC-BOOKING-LOOKUP-INVALID]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    supporting_check_refs: [CHK-OP-BOOKING-LOAD]
+    status: planned
+  - id: BT-BOOKING-CREATE
+    case_ref: UC-BOOKING-CREATE
+    source_case_id: UC-BOOKING-CREATE
+    criteria_refs: [AC-BOOKING-CREATE-01, AC-BOOKING-CREATE-02, AC-BOOKING-CREATE-03, AC-BOOKING-CREATE-TITLE, AC-BOOKING-CREATE-AUTH,
+      AC-BOOKING-CREATE-QUALITY]
+    scenarios:
+    - id: SC-BOOKING-CREATE-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-BOOKING-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-01
+      category: success
+      preparation: BOOK001 absent; title Annual review; trusted create and lookup permissions.
+      actor_context: allowed
+      action: Create BOOK001, then look it up.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A valid code creates an active booking and a later lookup returns it.
+      expected_effects: One active booking; save expects version zero and confirmed result has version 1.
+      criteria_refs: [AC-BOOKING-CREATE-01]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-02
+      category: limit
+      preparation: Lowercase or punctuated code; save spy enabled.
+      actor_context: allowed
+      action: Create the invalid booking.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An invalid code is refused with no retained booking.
+      expected_effects: No save or retained booking.
+      criteria_refs: [AC-BOOKING-CREATE-02]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-03
+      category: alternative
+      preparation: BOOK001 already retained or inserted concurrently; save expects version zero.
+      actor_context: allowed
+      action: Attempt create and force VERSION_CONFLICT.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A version conflict is never presented as a created booking.
+      expected_effects: No created result and no overwrite by this invocation.
+      criteria_refs: [AC-BOOKING-CREATE-03]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-TITLE
+      category: limit
+      preparation: Valid BOOK001 code and whitespace-only title; save spy enabled.
+      actor_context: allowed
+      action: Create the booking.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A whitespace-only title is refused and OP-BOOKING-SAVE is not invoked.
+      expected_effects: No save; no title normalization to manufacture validity.
+      criteria_refs: [AC-BOOKING-CREATE-TITLE]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CREATE-QUALITY
+      category: limit
+      preparation: Declare the local didactic configuration, input population, trusted caller and visible result
+        boundary. Use a monotonic clock.
+      actor_context: allowed
+      action: Run 30 creation requests against the declared configuration and record elapsed time.
+      observed_boundary: The creation stimulus is accepted. -> The result is visible.
+      configuration: Planned interaction-scoped measurement in the source didactic configuration; a selected channel
+        and realization are required. Direct-core timing alone does not establish visible response time.
+      expected_result: 'In the declared didactic configuration, demonstrate the canonical quality criterion and
+        its stated verification procedure; preserve its status as a teaching assumption, not a measured production
+        claim. Oracle: Visible result time is at most 2 seconds. Measurement: The creation stimulus is accepted.
+        -> The result is visible.'
+      expected_effects: Apply the case outcomes; timing does not relax authorization, validity or persistence obligations.
+        No measurement has been executed.
+      criteria_refs: [AC-BOOKING-CREATE-QUALITY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE]
+    supporting_check_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE, CHK-OP-BOOKING-SAVE]
+    status: planned
+  - id: BT-BOOKING-CANCEL
+    case_ref: UC-BOOKING-CANCEL
+    source_case_id: UC-BOOKING-CANCEL
+    criteria_refs: [AC-BOOKING-CANCEL-01, AC-BOOKING-CANCEL-02, AC-BOOKING-CANCEL-03, AC-BOOKING-CANCEL-FAILURE,
+      AC-BOOKING-CANCEL-CONTEXT, AC-BOOKING-CANCEL-AUTH, AC-BOOKING-CANCEL-QUALITY]
+    scenarios:
+    - id: SC-BOOKING-CANCEL-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-BOOKING-CANCEL directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-01
+      category: success
+      preparation: BOOK001 active at version 1; caller holds both cancellation and lookup permissions.
+      actor_context: allowed
+      action: Cancel BOOK001 through the composed lookup and conditional save.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Cancelling an active booking returns cancelled and retains the code.
+      expected_effects: Status cancelled, exact code/title retained, successful save increments version to 2.
+      criteria_refs: [AC-BOOKING-CANCEL-01]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-02
+      category: alternative
+      preparation: BOOK001 already cancelled at version 2; save spy enabled.
+      actor_context: allowed
+      action: Cancel BOOK001 again.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Cancelling an already-cancelled booking is refused with no data change.
+      expected_effects: Refusal and no save or version increment.
+      criteria_refs: [AC-BOOKING-CANCEL-02]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-03
+      category: alternative
+      preparation: Run once with BOOK999 absent and once with BOOK001 already cancelled.
+      actor_context: allowed
+      action: Cancel each code and compare outcomes.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A lookup not-found is distinguishable from an already-cancelled refusal.
+      expected_effects: Not-found and already-cancelled remain distinct; neither invokes save.
+      criteria_refs: [AC-BOOKING-CANCEL-03]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-FAILURE
+      category: failure
+      preparation: Run a failed lookup, a save failure guaranteed not_applied, and a save acknowledgement loss yielding
+        unknown.
+      actor_context: allowed
+      action: Cancel a valid code under each fault; inspect save and retry counters.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An unavailable lookup or save remains a failure; an unknown write is not reported as no change,
+        success, or retried automatically.
+      expected_effects: Failed lookup invokes no save. Unknown save leaves state uncertain; no automatic retry or
+        false no-change claim.
+      criteria_refs: [AC-BOOKING-CANCEL-FAILURE]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-CONTEXT
+      category: authorization
+      preparation: Resolved principal has cancellation permission but lacks lookup permission; record forwarded
+        context and save calls.
+      actor_context: allowed
+      action: Cancel BOOK001 and inspect the called lookup authorization.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A caller allowed to cancel but not to locate is denied by the composed lookup, with the same
+        principal preserved and no save.
+      expected_effects: Same principal/context reaches lookup; its denial stops cancellation before save or disclosure.
+      criteria_refs: [AC-BOOKING-CANCEL-CONTEXT]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-BOOKING-CANCEL-QUALITY
+      category: limit
+      preparation: Declare the local didactic configuration, input population, trusted caller and visible result
+        boundary. Use a monotonic clock.
+      actor_context: allowed
+      action: Run 30 creation requests against the declared configuration and record elapsed time.
+      observed_boundary: The creation stimulus is accepted. -> The result is visible.
+      configuration: Planned interaction-scoped measurement in the source didactic configuration; a selected channel
+        and realization are required. Direct-core timing alone does not establish visible response time.
+      expected_result: 'In the declared didactic configuration, demonstrate the canonical quality criterion and
+        its stated verification procedure; preserve its status as a teaching assumption, not a measured production
+        claim. Oracle: Visible result time is at most 2 seconds. Measurement: The creation stimulus is accepted.
+        -> The result is visible.'
+      expected_effects: Apply the case outcomes; timing does not relax authorization, validity or persistence obligations.
+        No measurement has been executed.
+      criteria_refs: [AC-BOOKING-CANCEL-QUALITY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Preserves the referenced canonical creation procedure. DEC-QUALITY-SCOPE records the unresolved
+        cancellation-specific measurement boundary; this scenario is not proof of cancellation latency.
+      check_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE]
+    supporting_check_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE, CHK-OP-BOOKING-SAVE]
+    status: planned
+  supporting_checks:
+  - id: CHK-RNF-BOOKING-CREATE-RESPONSE
+    purpose: 'The boundary presents the result of a creation within 2 seconds of the stimulus for inputs within
+      the declared limits. Applicability: Origin: SRC-BOOKING-BRIEF. This is a synthetic teaching obligation; any
+      numeric target and scenario count are illustrative assumptions, not an accepted production SLA or a measurement
+      made by this repository.'
+    behavioral_test_refs: [BT-BOOKING-CREATE, BT-BOOKING-CANCEL]
+    criteria_refs: [AC-BOOKING-CREATE-QUALITY, AC-BOOKING-CANCEL-QUALITY]
+    case_refs: [UC-BOOKING-CREATE, UC-BOOKING-CANCEL]
+    preparation: Select and record the realization, environment and declared source applicability. Prepare the specific
+      population or concurrency schedule required by this obligation.
+    actor_context: Trusted context permitted for each participating invocation; preserve principal and board when
+      applicable.
+    action: Run 30 creation requests against the declared configuration and record elapsed time.
+    expected_result: Visible result time is at most 2 seconds.
+    expected_effects: Only effects permitted by the participating case contracts; preserve no-write/unknown distinctions.
+    observed_boundary: The creation stimulus is accepted. -> The result is visible.
+    configuration: Future selected implementation. This is a planned check, not an observed performance, durability
+      or concurrency result.
+    reference: null
+  - id: CHK-OP-BOOKING-LOAD
+    purpose: Read one retained booking by code.
+    behavioral_test_refs: [BT-BOOKING-LOOKUP]
+    criteria_refs: []
+    case_refs: [UC-BOOKING-LOOKUP]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-BOOKING-LOAD under success and each declared failure condition.
+    expected_result: 'Success: A successful load returns one current booking.; The result reflects the stored record
+      at read time. Failures: NOT_FOUND: Distinct from an invalid code and from an unavailable store.; STORE_UNAVAILABLE:
+      Must not be reported as not found.'
+    expected_effects: 'Success: No persisted change. Failure effects: Distinct from an invalid code and from an
+      unavailable store.; Must not be reported as not found.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  - id: CHK-OP-BOOKING-SAVE
+    purpose: Persist the current data of one booking.
+    behavioral_test_refs: [BT-BOOKING-CREATE, BT-BOOKING-CANCEL]
+    criteria_refs: []
+    case_refs: [UC-BOOKING-CREATE, UC-BOOKING-CANCEL]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-BOOKING-SAVE under success and each declared failure condition.
+    expected_result: 'Success: A successful save confirms one updated retained booking.; Expected version zero means
+      insert only if the identifier is absent. A positive expected version means replace only the matching retained
+      version. Comparison and write are atomic; success increments the version by one.; VERSION_CONFLICT guarantees
+      this operation made no change; another concurrent operation may have changed the stored record.; A successful
+      save confirms the new data. Failures: VERSION_CONFLICT: This operation made no write. The existing or concurrently
+      updated record is not overwritten.; STORE_UNAVAILABLE: Distinguish write_outcome=not_applied, when supported
+      by a no-write guarantee, from unknown. Do not report success or automatically retry an unknown write.'
+    expected_effects: 'Success: The retained booking is replaced with the supplied data. Failure effects: This operation
+      made no write. The existing or concurrently updated record is not overwritten.; Distinguish write_outcome=not_applied,
+      when supported by a no-write guarantee, from unknown. Do not report success or automatically retry an unknown
+      write.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  executions: []
+  unverified_risks: [No executable application or test realization is delivered; all domain scenarios remain planned.,
+    'Production identity authority, channel mechanism and persistence implementation remain unselected.', Source
+      assumptions and open issues retain their original status; technical review is not stakeholder approval., The
+      shared response-time procedure names creation; cancellation-specific timing coverage remains unresolved in
+      L1 and is not claimed by this L2 plan.]
+  channel_obligations: []
+mirror:
+  root: docs/L2_MinervaBlueprints
+  documents: []
+  coverage: declared
+  include_patterns: []
+  exclusions: []
+traceability:
+- source_ref: ENT-BOOKING
+  target_refs: [ENT-BOOKING]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-BOOKING-CODE
+  target_refs: [VLD-BOOKING-CODE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-BOOKING-CANCEL
+  target_refs: [VLD-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-BOOKING-TITLE
+  target_refs: [VLD-BOOKING-TITLE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: TOL-BOOKING-STORE
+  target_refs: [TOL-BOOKING-STORE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-BOOKING-LOAD
+  target_refs: [OP-BOOKING-LOAD]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-BOOKING-SAVE
+  target_refs: [OP-BOOKING-SAVE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: UC-BOOKING-LOOKUP
+  target_refs: [UC-BOOKING-LOOKUP, BT-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-BOOKING-LOOKUP-01
+  target_refs: [UC-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-LOOKUP-02
+  target_refs: [UC-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-LOOKUP-03
+  target_refs: [UC-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-LOOKUP-04
+  target_refs: [UC-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-LOOKUP-AUTH
+  target_refs: [UC-BOOKING-LOOKUP]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: AC-BOOKING-LOOKUP-01
+  target_refs: [BT-BOOKING-LOOKUP, SC-BOOKING-LOOKUP-01]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-LOOKUP-02
+  target_refs: [BT-BOOKING-LOOKUP, SC-BOOKING-LOOKUP-02]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-LOOKUP-03
+  target_refs: [BT-BOOKING-LOOKUP, SC-BOOKING-LOOKUP-03]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-LOOKUP-INVALID
+  target_refs: [BT-BOOKING-LOOKUP, SC-BOOKING-LOOKUP-INVALID]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-LOOKUP-AUTH
+  target_refs: [BT-BOOKING-LOOKUP, SC-BOOKING-LOOKUP-AUTH-ABSENT, SC-BOOKING-LOOKUP-AUTH-UNRESOLVED, SC-BOOKING-LOOKUP-AUTH-UNKNOWN,
+    SC-BOOKING-LOOKUP-AUTH-INSUFFICIENT, SC-BOOKING-LOOKUP-AUTH-EXPIRED, SC-BOOKING-LOOKUP-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: UC-BOOKING-CREATE
+  target_refs: [UC-BOOKING-CREATE, BT-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-BOOKING-CREATE-01
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CREATE-02
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CREATE-03
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CREATE-04
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CREATE-TITLE
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CREATE-AUTH
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-BOOKING-CREATE-RESPONSE
+  target_refs: [UC-BOOKING-CREATE]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-BOOKING-CREATE-01
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-01]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CREATE-02
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-02]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CREATE-03
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-03]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CREATE-TITLE
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-TITLE]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CREATE-AUTH
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-AUTH-ABSENT, SC-BOOKING-CREATE-AUTH-UNRESOLVED, SC-BOOKING-CREATE-AUTH-UNKNOWN,
+    SC-BOOKING-CREATE-AUTH-INSUFFICIENT, SC-BOOKING-CREATE-AUTH-EXPIRED, SC-BOOKING-CREATE-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CREATE-QUALITY
+  target_refs: [BT-BOOKING-CREATE, SC-BOOKING-CREATE-QUALITY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: UC-BOOKING-CANCEL
+  target_refs: [UC-BOOKING-CANCEL, BT-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-BOOKING-CANCEL-01
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CANCEL-02
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CANCEL-03
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CANCEL-04
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CANCEL-05
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-BOOKING-CANCEL-AUTH
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-BOOKING-CANCEL-RESPONSE
+  target_refs: [UC-BOOKING-CANCEL]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-BOOKING-CANCEL-01
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-01]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-02
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-02]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-03
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-03]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-FAILURE
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-FAILURE]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-CONTEXT
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-CONTEXT]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-AUTH
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-AUTH-ABSENT, SC-BOOKING-CANCEL-AUTH-UNRESOLVED, SC-BOOKING-CANCEL-AUTH-UNKNOWN,
+    SC-BOOKING-CANCEL-AUTH-INSUFFICIENT, SC-BOOKING-CANCEL-AUTH-EXPIRED, SC-BOOKING-CANCEL-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-BOOKING-CANCEL-QUALITY
+  target_refs: [BT-BOOKING-CANCEL, SC-BOOKING-CANCEL-QUALITY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: RNF-BOOKING-CREATE-RESPONSE
+  target_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE]
+  relation: verifies
+  rationale: One canonical quality check preserves the source obligation and all affected cases.
+- source_ref: RNF-BOOKING-CANCEL-RESPONSE
+  target_refs: [CHK-RNF-BOOKING-CREATE-RESPONSE]
+  relation: verifies
+  rationale: Reference to the same canonical quality obligation, not an independently redefined target.
+- source_ref: OP-BOOKING-LOAD
+  target_refs: [CHK-OP-BOOKING-LOAD]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.
+- source_ref: OP-BOOKING-SAVE
+  target_refs: [CHK-OP-BOOKING-SAVE]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.

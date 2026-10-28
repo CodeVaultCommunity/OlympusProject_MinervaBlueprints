@@ -46,4 +46,4 @@ O texto permanece editável. As fontes não estão embutidas, portanto devem ser
 
 ## Revisão
 
-Foram verificadas a decodificação completa dos PNGs, a transparência, a integridade dos originais e a independência dos SVGs. A revisão visual cobre cada header e diagrama nos dois idiomas, incluindo textos, conectores, cortes e legibilidade. Essa revisão verifica a apresentação dos assets, não certifica a conformidade de qualquer aplicativo.
+Foram verificadas a decodificação completa dos PNGs, a integridade dos originais e a independência dos SVGs. A revisão atual inspecionou visualmente os dois diagramas de modelo alterados, incluindo textos, conectores, cortes e legibilidade. Os outros seis renders mantêm os bytes da base; os metadados registram esse escopo. Essa revisão verifica a apresentação dos assets, não certifica a conformidade de qualquer aplicativo.

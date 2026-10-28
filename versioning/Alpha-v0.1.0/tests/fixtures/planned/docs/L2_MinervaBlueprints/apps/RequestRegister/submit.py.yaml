@@ -1,0 +1,104 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-REQUEST-SUBMIT
+source:
+  path: apps/RequestRegister/submit.py
+  app: RequestRegister
+  language: python
+  state: planned
+  sha256: null
+  purpose: Illustrate a planned source binding for UC-REQUEST-SUBMIT.
+  observation: No source has been implemented or inspected.
+units:
+- id: UNIT-REQUEST-SUBMIT
+  code_name: submit
+  kind: function
+  role: use_case
+  model_refs:
+  - UC-REQUEST-SUBMIT
+  description: Planned callable for the request submission contract.
+  attributes: []
+  operations:
+  - id: OP-REQUEST-SUBMIT-CODE
+    code_name: submit
+    contract_scope: operational
+    native_signature: submit(actor_context, code, quantity)
+    description: Authorize, validate exact code and positive quantity, then consume
+      the injected request-store contract.
+    inputs:
+    - name: actor_context
+      description: 'One request is submitted against the single request register.
+
+        Caller context must contain a resolved authenticated principal, the relevant
+        case permissions, and a validity status. Its origin is the application''s
+        trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is
+        not permitted. Missing, unresolved, expired or insufficient context is denied
+        before any validation, tool access or effect.
+
+        The initiating actor is ACT-REQUESTER. The actor is a role; the caller is
+        the concrete principal. The identity/authentication mechanism and channel
+        encoding remain later design decisions.'
+      type:
+        kind: entity
+        ref: ENT-CALLER-CONTEXT
+        nullable: true
+      required: true
+    - name: request_code
+      description: The code that identifies the request.
+      type:
+        kind: primitive
+        name: string
+      required: true
+    - name: quantity
+      description: The number of units requested.
+      type:
+        kind: primitive
+        name: integer
+      required: true
+    outputs:
+    - name: result
+      description: The request is retained and confirmed.
+      type:
+        kind: entity
+        ref: ENT-REQUEST
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Retain one valid request and confirm the stored record.
+      steps:
+      - 'Start: the case receives the request and actor. If the actor is not permitted,
+        refuse with no effects (RF-REQUEST-01).'
+      - Apply VLD-REQUEST-CODE before the quantity check. An invalid code is refused
+        without storage (RF-REQUEST-07).
+      - Apply VLD-REQUEST-QUANTITY (RF-REQUEST-02). A fail result refuses the request
+        as invalid data.
+      - On pass, call OP-REQUEST-STORE (RF-REQUEST-03). A stored result produces the
+        confirmed outcome (RF-REQUEST-05). STORE_UNAVAILABLE produces the store-unavailable
+        failure (RF-REQUEST-04).
+      - DUPLICATE_CODE is the duplicate refusal with no change to the preexisting
+        request (RF-REQUEST-06). A write failure retains its known-not-applied versus
+        unknown distinction (RF-REQUEST-04).
+      preconditions:
+      - Requests may arrive without valid caller context; the explicit denial path
+        handles them before any collaborator is invoked.
+      postconditions:
+      - 'On OUT-REQUEST-CONFIRMED: The request is retained and confirmed.'
+      - 'On OUT-REQUEST-INVALID: The code or quantity is invalid; the request is refused.'
+      - 'On OUT-REQUEST-DENIED: The actor is absent or not permitted.'
+      - 'On OUT-REQUEST-STORE-FAILURE: The store reports that it is unavailable.'
+      - 'On OUT-REQUEST-DUPLICATE: The request code is already retained.'
+      effects:
+      - 'On OUT-REQUEST-CONFIRMED: One new request record exists in the store.'
+      - 'On OUT-REQUEST-INVALID: No store call and no retained record.'
+      - 'On OUT-REQUEST-DENIED: No validation, store call, or retained record.'
+      - 'On OUT-REQUEST-STORE-FAILURE: No confirmed request is reported.'
+      - 'On OUT-REQUEST-DUPLICATE: This invocation leaves the existing request unchanged.'
+      graph_refs: []
+graphs: []
+dependencies: []
+limitations:
+- Technical fixture, not an additional Atlas example or a complete ADMV instance.
+- The planned function and scenarios have not been executed.

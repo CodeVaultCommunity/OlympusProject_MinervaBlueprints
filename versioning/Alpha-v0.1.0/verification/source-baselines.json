@@ -74,31 +74,94 @@
       "sha256": "c695b889a86ca51942559fb2d88c7d4e192f312eff8dfb3fa2e1e74a92c8cb8f"
     },
     {
-      "source": "Prior combined Vulcan proposal",
-      "edition": "Alpha-v0.1.0-Alkimim",
-      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
-      "source_path": "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
-      "snapshot_path": "verification/sources/legacy-vulcan/README.pt-br.md.txt",
-      "size_bytes": 42411,
-      "sha256": "3d4c0571bb1ea9218cf2250d93a7a76a0c7bf4a8f270926eba3f4628e5c8d04b"
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/minimal/example.atlas.json",
+      "snapshot_path": "examples/minimal/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 59472,
+      "sha256": "731ef7e7f9e0dcda1b9dea1cae45a51a43bd16083948dae121d18fdd77bc746e"
     },
     {
-      "source": "Prior combined Vulcan proposal",
-      "edition": "Alpha-v0.1.0-Alkimim",
-      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
-      "source_path": "versioning/Alpha-v0.1.0-Alkimim/references/YAML-FORMAT.pt-br.md",
-      "snapshot_path": "verification/sources/legacy-vulcan/YAML-FORMAT.pt-br.md.txt",
-      "size_bytes": 14504,
-      "sha256": "9e69d0e04cc220bf89f8b23927b1bebda00bbf6525bfc868aba9061f6e9148c3"
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/minimal/assets/request-form.png",
+      "snapshot_path": "examples/minimal/docs/L1_AtlasSpecifications/assets/request-form.png",
+      "size_bytes": 22242,
+      "sha256": "5dd57bf8bccc9bcd9b68e1be1ea50163777caf93d83f6fbfec1a099eb1d84347"
     },
     {
-      "source": "Prior combined Vulcan proposal",
-      "edition": "Alpha-v0.1.0-Alkimim",
-      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
-      "source_path": "LICENSE",
-      "snapshot_path": "verification/sources/legacy-vulcan/LICENSE",
-      "size_bytes": 1084,
-      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/minimal/assets/request-form.svg",
+      "snapshot_path": "examples/minimal/docs/L1_AtlasSpecifications/assets/request-form.svg",
+      "size_bytes": 1663,
+      "sha256": "f5a97fb7cb43af9681b2083fe1deebe38bb3eda24adb947c3314317fc8a24de9"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/minimal/assets/request-flow.png",
+      "snapshot_path": "examples/minimal/docs/L1_AtlasSpecifications/assets/request-flow.png",
+      "size_bytes": 73547,
+      "sha256": "53545111afdda2bcf5b113667ef14dc2233ca3f7e5e730749d3f50473ed81f8b"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/minimal/assets/request-flow.svg",
+      "snapshot_path": "examples/minimal/docs/L1_AtlasSpecifications/assets/request-flow.svg",
+      "size_bytes": 10124,
+      "sha256": "71f3a97b667a88041cc5812da8c8e7e1ddaced2f9c835e56c2c7d6d1b4252206"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/task-board/example.atlas.json",
+      "snapshot_path": "examples/task-board/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 130253,
+      "sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/composition/example.atlas.json",
+      "snapshot_path": "examples/composition/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 114924,
+      "sha256": "63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/task-board/revisions/revision-2.atlas.json",
+      "snapshot_path": "examples/task-board/revisions/revision-2/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 129459,
+      "sha256": "b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3"
+    },
+    {
+      "source": "Atlas Specifications example",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/examples/task-board/revisions/revision-3.atlas.json",
+      "snapshot_path": "examples/task-board/revisions/revision-3/docs/L1_AtlasSpecifications/example.atlas.json",
+      "size_bytes": 130253,
+      "sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8"
     }
   ]
 }

@@ -22,6 +22,7 @@ source_l1:
   revision: Unselected revision
   case_ids: []
   sha256: null
+  catalog: []
 adpm:
   types: []
   entities: []
@@ -48,3 +49,4 @@ mirror:
   coverage: declared
   include_patterns: []
   exclusions: []
+traceability: []

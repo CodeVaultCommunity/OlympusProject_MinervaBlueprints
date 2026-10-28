@@ -1,6 +1,6 @@
 # Minerva YAML · profile 0.1.0
 
-English · [Português brasileiro](README.pt-br.md) · [Model rules](../../README.md#reference-rules)
+English · [Português brasileiro](README.pt-br.md) · [Model rules](../../specification/model.md#reference-rules)
 
 This is a representation of Minerva Blueprints `Alpha-v0.1.0`, targeting OAL `Stable-v1.0.0`. The canonical [JSON Schema](../../minerva_blueprints/schemas/minerva.schema.json) is packaged with the reference validator. A representation check establishes readable supported data, not the sufficiency of its semantics.
 
@@ -10,7 +10,7 @@ Two document kinds share `format: minerva-yaml`, `model_version: Alpha-v0.1.0` a
 
 | Kind | Role | Required top-level groups |
 | --- | --- | --- |
-| `blueprint` | An integrated program/verification instance, including scope and provenance | `oal_edition`, `document`, `source_l1`, `adpm`, `advs`, `mirror` |
+| `blueprint` | An integrated program/verification instance, including scope and provenance | `oal_edition`, `document`, `source_l1`, `adpm`, `advs`, `mirror`, `traceability` |
 | `source` | A per-file binding/description; several units may occupy one file | `document_id`, `source`, `units`, `graphs`, `dependencies`, `limitations` |
 
 The `--root` option identifies the ecosystem root. Every artifact path in these documents resolves from that root. The document supplied on the command line is an ordinary filesystem path. The recommended mirror root is `docs/L2_MinervaBlueprints`; alternatives such as `design/program` are valid. Given mirror root `R` and source path `P`, the record path is exactly **`R/P.yaml`**. For example, `apps/Billing/Task.go` maps to `docs/L2_MinervaBlueprints/apps/Billing/Task.go.yaml`. Directory names and source extensions are preserved.
@@ -25,7 +25,7 @@ Paths use `/`, are relative and cannot contain `..`, drive prefixes or backslash
 | Authored state | `document.status`: `draft` or `reviewed`; review authority and pending approval remain explicit in prose |
 | Document provenance | `document.nature`: `designed`, `reconstructed` or `mixed` |
 | Decisions and observations | `document.decisions[]`: independent `id`, kind, statement, source, review status |
-| Source baseline | `source_l1`: model/version, artifact path, document identity/revision, selected case IDs, optional hash |
+| Source baseline | `source_l1`: model/version, artifact path, document identity/revision, selected case IDs, authored catalogue and hash (required for reviewed blueprints) |
 | Data entities | `adpm.entities[]`: fields, meaning, canonical construction, invariant references, behavior, dependencies |
 | Primitive refinements | `adpm.types[]`: stable ID, primitive base, textual constraints |
 | Tool capabilities | `adpm.tools[].operations[]`: semantic contract independent of mechanism |
@@ -42,7 +42,6 @@ Paths use `/`, are relative and cannot contain `..`, drive prefixes or backslash
 | Declared gaps | `advs.unverified_risks[]` and document limitations; absence of a scenario does not become approval |
 | Interaction obligations | `advs.channel_obligations[]`: statement, source and affected cases; scenarios link them through `obligation_refs` |
 | Source binding | `source.path`, app, language, state, hash, purpose and observation; `units[].model_refs` preserve logical identity |
-| Legacy structures | Several `units[]` in one source record, each independently identified and described |
 
 All objects have closed field sets in profile `0.1.0`; unknown fields are errors. There is no arbitrary extension namespace in this YAML profile. A future extension must receive an explicitly supported profile/mapping. Do not disguise unknown semantics as absent fields. This restriction belongs to the delivered profile, not to the abstract possibility of another Minerva representation.
 
@@ -79,15 +78,17 @@ Requiredness and nullability differ: required means that the argument/field is p
 
 `source.state: planned` records intended structure before code exists and requires `sha256: null`. `observed` records a source observation; a current code-correspondence claim requires matching bytes and a non-null SHA-256. Neither state says that tests ran. A `designed` blueprint may contain planned sources; a `reconstructed` blueprint records intentional reconstruction from an observed realization; `mixed` requires the decisions to explain the split. Pending issues are explicit `open_issue` decisions, draft status or limitations, not invented observation states.
 
-Each source unit identifies `code_name`, `kind`, `role`, `model_refs`, description, attributes and operations. `class`, `struct`, `function` and `module` describe physical units. Their role may be use case, entity, value object, tool, boundary, composition, test, support or legacy. Functions associated with a C/Go struct can be documented in that unit; Python symbol inspection only supports the Python forms it declares.
+Each source unit identifies `code_name`, `kind`, `role`, `model_refs`, description, attributes and operations. `class`, `struct`, `function` and `module` describe physical units. Their role may be use case, entity, value object, tool, boundary, composition, test or support. Functions associated with a C/Go struct can be documented in that unit; Python symbol inspection only supports the Python forms it declares.
 
 An operation records its semantic input/output contract and behavior; technical operations may describe injected collaborators separately. A source dependency's `from_unit` must identify a local unit; its textual `target` describes an import, call or resource observation, and is not a universal cross-language import resolver. The logical ADPM dependency graph separately resolves typed element IDs.
 
-## L1 adapter and criteria
+## Source catalogue and traceability
 
-The reference reader supports **Atlas Specifications Stable-v1.0.0 JSON** at `source_l1.artifact`. It checks the pinned document identity, revision, selected cases, criterion IDs and actors. It is not the full Atlas semantic validator; use the Atlas tool independently. Other models may have a valid abstract L2 mapping, but this tool reports their adapter as unsupported.
+`source_l1` identifies the model, revision, artifact, hash and selected cases. `catalog` is an authored Minerva list: each entry contains `ref`, `kind`, `statement` and, where relevant, `case_refs`, `actor_refs` and an editorial `source_pointer`. Source identities occupy a separate namespace from L2 IDs. No Atlas reader is included; the L1 file is read only as bytes for hashing.
 
-An explicitly selected Atlas extension, `atlas.extensions.minerva_shared_criteria`, can carry a list of `{id, case_ids, statement}` records. Each shared criterion needs a canonical nonempty statement and all participating cases in the selected scope. Each affected behavioral test lists the criterion; the common supporting check links all those tests reciprocally. This is an **adapter convention**, not a new Atlas normative field or an extra UCS case. The regression suite demonstrates both complete and incomplete shared links.
+`traceability` contains `source_ref`, `target_refs`, `relation` (`preserves`, `refines` or `verifies`) and `rationale`. Declared in-scope requirements and criteria require links. `source_entity_id` resolves a declared entity; `origin_refs` resolves a typed origin or an explicit decision; actors are checked against the declared source-case set. These checks do not prove correct catalogue transcription. Separate review must compare source, catalogue and oracles.
+
+Shared obligations preserve a canonical definition and reciprocal links between supporting checks and affected tests. [Atlas integration](../../integrations/atlas/mapping.md) explains the documentary mapping of native references without changing Atlas.
 
 ## Graph semantics
 
@@ -104,7 +105,7 @@ The loader accepts a deliberately restricted YAML scalar subset: lowercase `true
 ```bash
 # From the edition directory
 python validator/minerva_validate.py examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml --root examples/minimal --json
-python examples/counterexamples/check.py
+python tests/fixtures/counterexamples/check.py
 ```
 
 First validate structure. Then inspect source links, case/test cardinality, criterion coverage, typed references, ownership and graph checks. Review the semantics and open issues. Only request `--verify-code` against a supplied realization; inspect its hashes and symbol correspondence. Execute application tests separately and record genuine results with the evaluated revision and environment. This profile does not write or approve code, perform a layer derivation, or turn a source inspection into an execution report.

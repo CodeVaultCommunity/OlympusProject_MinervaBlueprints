@@ -4,132 +4,209 @@ profile_version: 0.1.0
 kind: blueprint
 oal_edition: Stable-v1.0.0
 document:
-  id: MINERVA-MINIMAL
-  revision: '1'
+  id: MINERVA-REQUEST-REGISTER
+  revision: '2'
   status: reviewed
-  nature: reconstructed
-  title: Minimal list-task scope
-  responsible: 'Project author: Douglas de Oliveira Alkimim. This alpha example was prepared and technically reviewed
-    with AI assistance; project-owner approval is pending.'
-  scope: One selected ListTasks case from the reconstructed Atlas source; other source cases are explicitly outside
-    this blueprint scope.
-  limitations:
-  - This is a manually reconstructed teaching source, not a derivation of the TaskBoard published in the Atlas repository.
-  - Program text and expected scenarios require semantic review; successful consistency checks are not proof of
-    runtime behavior.
-  - Minerva copies of source records preserve observations from the companion Vulcan example. Source code is delivered
-    by that companion example.
-  - reviewed denotes technical review for this candidate edition, not approval by the project owner. The user has
-    not approved this alpha delivery.
+  nature: designed
+  title: Minimal request register â€” program and verification model
+  responsible: 'Project author: Douglas de Oliveira Alkimim. AI-assisted preparation and technical review; project-owner
+    semantic acceptance is pending.'
+  scope: All 1 source cases, their contracts and acceptance criteria. No realization or channel implementation is
+    claimed.
+  limitations: ['Source remains the canonical L1 package; the catalogue is a manually checked Minerva declaration,
+      not independently parsed by the validator.', 'L1 boundary illustrations remain proposals; no web form, CLI
+      or HTTP protocol is mandated by this L2.', 'No application code, source observation, test execution or stakeholder
+      approval is asserted.']
   decisions:
-  - id: DEC-TASKBOARD-ORIGIN
-    kind: observation
-    statement: This blueprint was authored from the revised Vulcan teaching example and its explicitly reconstructed
-      Atlas source.
-    source: Companion Vulcan Ecosystem Alpha-v0.1.0 and local Atlas artifact.
-    review_status: reviewed
-  - id: DEC-TASKBOARD-CONTEXT
-    kind: decision
-    statement: Represent invocation context as a local entity distinct from business payload data. No universal
-      base class is imposed.
-    source: Selected realization and OAL actor-context obligation.
-    review_status: reviewed
-  - id: DEC-OWNER-REVIEW
-    kind: open_issue
-    statement: Obtain project-owner review of this candidate model and its teaching examples.
-    source: Current delivery review remains pending.
-    review_status: draft
+  - {id: DEC-CALLER-CONTEXT, kind: decision, statement: Represent the required trusted caller context as an explicit
+      L2 entity and nullable case input so denial can be specified. No identity provider or channel mechanism is
+      selected., source: Source case context and authorization contracts., review_status: reviewed}
+  - {id: DEC-MANUAL-DERIVATION, kind: decision, statement: AI-assisted editorial derivation of the pinned Atlas
+      example into Minerva. Exact source text extraction and authored scenario design were reviewed together; no
+      reusable translator or source-model reader is delivered., source: User-authorized revision of unpublished
+      Alpha-v0.1.0., review_status: reviewed}
+  - {id: DEC-OWNER-REVIEW, kind: open_issue, statement: Project-owner acceptance of the resulting model and examples
+      remains pending; authorization to edit is not semantic acceptance., source: Current candidate preparation.,
+    review_status: draft}
+  - {id: ASM-REQUEST-STORE-UNIQUE, kind: assumption, statement: A future implementation of the request store can
+      enforce code uniqueness atomically., source: 'Pinned Atlas source /atlas/assumptions; original status: open',
+    review_status: draft}
+  - {id: OI-REQUEST-LATENCY, kind: open_issue, statement: The 2-second target is a verifiable example target; a
+      production adoption must confirm it with stakeholders., source: 'Pinned Atlas source /atlas/open_issues; original
+      status: open', review_status: draft}
 source_l1:
   model: Atlas Specifications
   model_version: Stable-v1.0.0
-  artifact: docs/L1_AtlasSpecifications/task-board.atlas.json
-  document_id: ATLAS-VULCAN-TASKBOARD
-  revision: '1'
-  case_ids:
-  - UC-TASK-002
-  sha256: e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886
+  artifact: docs/L1_AtlasSpecifications/example.atlas.json
+  document_id: ATLAS-EX-MINIMAL
+  revision: '2'
+  case_ids: [UC-REQUEST-SUBMIT]
+  sha256: 731ef7e7f9e0dcda1b9dea1cae45a51a43bd16083948dae121d18fdd77bc746e
+  catalog:
+  - {ref: ACT-REQUESTER, kind: actor, statement: Requester, source_pointer: /atlas/actors/0}
+  - {ref: ENT-REQUEST, kind: entity, statement: Request, source_pointer: /atlas/entities/0}
+  - {ref: FLD-REQUEST-CODE, kind: field, statement: Request code, source_pointer: /atlas/entities/0/fields/0}
+  - {ref: FLD-REQUEST-QUANTITY, kind: field, statement: Quantity, source_pointer: /atlas/entities/0/fields/1}
+  - {ref: VLD-REQUEST-QUANTITY, kind: validation, statement: The quantity field is valid when its value is an integer
+      greater than or equal to 1., source_pointer: /atlas/entities/0/validations/0}
+  - {ref: VLD-REQUEST-CODE, kind: validation, statement: The code must be text containing at least one character.
+      Preserve the code exactly; case is significant., source_pointer: /atlas/entities/0/validations/1}
+  - {ref: TOL-REQUEST-STORE, kind: tool, statement: Request store, source_pointer: /atlas/tools/0}
+  - {ref: OP-REQUEST-STORE, kind: operation, statement: Store request, source_pointer: /atlas/tools/0/operations/0}
+  - ref: UC-REQUEST-SUBMIT
+    kind: case
+    statement: Submit request
+    source_pointer: /atlas/use_cases/0
+    actor_refs: [ACT-REQUESTER]
+  - ref: RF-REQUEST-01
+    kind: requirement
+    statement: The case admits only an actor with the requester permission and refuses every other actor before
+      any validation, store call, or effect.
+    source_pointer: /atlas/use_cases/0/functional_requirements/0
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-02
+    kind: requirement
+    statement: The case applies VLD-REQUEST-QUANTITY to the supplied quantity and, when the validation reports fail,
+      refuses the request with the invalid-data outcome and no store call.
+    source_pointer: /atlas/use_cases/0/functional_requirements/1
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-03
+    kind: requirement
+    statement: After a passing validation, the case calls OP-REQUEST-STORE with the code and quantity; a stored
+      result produces the confirmation outcome.
+    source_pointer: /atlas/use_cases/0/functional_requirements/2
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-04
+    kind: requirement
+    statement: 'When OP-REQUEST-STORE reports STORE_UNAVAILABLE, the case reports the store-unavailable failure
+      and does not claim a confirmed request.
+
+      Preserve whether the tool guarantees not_applied or reports unknown. A lost confirmation is not evidence of
+      no write; do not automatically retry.'
+    source_pointer: /atlas/use_cases/0/functional_requirements/3
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-05
+    kind: requirement
+    statement: A confirmed request result contains the supplied code and quantity and identifies the new record.
+    source_pointer: /atlas/use_cases/0/functional_requirements/4
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-06
+    kind: requirement
+    statement: When OP-REQUEST-STORE reports DUPLICATE_CODE, refuse the duplicate and leave the existing request
+      unchanged; do not report confirmation.
+    source_pointer: /atlas/use_cases/0/functional_requirements/5
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RF-REQUEST-07
+    kind: requirement
+    statement: After authorization and before quantity validation, apply VLD-REQUEST-CODE. Refuse invalid code without
+      storage; preserve valid code exactly.
+    source_pointer: /atlas/use_cases/0/functional_requirements/6
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: RNF-REQUEST-01
+    kind: requirement
+    statement: For inputs within the declared field limits and an available store, the boundary presents a confirmed
+      or refused result within 2 seconds of the submit stimulus.
+    source_pointer: /atlas/use_cases/0/nonfunctional_requirements/0
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-01
+    kind: criterion
+    statement: A requester with a valid code and quantity of 2 receives a confirmed result; a later lookup of the
+      code returns quantity 2.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/0
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-02
+    kind: criterion
+    statement: A quantity of 0 is refused as invalid data, and no record is created.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/1
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-03
+    kind: criterion
+    statement: An actor absent from the permitted set is refused before validation or store access.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/2
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-04
+    kind: criterion
+    statement: Submit the same code twice. The second attempt reports duplicate-code refusal and preserves the first
+      retained quantity.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/3
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-05
+    kind: criterion
+    statement: If a store write has an unknown final outcome, return the failure without claiming success or no
+      write and without automatic retry.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/4
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-06
+    kind: criterion
+    statement: An empty code is refused before quantity validation and store invocation.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/5
+    case_refs: [UC-REQUEST-SUBMIT]
+  - ref: AC-REQUEST-SUBMIT-QUALITY
+    kind: criterion
+    statement: In the declared didactic configuration, demonstrate the canonical quality criterion and its stated
+      verification procedure; preserve its status as a teaching assumption, not a measured production claim.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/6
+    case_refs: [UC-REQUEST-SUBMIT]
 adpm:
   types: []
   entities:
-  - id: ENT-TASK
-    source_entity_id: ENT-TASK
-    name: Task
-    meaning: An identified item retained in the shared local task list.
+  - id: ENT-REQUEST
+    source_entity_id: ENT-REQUEST
+    name: Request
+    meaning: A request asks the register to retain a quantity of a catalog code. The request is identified by its
+      code.
     fields:
-    - name: task_id
-      type:
-        kind: primitive
-        name: string
-      description: Stable generated identity.
+    - name: request_code
+      description: 'A non-empty code chosen by the requester. Constraints: The code is preserved exactly; case is
+        significant.'
+      type: {kind: primitive, name: string}
       required: true
-    - name: title
-      type:
-        kind: primitive
-        name: string
-      description: Canonical stripped title.
+      cardinality: '1'
+    - name: quantity
+      description: 'The number of units requested. Constraints: The value must be an integer greater than or equal
+        to 1.'
+      type: {kind: primitive, name: integer}
       required: true
-    - name: completed
-      type:
-        kind: primitive
-        name: boolean
-      description: Whether the task is completed.
-      required: true
-    invariant_refs:
-    - RULE-TASK-ID
-    - RULE-TASK-TITLE
-    - RULE-TASK-COMPLETED
-    construction: Entity_Task constructs its internal ValueObject_TaskTitle. The tool uses that canonical construction
-      for raw inputs and hydration.
+      cardinality: '1'
+    invariant_refs: [VLD-REQUEST-QUANTITY, VLD-REQUEST-CODE]
+    construction: Canonical construction/hydration enforces all field constraints and state coherence once. Named
+      transition rules apply only to their declared transition, not to every hydrated entity.
     behavior:
-      summary: Preserve identity and title; complete changes pending to completed and repeating completion keeps
-        the same state.
-      steps: []
+      summary: Preserve identity, exact data and the declared lifecycle.
+      steps: [The quantity field is valid when its value is an integer greater than or equal to 1., The code must
+          be text containing at least one character. Preserve the code exactly; case is significant.]
       preconditions: []
       postconditions: []
       effects: []
-      graph_refs:
-      - GRAPH-TASK-STATE
+      graph_refs: [GRAPH-VLD-REQUEST-QUANTITY, GRAPH-VLD-REQUEST-CODE]
     dependencies: []
-  - id: ENT-ACTOR-CONTEXT
+  - id: ENT-CALLER-CONTEXT
     source_entity_id: null
-    name: Actor context
-    meaning: Local implementation representation of trusted caller context; never trusted merely because it appears
-      in request JSON.
+    name: Caller context
+    meaning: L2 invocation data, distinct from business inputs and injected tools.
     fields:
-    - name: actor_id
-      type:
-        kind: primitive
-        name: string
-        nullable: true
-      description: Resolved caller identity or explicit absence.
+    - name: principal
+      description: Authenticated concrete caller identity.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: issuer
+      description: Trusted context issuer.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: valid
+      description: Context is resolved, known and unexpired.
+      type: {kind: primitive, name: boolean}
       required: true
     - name: permissions
+      description: Case permissions from the trusted authority.
       type:
         kind: array
-        items:
-          kind: primitive
-          name: string
-      description: Trusted permissions supplied by the selected resolver.
+        items: {kind: primitive, name: string}
       required: true
-    - name: resolution
-      type:
-        kind: primitive
-        name: string
-      description: Resolution state.
-      required: true
-    - name: known_actor
-      type:
-        kind: primitive
-        name: boolean
-      description: Whether the caller is recognized.
-      required: true
-    invariant_refs:
-    - RULE-ACTOR-CONTEXT
-    construction: Entity_ActorContext applies canonical field-type validation. Each case still checks whether the
-      context authorizes its operation.
+    invariant_refs: [RULE-CALLER-CONTEXT]
+    construction: Created by the selected trusted authority; a matching request shape does not establish trust.
     behavior:
-      summary: Represent trusted context; canPerform requires resolved, known, nonblank identity and the requested
-        permission.
+      summary: Carry caller identity and grants; each case decides its own authorization.
       steps: []
       preconditions: []
       postconditions: []
@@ -137,560 +214,498 @@ adpm:
       graph_refs: []
     dependencies: []
   tools:
-  - id: TOL-TASK-STORE
-    name: Task persistence capability
-    purpose: Provide task persistence under declared local storage semantics.
+  - id: TOL-REQUEST-STORE
+    name: Request store
+    purpose: Retain request records durably. The contract does not choose a database, transport, or file layout.
     operations:
-    - id: OP-TASK-CREATE
-      name: Create task
-      purpose: Generate a UUID4 hex identity, construct a valid Task and retain it.
+    - id: OP-REQUEST-STORE
+      name: Store request
+      purpose: Create one retained request record when its code is unused.
       inputs:
-      - name: title
-        type:
-          kind: primitive
-          name: string
-        description: Raw title to be canonically constructed.
+      - name: request_code
+        description: The code to retain.
+        type: {kind: primitive, name: string}
+        required: true
+      - name: quantity
+        description: An already validated positive integer.
+        type: {kind: primitive, name: integer}
         required: true
       outputs:
-      - name: task
-        type:
-          kind: entity
-          ref: ENT-TASK
-        description: The new retained Task.
+      - name: stored_request
+        description: The retained request with its code and quantity.
+        type: {kind: entity, ref: ENT-REQUEST}
         required: true
-      conditions:
-      - The selected persistence resource is prepared by composition.
-      guarantees:
-      - The canonical entity exists before insertion.
-      - A confirmed result remains readable after normal reopen of the same database.
-      effects:
-      - Insert exactly one new task on confirmed success.
+      conditions: [The code is not allocated to a retained request., The store is available., 'Inputs described
+          as ready entities already satisfy canonical entity invariants. Do not duplicate those validations inside
+          this tool. When constructing entities from raw retained records, use the canonical entity hydration rules;
+          operation-specific external conditions remain this tool''s responsibility.']
+      guarantees: [A successful result confirms one retained record., A duplicate-code failure leaves the existing
+          record unchanged., 'After a successful result, the record is readable by code in the same retained store.']
+      effects: [One request record is added to the retained store.]
       failures:
-      - id: FAIL-STORE-CREATE
-        condition: Storage or filesystem operation fails.
-        result: Propagate the storage failure; no automatic retry.
-        effects: Failure does not establish whether a write was applied.
-        outcome_certainty: unknown
-      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
-        rows and raw title are constructed canonically.
-      canonical_construction_refs:
-      - ENT-TASK
-      revalidates_rule_refs: []
-      contextual_conditions: []
-    - id: OP-TASK-LIST
-      name: List task
-      purpose: Read and canonically hydrate retained tasks.
-      inputs: []
-      outputs:
-      - name: tasks
-        type:
-          kind: array
-          items:
-            kind: entity
-            ref: ENT-TASK
-        description: Tasks in insertion order.
-        required: true
-      conditions:
-      - The selected persistence resource is prepared by composition.
-      guarantees:
-      - An empty store returns an empty collection.
-      - Order is insertion order, not UUID sort.
-      effects: []
-      failures:
-      - id: FAIL-STORE-LIST
-        condition: Storage or filesystem operation fails.
-        result: Propagate the storage failure; no automatic retry.
-        effects: No domain write is requested.
-        outcome_certainty: not_applicable
-      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
-        rows and raw title are constructed canonically.
-      canonical_construction_refs:
-      - ENT-TASK
-      revalidates_rule_refs: []
-      contextual_conditions: []
-    - id: OP-TASK-GET
-      name: Get task
-      purpose: Read one retained task by identity.
-      inputs:
-      - name: task_id
-        type:
-          kind: primitive
-          name: string
-        description: Identity to look up.
-        required: true
-      outputs:
-      - name: task
-        type:
-          kind: entity
-          ref: ENT-TASK
-          nullable: true
-        description: Task or absence.
-        required: true
-      conditions:
-      - The selected persistence resource is prepared by composition.
-      guarantees:
-      - Return absence when identity is not retained.
-      effects: []
-      failures:
-      - id: FAIL-STORE-GET
-        condition: Storage or filesystem operation fails.
-        result: Propagate the storage failure; no automatic retry.
-        effects: No domain write is requested.
-        outcome_certainty: not_applicable
-      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
-        rows and raw title are constructed canonically.
-      canonical_construction_refs:
-      - ENT-TASK
-      revalidates_rule_refs: []
-      contextual_conditions: []
-    - id: OP-TASK-SAVE
-      name: Save task
-      purpose: Persist the supplied ready entity.
-      inputs:
-      - name: task
-        type:
-          kind: entity
-          ref: ENT-TASK
-        description: Already valid Task.
-        required: true
-      outputs:
-      - name: task
-        type:
-          kind: entity
-          ref: ENT-TASK
-        description: Task after confirmed update.
-        required: true
-      conditions:
-      - The selected persistence resource is prepared by composition.
-      guarantees:
-      - Ready entity invariants are assumed and not revalidated.
-      - A missing retained row produces LookupError.
-      effects:
-      - Update the matching retained row.
-      failures:
-      - id: FAIL-STORE-SAVE
-        condition: Storage or filesystem operation fails.
-        result: Propagate the storage failure; no automatic retry.
-        effects: Failure does not establish whether a write was applied.
-        outcome_certainty: unknown
-      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
-        rows and raw title are constructed canonically.
+      - {id: FAIL-OP-REQUEST-STORE-DUPLICATE-CODE, condition: The code is already allocated., result: 'DUPLICATE_CODE:
+          The consumer must distinguish this from a successful store and from an unavailable store.', effects: The
+          consumer must distinguish this from a successful store and from an unavailable store., outcome_certainty: not_applied}
+      - {id: FAIL-OP-REQUEST-STORE-STORE-UNAVAILABLE, condition: The store did not confirm the write., result: 'STORE_UNAVAILABLE:
+          Return write_outcome=not_applied only when the tool can guarantee no write; otherwise return write_outcome=unknown.
+          Neither outcome is confirmation. An unknown outcome must not trigger an automatic retry.', effects: Return
+          write_outcome=not_applied only when the tool can guarantee no write; otherwise return write_outcome=unknown.
+          Neither outcome is confirmation. An unknown outcome must not trigger an automatic retry., outcome_certainty: unknown}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
       canonical_construction_refs: []
       revalidates_rule_refs: []
       contextual_conditions:
-      - id: COND-SAVE-ROW
-        condition: Exactly one retained row must match the supplied identity.
-        object: persistent row
-        purpose: Distinguish update success from absence.
-        responsibility: Persistence capability evaluates affected row count.
-    dependencies: []
-    technical_selection: Vulcan AppComposition selects Tool_SqliteTaskStore; the logical contract does not require
-      a Python base class or a database brand.
+      - {id: CTX-OP-REQUEST-STORE, condition: 'A successful result confirms one retained record.
+
+          A duplicate-code failure leaves the existing record unchanged.', object: The persisted identifier and
+          any expected version., purpose: Enforce atomic external storage conditions without repeating ready-entity
+          validity., responsibility: OP-REQUEST-STORE}
+    dependencies: [ENT-REQUEST]
+    technical_selection: Unselected; the future realization must meet this contract.
   cases:
-  - id: UC-TASK-002
-    source_case_id: UC-TASK-002
-    app: TaskBoard
-    name: List tasks
-    objective: List tasks while preserving the reconstructed demo contract.
+  - id: UC-REQUEST-SUBMIT
+    source_case_id: UC-REQUEST-SUBMIT
+    app: RequestRegister
+    name: Submit request
+    objective: Retain one valid request and confirm the stored record.
     inputs:
     - name: actor_context
-      type:
-        kind: entity
-        ref: ENT-ACTOR-CONTEXT
-        nullable: true
-      description: Invocation context supplied by the trusted resolver or explicit absence; this is not a business
-        payload field.
+      description: 'One request is submitted against the single request register.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-REQUESTER. The actor is a role; the caller is the concrete principal. The identity/authentication
+        mechanism and channel encoding remain later design decisions.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: request_code
+      description: The code that identifies the request.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: quantity
+      description: The number of units requested.
+      type: {kind: primitive, name: integer}
       required: true
     outputs:
-    - name: tasks
-      type:
-        kind: array
-        items:
-          kind: entity
-          ref: ENT-TASK
-      description: Current tasks in insertion order.
+    - name: result
+      description: The request is retained and confirmed.
+      type: {kind: entity, ref: ENT-REQUEST}
       required: true
-    collaborators:
-    - TOL-TASK-STORE
-    - OP-TASK-LIST
-    - ENT-TASK
-    - ENT-ACTOR-CONTEXT
-    rule_refs:
-    - RULE-TASK-002-AUTH
+    collaborators: [ENT-REQUEST, TOL-REQUEST-STORE, OP-REQUEST-STORE]
+    rule_refs: [RULE-REQUEST-SUBMIT-AUTH, VLD-REQUEST-QUANTITY, VLD-REQUEST-CODE]
     permission:
       context_input: actor_context
-      trust_source: Declared local resolver maps configured opaque demo tokens to fixed caller contexts; direct
-        callers supply a trusted context under this explicit trust assumption.
-      required_permissions:
-      - tasks:read
-      allowed_actor_refs:
-      - ACT-TASK-USER
-      deny_contexts:
-      - absent
-      - unresolved
-      - unknown
-      - insufficient
+      trust_source: 'One request is submitted against the single request register.
+
+        Caller context must contain a resolved authenticated principal, the relevant case permissions, and a validity
+        status. Its origin is the application''s trusted identity-and-permission authority; request fields and caller-supplied
+        role strings are not trusted authorization evidence. Anonymous execution is not permitted. Missing, unresolved,
+        expired or insufficient context is denied before any validation, tool access or effect.
+
+        The initiating actor is ACT-REQUESTER. The actor is a role; the caller is the concrete principal. The identity/authentication
+        mechanism and channel encoding remain later design decisions.'
+      required_permissions: [Permitted to submit requests.]
+      allowed_actor_refs: [ACT-REQUESTER]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
       anonymous_allowed: false
-      authentication: This local demonstration resolves configured opaque credentials; it does not claim production
-        identity infrastructure.
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
       before_effects: true
     behavior:
-      summary: List tasks under the selected capability contract.
-      steps:
-      - Authorize the supplied context.
-      - Invoke OP-TASK-LIST.
-      - Return the collection, including an empty collection.
-      preconditions: []
-      postconditions: []
-      effects: []
-      graph_refs:
-      - GRAPH-TASK-002
+      summary: Retain one valid request and confirm the stored record.
+      steps: ['Start: the case receives the request and actor. If the actor is not permitted, refuse with no effects
+          (RF-REQUEST-01).', Apply VLD-REQUEST-CODE before the quantity check. An invalid code is refused without
+          storage (RF-REQUEST-07)., Apply VLD-REQUEST-QUANTITY (RF-REQUEST-02). A fail result refuses the request
+          as invalid data., 'On pass, call OP-REQUEST-STORE (RF-REQUEST-03). A stored result produces the confirmed
+          outcome (RF-REQUEST-05). STORE_UNAVAILABLE produces the store-unavailable failure (RF-REQUEST-04).', DUPLICATE_CODE
+          is the duplicate refusal with no change to the preexisting request (RF-REQUEST-06). A write failure retains
+          its known-not-applied versus unknown distinction (RF-REQUEST-04).]
+      preconditions: [Requests may arrive without valid caller context; the explicit denial path handles them before
+          any collaborator is invoked.]
+      postconditions: ['On OUT-REQUEST-CONFIRMED: The request is retained and confirmed.', 'On OUT-REQUEST-INVALID:
+          The code or quantity is invalid; the request is refused.', 'On OUT-REQUEST-DENIED: The actor is absent
+          or not permitted.', 'On OUT-REQUEST-STORE-FAILURE: The store reports that it is unavailable.', 'On OUT-REQUEST-DUPLICATE:
+          The request code is already retained.']
+      effects: ['On OUT-REQUEST-CONFIRMED: One new request record exists in the store.', 'On OUT-REQUEST-INVALID:
+          No store call and no retained record.', 'On OUT-REQUEST-DENIED: No validation, store call, or retained
+          record.', 'On OUT-REQUEST-STORE-FAILURE: No confirmed request is reported.', 'On OUT-REQUEST-DUPLICATE:
+          This invocation leaves the existing request unchanged.']
+      graph_refs: [GRAPH-REQUEST-SUBMIT]
     failures:
-    - id: FAIL-TASK-002-AUTH
-      condition: Context absent, unresolved, unknown or insufficient.
-      result: PermissionError.
-      effects: No task capability is called.
-      outcome_certainty: not_applied
-    - id: FAIL-TASK-002-STORE
-      condition: A selected persistence operation fails.
-      result: Propagate the failure.
-      effects: Do not infer a successful write or safe retry from an unavailable result.
-      outcome_certainty: unknown
-    domain_ref: DOMAIN-TASK-MANAGEMENT
+    - {id: OUT-REQUEST-INVALID, condition: The code or quantity is invalid; the request is refused., result: OUT-REQUEST-INVALID,
+      effects: No store call and no retained record., outcome_certainty: not_applied}
+    - {id: OUT-REQUEST-DENIED, condition: The actor is absent or not permitted., result: OUT-REQUEST-DENIED, effects: 'No
+        validation, store call, or retained record.', outcome_certainty: not_applied}
+    - {id: OUT-REQUEST-STORE-FAILURE, condition: The store reports that it is unavailable., result: OUT-REQUEST-STORE-FAILURE,
+      effects: No confirmed request is reported., outcome_certainty: unknown}
+    - {id: OUT-REQUEST-DUPLICATE, condition: The request code is already retained., result: OUT-REQUEST-DUPLICATE,
+      effects: This invocation leaves the existing request unchanged., outcome_certainty: not_applied}
+    domain_ref: null
   rules:
-  - id: RULE-TASK-ID
-    statement: Task identity is nonempty text and is preserved after construction.
-    owner_ref: ENT-TASK
-    origin_refs: []
+  - id: VLD-REQUEST-QUANTITY
+    statement: 'The quantity field is valid when its value is an integer greater than or equal to 1. Conditions:
+      The value is an integer.; The value is at least 1.'
+    owner_ref: ENT-REQUEST
+    origin_refs: [VLD-REQUEST-QUANTITY]
     kind: invariant
-  - id: RULE-TASK-TITLE
-    statement: Canonical title is stripped text with 1 through 120 characters.
-    owner_ref: ENT-TASK
-    origin_refs: []
+  - id: VLD-REQUEST-CODE
+    statement: 'The code must be text containing at least one character. Preserve the code exactly; case is significant.
+      Conditions: The code is text with at least one character.'
+    owner_ref: ENT-REQUEST
+    origin_refs: [VLD-REQUEST-CODE]
     kind: invariant
-  - id: RULE-TASK-COMPLETED
-    statement: Completion is boolean; completion preserves identity and title.
-    owner_ref: ENT-TASK
-    origin_refs: []
-    kind: transition
-  - id: RULE-ACTOR-CONTEXT
-    statement: Caller identity is text or absent, permissions are a tuple of text, resolution is text and known_actor
-      is boolean.
-    owner_ref: ENT-ACTOR-CONTEXT
-    origin_refs: []
+  - id: RULE-CALLER-CONTEXT
+    statement: Context fields preserve the declared principal, issuer, validity and permissions. Trust is an external
+      premise; cases deny absent, unresolved, unknown, expired or insufficient context.
+    owner_ref: ENT-CALLER-CONTEXT
+    origin_refs: [DEC-CALLER-CONTEXT]
     kind: invariant
-  - id: RULE-TASK-002-AUTH
-    statement: Require resolved, known, nonblank caller identity and tasks:read before protected effects.
-    owner_ref: UC-TASK-002
-    origin_refs: []
+  - id: RULE-REQUEST-SUBMIT-AUTH
+    statement: The case admits only an actor with the requester permission and refuses every other actor before
+      any validation, store call, or effect.
+    owner_ref: UC-REQUEST-SUBMIT
+    origin_refs: [RF-REQUEST-01]
     kind: authorization
   dependencies:
-  - id: DEP-TASK-002-1
-    consumer_ref: UC-TASK-002
-    provider_ref: TOL-TASK-STORE
-    relation: calls
-    purpose: Declared collaborator for list tasks.
-    context_forwarding: null
-  - id: DEP-TASK-002-2
-    consumer_ref: UC-TASK-002
-    provider_ref: OP-TASK-LIST
-    relation: calls
-    purpose: Declared collaborator for list tasks.
-    context_forwarding: null
-  - id: DEP-TASK-002-3
-    consumer_ref: UC-TASK-002
-    provider_ref: ENT-TASK
-    relation: uses_type
-    purpose: Declared collaborator for list tasks.
-    context_forwarding: null
-  - id: DEP-TASK-002-4
-    consumer_ref: UC-TASK-002
-    provider_ref: ENT-ACTOR-CONTEXT
-    relation: uses_type
-    purpose: Declared collaborator for list tasks.
-    context_forwarding: null
-  domains:
-  - id: DOMAIN-TASK-MANAGEMENT
-    name: Task management
-    purpose: Group the three task application objectives.
-    case_refs:
-    - UC-TASK-002
-    access_policy: Grouping does not authorize execution; each case checks its own permission.
+  - {id: DEP-REQUEST-SUBMIT-ENT-REQUEST, consumer_ref: UC-REQUEST-SUBMIT, provider_ref: ENT-REQUEST, relation: uses_type,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-REQUEST-SUBMIT-TOL-REQUEST-STORE, consumer_ref: UC-REQUEST-SUBMIT, provider_ref: TOL-REQUEST-STORE,
+    relation: calls, purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-REQUEST-SUBMIT-OP-REQUEST-STORE, consumer_ref: UC-REQUEST-SUBMIT, provider_ref: OP-REQUEST-STORE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  domains: []
   composition:
-    selection_location: Companion Vulcan AppComposition selects the concrete persistence capability.
-    description: The selected capability is provided explicitly to prepared cases; no global service locator or
-      mandatory abstract base.
+    selection_location: Application composition root selected by the future L3 realization.
+    description: Inject contracted tools and composed cases explicitly. No concrete database, framework or global
+      service lookup is prescribed.
     lifetimes:
-    - element_ref: UC-TASK-002
-      scope: One prepared instance per composition.
-      ownership: Composition owns and supplies the collaborator.
-    - element_ref: TOL-TASK-STORE
-      scope: Capability lives with composition; each SQLite operation owns and closes its connection.
-      ownership: Concrete capability owns technical resources.
+    - {element_ref: UC-REQUEST-SUBMIT, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: TOL-REQUEST-STORE, scope: Managed by the chosen L3 scope; persistence outlives a case call and
+        satisfies stated restart guarantees., ownership: Composition root closes concrete resources; no singleton
+        is prescribed.}
   graphs:
-  - id: GRAPH-TASK-STATE
-    owner_ref: ENT-TASK
-    kind: state_machine
-    summary: Task completion is idempotent.
-    entry: STATE-TASK-PENDING
-    nodes:
-    - id: STATE-TASK-PENDING
-      kind: state
-      description: A new task is pending.
-    - id: STATE-TASK-COMPLETED
-      kind: state
-      description: The task is completed.
-    edges:
-    - id: EDGE-TASK-COMPLETE
-      from: STATE-TASK-PENDING
-      to: STATE-TASK-COMPLETED
-      condition: Authorized completion of a retained task.
-      action: Set completion true.
-    - id: EDGE-TASK-REPEAT
-      from: STATE-TASK-COMPLETED
-      to: STATE-TASK-COMPLETED
-      condition: Completion is requested again.
-      action: Preserve identity, title and completion; no second task.
-  - id: GRAPH-TASK-002
-    owner_ref: UC-TASK-002
+  - id: GRAPH-VLD-REQUEST-QUANTITY
+    owner_ref: VLD-REQUEST-QUANTITY
     kind: flow
-    summary: List tasks including authorization and failure.
-    entry: NODE-002-RECEIVE
+    summary: Quantity validation Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-REQ-START
     nodes:
-    - id: NODE-002-RECEIVE
-      kind: start
-      description: Receive invocation data and trusted context.
-    - id: NODE-002-AUTHORIZE
-      kind: decision
-      description: Apply the case permission policy.
-    - id: NODE-002-EXECUTE
-      kind: action
-      description: Perform the declared case steps and capability calls.
-    - id: NODE-002-RETURN
-      kind: end
-      description: Return the documented result.
-    - id: NODE-002-FAIL
-      kind: failure
-      description: Return or raise the documented refusal/failure.
+    - {id: N-VLD-REQ-START, kind: start, description: Start}
+    - {id: N-VLD-REQ-READ, kind: action, description: Read quantity}
+    - {id: N-VLD-REQ-TYPE, kind: decision, description: 'Integer?'}
+    - {id: N-VLD-REQ-MIN, kind: decision, description: 'At least 1?'}
+    - {id: N-VLD-REQ-PASS, kind: end, description: Valid}
+    - {id: N-VLD-REQ-FAIL-TYPE, kind: failure, description: 'Invalid: not an integer'}
+    - {id: N-VLD-REQ-FAIL-MIN, kind: failure, description: 'Invalid: less than 1'}
     edges:
-    - id: EDGE-002-1
-      from: NODE-002-RECEIVE
-      to: NODE-002-AUTHORIZE
-      condition: Invocation received.
-      action: ''
-    - id: EDGE-002-2
-      from: NODE-002-AUTHORIZE
-      to: NODE-002-FAIL
-      condition: Context is not permitted.
-      action: ''
-    - id: EDGE-002-3
-      from: NODE-002-AUTHORIZE
-      to: NODE-002-EXECUTE
-      condition: Context satisfies the case policy.
-      action: ''
-    - id: EDGE-002-4
-      from: NODE-002-EXECUTE
-      to: NODE-002-FAIL
-      condition: A specified data, absence or storage failure occurs.
-      action: ''
-    - id: EDGE-002-5
-      from: NODE-002-EXECUTE
-      to: NODE-002-RETURN
-      condition: The specified operation succeeds.
-      action: ''
+    - {id: E-VLD-REQ-1, from: N-VLD-REQ-START, to: N-VLD-REQ-READ, condition: Unconditional passage, action: ''}
+    - {id: E-VLD-REQ-2, from: N-VLD-REQ-READ, to: N-VLD-REQ-TYPE, condition: Unconditional passage, action: ''}
+    - {id: E-VLD-REQ-3, from: N-VLD-REQ-TYPE, to: N-VLD-REQ-FAIL-TYPE, condition: 'no', action: ''}
+    - {id: E-VLD-REQ-4, from: N-VLD-REQ-TYPE, to: N-VLD-REQ-MIN, condition: 'yes', action: ''}
+    - {id: E-VLD-REQ-5, from: N-VLD-REQ-MIN, to: N-VLD-REQ-FAIL-MIN, condition: 'no', action: ''}
+    - {id: E-VLD-REQ-6, from: N-VLD-REQ-MIN, to: N-VLD-REQ-PASS, condition: 'yes', action: ''}
+  - id: GRAPH-REQUEST-SUBMIT
+    owner_ref: UC-REQUEST-SUBMIT
+    kind: flow
+    summary: Submit request Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-REQ-START
+    nodes:
+    - {id: N-REQ-START, kind: start, description: Start}
+    - {id: N-REQ-PERM, kind: decision, description: 'Actor permitted?'}
+    - {id: N-REQ-DENY, kind: failure, description: 'Refuse: actor not permitted'}
+    - {id: N-REQ-VALIDATE, kind: action, description: Apply VLD-REQUEST-QUANTITY}
+    - {id: N-REQ-QTYDEC, kind: decision, description: 'Quantity valid?'}
+    - {id: N-REQ-INVALID, kind: failure, description: Invalid code or quantity}
+    - {id: N-REQ-STORE, kind: action, description: Store request}
+    - {id: N-REQ-STOREERROR, kind: failure, description: Report STORE_UNAVAILABLE}
+    - {id: N-REQ-SUCCESS, kind: end, description: Request confirmed}
+    - {id: N-REQ-DUPLICATE, kind: failure, description: Duplicate code; no change}
+    - {id: N-REQ-CODE, kind: action, description: Apply code validity}
+    - {id: N-REQ-CODE-VALID, kind: decision, description: 'Code valid?'}
+    edges:
+    - {id: E-REQ-1, from: N-REQ-START, to: N-REQ-PERM, condition: Unconditional passage, action: ''}
+    - {id: E-REQ-2, from: N-REQ-PERM, to: N-REQ-DENY, condition: 'no', action: ''}
+    - {id: E-REQ-3, from: N-REQ-PERM, to: N-REQ-CODE, condition: 'yes', action: ''}
+    - {id: E-REQ-4, from: N-REQ-VALIDATE, to: N-REQ-QTYDEC, condition: Unconditional passage, action: ''}
+    - {id: E-REQ-5, from: N-REQ-QTYDEC, to: N-REQ-INVALID, condition: fail, action: ''}
+    - {id: E-REQ-6, from: N-REQ-QTYDEC, to: N-REQ-STORE, condition: pass, action: ''}
+    - {id: E-REQ-7, from: N-REQ-STORE, to: N-REQ-SUCCESS, condition: stored, action: ''}
+    - {id: E-REQ-8, from: N-REQ-STORE, to: N-REQ-STOREERROR, condition: STORE_UNAVAILABLE, action: ''}
+    - {id: E-REQ-DUPLICATE, from: N-REQ-STORE, to: N-REQ-DUPLICATE, condition: DUPLICATE_CODE, action: ''}
+    - {id: E-REQ-CODE-1, from: N-REQ-CODE, to: N-REQ-CODE-VALID, condition: Unconditional passage, action: ''}
+    - {id: E-REQ-CODE-2, from: N-REQ-CODE-VALID, to: N-REQ-VALIDATE, condition: pass, action: ''}
+    - {id: E-REQ-CODE-3, from: N-REQ-CODE-VALID, to: N-REQ-INVALID, condition: fail, action: ''}
+  - id: GRAPH-VLD-REQUEST-CODE
+    owner_ref: VLD-REQUEST-CODE
+    kind: flow
+    summary: Request code validity Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-REQ-CODE-START
+    nodes:
+    - {id: N-VLD-REQ-CODE-START, kind: start, description: Receive code}
+    - {id: N-VLD-REQ-CODE-CHECK, kind: decision, description: 'Non-empty text?'}
+    - {id: N-VLD-REQ-CODE-PASS, kind: end, description: Pass unchanged}
+    - {id: N-VLD-REQ-CODE-FAIL, kind: failure, description: Invalid code}
+    edges:
+    - {id: E-VLD-REQ-CODE-1, from: N-VLD-REQ-CODE-START, to: N-VLD-REQ-CODE-CHECK, condition: Unconditional passage,
+      action: ''}
+    - {id: E-VLD-REQ-CODE-2, from: N-VLD-REQ-CODE-CHECK, to: N-VLD-REQ-CODE-PASS, condition: 'yes', action: ''}
+    - {id: E-VLD-REQ-CODE-3, from: N-VLD-REQ-CODE-CHECK, to: N-VLD-REQ-CODE-FAIL, condition: 'no', action: ''}
 advs:
   behavioral_tests:
-  - id: BT-TASK-002
-    case_ref: UC-TASK-002
-    source_case_id: UC-TASK-002
-    criteria_refs:
-    - AC-TASK-002-AUTH
-    - AC-TASK-002-SUCCESS
-    - AC-TASK-002-EMPTY
+  - id: BT-REQUEST-SUBMIT
+    case_ref: UC-REQUEST-SUBMIT
+    source_case_id: UC-REQUEST-SUBMIT
+    criteria_refs: [AC-REQUEST-01, AC-REQUEST-02, AC-REQUEST-03, AC-REQUEST-04, AC-REQUEST-05, AC-REQUEST-06, AC-REQUEST-SUBMIT-QUALITY]
     scenarios:
-    - id: SC-TASK-002-AUTH-ALLOWED
+    - id: SC-REQUEST-SUBMIT-AUTH-ABSENT
       category: authorization
-      preparation: Prepare a fresh store and the declared allowed caller context.
-      actor_context: allowed
-      action: Invoke list tasks.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: Authorization permits the case to evaluate its remaining contract.
-      expected_effects: Only effects of the permitted case result.
-      criteria_refs:
-      - AC-TASK-002-AUTH
-      obligation_refs: []
-      applicability: applicable
-      rationale: This context is relevant to the explicit deny-by-default case contract.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-AUTH-ABSENT
-      category: authorization
-      preparation: Prepare a fresh store and the declared absent caller context.
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
       actor_context: absent
-      action: Invoke list tasks.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: PermissionError before capability access.
-      expected_effects: No capability call and no protected mutation.
-      criteria_refs:
-      - AC-TASK-002-AUTH
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
       obligation_refs: []
       applicability: applicable
-      rationale: This context is relevant to the explicit deny-by-default case contract.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-AUTH-UNRESOLVED
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-AUTH-UNRESOLVED
       category: authorization
-      preparation: Prepare a fresh store and the declared unresolved caller context.
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
       actor_context: unresolved
-      action: Invoke list tasks.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: PermissionError before capability access.
-      expected_effects: No capability call and no protected mutation.
-      criteria_refs:
-      - AC-TASK-002-AUTH
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
       obligation_refs: []
       applicability: applicable
-      rationale: This context is relevant to the explicit deny-by-default case contract.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-AUTH-UNKNOWN
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-AUTH-UNKNOWN
       category: authorization
-      preparation: Prepare a fresh store and the declared unknown caller context.
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
       actor_context: unknown
-      action: Invoke list tasks.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: PermissionError before capability access.
-      expected_effects: No capability call and no protected mutation.
-      criteria_refs:
-      - AC-TASK-002-AUTH
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
       obligation_refs: []
       applicability: applicable
-      rationale: This context is relevant to the explicit deny-by-default case contract.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-AUTH-INSUFFICIENT
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-AUTH-INSUFFICIENT
       category: authorization
-      preparation: Prepare a fresh store and the declared insufficient caller context.
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
       actor_context: insufficient
-      action: Invoke list tasks.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: PermissionError before capability access.
-      expected_effects: No capability call and no protected mutation.
-      criteria_refs:
-      - AC-TASK-002-AUTH
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
       obligation_refs: []
       applicability: applicable
-      rationale: This context is relevant to the explicit deny-by-default case contract.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-SUCCESS
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-REQUEST-SUBMIT directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-REQUEST-03]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-01
       category: success
-      preparation: Retain two tasks using authorized creation and provide read permission.
+      preparation: Unused exact code REQ-001; quantity 2; trusted requester; available retained store.
       actor_context: allowed
-      action: List tasks.
-      observed_boundary: Direct case invocation and subsequent read when specified.
-      configuration: Temporary SQLite database, same selected file across recomposition when needed.
-      expected_result: Return both tasks in insertion order with their canonical fields.
-      expected_effects: No domain mutation.
-      criteria_refs:
-      - AC-TASK-002-SUCCESS
+      action: Submit REQ-001 / 2, then look up the retained code.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A requester with a valid code and quantity of 2 receives a confirmed result; a later lookup
+        of the code returns quantity 2.
+      expected_effects: Exactly one record; exact case-sensitive code and integer quantity retained.
+      criteria_refs: [AC-REQUEST-01]
       obligation_refs: []
       applicability: applicable
-      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-EMPTY
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-02
+      category: limit
+      preparation: Unused REQ-001 and quantity 0; storage spy enabled.
+      actor_context: allowed
+      action: Submit the invalid quantity.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A quantity of 0 is refused as invalid data, and no record is created.
+      expected_effects: No storage invocation and no retained record.
+      criteria_refs: [AC-REQUEST-02]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-04
       category: alternative
-      preparation: Prepare a fresh empty database and a resolved reader.
+      preparation: Trusted requester; REQ-001 first stored with quantity 2.
       actor_context: allowed
-      action: List tasks.
-      observed_boundary: Direct case invocation and subsequent read when specified.
-      configuration: Temporary SQLite database, same selected file across recomposition when needed.
-      expected_result: Return an empty collection.
-      expected_effects: No domain mutation.
-      criteria_refs:
-      - AC-TASK-002-EMPTY
+      action: Submit REQ-001 again with quantity 3; inspect retained quantity.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Submit the same code twice. The second attempt reports duplicate-code refusal and preserves
+        the first retained quantity.
+      expected_effects: Second call changes nothing; quantity remains 2.
+      criteria_refs: [AC-REQUEST-04]
       obligation_refs: []
       applicability: applicable
-      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
-      check_refs:
-      - CHECK-TASK-002
-    - id: SC-TASK-002-STORAGE-FAILURE
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-05
       category: failure
-      preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject
-        sqlite3.OperationalError at sqlite3.connect before storage access.
+      preparation: Storage double can apply the write and lose confirmation; retry counter enabled.
       actor_context: allowed
-      action: Invoke listTasks with tasks:read while sqlite3.connect raises before opening the database.
-      observed_boundary: Direct case invocation.
-      configuration: Prepared case and instrumented or temporary persistence capability.
-      expected_result: Propagate sqlite3.OperationalError; do not return a successful result or an invented empty
-        collection.
-      expected_effects: No write is requested and retained task data stays unchanged.
-      criteria_refs:
-      - AC-TASK-002-SUCCESS
-      - AC-TASK-002-EMPTY
+      action: Submit valid data; return STORE_UNAVAILABLE with write_outcome unknown.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: If a store write has an unknown final outcome, return the failure without claiming success
+        or no write and without automatic retry.
+      expected_effects: Final retention may be present or absent; never infer no write; no automatic retry.
+      criteria_refs: [AC-REQUEST-05]
       obligation_refs: []
       applicability: applicable
-      rationale: Connection failure is deliberately injected before any storage access; ambiguous write outcomes
-        are outside this scenario.
-      check_refs:
-      - CHECK-TASK-STORAGE-FAILURE
-    supporting_check_refs:
-    - CHECK-TASK-002
-    - CHECK-TASK-STORAGE-FAILURE
-    status: implemented
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-06
+      category: limit
+      preparation: Empty code; quantity-validation and storage spies enabled.
+      actor_context: allowed
+      action: Submit empty code with quantity 2.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An empty code is refused before quantity validation and store invocation.
+      expected_effects: Neither quantity validation nor storage is invoked.
+      criteria_refs: [AC-REQUEST-06]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-REQUEST-SUBMIT-QUALITY
+      category: limit
+      preparation: Declare the local didactic configuration, input population, trusted caller and visible result
+        boundary. Use a monotonic clock.
+      actor_context: allowed
+      action: Run 30 sequential submissions with valid and invalid quantities against the declared local configuration
+        and record the result time for each.
+      observed_boundary: The submit stimulus is accepted by the boundary. -> The result state is visible to the
+        actor.
+      configuration: Planned interaction-scoped measurement in the source didactic configuration; a selected channel
+        and realization are required. Direct-core timing alone does not establish visible response time.
+      expected_result: 'In the declared didactic configuration, demonstrate the canonical quality criterion and
+        its stated verification procedure; preserve its status as a teaching assumption, not a measured production
+        claim. Oracle: The elapsed time from the submit stimulus to the visible result is at most 2 seconds. Measurement:
+        The submit stimulus is accepted by the boundary. -> The result state is visible to the actor.'
+      expected_effects: Apply the case outcomes; timing does not relax authorization, validity or persistence obligations.
+        No measurement has been executed.
+      criteria_refs: [AC-REQUEST-SUBMIT-QUALITY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: [CHK-RNF-REQUEST-01]
+    supporting_check_refs: [CHK-RNF-REQUEST-01, CHK-OP-REQUEST-STORE]
+    status: planned
   supporting_checks:
-  - id: CHECK-TASK-002
-    purpose: Executable support for the directly linked behavioral test; existence is not an execution result.
-    behavioral_test_refs:
-    - BT-TASK-002
+  - id: CHK-RNF-REQUEST-01
+    purpose: 'For inputs within the declared field limits and an available store, the boundary presents a confirmed
+      or refused result within 2 seconds of the submit stimulus. Applicability: Origin: SRC-REQUEST-BRIEF. This
+      is a synthetic teaching obligation; any numeric target and scenario count are illustrative assumptions, not
+      an accepted production SLA or a measurement made by this repository.'
+    behavioral_test_refs: [BT-REQUEST-SUBMIT]
+    criteria_refs: [AC-REQUEST-SUBMIT-QUALITY]
+    case_refs: [UC-REQUEST-SUBMIT]
+    preparation: Select and record the realization, environment and declared source applicability. Prepare the specific
+      population or concurrency schedule required by this obligation.
+    actor_context: Trusted context permitted for each participating invocation; preserve principal and board when
+      applicable.
+    action: Run 30 sequential submissions with valid and invalid quantities against the declared local configuration
+      and record the result time for each.
+    expected_result: The elapsed time from the submit stimulus to the visible result is at most 2 seconds.
+    expected_effects: Only effects permitted by the participating case contracts; preserve no-write/unknown distinctions.
+    observed_boundary: The submit stimulus is accepted by the boundary. -> The result state is visible to the actor.
+    configuration: Future selected implementation. This is a planned check, not an observed performance, durability
+      or concurrency result.
+    reference: null
+  - id: CHK-OP-REQUEST-STORE
+    purpose: Create one retained request record when its code is unused.
+    behavioral_test_refs: [BT-REQUEST-SUBMIT]
     criteria_refs: []
-    case_refs:
-    - UC-TASK-002
-    preparation: Use the temporary database and trusted test composition described in the case scenarios.
-    actor_context: Each supported scenario supplies the specified context or deliberate absence.
-    action: Invoke the directly named test method and its subcases.
-    expected_result: Assertions satisfy the declared case scenarios.
-    expected_effects: Only the effects permitted by the scenario occur.
-    observed_boundary: Direct prepared application cases.
-    configuration: Python unittest with local SQLite and temporary files.
-    reference:
-      path: apps/TaskBoard/tests/Test_TaskCases.py
-      symbol: Test_TaskCases.testListTasks
-      status: observed
-  - id: CHECK-TASK-STORAGE-FAILURE
-    purpose: Check storage unavailability separately from a confirmed empty collection.
-    behavioral_test_refs:
-    - BT-TASK-002
-    criteria_refs:
-    - AC-TASK-002-SUCCESS
-    - AC-TASK-002-EMPTY
-    case_refs:
-    - UC-TASK-002
-    preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject sqlite3.OperationalError
-      at sqlite3.connect before storage access.
-    actor_context: Each supported scenario supplies the specified context or deliberate absence.
-    action: Invoke creation, listing or completion as selected by the scenario while the connection factory is unavailable;
-      restore it before checking retained state.
-    expected_result: Valid inputs propagate sqlite3.OperationalError; listing does not fabricate an empty collection.
-      Invalid raw title still fails canonical construction before connection.
-    expected_effects: The injected pre-access failure inserts or changes no row. Listing requests no write. This
-      setup makes no claim about failure during or after commit.
-    observed_boundary: Direct prepared application cases.
-    configuration: Python unittest with local SQLite and temporary files.
-    reference:
-      path: apps/TaskBoard/tests/Test_TaskCases.py
-      symbol: Test_TaskCases.testStorageFailureAndCanonicalConstruction
-      status: planned
+    case_refs: [UC-REQUEST-SUBMIT]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-REQUEST-STORE under success and each declared failure condition.
+    expected_result: 'Success: A successful result confirms one retained record.; A duplicate-code failure leaves
+      the existing record unchanged.; After a successful result, the record is readable by code in the same retained
+      store. Failures: DUPLICATE_CODE: The consumer must distinguish this from a successful store and from an unavailable
+      store.; STORE_UNAVAILABLE: Return write_outcome=not_applied only when the tool can guarantee no write; otherwise
+      return write_outcome=unknown. Neither outcome is confirmation. An unknown outcome must not trigger an automatic
+      retry.'
+    expected_effects: 'Success: One request record is added to the retained store. Failure effects: The consumer
+      must distinguish this from a successful store and from an unavailable store.; Return write_outcome=not_applied
+      only when the tool can guarantee no write; otherwise return write_outcome=unknown. Neither outcome is confirmation.
+      An unknown outcome must not trigger an automatic retry.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
   executions: []
-  unverified_risks:
-  - No test execution is claimed by this blueprint. Consult the companion Vulcan execution report for observed configurations.
-  - Distributed recovery, production authentication and exhaustive storage failure behavior are not established.
+  unverified_risks: [No executable application or test realization is delivered; all domain scenarios remain planned.,
+    'Production identity authority, channel mechanism and persistence implementation remain unselected.', Source
+      assumptions and open issues retain their original status; technical review is not stakeholder approval.]
   channel_obligations: []
 mirror:
   root: docs/L2_MinervaBlueprints
@@ -698,3 +713,97 @@ mirror:
   coverage: declared
   include_patterns: []
   exclusions: []
+traceability:
+- source_ref: ENT-REQUEST
+  target_refs: [ENT-REQUEST]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-REQUEST-QUANTITY
+  target_refs: [VLD-REQUEST-QUANTITY]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-REQUEST-CODE
+  target_refs: [VLD-REQUEST-CODE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: TOL-REQUEST-STORE
+  target_refs: [TOL-REQUEST-STORE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-REQUEST-STORE
+  target_refs: [OP-REQUEST-STORE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: UC-REQUEST-SUBMIT
+  target_refs: [UC-REQUEST-SUBMIT, BT-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-REQUEST-01
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-02
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-03
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-04
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-05
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-06
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-REQUEST-07
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-REQUEST-01
+  target_refs: [UC-REQUEST-SUBMIT]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-REQUEST-01
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-01]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-02
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-02]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-03
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-SUBMIT-AUTH-ABSENT, SC-REQUEST-SUBMIT-AUTH-UNRESOLVED, SC-REQUEST-SUBMIT-AUTH-UNKNOWN,
+    SC-REQUEST-SUBMIT-AUTH-INSUFFICIENT, SC-REQUEST-SUBMIT-AUTH-EXPIRED, SC-REQUEST-SUBMIT-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-04
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-04]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-05
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-05]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-06
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-06]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-REQUEST-SUBMIT-QUALITY
+  target_refs: [BT-REQUEST-SUBMIT, SC-REQUEST-SUBMIT-QUALITY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: RNF-REQUEST-01
+  target_refs: [CHK-RNF-REQUEST-01]
+  relation: verifies
+  rationale: One canonical quality check preserves the source obligation and all affected cases.
+- source_ref: OP-REQUEST-STORE
+  target_refs: [CHK-OP-REQUEST-STORE]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.

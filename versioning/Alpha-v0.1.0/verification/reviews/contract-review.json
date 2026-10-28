@@ -1,0 +1,762 @@
+{
+  "reviewed_at": "2026-10-28T12:55:47.850916+00:00",
+  "author": "AI-assisted editorial preparation and technical review",
+  "owner_acceptance": "pending",
+  "source_reader_delivered": false,
+  "method": "One-off source-byte and selected-field comparison outside the delivered product, plus documented semantic review. It is not an independent proof of equivalence.",
+  "checked": "Official source bytes, identity/revision, every catalogue locator and statement, case objectives/flow/actors, criterion/test links, requirement mappings, graph identities and endpoints, unresolved source records, absence of domain executions.",
+  "examples": [
+    {
+      "example": "composition",
+      "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_sha256": "63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96",
+      "blueprint_sha256": "89f0703fc85e995c1a4c4ce65a90351861f590dca56c2d359d117a668ccc94d5",
+      "document": "ATLAS-EX-COMPOSITION",
+      "revision": "2",
+      "case_ids": [
+        "UC-BOOKING-LOOKUP",
+        "UC-BOOKING-CREATE",
+        "UC-BOOKING-CANCEL"
+      ],
+      "catalogue_entries_compared": 52,
+      "requirements_mapped": 19,
+      "graphs_compared": 7,
+      "criteria": [
+        {
+          "id": "AC-BOOKING-LOOKUP-01",
+          "case": "UC-BOOKING-LOOKUP",
+          "test": "BT-BOOKING-LOOKUP",
+          "scenarios": [
+            "SC-BOOKING-LOOKUP-01"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-LOOKUP-02",
+          "case": "UC-BOOKING-LOOKUP",
+          "test": "BT-BOOKING-LOOKUP",
+          "scenarios": [
+            "SC-BOOKING-LOOKUP-02"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-LOOKUP-03",
+          "case": "UC-BOOKING-LOOKUP",
+          "test": "BT-BOOKING-LOOKUP",
+          "scenarios": [
+            "SC-BOOKING-LOOKUP-03"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-LOOKUP-INVALID",
+          "case": "UC-BOOKING-LOOKUP",
+          "test": "BT-BOOKING-LOOKUP",
+          "scenarios": [
+            "SC-BOOKING-LOOKUP-INVALID"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-LOOKUP-AUTH",
+          "case": "UC-BOOKING-LOOKUP",
+          "test": "BT-BOOKING-LOOKUP",
+          "scenarios": [
+            "SC-BOOKING-LOOKUP-AUTH-ABSENT",
+            "SC-BOOKING-LOOKUP-AUTH-UNRESOLVED",
+            "SC-BOOKING-LOOKUP-AUTH-UNKNOWN",
+            "SC-BOOKING-LOOKUP-AUTH-INSUFFICIENT",
+            "SC-BOOKING-LOOKUP-AUTH-EXPIRED",
+            "SC-BOOKING-LOOKUP-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-01",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-01"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-02",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-02"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-03",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-03"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-TITLE",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-TITLE"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-AUTH",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-AUTH-ABSENT",
+            "SC-BOOKING-CREATE-AUTH-UNRESOLVED",
+            "SC-BOOKING-CREATE-AUTH-UNKNOWN",
+            "SC-BOOKING-CREATE-AUTH-INSUFFICIENT",
+            "SC-BOOKING-CREATE-AUTH-EXPIRED",
+            "SC-BOOKING-CREATE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CREATE-QUALITY",
+          "case": "UC-BOOKING-CREATE",
+          "test": "BT-BOOKING-CREATE",
+          "scenarios": [
+            "SC-BOOKING-CREATE-QUALITY"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-01",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-01"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-02",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-02"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-03",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-03"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-FAILURE",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-FAILURE"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-CONTEXT",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-CONTEXT"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-AUTH",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-AUTH-ABSENT",
+            "SC-BOOKING-CANCEL-AUTH-UNRESOLVED",
+            "SC-BOOKING-CANCEL-AUTH-UNKNOWN",
+            "SC-BOOKING-CANCEL-AUTH-INSUFFICIENT",
+            "SC-BOOKING-CANCEL-AUTH-EXPIRED",
+            "SC-BOOKING-CANCEL-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-BOOKING-CANCEL-QUALITY",
+          "case": "UC-BOOKING-CANCEL",
+          "test": "BT-BOOKING-CANCEL",
+          "scenarios": [
+            "SC-BOOKING-CANCEL-QUALITY"
+          ]
+        }
+      ],
+      "scenarios": 33,
+      "status": "compared; semantic review limited as documented"
+    },
+    {
+      "example": "minimal",
+      "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_sha256": "731ef7e7f9e0dcda1b9dea1cae45a51a43bd16083948dae121d18fdd77bc746e",
+      "blueprint_sha256": "4d17ef6a82b0761836828e0d92f0428910090de46be6101ad0dec971071bc3f4",
+      "document": "ATLAS-EX-MINIMAL",
+      "revision": "2",
+      "case_ids": [
+        "UC-REQUEST-SUBMIT"
+      ],
+      "catalogue_entries_compared": 24,
+      "requirements_mapped": 8,
+      "graphs_compared": 3,
+      "criteria": [
+        {
+          "id": "AC-REQUEST-01",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-01"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-02",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-02"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-03",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-SUBMIT-AUTH-ABSENT",
+            "SC-REQUEST-SUBMIT-AUTH-UNRESOLVED",
+            "SC-REQUEST-SUBMIT-AUTH-UNKNOWN",
+            "SC-REQUEST-SUBMIT-AUTH-INSUFFICIENT",
+            "SC-REQUEST-SUBMIT-AUTH-EXPIRED",
+            "SC-REQUEST-SUBMIT-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-04",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-04"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-05",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-05"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-06",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-06"
+          ]
+        },
+        {
+          "id": "AC-REQUEST-SUBMIT-QUALITY",
+          "case": "UC-REQUEST-SUBMIT",
+          "test": "BT-REQUEST-SUBMIT",
+          "scenarios": [
+            "SC-REQUEST-SUBMIT-QUALITY"
+          ]
+        }
+      ],
+      "scenarios": 12,
+      "status": "compared; semantic review limited as documented"
+    },
+    {
+      "example": "task-board",
+      "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8",
+      "blueprint_sha256": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8",
+      "document": "DOC-TASK-BOARD",
+      "revision": "3",
+      "case_ids": [
+        "UC-TASK-CREATE",
+        "UC-TASK-COMPLETE",
+        "UC-TASK-LIST"
+      ],
+      "catalogue_entries_compared": 51,
+      "requirements_mapped": 18,
+      "graphs_compared": 6,
+      "criteria": [
+        {
+          "id": "AC-TASK-CREATE-AUTH",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-AUTH-ABSENT",
+            "SC-TASK-CREATE-AUTH-UNRESOLVED",
+            "SC-TASK-CREATE-AUTH-UNKNOWN",
+            "SC-TASK-CREATE-AUTH-INSUFFICIENT",
+            "SC-TASK-CREATE-AUTH-EXPIRED",
+            "SC-TASK-CREATE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-SUCCESS",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-INVALID",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-DUPLICATE",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-DUPLICATE"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-UNKNOWN",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-AUTH",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-AUTH-ABSENT",
+            "SC-TASK-COMPLETE-AUTH-UNRESOLVED",
+            "SC-TASK-COMPLETE-AUTH-UNKNOWN",
+            "SC-TASK-COMPLETE-AUTH-INSUFFICIENT",
+            "SC-TASK-COMPLETE-AUTH-EXPIRED",
+            "SC-TASK-COMPLETE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-SUCCESS",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-MISSING",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-MISSING"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-INVALID",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-ALREADY",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-ALREADY"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-CONFLICT",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-CONFLICT"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-UNKNOWN",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-AUTH",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-AUTH-ABSENT",
+            "SC-TASK-LIST-AUTH-UNRESOLVED",
+            "SC-TASK-LIST-AUTH-UNKNOWN",
+            "SC-TASK-LIST-AUTH-INSUFFICIENT",
+            "SC-TASK-LIST-AUTH-EXPIRED",
+            "SC-TASK-LIST-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-CONTENT",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-CONTENT"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-EMPTY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-EMPTY"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-INTEGRITY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-INTEGRITY"
+          ]
+        }
+      ],
+      "scenarios": 31,
+      "status": "compared; semantic review limited as documented"
+    },
+    {
+      "example": "task-board/revisions/revision-2",
+      "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_sha256": "b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3",
+      "blueprint_sha256": "85ea0240f8b875ee16a97a441eb4d1ae64dfcc7ccfacdb12ecdddc8456ac8f60",
+      "document": "DOC-TASK-BOARD",
+      "revision": "2",
+      "case_ids": [
+        "UC-TASK-CREATE",
+        "UC-TASK-COMPLETE",
+        "UC-TASK-LIST"
+      ],
+      "catalogue_entries_compared": 51,
+      "requirements_mapped": 18,
+      "graphs_compared": 6,
+      "criteria": [
+        {
+          "id": "AC-TASK-CREATE-AUTH",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-AUTH-ABSENT",
+            "SC-TASK-CREATE-AUTH-UNRESOLVED",
+            "SC-TASK-CREATE-AUTH-UNKNOWN",
+            "SC-TASK-CREATE-AUTH-INSUFFICIENT",
+            "SC-TASK-CREATE-AUTH-EXPIRED",
+            "SC-TASK-CREATE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-SUCCESS",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-INVALID",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-DUPLICATE",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-DUPLICATE"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-UNKNOWN",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-AUTH",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-AUTH-ABSENT",
+            "SC-TASK-COMPLETE-AUTH-UNRESOLVED",
+            "SC-TASK-COMPLETE-AUTH-UNKNOWN",
+            "SC-TASK-COMPLETE-AUTH-INSUFFICIENT",
+            "SC-TASK-COMPLETE-AUTH-EXPIRED",
+            "SC-TASK-COMPLETE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-SUCCESS",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-MISSING",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-MISSING"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-INVALID",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-ALREADY",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-ALREADY"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-CONFLICT",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-CONFLICT"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-UNKNOWN",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-AUTH",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-AUTH-ABSENT",
+            "SC-TASK-LIST-AUTH-UNRESOLVED",
+            "SC-TASK-LIST-AUTH-UNKNOWN",
+            "SC-TASK-LIST-AUTH-INSUFFICIENT",
+            "SC-TASK-LIST-AUTH-EXPIRED",
+            "SC-TASK-LIST-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-CONTENT",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-CONTENT"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-EMPTY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-EMPTY"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-INTEGRITY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-INTEGRITY"
+          ]
+        }
+      ],
+      "scenarios": 31,
+      "status": "compared; semantic review limited as documented"
+    },
+    {
+      "example": "task-board/revisions/revision-3",
+      "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_sha256": "fa14749cf58a179792ee66231e413cd912ddf944174824919b8c4615e91d87c8",
+      "blueprint_sha256": "2aab3f264c1bc9b1bb437b97dc21ffd64e9e7d250ccb34f0b21edf4b5b2809d8",
+      "document": "DOC-TASK-BOARD",
+      "revision": "3",
+      "case_ids": [
+        "UC-TASK-CREATE",
+        "UC-TASK-COMPLETE",
+        "UC-TASK-LIST"
+      ],
+      "catalogue_entries_compared": 51,
+      "requirements_mapped": 18,
+      "graphs_compared": 6,
+      "criteria": [
+        {
+          "id": "AC-TASK-CREATE-AUTH",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-AUTH-ABSENT",
+            "SC-TASK-CREATE-AUTH-UNRESOLVED",
+            "SC-TASK-CREATE-AUTH-UNKNOWN",
+            "SC-TASK-CREATE-AUTH-INSUFFICIENT",
+            "SC-TASK-CREATE-AUTH-EXPIRED",
+            "SC-TASK-CREATE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-SUCCESS",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-INVALID",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-DUPLICATE",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-DUPLICATE"
+          ]
+        },
+        {
+          "id": "AC-TASK-CREATE-UNKNOWN",
+          "case": "UC-TASK-CREATE",
+          "test": "BT-TASK-CREATE",
+          "scenarios": [
+            "SC-TASK-CREATE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-AUTH",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-AUTH-ABSENT",
+            "SC-TASK-COMPLETE-AUTH-UNRESOLVED",
+            "SC-TASK-COMPLETE-AUTH-UNKNOWN",
+            "SC-TASK-COMPLETE-AUTH-INSUFFICIENT",
+            "SC-TASK-COMPLETE-AUTH-EXPIRED",
+            "SC-TASK-COMPLETE-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-SUCCESS",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-SUCCESS"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-MISSING",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-MISSING"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-INVALID",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-INVALID"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-ALREADY",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-ALREADY"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-CONFLICT",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-CONFLICT"
+          ]
+        },
+        {
+          "id": "AC-TASK-COMPLETE-UNKNOWN",
+          "case": "UC-TASK-COMPLETE",
+          "test": "BT-TASK-COMPLETE",
+          "scenarios": [
+            "SC-TASK-COMPLETE-UNKNOWN"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-AUTH",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-AUTH-ABSENT",
+            "SC-TASK-LIST-AUTH-UNRESOLVED",
+            "SC-TASK-LIST-AUTH-UNKNOWN",
+            "SC-TASK-LIST-AUTH-INSUFFICIENT",
+            "SC-TASK-LIST-AUTH-EXPIRED",
+            "SC-TASK-LIST-AUTH-ANONYMOUS"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-CONTENT",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-CONTENT"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-EMPTY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-EMPTY"
+          ]
+        },
+        {
+          "id": "AC-TASK-LIST-INTEGRITY",
+          "case": "UC-TASK-LIST",
+          "test": "BT-TASK-LIST",
+          "scenarios": [
+            "SC-TASK-LIST-INTEGRITY"
+          ]
+        }
+      ],
+      "scenarios": 31,
+      "status": "compared; semantic review limited as documented"
+    }
+  ],
+  "limits": [
+    "Canonical shared response-time procedure names creation; cancellation-specific measurement requires source clarification (DEC-QUALITY-SCOPE).",
+    "Graph projection retains topology and labels; Atlas-specific graph metadata remains in the source.",
+    "No application implementation or domain execution; no owner acceptance or universal OAL certification."
+  ]
+}

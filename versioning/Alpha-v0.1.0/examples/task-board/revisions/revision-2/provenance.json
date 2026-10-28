@@ -1,0 +1,17 @@
+{
+  "source_repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+  "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+  "source_path": "versioning/Stable-v1.0.0/examples/task-board/revisions/revision-2.atlas.json",
+  "source_document_id": "DOC-TASK-BOARD",
+  "source_revision": "2",
+  "source_sha256": "b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3",
+  "derivation": "AI-assisted editorial construction with source-text extraction and explicitly authored scenarios; no translation engine is included.",
+  "case_ids": [
+    "UC-TASK-CREATE",
+    "UC-TASK-COMPLETE",
+    "UC-TASK-LIST"
+  ],
+  "criteria_count": 16,
+  "review_status": "technical_review_recorded; owner_acceptance_pending",
+  "executed_domain_tests": false
+}

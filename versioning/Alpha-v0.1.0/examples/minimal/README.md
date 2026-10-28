@@ -1,15 +1,17 @@
-# Minimal selected-scope blueprint
+# Minimal request register
 
-English · [Português brasileiro](README.pt-br.md)
+This example preserves the cases and contracts of `ATLAS-EX-MINIMAL`, revision `2`, from Atlas Stable-v1.0.0. L2 construction was editorial and AI-assisted. Project-owner acceptance remains pending.
 
-This example selects only **UC-TASK-002**, the list operation, from the pinned [didactic Atlas source](docs/L1_AtlasSpecifications/task-board.atlas.json). The source still contains its original three cases; `source_l1.case_ids` makes the one-case L2 scope explicit. The [blueprint](docs/L2_MinervaBlueprints/blueprint.yaml) contains program contracts, entity/tool rules, context authorization, a directly linked behavioral test, criteria coverage, positive/denied/empty scenarios and a storage-failure scenario. It is a small selected scope, not a complete realization of every source case.
+[Atlas JSON](docs/L1_AtlasSpecifications/example.atlas.json) · [Minerva YAML](docs/L2_MinervaBlueprints/blueprint.yaml) · [Provenance](provenance.json) · [Traceability](traceability.md)
 
-No code files are supplied or claimed by its declared mirror. Source records are not a prerequisite to reason about the program before implementation. Supporting checks identify intended realizations separately from results; no execution is claimed here.
+| Case | Behavioral test | Criteria |
+| --- | --- | --- |
+| UC-REQUEST-SUBMIT | BT-REQUEST-SUBMIT | 7 |
 
-From the edition directory:
+All scenarios are planned. The absence of code and executions is intentional: L2 can be authored before L3. Illustrated source channels remain proposals; their drawings and resources are preserved where present.
 
 ```bash
 python validator/minerva_validate.py examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml --root examples/minimal --json
 ```
 
-Expected result: exit 0, one program case, one directly linked behavioral test and three criteria. Review the actor trust premise, insertion-order guarantee, distinction between confirmed empty storage and failure, and the absence of writes during listing. Structural success does not prove those claims against code.
+Run from the edition. The result checks Minerva declarations and hashes; it neither interprets Atlas nor executes the scenarios.

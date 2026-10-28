@@ -1,0 +1,24 @@
+{
+  "minerva_edition": "Alpha-v0.1.0",
+  "yaml_profile": "0.1.0",
+  "atlas_edition": "Stable-v1.0.0",
+  "atlas_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+  "oal_edition": "Stable-v1.0.0",
+  "integration": "documented_mapping_and_editorially_authored_examples",
+  "source_reader_included": false,
+  "translation_engine_included": false,
+  "source_content_validation": "external Atlas tooling, separately recorded",
+  "minerva_validation": "schema, declared source catalogue, traceability, source byte integrity and optional code inspection",
+  "examples": [
+    "minimal",
+    "task-board",
+    "composition",
+    "task-board/revisions/revision-2",
+    "task-board/revisions/revision-3"
+  ],
+  "limits": [
+    "No universal or automatic translation is claimed.",
+    "Catalogue fidelity and contract preservation require source review.",
+    "No domain application execution or stakeholder acceptance is asserted."
+  ]
+}

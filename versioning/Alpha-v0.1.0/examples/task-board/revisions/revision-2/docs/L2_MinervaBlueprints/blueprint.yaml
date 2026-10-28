@@ -1,0 +1,1958 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: blueprint
+oal_edition: Stable-v1.0.0
+document:
+  id: MINERVA-TASK-BOARD
+  revision: '2'
+  status: reviewed
+  nature: designed
+  title: Task board — create, complete, and list â€” program and verification model
+  responsible: 'Project author: Douglas de Oliveira Alkimim. AI-assisted preparation and technical review; project-owner
+    semantic acceptance is pending.'
+  scope: All 3 source cases, their contracts and acceptance criteria. No realization or channel implementation is
+    claimed.
+  limitations: ['Source remains the canonical L1 package; the catalogue is a manually checked Minerva declaration,
+      not independently parsed by the validator.', 'L1 boundary illustrations remain proposals; no web form, CLI
+      or HTTP protocol is mandated by this L2.', 'No application code, source observation, test execution or stakeholder
+      approval is asserted.']
+  decisions:
+  - {id: DEC-CALLER-CONTEXT, kind: decision, statement: Represent the required trusted caller context as an explicit
+      L2 entity and nullable case input so denial can be specified. No identity provider or channel mechanism is
+      selected., source: Source case context and authorization contracts., review_status: reviewed}
+  - {id: DEC-MANUAL-DERIVATION, kind: decision, statement: AI-assisted editorial derivation of the pinned Atlas
+      example into Minerva. Exact source text extraction and authored scenario design were reviewed together; no
+      reusable translator or source-model reader is delivered., source: User-authorized revision of unpublished
+      Alpha-v0.1.0., review_status: reviewed}
+  - {id: DEC-OWNER-REVIEW, kind: open_issue, statement: Project-owner acceptance of the resulting model and examples
+      remains pending; authorization to edit is not semantic acceptance., source: Current candidate preparation.,
+    review_status: draft}
+  - {id: ASM-TASK-SINGLE-BOARD, kind: assumption, statement: Synthetic scope assumes one resolved board per invocation
+      and stable task identifiers within that board., source: 'Pinned Atlas source /atlas/assumptions; original
+      status: open', review_status: draft}
+  - {id: ASM-TASK-IDENTITY, kind: assumption, statement: 'A future application has a trusted identity-and-permission
+      authority that resolves principal, board, grants and validity. This capability is assumed, not implemented
+      or empirically demonstrated here.', source: 'Pinned Atlas source /atlas/assumptions; original status: open',
+    review_status: draft}
+source_l1:
+  model: Atlas Specifications
+  model_version: Stable-v1.0.0
+  artifact: docs/L1_AtlasSpecifications/example.atlas.json
+  document_id: DOC-TASK-BOARD
+  revision: '2'
+  case_ids: [UC-TASK-CREATE, UC-TASK-COMPLETE, UC-TASK-LIST]
+  sha256: b94ca14964d5a9b418eb7512f32edf9d2bd8e3cb56b84dde9e95e9f7f43f44b3
+  catalog:
+  - {ref: ACT-BOARD-MEMBER, kind: actor, statement: Board member, source_pointer: /atlas/actors/0}
+  - {ref: ENT-TASK, kind: entity, statement: Task, source_pointer: /atlas/entities/0}
+  - {ref: FLD-TASK-ID, kind: field, statement: Task identifier, source_pointer: /atlas/entities/0/fields/0}
+  - {ref: FLD-TASK-TITLE, kind: field, statement: Title, source_pointer: /atlas/entities/0/fields/1}
+  - {ref: FLD-TASK-STATUS, kind: field, statement: Status, source_pointer: /atlas/entities/0/fields/2}
+  - {ref: FLD-TASK-REVISION, kind: field, statement: Revision, source_pointer: /atlas/entities/0/fields/3}
+  - {ref: VLD-TASK-ID, kind: validation, statement: 'A task identifier is non-empty text, preserved exactly.', source_pointer: /atlas/entities/0/validations/0}
+  - {ref: VLD-TASK-NEW, kind: validation, statement: 'A new Task has a valid identifier, a meaningful title, open
+      status, and revision zero.', source_pointer: /atlas/entities/0/validations/1}
+  - {ref: VLD-TASK-COMPLETE, kind: validation, statement: A ready Task may transition from open to completed; a
+      completed Task cannot be completed again., source_pointer: /atlas/entities/0/validations/2}
+  - {ref: TOL-TASK-STORE, kind: tool, statement: Task store, source_pointer: /atlas/tools/0}
+  - {ref: OP-TASK-CREATE, kind: operation, statement: Retain a new Task, source_pointer: /atlas/tools/0/operations/0}
+  - {ref: OP-TASK-LOAD, kind: operation, statement: Read one Task, source_pointer: /atlas/tools/0/operations/1}
+  - {ref: OP-TASK-COMPLETE, kind: operation, statement: Retain a completion, source_pointer: /atlas/tools/0/operations/2}
+  - {ref: OP-TASK-LIST, kind: operation, statement: Read the board, source_pointer: /atlas/tools/0/operations/3}
+  - ref: UC-TASK-CREATE
+    kind: case
+    statement: Create task
+    source_pointer: /atlas/use_cases/0
+    actor_refs: [ACT-BOARD-MEMBER]
+  - ref: RF-TASK-CREATE-AUTH
+    kind: requirement
+    statement: 'Resolve the initiating board member and require task.create for the selected board in trusted caller
+      context. Missing, unresolved, expired, or insufficient context is denied before any entity application or
+      tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    source_pointer: /atlas/use_cases/0/functional_requirements/0
+    case_refs: [UC-TASK-CREATE]
+  - ref: RF-TASK-CREATE-DATA
+    kind: requirement
+    statement: After authorization, construct a new Task from task_id and title with status open and revision zero,
+      applying VLD-TASK-NEW. An invalid candidate is refused before storage; preserve input text exactly.
+    source_pointer: /atlas/use_cases/0/functional_requirements/1
+    case_refs: [UC-TASK-CREATE]
+  - ref: RF-TASK-CREATE-RETAIN
+    kind: requirement
+    statement: Pass the ready Task and authorized board to OP-TASK-CREATE once. Only a confirmed result returns
+      the retained identifier, title, open status, and revision zero.
+    source_pointer: /atlas/use_cases/0/functional_requirements/2
+    case_refs: [UC-TASK-CREATE]
+  - ref: RF-TASK-CREATE-DUPLICATE
+    kind: requirement
+    statement: Map DUPLICATE_ID to duplicate-identifier refusal. Preserve the existing Task and do not choose a
+      replacement identifier silently.
+    source_pointer: /atlas/use_cases/0/functional_requirements/3
+    case_refs: [UC-TASK-CREATE]
+  - ref: RF-TASK-CREATE-FAILURE
+    kind: requirement
+    statement: On STORE_UNAVAILABLE, report write_outcome supplied by the tool. Distinguish not_applied from unknown;
+      never infer no change or success from an absent confirmation and do not retry automatically.
+    source_pointer: /atlas/use_cases/0/functional_requirements/4
+    case_refs: [UC-TASK-CREATE]
+  - ref: RNF-TASK-CREATE-RETENTION
+    kind: requirement
+    statement: 'A confirmed creation remains readable after a normal store restart. Origin: SRC-TASK-BRIEF (synthetic
+      teaching brief).'
+    source_pointer: /atlas/use_cases/0/nonfunctional_requirements/0
+    case_refs: [UC-TASK-CREATE]
+  - ref: AC-TASK-CREATE-AUTH
+    kind: criterion
+    statement: Try absent context, an unresolved identity, an expired context, and a member lacking this permission.
+      Every attempt is denied before tool invocation, with no task state or existence disclosed.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/0
+    case_refs: [UC-TASK-CREATE]
+  - ref: AC-TASK-CREATE-SUCCESS
+    kind: criterion
+    statement: With trusted create permission and unused TASK001 / Review Atlas, receive the exact open Task at
+      revision zero; a later successful list includes it once.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/1
+    case_refs: [UC-TASK-CREATE]
+  - ref: AC-TASK-CREATE-INVALID
+    kind: criterion
+    statement: An empty title or whitespace-only identifier is refused before OP-TASK-CREATE is invoked.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/2
+    case_refs: [UC-TASK-CREATE]
+  - ref: AC-TASK-CREATE-DUPLICATE
+    kind: criterion
+    statement: Creating TASK001 twice retains the first Task unchanged and returns duplicate-identifier refusal
+      on the second attempt.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/3
+    case_refs: [UC-TASK-CREATE]
+  - ref: AC-TASK-CREATE-UNKNOWN
+    kind: criterion
+    statement: Inject a write with lost confirmation. The case reports unknown; it does not claim no write, report
+      success, or initiate a retry.
+    source_pointer: /atlas/use_cases/0/acceptance_criteria/4
+    case_refs: [UC-TASK-CREATE]
+  - ref: UC-TASK-COMPLETE
+    kind: case
+    statement: Complete task
+    source_pointer: /atlas/use_cases/1
+    actor_refs: [ACT-BOARD-MEMBER]
+  - ref: RF-TASK-COMPLETE-AUTH
+    kind: requirement
+    statement: 'Resolve the initiating board member and require task.complete for the selected board in trusted
+      caller context. Missing, unresolved, expired, or insufficient context is denied before any entity application
+      or tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    source_pointer: /atlas/use_cases/1/functional_requirements/0
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RF-TASK-COMPLETE-ID
+    kind: requirement
+    statement: After authorization, apply VLD-TASK-ID to the supplied identifier; refuse invalid input before tool
+      access.
+    source_pointer: /atlas/use_cases/1/functional_requirements/1
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RF-TASK-COMPLETE-LOAD
+    kind: requirement
+    statement: Read a ready Task and its observed revision with OP-TASK-LOAD. A confirmed NOT_FOUND is a refusal
+      without write, distinct from unavailable or malformed storage.
+    source_pointer: /atlas/use_cases/1/functional_requirements/2
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RF-TASK-COMPLETE-TRANSITION
+    kind: requirement
+    statement: Apply VLD-TASK-COMPLETE to the ready Task's current state. If already completed, refuse without writing.
+      Otherwise produce a ready completed Task preserving identifier/title; do not repeat validation of its established
+      invariants.
+    source_pointer: /atlas/use_cases/1/functional_requirements/3
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RF-TASK-COMPLETE-WRITE
+    kind: requirement
+    statement: Call OP-TASK-COMPLETE with the completed Task and observed revision. Confirm only its successful
+      result. NOT_FOUND or VERSION_CONFLICT refuses with no write by this operation; never overwrite a competing
+      change.
+    source_pointer: /atlas/use_cases/1/functional_requirements/4
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RF-TASK-COMPLETE-FAILURE
+    kind: requirement
+    statement: Propagate read unavailable/invalid-state failures without a write. On a write's STORE_UNAVAILABLE
+      preserve not_applied versus unknown; do not claim completion or retry automatically.
+    source_pointer: /atlas/use_cases/1/functional_requirements/5
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: RNF-TASK-COMPLETE-ATOMICITY
+    kind: requirement
+    statement: 'Concurrent completion must not lose an update or report two writes for the same observed revision.
+      Origin: SRC-TASK-BRIEF (synthetic teaching brief).'
+    source_pointer: /atlas/use_cases/1/nonfunctional_requirements/0
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-AUTH
+    kind: criterion
+    statement: Try absent context, an unresolved identity, an expired context, and a member lacking this permission.
+      Every attempt is denied before tool invocation, with no task state or existence disclosed.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/0
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-SUCCESS
+    kind: criterion
+    statement: For TASK001 open at revision zero, completion returns the same identifier/title, completed status
+      and revision one; later listing reflects that state.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/1
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-MISSING
+    kind: criterion
+    statement: A confirmed absent identifier produces not-found without calling OP-TASK-COMPLETE.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/2
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-INVALID
+    kind: criterion
+    statement: An empty or whitespace-only identifier is refused before load or completion tools are invoked.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/3
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-ALREADY
+    kind: criterion
+    statement: A ready completed Task produces already-completed refusal and no write; its revision remains unchanged.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/4
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-CONFLICT
+    kind: criterion
+    statement: Change the retained revision between load and completion. Return VERSION_CONFLICT, preserving the
+      competing state.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/5
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: AC-TASK-COMPLETE-UNKNOWN
+    kind: criterion
+    statement: Lose the completion confirmation after issuing a write. Return unknown without success/no-change
+      claims or automatic retry.
+    source_pointer: /atlas/use_cases/1/acceptance_criteria/6
+    case_refs: [UC-TASK-COMPLETE]
+  - ref: UC-TASK-LIST
+    kind: case
+    statement: List tasks
+    source_pointer: /atlas/use_cases/2
+    actor_refs: [ACT-BOARD-MEMBER]
+  - ref: RF-TASK-LIST-AUTH
+    kind: requirement
+    statement: 'Resolve the initiating board member and require task.list for the selected board in trusted caller
+      context. Missing, unresolved, expired, or insufficient context is denied before any entity application or
+      tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    source_pointer: /atlas/use_cases/2/functional_requirements/0
+    case_refs: [UC-TASK-LIST]
+  - ref: RF-TASK-LIST-SNAPSHOT
+    kind: requirement
+    statement: After authorization, call OP-TASK-LIST for the trusted board. Return every ready Task exactly once
+      in the declared identifier order, preserving title, state, and revision. A confirmed empty snapshot is a successful
+      empty list. Do not revalidate ready entities.
+    source_pointer: /atlas/use_cases/2/functional_requirements/1
+    case_refs: [UC-TASK-LIST]
+  - ref: RF-TASK-LIST-FAILURE
+    kind: requirement
+    statement: Report unavailable or invalid-state retrieval as a failure, preserving its distinction. Do not return
+      an empty or partial success and make no task changes.
+    source_pointer: /atlas/use_cases/2/functional_requirements/2
+    case_refs: [UC-TASK-LIST]
+  - ref: RNF-TASK-LIST-CONSISTENCY
+    kind: requirement
+    statement: 'The list represents one consistent snapshot of the authorized board. Origin: SRC-TASK-BRIEF (synthetic
+      teaching brief).'
+    source_pointer: /atlas/use_cases/2/nonfunctional_requirements/0
+    case_refs: [UC-TASK-LIST]
+  - ref: RNF-TASK-LIST-RETENTION
+    kind: requirement
+    statement: 'A confirmed creation remains readable after a normal store restart. Origin: SRC-TASK-BRIEF (synthetic
+      teaching brief).'
+    source_pointer: /atlas/use_cases/2/nonfunctional_requirements/1
+    case_refs: [UC-TASK-LIST]
+  - ref: AC-TASK-LIST-AUTH
+    kind: criterion
+    statement: Try absent context, an unresolved identity, an expired context, and a member lacking this permission.
+      Every attempt is denied before tool invocation, with no task state or existence disclosed.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/0
+    case_refs: [UC-TASK-LIST]
+  - ref: AC-TASK-LIST-CONTENT
+    kind: criterion
+    statement: Given open TASK002 and completed TASK001, return TASK001 then TASK002 with exact fields, once each,
+      with no state or revision changed.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/1
+    case_refs: [UC-TASK-LIST]
+  - ref: AC-TASK-LIST-EMPTY
+    kind: criterion
+    statement: A successful read of an empty board returns an empty list; an unavailable store instead returns failure.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/2
+    case_refs: [UC-TASK-LIST]
+  - ref: AC-TASK-LIST-INTEGRITY
+    kind: criterion
+    statement: If hydration finds an invalid stored Task, report STORE_INVALID_STATE without publishing a partial
+      successful list.
+    source_pointer: /atlas/use_cases/2/acceptance_criteria/3
+    case_refs: [UC-TASK-LIST]
+adpm:
+  types:
+  - id: TYP-TASK-STATUS
+    base: string
+    constraints: [Exactly open or completed.]
+  - id: TYP-RESOLVED-BOARD
+    base: string
+    constraints: ['Trusted opaque board identifier, bound to the invocation by the identity authority; never accepted
+        from untrusted business input.']
+  entities:
+  - id: ENT-TASK
+    source_entity_id: ENT-TASK
+    name: Task
+    meaning: A unit of work retained in one board. Its identity and title survive completion. The entity owns data
+      validity and state-transition rules; it has no tool or use-case dependency.
+    fields:
+    - name: task_identifier
+      description: 'Identity within this board. Constraints: Non-empty, non-whitespace text; equality is exact and
+        case-sensitive.'
+      type: {kind: primitive, name: string}
+      required: true
+      cardinality: '1'
+    - name: title
+      description: 'The work to be remembered. Constraints: At least one non-whitespace character; retain the original
+        text.'
+      type: {kind: primitive, name: string}
+      required: true
+      cardinality: '1'
+    - name: status
+      description: 'Lifecycle state. Constraints: One of open or completed.'
+      type: {kind: type, ref: TYP-TASK-STATUS}
+      required: true
+      cardinality: '1'
+    - name: revision
+      description: 'Concurrency token for a retained Task. Constraints: A non-negative integer, increased by one
+        for each successful completion.'
+      type: {kind: primitive, name: integer}
+      required: true
+      cardinality: '1'
+    invariant_refs: [VLD-TASK-ID, VLD-TASK-NEW]
+    construction: Canonical construction/hydration enforces all field constraints and state coherence once. Named
+      transition rules apply only to their declared transition, not to every hydrated entity.
+    behavior:
+      summary: Preserve identity, exact data and the declared lifecycle.
+      steps: ['A task identifier is non-empty text, preserved exactly.', 'A new Task has a valid identifier, a meaningful
+          title, open status, and revision zero.', A ready Task may transition from open to completed; a completed
+          Task cannot be completed again.]
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: [GRAPH-VLD-TASK-ID, GRAPH-VLD-TASK-NEW, GRAPH-VLD-TASK-COMPLETE]
+    dependencies: []
+  - id: ENT-CALLER-CONTEXT
+    source_entity_id: null
+    name: Caller context
+    meaning: L2 invocation data, distinct from business inputs and injected tools.
+    fields:
+    - name: principal
+      description: Authenticated concrete caller identity.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: issuer
+      description: Trusted context issuer.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: valid
+      description: Context is resolved, known and unexpired.
+      type: {kind: primitive, name: boolean}
+      required: true
+    - name: permissions
+      description: Case permissions from the trusted authority.
+      type:
+        kind: array
+        items: {kind: primitive, name: string}
+      required: true
+    - name: board
+      description: Authorized board binding; fixed for this invocation and forwarded calls.
+      type: {kind: primitive, name: string}
+      required: true
+    invariant_refs: [RULE-CALLER-CONTEXT]
+    construction: Created by the selected trusted authority; a matching request shape does not establish trust.
+    behavior:
+      summary: Carry caller identity and grants; each case decides its own authorization.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+    dependencies: []
+  tools:
+  - id: TOL-TASK-STORE
+    name: Task store
+    purpose: An abstract retention and retrieval capability. This specification chooses no database, protocol, framework,
+      SQL syntax, route, or concrete adapter.
+    operations:
+    - id: OP-TASK-CREATE
+      name: Retain a new Task
+      purpose: Atomically insert one ready open Task if its identifier is absent.
+      inputs:
+      - name: task
+        description: Ready Task after VLD-TASK-NEW; revision zero.
+        type: {kind: entity, ref: ENT-TASK}
+        required: true
+      - name: board
+        description: The board bound to trusted caller context.
+        type: {kind: type, ref: TYP-RESOLVED-BOARD}
+        required: true
+      outputs:
+      - name: created_task
+        description: The retained Task, with its exact title and identifier.
+        type: {kind: entity, ref: ENT-TASK}
+        required: true
+      conditions: [A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not
+          repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+          boundary once; this is not duplicate validation of a ready Task., All operations act on the board resolved
+          in the trusted caller context. A caller supplies no untrusted substitute for that board binding.]
+      guarantees: [Uniqueness check and insertion are atomic. A duplicate does not overwrite an existing Task.,
+        A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant
+          validation. Loading raw records uses the canonical entity construction/hydration boundary once; this is
+          not duplicate validation of a ready Task., A successful result confirms retention at revision zero.]
+      effects: [One Task is added on success.]
+      failures:
+      - {id: FAIL-OP-TASK-CREATE-DUPLICATE-ID, condition: The identifier is already retained in this board., result: 'DUPLICATE_ID:
+          This outcome is not applied: the store guarantees that this operation made no change.', effects: 'This
+          outcome is not applied: the store guarantees that this operation made no change.', outcome_certainty: not_applied}
+      - {id: FAIL-OP-TASK-CREATE-STORE-UNAVAILABLE, condition: The capability could not confirm the requested result.,
+        result: 'STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence no write occurred;
+          otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not
+          be automatically retried. A read failure returns no usable snapshot and changes no task.', effects: 'For
+          a write, return write_outcome=not_applied only with evidence no write occurred; otherwise return write_outcome=unknown.
+          Unknown is neither success nor proof of no change, and must not be automatically retried. A read failure
+          returns no usable snapshot and changes no task.', outcome_certainty: unknown}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: []
+      revalidates_rule_refs: []
+      contextual_conditions:
+      - {id: CTX-OP-TASK-CREATE, condition: 'Uniqueness check and insertion are atomic. A duplicate does not overwrite
+          an existing Task.
+
+          A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant
+          validation. Loading raw records uses the canonical entity construction/hydration boundary once; this is
+          not duplicate validation of a ready Task.', object: The persisted identifier and any expected version.,
+        purpose: Enforce atomic external storage conditions without repeating ready-entity validity., responsibility: OP-TASK-CREATE}
+    - id: OP-TASK-LOAD
+      name: Read one Task
+      purpose: Return a ready Task and its observed revision by exact identifier.
+      inputs:
+      - name: task_identifier
+        description: Identifier already checked against VLD-TASK-ID.
+        type: {kind: primitive, name: string}
+        required: true
+      - name: board
+        description: The authorized board.
+        type: {kind: type, ref: TYP-RESOLVED-BOARD}
+        required: true
+      outputs:
+      - name: task
+        description: A ready Task hydrated from one retained record.
+        type: {kind: entity, ref: ENT-TASK}
+        required: true
+      conditions: [A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not
+          repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+          boundary once; this is not duplicate validation of a ready Task., All operations act on the board resolved
+          in the trusted caller context. A caller supplies no untrusted substitute for that board binding.]
+      guarantees: ['No write occurs. Not-found is a confirmed absence, not a masked read error.', A Task input is
+          already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant validation.
+          Loading raw records uses the canonical entity construction/hydration boundary once; this is not duplicate
+          validation of a ready Task., Its revision describes the same observed record as its fields.]
+      effects: [No task is changed.]
+      failures:
+      - {id: FAIL-OP-TASK-LOAD-NOT-FOUND, condition: No task with this identifier exists in this board at read time.,
+        result: 'NOT_FOUND: Distinct from unavailable or malformed storage.', effects: Distinct from unavailable
+          or malformed storage., outcome_certainty: not_applicable}
+      - {id: FAIL-OP-TASK-LOAD-STORE-UNAVAILABLE, condition: The capability could not confirm the requested result.,
+        result: 'STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence no write occurred;
+          otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not
+          be automatically retried. A read failure returns no usable snapshot and changes no task.', effects: 'For
+          a write, return write_outcome=not_applied only with evidence no write occurred; otherwise return write_outcome=unknown.
+          Unknown is neither success nor proof of no change, and must not be automatically retried. A read failure
+          returns no usable snapshot and changes no task.', outcome_certainty: not_applicable}
+      - {id: FAIL-OP-TASK-LOAD-STORE-INVALID-STATE, condition: A stored record could not be hydrated through the
+          canonical Task validity rules., result: 'STORE_INVALID_STATE: Do not return a malformed ready Task, an
+          empty success, or a partial list. Report the integrity failure; no task is changed by the read.', effects: 'Do
+          not return a malformed ready Task, an empty success, or a partial list. Report the integrity failure;
+          no task is changed by the read.', outcome_certainty: not_applicable}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: [ENT-TASK]
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    - id: OP-TASK-COMPLETE
+      name: Retain a completion
+      purpose: Atomically replace the observed Task with a ready completed Task only if its revision still matches.
+      inputs:
+      - name: task
+        description: Ready Task after the entity's open-to-completed transition; identity/title unchanged.
+        type: {kind: entity, ref: ENT-TASK}
+        required: true
+      - name: expected_revision
+        description: Revision returned by OP-TASK-LOAD.
+        type: {kind: primitive, name: integer}
+        required: true
+      - name: board
+        description: The authorized board.
+        type: {kind: type, ref: TYP-RESOLVED-BOARD}
+        required: true
+      outputs:
+      - name: completed_task
+        description: The retained completed Task.
+        type: {kind: entity, ref: ENT-TASK}
+        required: true
+      conditions: [A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not
+          repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+          boundary once; this is not duplicate validation of a ready Task., All operations act on the board resolved
+          in the trusted caller context. A caller supplies no untrusted substitute for that board binding.]
+      guarantees: [Existence/revision comparison and replacement are atomic; no lost update is reported as success.,
+        A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant
+          validation. Loading raw records uses the canonical entity construction/hydration boundary once; this is
+          not duplicate validation of a ready Task., Revision is expected_revision+1; identity and title are unchanged.]
+      effects: [Status becomes completed and revision increases once on success.]
+      failures:
+      - {id: FAIL-OP-TASK-COMPLETE-NOT-FOUND, condition: The observed Task is no longer present at conditional-write
+          time., result: 'NOT_FOUND: This outcome is not applied: the store guarantees that this operation made
+          no change.', effects: 'This outcome is not applied: the store guarantees that this operation made no change.',
+        outcome_certainty: not_applied}
+      - {id: FAIL-OP-TASK-COMPLETE-VERSION-CONFLICT, condition: The retained revision differs from the expected
+          revision., result: 'VERSION_CONFLICT: This outcome is not applied: the store guarantees that this operation
+          made no change.', effects: 'This outcome is not applied: the store guarantees that this operation made
+          no change.', outcome_certainty: not_applied}
+      - {id: FAIL-OP-TASK-COMPLETE-STORE-UNAVAILABLE, condition: The capability could not confirm the requested
+          result., result: 'STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence
+          no write occurred; otherwise return write_outcome=unknown. Unknown is neither success nor proof of no
+          change, and must not be automatically retried. A read failure returns no usable snapshot and changes no
+          task.', effects: 'For a write, return write_outcome=not_applied only with evidence no write occurred;
+          otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not
+          be automatically retried. A read failure returns no usable snapshot and changes no task.', outcome_certainty: unknown}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: []
+      revalidates_rule_refs: []
+      contextual_conditions:
+      - {id: CTX-OP-TASK-COMPLETE, condition: 'Existence/revision comparison and replacement are atomic; no lost
+          update is reported as success.
+
+          A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant
+          validation. Loading raw records uses the canonical entity construction/hydration boundary once; this is
+          not duplicate validation of a ready Task.', object: The persisted identifier and any expected version.,
+        purpose: Enforce atomic external storage conditions without repeating ready-entity validity., responsibility: OP-TASK-COMPLETE}
+    - id: OP-TASK-LIST
+      name: Read the board
+      purpose: Return one consistent snapshot of all Tasks in the authorized board.
+      inputs:
+      - name: board
+        description: The authorized board.
+        type: {kind: type, ref: TYP-RESOLVED-BOARD}
+        required: true
+      outputs:
+      - name: tasks
+        description: Ready Tasks ordered by exact identifier using Unicode code-point order.
+        type:
+          kind: array
+          items: {kind: entity, ref: ENT-TASK}
+        required: true
+      conditions: [A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not
+          repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+          boundary once; this is not duplicate validation of a ready Task., All operations act on the board resolved
+          in the trusted caller context. A caller supplies no untrusted substitute for that board binding.]
+      guarantees: [No partial list is returned as a complete snapshot. Concurrent later changes need not appear
+          in this snapshot., A Task input is already valid according to ENT-TASK. Tools consume ready entities and
+          do not repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+          boundary once; this is not duplicate validation of a ready Task., Each matching Task appears exactly once;
+          an empty successful list means the board was empty at the snapshot instant.]
+      effects: [No task is changed.]
+      failures:
+      - {id: FAIL-OP-TASK-LIST-STORE-UNAVAILABLE, condition: The capability could not confirm the requested result.,
+        result: 'STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence no write occurred;
+          otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not
+          be automatically retried. A read failure returns no usable snapshot and changes no task.', effects: 'For
+          a write, return write_outcome=not_applied only with evidence no write occurred; otherwise return write_outcome=unknown.
+          Unknown is neither success nor proof of no change, and must not be automatically retried. A read failure
+          returns no usable snapshot and changes no task.', outcome_certainty: not_applicable}
+      - {id: FAIL-OP-TASK-LIST-STORE-INVALID-STATE, condition: A stored record could not be hydrated through the
+          canonical Task validity rules., result: 'STORE_INVALID_STATE: Do not return a malformed ready Task, an
+          empty success, or a partial list. Report the integrity failure; no task is changed by the read.', effects: 'Do
+          not return a malformed ready Task, an empty success, or a partial list. Report the integrity failure;
+          no task is changed by the read.', outcome_certainty: not_applicable}
+      ready_entity_assumption: Ready entities already satisfy canonical invariants. Validated scalar inputs retain
+        their preconditions; no duplicate domain validation in this tool.
+      canonical_construction_refs: [ENT-TASK]
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    dependencies: [ENT-TASK]
+    technical_selection: Unselected; the future realization must meet this contract.
+  cases:
+  - id: UC-TASK-CREATE
+    source_case_id: UC-TASK-CREATE
+    app: TaskBoard
+    name: Create task
+    objective: Remember one new unit of work in the board.
+    inputs:
+    - name: actor_context
+      description: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: task_identifier
+      description: Requested stable task identifier.
+      type: {kind: primitive, name: string}
+      required: true
+    - name: title
+      description: The work to remember.
+      type: {kind: primitive, name: string}
+      required: true
+    outputs:
+    - name: result
+      description: The retained Task is returned.
+      type: {kind: entity, ref: ENT-TASK}
+      required: true
+    collaborators: [ENT-TASK, TOL-TASK-STORE, OP-TASK-CREATE]
+    rule_refs: [RULE-TASK-CREATE-AUTH, VLD-TASK-NEW]
+    permission:
+      context_input: actor_context
+      trust_source: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      required_permissions: [task.create]
+      allowed_actor_refs: [ACT-BOARD-MEMBER]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Remember one new unit of work in the board.
+      steps: ['Resolve trusted context first. Deny missing, unresolved, expired, or insufficient permission before
+          validation and storage (RF-TASK-CREATE-AUTH).', Apply VLD-TASK-NEW to input data once. Refuse invalid
+          input without tool access (RF-TASK-CREATE-DATA)., 'Pass the ready Task to OP-TASK-CREATE. Confirm only
+          on its success; map duplicate and unavailable outcomes explicitly (RF-TASK-CREATE-RETAIN, RF-TASK-CREATE-DUPLICATE,
+          RF-TASK-CREATE-FAILURE).']
+      preconditions: [Requests may arrive with invalid or missing authorization context; the case's denial path
+          remains defined. No downstream effect occurs before authorization succeeds.]
+      postconditions: ['On OUT-TASK-CREATE-DENIED: The caller context is absent, unresolved, expired, or lacks this
+          case''s permission for this board.', 'On OUT-TASK-CREATE-CREATED: The retained Task is returned.', 'On
+          OUT-TASK-CREATE-INVALID: The new-task validity rule failed.', 'On OUT-TASK-CREATE-DUPLICATE: The identifier
+          was already retained.', 'On OUT-TASK-CREATE-UNAVAILABLE: Storage did not confirm creation; report write_outcome.']
+      effects: ['On OUT-TASK-CREATE-DENIED: No tool call, no write, and no disclosure of task existence or content.',
+        'On OUT-TASK-CREATE-CREATED: Exactly one open Task at revision zero is retained.', 'On OUT-TASK-CREATE-INVALID:
+          No store invocation or state change.', 'On OUT-TASK-CREATE-DUPLICATE: No change to that Task.', 'On OUT-TASK-CREATE-UNAVAILABLE:
+          not_applied guarantees no write; unknown leaves final retention state unresolved.']
+      graph_refs: [GRAPH-TASK-CREATE]
+    failures:
+    - {id: OUT-TASK-CREATE-DENIED, condition: 'The caller context is absent, unresolved, expired, or lacks this
+        case''s permission for this board.', result: OUT-TASK-CREATE-DENIED, effects: 'No tool call, no write, and
+        no disclosure of task existence or content.', outcome_certainty: not_applied}
+    - {id: OUT-TASK-CREATE-INVALID, condition: The new-task validity rule failed., result: OUT-TASK-CREATE-INVALID,
+      effects: No store invocation or state change., outcome_certainty: not_applied}
+    - {id: OUT-TASK-CREATE-DUPLICATE, condition: The identifier was already retained., result: OUT-TASK-CREATE-DUPLICATE,
+      effects: No change to that Task., outcome_certainty: not_applied}
+    - {id: OUT-TASK-CREATE-UNAVAILABLE, condition: Storage did not confirm creation; report write_outcome., result: OUT-TASK-CREATE-UNAVAILABLE,
+      effects: not_applied guarantees no write; unknown leaves final retention state unresolved., outcome_certainty: unknown}
+    domain_ref: null
+  - id: UC-TASK-COMPLETE
+    source_case_id: UC-TASK-COMPLETE
+    app: TaskBoard
+    name: Complete task
+    objective: Mark an existing open Task completed without losing a competing change.
+    inputs:
+    - name: actor_context
+      description: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    - name: task_identifier
+      description: Exact identifier to complete.
+      type: {kind: primitive, name: string}
+      required: true
+    outputs:
+    - name: result
+      description: Return the confirmed completed Task.
+      type: {kind: entity, ref: ENT-TASK}
+      required: true
+    collaborators: [ENT-TASK, TOL-TASK-STORE, OP-TASK-LOAD, OP-TASK-COMPLETE]
+    rule_refs: [RULE-TASK-COMPLETE-AUTH, VLD-TASK-ID, VLD-TASK-COMPLETE]
+    permission:
+      context_input: actor_context
+      trust_source: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      required_permissions: [task.complete]
+      allowed_actor_refs: [ACT-BOARD-MEMBER]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Mark an existing open Task completed without losing a competing change.
+      steps: ['Authorize trusted caller context first (RF-TASK-COMPLETE-AUTH). Validate the identifier, then load
+          a ready Task (RF-TASK-COMPLETE-ID, RF-TASK-COMPLETE-LOAD).', Refuse a confirmed absence; report a read
+          failure without attempting a write. Apply the entity's transition to the ready Task; refuse already-completed
+          state (RF-TASK-COMPLETE-TRANSITION)., 'Conditionally retain the completed Task with its observed revision.
+          Distinguish success, concurrent conflict, confirmed absence, and unavailable-write outcome (RF-TASK-COMPLETE-WRITE,
+          RF-TASK-COMPLETE-FAILURE).']
+      preconditions: [Requests may arrive with invalid or missing authorization context; the case's denial path
+          remains defined. No downstream effect occurs before authorization succeeds.]
+      postconditions: ['On OUT-TASK-COMPLETE-DENIED: The caller context is absent, unresolved, expired, or lacks
+          this case''s permission for this board.', 'On OUT-TASK-COMPLETE-COMPLETED: Return the confirmed completed
+          Task.', 'On OUT-TASK-COMPLETE-INVALID: Identifier is invalid.', 'On OUT-TASK-COMPLETE-MISSING: Task absence
+          was confirmed at read or write time.', 'On OUT-TASK-COMPLETE-ALREADY: Task was already completed.', 'On
+          OUT-TASK-COMPLETE-CONFLICT: The Task changed after the observed read.', 'On OUT-TASK-COMPLETE-STORAGE:
+          Storage was unavailable or returned invalid stored state.']
+      effects: ['On OUT-TASK-COMPLETE-DENIED: No tool call, no write, and no disclosure of task existence or content.',
+        'On OUT-TASK-COMPLETE-COMPLETED: Status changes once; revision increases by one, title/identifier unchanged.',
+        'On OUT-TASK-COMPLETE-INVALID: No store access.', 'On OUT-TASK-COMPLETE-MISSING: This invocation makes no
+          write.', 'On OUT-TASK-COMPLETE-ALREADY: No completion write.', 'On OUT-TASK-COMPLETE-CONFLICT: This invocation
+          does not overwrite the competing change.', 'On OUT-TASK-COMPLETE-STORAGE: Read failures make no change.
+          For a write, not_applied guarantees no change and unknown leaves the final state unresolved.']
+      graph_refs: [GRAPH-TASK-COMPLETE]
+    failures:
+    - {id: OUT-TASK-COMPLETE-DENIED, condition: 'The caller context is absent, unresolved, expired, or lacks this
+        case''s permission for this board.', result: OUT-TASK-COMPLETE-DENIED, effects: 'No tool call, no write,
+        and no disclosure of task existence or content.', outcome_certainty: not_applied}
+    - {id: OUT-TASK-COMPLETE-INVALID, condition: Identifier is invalid., result: OUT-TASK-COMPLETE-INVALID, effects: No
+        store access., outcome_certainty: not_applied}
+    - {id: OUT-TASK-COMPLETE-MISSING, condition: Task absence was confirmed at read or write time., result: OUT-TASK-COMPLETE-MISSING,
+      effects: This invocation makes no write., outcome_certainty: not_applied}
+    - {id: OUT-TASK-COMPLETE-ALREADY, condition: Task was already completed., result: OUT-TASK-COMPLETE-ALREADY,
+      effects: No completion write., outcome_certainty: not_applied}
+    - {id: OUT-TASK-COMPLETE-CONFLICT, condition: The Task changed after the observed read., result: OUT-TASK-COMPLETE-CONFLICT,
+      effects: This invocation does not overwrite the competing change., outcome_certainty: not_applied}
+    - {id: OUT-TASK-COMPLETE-STORAGE, condition: Storage was unavailable or returned invalid stored state., result: OUT-TASK-COMPLETE-STORAGE,
+      effects: 'Read failures make no change. For a write, not_applied guarantees no change and unknown leaves the
+        final state unresolved.', outcome_certainty: unknown}
+    domain_ref: null
+  - id: UC-TASK-LIST
+    source_case_id: UC-TASK-LIST
+    app: TaskBoard
+    name: List tasks
+    objective: Observe all current Tasks in the authorized board without changing them.
+    inputs:
+    - name: actor_context
+      description: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      type: {kind: entity, ref: ENT-CALLER-CONTEXT, nullable: true}
+      required: true
+    outputs:
+    - name: result
+      description: Return the complete ordered snapshot, including an empty list for a confirmed empty board.
+      type:
+        kind: array
+        items: {kind: entity, ref: ENT-TASK}
+      required: true
+    collaborators: [ENT-TASK, TOL-TASK-STORE, OP-TASK-LIST]
+    rule_refs: [RULE-TASK-LIST-AUTH]
+    permission:
+      context_input: actor_context
+      trust_source: 'Required caller context: resolved principal identifier, selected board identifier, authenticated
+        status, granted case permissions, issuer, and validity status. The context originates from a trusted identity-and-permission
+        authority configured for the application; claims in the task request are untrusted and cannot supply authorization.
+
+        The trust assumption is ASM-TASK-IDENTITY. Authentication is required; its mechanism and token/channel encoding
+        belong to later design. Authorization is reevaluated for this invocation, and composed invocations would
+        preserve the same principal and board context.
+
+        The actor is a role. The caller is the concrete principal for this request. Neither is an accountable human
+        author for a Needs-to-L1 derivation.'
+      required_permissions: [task.list]
+      allowed_actor_refs: [ACT-BOARD-MEMBER]
+      deny_contexts: [absent, unresolved, unknown, insufficient]
+      anonymous_allowed: false
+      authentication: Authenticated, resolved, known and unexpired principal required; channel mechanism remains
+        unselected.
+      before_effects: true
+    behavior:
+      summary: Observe all current Tasks in the authorized board without changing them.
+      steps: [Resolve and authorize caller context before retrieving any Task (RF-TASK-LIST-AUTH)., Read one complete
+          snapshot with OP-TASK-LIST and return the ready Tasks unchanged. An empty successful snapshot means confirmed
+          emptiness (RF-TASK-LIST-SNAPSHOT)., 'Report retrieval failure as failure, never as an empty or partial
+          successful list (RF-TASK-LIST-FAILURE).']
+      preconditions: [Requests may arrive with invalid or missing authorization context; the case's denial path
+          remains defined. No downstream effect occurs before authorization succeeds.]
+      postconditions: ['On OUT-TASK-LIST-DENIED: The caller context is absent, unresolved, expired, or lacks this
+          case''s permission for this board.', 'On OUT-TASK-LIST-LISTED: Return the complete ordered snapshot, including
+          an empty list for a confirmed empty board.', 'On OUT-TASK-LIST-STORAGE: The requested snapshot could not
+          be obtained or contained invalid stored state.']
+      effects: ['On OUT-TASK-LIST-DENIED: No tool call, no write, and no disclosure of task existence or content.',
+        'On OUT-TASK-LIST-LISTED: No task changes.', 'On OUT-TASK-LIST-STORAGE: No task changes; no usable complete
+          list is claimed.']
+      graph_refs: [GRAPH-TASK-LIST]
+    failures:
+    - {id: OUT-TASK-LIST-DENIED, condition: 'The caller context is absent, unresolved, expired, or lacks this case''s
+        permission for this board.', result: OUT-TASK-LIST-DENIED, effects: 'No tool call, no write, and no disclosure
+        of task existence or content.', outcome_certainty: not_applied}
+    - {id: OUT-TASK-LIST-STORAGE, condition: The requested snapshot could not be obtained or contained invalid stored
+        state., result: OUT-TASK-LIST-STORAGE, effects: No task changes; no usable complete list is claimed., outcome_certainty: not_applicable}
+    domain_ref: null
+  rules:
+  - id: VLD-TASK-ID
+    statement: 'A task identifier is non-empty text, preserved exactly. Conditions: The candidate is text containing
+      at least one non-whitespace character.'
+    owner_ref: ENT-TASK
+    origin_refs: [VLD-TASK-ID]
+    kind: invariant
+  - id: VLD-TASK-NEW
+    statement: 'A new Task has a valid identifier, a meaningful title, open status, and revision zero. Conditions:
+      The task identifier satisfies VLD-TASK-ID.; The title is text with at least one non-whitespace character.;
+      The status is open.; The revision is the integer zero.'
+    owner_ref: ENT-TASK
+    origin_refs: [VLD-TASK-NEW]
+    kind: invariant
+  - id: VLD-TASK-COMPLETE
+    statement: 'A ready Task may transition from open to completed; a completed Task cannot be completed again.
+      Conditions: The current state is ST-TASK-OPEN.'
+    owner_ref: ENT-TASK
+    origin_refs: [VLD-TASK-COMPLETE]
+    kind: transition
+  - id: RULE-CALLER-CONTEXT
+    statement: Context fields preserve the declared principal, issuer, validity and permissions. Trust is an external
+      premise; cases deny absent, unresolved, unknown, expired or insufficient context.
+    owner_ref: ENT-CALLER-CONTEXT
+    origin_refs: [DEC-CALLER-CONTEXT]
+    kind: invariant
+  - id: RULE-TASK-CREATE-AUTH
+    statement: 'Resolve the initiating board member and require task.create for the selected board in trusted caller
+      context. Missing, unresolved, expired, or insufficient context is denied before any entity application or
+      tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    owner_ref: UC-TASK-CREATE
+    origin_refs: [RF-TASK-CREATE-AUTH]
+    kind: authorization
+  - id: RULE-TASK-COMPLETE-AUTH
+    statement: 'Resolve the initiating board member and require task.complete for the selected board in trusted
+      caller context. Missing, unresolved, expired, or insufficient context is denied before any entity application
+      or tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    owner_ref: UC-TASK-COMPLETE
+    origin_refs: [RF-TASK-COMPLETE-AUTH]
+    kind: authorization
+  - id: RULE-TASK-LIST-AUTH
+    statement: 'Resolve the initiating board member and require task.list for the selected board in trusted caller
+      context. Missing, unresolved, expired, or insufficient context is denied before any entity application or
+      tool call. No anonymous execution is permitted. Origin: SRC-TASK-BRIEF.'
+    owner_ref: UC-TASK-LIST
+    origin_refs: [RF-TASK-LIST-AUTH]
+    kind: authorization
+  dependencies:
+  - {id: DEP-TASK-CREATE-ENT-TASK, consumer_ref: UC-TASK-CREATE, provider_ref: ENT-TASK, relation: uses_type, purpose: Declared
+      collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-CREATE-TOL-TASK-STORE, consumer_ref: UC-TASK-CREATE, provider_ref: TOL-TASK-STORE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-CREATE-OP-TASK-CREATE, consumer_ref: UC-TASK-CREATE, provider_ref: OP-TASK-CREATE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-COMPLETE-ENT-TASK, consumer_ref: UC-TASK-COMPLETE, provider_ref: ENT-TASK, relation: uses_type,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-COMPLETE-TOL-TASK-STORE, consumer_ref: UC-TASK-COMPLETE, provider_ref: TOL-TASK-STORE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-COMPLETE-OP-TASK-LOAD, consumer_ref: UC-TASK-COMPLETE, provider_ref: OP-TASK-LOAD, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-COMPLETE-OP-TASK-COMPLETE, consumer_ref: UC-TASK-COMPLETE, provider_ref: OP-TASK-COMPLETE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-LIST-ENT-TASK, consumer_ref: UC-TASK-LIST, provider_ref: ENT-TASK, relation: uses_type, purpose: Declared
+      collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-LIST-TOL-TASK-STORE, consumer_ref: UC-TASK-LIST, provider_ref: TOL-TASK-STORE, relation: calls,
+    purpose: Declared collaborator in the source case contract., context_forwarding: null}
+  - {id: DEP-TASK-LIST-OP-TASK-LIST, consumer_ref: UC-TASK-LIST, provider_ref: OP-TASK-LIST, relation: calls, purpose: Declared
+      collaborator in the source case contract., context_forwarding: null}
+  domains: []
+  composition:
+    selection_location: Application composition root selected by the future L3 realization.
+    description: Inject contracted tools and composed cases explicitly. No concrete database, framework or global
+      service lookup is prescribed.
+    lifetimes:
+    - {element_ref: UC-TASK-CREATE, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: UC-TASK-COMPLETE, scope: Stateless callable; invocation state belongs to the passed context.,
+      ownership: The L3 composition root owns the case and injected collaborators.}
+    - {element_ref: UC-TASK-LIST, scope: Stateless callable; invocation state belongs to the passed context., ownership: The
+        L3 composition root owns the case and injected collaborators.}
+    - {element_ref: TOL-TASK-STORE, scope: Managed by the chosen L3 scope; persistence outlives a case call and
+        satisfies stated restart guarantees., ownership: Composition root closes concrete resources; no singleton
+        is prescribed.}
+  graphs:
+  - id: GRAPH-VLD-TASK-ID
+    owner_ref: VLD-TASK-ID
+    kind: flow
+    summary: Task identifier Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-TASK-ID-START
+    nodes:
+    - {id: N-VLD-TASK-ID-START, kind: start, description: Receive candidate}
+    - {id: N-VLD-TASK-ID-CHECK, kind: decision, description: 'All conditions hold?'}
+    - {id: N-VLD-TASK-ID-PASS, kind: end, description: Pass unchanged}
+    - {id: N-VLD-TASK-ID-FAIL, kind: failure, description: Fail; no mutation}
+    edges:
+    - {id: E-VLD-TASK-ID-1, from: N-VLD-TASK-ID-START, to: N-VLD-TASK-ID-CHECK, condition: Unconditional passage,
+      action: ''}
+    - {id: E-VLD-TASK-ID-2, from: N-VLD-TASK-ID-CHECK, to: N-VLD-TASK-ID-PASS, condition: 'yes', action: ''}
+    - {id: E-VLD-TASK-ID-3, from: N-VLD-TASK-ID-CHECK, to: N-VLD-TASK-ID-FAIL, condition: 'no', action: ''}
+  - id: GRAPH-VLD-TASK-NEW
+    owner_ref: VLD-TASK-NEW
+    kind: flow
+    summary: New task validity Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-TASK-NEW-START
+    nodes:
+    - {id: N-VLD-TASK-NEW-START, kind: start, description: Receive candidate}
+    - {id: N-VLD-TASK-NEW-CHECK, kind: decision, description: 'All conditions hold?'}
+    - {id: N-VLD-TASK-NEW-PASS, kind: end, description: Pass unchanged}
+    - {id: N-VLD-TASK-NEW-FAIL, kind: failure, description: Fail; no mutation}
+    edges:
+    - {id: E-VLD-TASK-NEW-1, from: N-VLD-TASK-NEW-START, to: N-VLD-TASK-NEW-CHECK, condition: Unconditional passage,
+      action: ''}
+    - {id: E-VLD-TASK-NEW-2, from: N-VLD-TASK-NEW-CHECK, to: N-VLD-TASK-NEW-PASS, condition: 'yes', action: ''}
+    - {id: E-VLD-TASK-NEW-3, from: N-VLD-TASK-NEW-CHECK, to: N-VLD-TASK-NEW-FAIL, condition: 'no', action: ''}
+  - id: GRAPH-VLD-TASK-COMPLETE
+    owner_ref: VLD-TASK-COMPLETE
+    kind: flow
+    summary: Completion transition Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-VLD-TASK-COMPLETE-START
+    nodes:
+    - {id: N-VLD-TASK-COMPLETE-START, kind: start, description: Receive candidate}
+    - {id: N-VLD-TASK-COMPLETE-CHECK, kind: decision, description: 'All conditions hold?'}
+    - {id: N-VLD-TASK-COMPLETE-PASS, kind: end, description: Pass unchanged}
+    - {id: N-VLD-TASK-COMPLETE-FAIL, kind: failure, description: Fail; no mutation}
+    edges:
+    - {id: E-VLD-TASK-COMPLETE-1, from: N-VLD-TASK-COMPLETE-START, to: N-VLD-TASK-COMPLETE-CHECK, condition: Unconditional
+        passage, action: ''}
+    - {id: E-VLD-TASK-COMPLETE-2, from: N-VLD-TASK-COMPLETE-CHECK, to: N-VLD-TASK-COMPLETE-PASS, condition: 'yes',
+      action: ''}
+    - {id: E-VLD-TASK-COMPLETE-3, from: N-VLD-TASK-COMPLETE-CHECK, to: N-VLD-TASK-COMPLETE-FAIL, condition: 'no',
+      action: ''}
+  - id: GRAPH-TASK-CREATE
+    owner_ref: UC-TASK-CREATE
+    kind: flow
+    summary: Create task Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-TASK-CREATE-START
+    nodes:
+    - {id: N-TASK-CREATE-START, kind: start, description: Receive request}
+    - {id: N-TASK-CREATE-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-TASK-CREATE-DENIED, kind: failure, description: Denied; no tool call}
+    - {id: N-TASK-CREATE-VALIDATE, kind: action, description: Apply new-task validity}
+    - {id: N-TASK-CREATE-VALID, kind: decision, description: 'Candidate valid?'}
+    - {id: N-TASK-CREATE-INVALID, kind: failure, description: Invalid; no write}
+    - {id: N-TASK-CREATE-STORE, kind: action, description: Retain ready Task}
+    - {id: N-TASK-CREATE-DUPLICATE, kind: failure, description: Duplicate; no change}
+    - {id: N-TASK-CREATE-UNAVAILABLE, kind: failure, description: Report write outcome}
+    - {id: N-TASK-CREATE-CREATED, kind: end, description: Created at revision 0}
+    edges:
+    - {id: E-TASK-CREATE-START, from: N-TASK-CREATE-START, to: N-TASK-CREATE-AUTH, condition: Unconditional passage,
+      action: ''}
+    - {id: E-TASK-CREATE-DENIED, from: N-TASK-CREATE-AUTH, to: N-TASK-CREATE-DENIED, condition: missing / unresolved
+        / insufficient, action: ''}
+    - {id: E-TASK-CREATE-ALLOWED, from: N-TASK-CREATE-AUTH, to: N-TASK-CREATE-VALIDATE, condition: authorized, action: ''}
+    - {id: E-TASK-CREATE-1, from: N-TASK-CREATE-VALIDATE, to: N-TASK-CREATE-VALID, condition: Unconditional passage,
+      action: ''}
+    - {id: E-TASK-CREATE-2, from: N-TASK-CREATE-VALID, to: N-TASK-CREATE-INVALID, condition: fail, action: ''}
+    - {id: E-TASK-CREATE-3, from: N-TASK-CREATE-VALID, to: N-TASK-CREATE-STORE, condition: pass, action: ''}
+    - {id: E-TASK-CREATE-4, from: N-TASK-CREATE-STORE, to: N-TASK-CREATE-DUPLICATE, condition: DUPLICATE_ID, action: ''}
+    - {id: E-TASK-CREATE-5, from: N-TASK-CREATE-STORE, to: N-TASK-CREATE-UNAVAILABLE, condition: STORE_UNAVAILABLE,
+      action: ''}
+    - {id: E-TASK-CREATE-6, from: N-TASK-CREATE-STORE, to: N-TASK-CREATE-CREATED, condition: confirmed, action: ''}
+  - id: GRAPH-TASK-COMPLETE
+    owner_ref: UC-TASK-COMPLETE
+    kind: flow
+    summary: Complete task Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-TASK-COMPLETE-START
+    nodes:
+    - {id: N-TASK-COMPLETE-START, kind: start, description: Receive request}
+    - {id: N-TASK-COMPLETE-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-TASK-COMPLETE-DENIED, kind: failure, description: Denied; no tool call}
+    - {id: N-TASK-COMPLETE-ID, kind: action, description: Apply identifier validity}
+    - {id: N-TASK-COMPLETE-VALID, kind: decision, description: 'Identifier valid?'}
+    - {id: N-TASK-COMPLETE-INVALID, kind: failure, description: Invalid identifier}
+    - {id: N-TASK-COMPLETE-LOAD, kind: action, description: Load ready Task}
+    - {id: N-TASK-COMPLETE-MISSING, kind: failure, description: Task not found}
+    - {id: N-TASK-COMPLETE-TRANSITION, kind: action, description: Apply completion rule}
+    - {id: N-TASK-COMPLETE-ALLOWED, kind: decision, description: 'Transition allowed?'}
+    - {id: N-TASK-COMPLETE-ALREADY, kind: failure, description: Already completed}
+    - {id: N-TASK-COMPLETE-STORE, kind: action, description: Conditional completion}
+    - {id: N-TASK-COMPLETE-CONFLICT, kind: failure, description: Version conflict}
+    - {id: N-TASK-COMPLETE-ERROR, kind: failure, description: Report storage outcome}
+    - {id: N-TASK-COMPLETE-DONE, kind: end, description: Completion confirmed}
+    edges:
+    - {id: E-TASK-COMPLETE-START, from: N-TASK-COMPLETE-START, to: N-TASK-COMPLETE-AUTH, condition: Unconditional
+        passage, action: ''}
+    - {id: E-TASK-COMPLETE-DENIED, from: N-TASK-COMPLETE-AUTH, to: N-TASK-COMPLETE-DENIED, condition: missing /
+        unresolved / insufficient, action: ''}
+    - {id: E-TASK-COMPLETE-ALLOWED, from: N-TASK-COMPLETE-AUTH, to: N-TASK-COMPLETE-ID, condition: authorized, action: ''}
+    - {id: E-TASK-COMPLETE-1, from: N-TASK-COMPLETE-ID, to: N-TASK-COMPLETE-VALID, condition: Unconditional passage,
+      action: ''}
+    - {id: E-TASK-COMPLETE-2, from: N-TASK-COMPLETE-VALID, to: N-TASK-COMPLETE-INVALID, condition: fail, action: ''}
+    - {id: E-TASK-COMPLETE-3, from: N-TASK-COMPLETE-VALID, to: N-TASK-COMPLETE-LOAD, condition: pass, action: ''}
+    - {id: E-TASK-COMPLETE-4, from: N-TASK-COMPLETE-LOAD, to: N-TASK-COMPLETE-MISSING, condition: NOT_FOUND, action: ''}
+    - {id: E-TASK-COMPLETE-5, from: N-TASK-COMPLETE-LOAD, to: N-TASK-COMPLETE-ERROR, condition: unavailable / invalid
+        state, action: ''}
+    - {id: E-TASK-COMPLETE-6, from: N-TASK-COMPLETE-LOAD, to: N-TASK-COMPLETE-TRANSITION, condition: ready Task,
+      action: ''}
+    - {id: E-TASK-COMPLETE-7, from: N-TASK-COMPLETE-TRANSITION, to: N-TASK-COMPLETE-ALLOWED, condition: Unconditional
+        passage, action: ''}
+    - {id: E-TASK-COMPLETE-8, from: N-TASK-COMPLETE-ALLOWED, to: N-TASK-COMPLETE-ALREADY, condition: fail, action: ''}
+    - {id: E-TASK-COMPLETE-9, from: N-TASK-COMPLETE-ALLOWED, to: N-TASK-COMPLETE-STORE, condition: pass, action: ''}
+    - {id: E-TASK-COMPLETE-10, from: N-TASK-COMPLETE-STORE, to: N-TASK-COMPLETE-CONFLICT, condition: VERSION_CONFLICT,
+      action: ''}
+    - {id: E-TASK-COMPLETE-11, from: N-TASK-COMPLETE-STORE, to: N-TASK-COMPLETE-MISSING, condition: NOT_FOUND, action: ''}
+    - {id: E-TASK-COMPLETE-12, from: N-TASK-COMPLETE-STORE, to: N-TASK-COMPLETE-ERROR, condition: STORE_UNAVAILABLE,
+      action: ''}
+    - {id: E-TASK-COMPLETE-13, from: N-TASK-COMPLETE-STORE, to: N-TASK-COMPLETE-DONE, condition: confirmed, action: ''}
+  - id: GRAPH-TASK-LIST
+    owner_ref: UC-TASK-LIST
+    kind: flow
+    summary: List tasks Source graph retained from L1; representation here does not reclassify its origin.
+    entry: N-TASK-LIST-START
+    nodes:
+    - {id: N-TASK-LIST-START, kind: start, description: Receive request}
+    - {id: N-TASK-LIST-AUTH, kind: decision, description: 'Trusted permission?'}
+    - {id: N-TASK-LIST-DENIED, kind: failure, description: Denied; no tool call}
+    - {id: N-TASK-LIST-READ, kind: action, description: Read board snapshot}
+    - {id: N-TASK-LIST-FAIL, kind: failure, description: Read failure; no list}
+    - {id: N-TASK-LIST-RETURN, kind: end, description: Return exact snapshot}
+    edges:
+    - {id: E-TASK-LIST-START, from: N-TASK-LIST-START, to: N-TASK-LIST-AUTH, condition: Unconditional passage, action: ''}
+    - {id: E-TASK-LIST-DENIED, from: N-TASK-LIST-AUTH, to: N-TASK-LIST-DENIED, condition: missing / unresolved /
+        insufficient, action: ''}
+    - {id: E-TASK-LIST-ALLOWED, from: N-TASK-LIST-AUTH, to: N-TASK-LIST-READ, condition: authorized, action: ''}
+    - {id: E-TASK-LIST-1, from: N-TASK-LIST-READ, to: N-TASK-LIST-FAIL, condition: unavailable / invalid state,
+      action: ''}
+    - {id: E-TASK-LIST-2, from: N-TASK-LIST-READ, to: N-TASK-LIST-RETURN, condition: complete snapshot, action: ''}
+advs:
+  behavioral_tests:
+  - id: BT-TASK-CREATE
+    case_ref: UC-TASK-CREATE
+    source_case_id: UC-TASK-CREATE
+    criteria_refs: [AC-TASK-CREATE-AUTH, AC-TASK-CREATE-SUCCESS, AC-TASK-CREATE-INVALID, AC-TASK-CREATE-DUPLICATE,
+      AC-TASK-CREATE-UNKNOWN]
+    scenarios:
+    - id: SC-TASK-CREATE-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-TASK-CREATE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-CREATE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-SUCCESS
+      category: success
+      preparation: Trusted create/list context for board A; TASK001 absent; title Review Atlas.
+      actor_context: allowed
+      action: Create TASK001, restart the selected store normally, then list board A.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: With trusted create permission and unused TASK001 / Review Atlas, receive the exact open
+        Task at revision zero; a later successful list includes it once.
+      expected_effects: One exact open task at revision zero survives normal restart; no duplicates.
+      criteria_refs: [AC-TASK-CREATE-SUCCESS]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-INVALID
+      category: limit
+      preparation: Trusted context; alternate empty title and whitespace-only identifier; tool spies enabled.
+      actor_context: allowed
+      action: Create each invalid candidate.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An empty title or whitespace-only identifier is refused before OP-TASK-CREATE is invoked.
+      expected_effects: No create tool call or task mutation.
+      criteria_refs: [AC-TASK-CREATE-INVALID]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-DUPLICATE
+      category: alternative
+      preparation: TASK001 retained with title First; second candidate title Second.
+      actor_context: allowed
+      action: Attempt a second create with TASK001 and compare the retained task.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Creating TASK001 twice retains the first Task unchanged and returns duplicate-identifier
+        refusal on the second attempt.
+      expected_effects: First task remains unchanged; no overwrite.
+      criteria_refs: [AC-TASK-CREATE-DUPLICATE]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-CREATE-UNKNOWN
+      category: failure
+      preparation: Write double loses acknowledgement after submission; retry counter enabled.
+      actor_context: allowed
+      action: Create valid TASK001 and receive STORE_UNAVAILABLE / unknown.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Inject a write with lost confirmation. The case reports unknown; it does not claim no write,
+        report success, or initiate a retry.
+      expected_effects: Retention remains uncertain; no success or no-write claim; no retry.
+      criteria_refs: [AC-TASK-CREATE-UNKNOWN]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    supporting_check_refs: [CHK-RNF-TASK-CREATE-RETENTION, CHK-OP-TASK-CREATE]
+    status: planned
+  - id: BT-TASK-COMPLETE
+    case_ref: UC-TASK-COMPLETE
+    source_case_id: UC-TASK-COMPLETE
+    criteria_refs: [AC-TASK-COMPLETE-AUTH, AC-TASK-COMPLETE-SUCCESS, AC-TASK-COMPLETE-MISSING, AC-TASK-COMPLETE-INVALID,
+      AC-TASK-COMPLETE-ALREADY, AC-TASK-COMPLETE-CONFLICT, AC-TASK-COMPLETE-UNKNOWN]
+    scenarios:
+    - id: SC-TASK-COMPLETE-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-TASK-COMPLETE directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-COMPLETE-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-SUCCESS
+      category: success
+      preparation: TASK001 / Review Atlas is open at revision 0 in board A.
+      actor_context: allowed
+      action: Complete TASK001 with trusted complete context, then list.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: For TASK001 open at revision zero, completion returns the same identifier/title, completed
+        status and revision one; later listing reflects that state.
+      expected_effects: Status completed and revision 1; exact identifier/title preserved.
+      criteria_refs: [AC-TASK-COMPLETE-SUCCESS]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-MISSING
+      category: alternative
+      preparation: Exact valid identifier absent at read time; completion spy enabled.
+      actor_context: allowed
+      action: Complete the absent identifier.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A confirmed absent identifier produces not-found without calling OP-TASK-COMPLETE.
+      expected_effects: No completion call or write.
+      criteria_refs: [AC-TASK-COMPLETE-MISSING]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-INVALID
+      category: limit
+      preparation: Empty and whitespace-only identifiers; load and completion spies enabled.
+      actor_context: allowed
+      action: Complete each invalid identifier.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: An empty or whitespace-only identifier is refused before load or completion tools are invoked.
+      expected_effects: No load or completion tool call.
+      criteria_refs: [AC-TASK-COMPLETE-INVALID]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-ALREADY
+      category: alternative
+      preparation: TASK001 already completed at revision 1.
+      actor_context: allowed
+      action: Complete TASK001 again.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A ready completed Task produces already-completed refusal and no write; its revision remains
+        unchanged.
+      expected_effects: Refusal; no write and revision remains 1.
+      criteria_refs: [AC-TASK-COMPLETE-ALREADY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-CONFLICT
+      category: alternative
+      preparation: Load open TASK001 at revision 0; a competing update changes the retained revision before write.
+      actor_context: allowed
+      action: Attempt conditional completion using expected revision 0.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Change the retained revision between load and completion. Return VERSION_CONFLICT, preserving
+        the competing state.
+      expected_effects: Competing state survives; this invocation makes no write.
+      criteria_refs: [AC-TASK-COMPLETE-CONFLICT]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-COMPLETE-UNKNOWN
+      category: failure
+      preparation: Ready open task; completion can apply but lose its acknowledgement.
+      actor_context: allowed
+      action: Attempt completion and return an unknown write outcome.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Lose the completion confirmation after issuing a write. Return unknown without success/no-change
+        claims or automatic retry.
+      expected_effects: Final state uncertain; no retry or false success/no-change claim.
+      criteria_refs: [AC-TASK-COMPLETE-UNKNOWN]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    supporting_check_refs: [CHK-RNF-TASK-COMPLETE-ATOMICITY, CHK-OP-TASK-LOAD, CHK-OP-TASK-COMPLETE]
+    status: planned
+  - id: BT-TASK-LIST
+    case_ref: UC-TASK-LIST
+    source_case_id: UC-TASK-LIST
+    criteria_refs: [AC-TASK-LIST-AUTH, AC-TASK-LIST-CONTENT, AC-TASK-LIST-EMPTY, AC-TASK-LIST-INTEGRITY]
+    scenarios:
+    - id: SC-TASK-LIST-AUTH-ABSENT
+      category: authorization
+      preparation: No caller context supplied. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: absent
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Caller identity cannot be resolved. Capture validation, tool and composed-call counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-AUTH-UNKNOWN
+      category: authorization
+      preparation: Resolved identity is not a recognized permitted actor. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unknown
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Known authenticated caller lacks this case permission. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: insufficient
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-AUTH-EXPIRED
+      category: authorization
+      preparation: Identity and grants exist but their context is expired. Capture validation, tool and composed-call
+        counters and disclosure.
+      actor_context: unresolved
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-AUTH-ANONYMOUS
+      category: authorization
+      preparation: Explicit anonymous context; the source forbids anonymous execution. Capture validation, tool
+        and composed-call counters and disclosure.
+      actor_context: anonymous
+      action: Invoke UC-TASK-LIST directly with otherwise valid inputs.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Authorization denied before protected work.
+      expected_effects: No validation, collaborator access, domain/storage mutation or existence/content disclosure.
+      criteria_refs: [AC-TASK-LIST-AUTH]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-CONTENT
+      category: success
+      preparation: Board A contains open TASK002 and completed TASK001; board B has a distinct task; snapshot/write
+        instrumentation enabled.
+      actor_context: allowed
+      action: List board A with its trusted context.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: Given open TASK002 and completed TASK001, return TASK001 then TASK002 with exact fields,
+        once each, with no state or revision changed.
+      expected_effects: TASK001 then TASK002 exactly once; no board-B disclosure; all fields and revisions unchanged.
+      criteria_refs: [AC-TASK-LIST-CONTENT]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-EMPTY
+      category: alternative
+      preparation: Run separately against a confirmed empty board A and an unavailable store; observe writes and
+        returned data.
+      actor_context: allowed
+      action: List with valid board-A context in both configurations.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: A successful read of an empty board returns an empty list; an unavailable store instead returns
+        failure.
+      expected_effects: Confirmed emptiness yields []; unavailable yields failure; no state or revision changes.
+      criteria_refs: [AC-TASK-LIST-EMPTY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    - id: SC-TASK-LIST-INTEGRITY
+      category: failure
+      preparation: Snapshot includes a raw record violating canonical task validity.
+      actor_context: allowed
+      action: List and force canonical hydration of every candidate record.
+      observed_boundary: Direct callable core and collaborator spies
+      configuration: Planned verification against an explicitly selected realization; deterministic doubles for
+        controlled faults, real selected storage for persistence/concurrency claims.
+      expected_result: If hydration finds an invalid stored Task, report STORE_INVALID_STATE without publishing
+        a partial successful list.
+      expected_effects: No partial successful list and no task changes.
+      criteria_refs: [AC-TASK-LIST-INTEGRITY]
+      obligation_refs: []
+      applicability: applicable
+      rationale: Necessary to verify the referenced source contract; not an execution report.
+      check_refs: []
+    supporting_check_refs: [CHK-RNF-TASK-CREATE-RETENTION, CHK-RNF-TASK-LIST-CONSISTENCY, CHK-OP-TASK-LIST]
+    status: planned
+  supporting_checks:
+  - id: CHK-RNF-TASK-CREATE-RETENTION
+    purpose: 'A confirmed creation remains readable after a normal store restart. Origin: SRC-TASK-BRIEF (synthetic
+      teaching brief). Applicability: Applies under the explicitly stated case and tool conditions. This is an obligation
+      for a future implementation, not a measured claim about this repository.'
+    behavioral_test_refs: [BT-TASK-CREATE, BT-TASK-LIST]
+    criteria_refs: [AC-TASK-CREATE-SUCCESS]
+    case_refs: [UC-TASK-CREATE, UC-TASK-LIST]
+    preparation: Select and record the realization, environment and declared source applicability. Prepare the specific
+      population or concurrency schedule required by this obligation.
+    actor_context: Trusted context permitted for each participating invocation; preserve principal and board when
+      applicable.
+    action: Exercise create, restart the chosen persistence implementation normally, then list. This repository
+      supplies the contract, not that implementation.
+    expected_result: After a confirmed create and normal restart, a successful list returns the Task with unchanged
+      fields exactly once.
+    expected_effects: Only effects permitted by the participating case contracts; preserve no-write/unknown distinctions.
+    observed_boundary: Case results, persisted state, revisions and operation counters at the selected store boundary.
+    configuration: Future selected implementation. This is a planned check, not an observed performance, durability
+      or concurrency result.
+    reference: null
+  - id: CHK-RNF-TASK-COMPLETE-ATOMICITY
+    purpose: 'Concurrent completion must not lose an update or report two writes for the same observed revision.
+      Origin: SRC-TASK-BRIEF (synthetic teaching brief). Applicability: Applies under the explicitly stated case
+      and tool conditions. This is an obligation for a future implementation, not a measured claim about this repository.'
+    behavioral_test_refs: [BT-TASK-COMPLETE]
+    criteria_refs: [AC-TASK-COMPLETE-CONFLICT]
+    case_refs: [UC-TASK-COMPLETE]
+    preparation: Select and record the realization, environment and declared source applicability. Prepare the specific
+      population or concurrency schedule required by this obligation.
+    actor_context: Trusted context permitted for each participating invocation; preserve principal and board when
+      applicable.
+    action: Coordinate concurrent attempts at the conditional-write boundary and inspect confirmed revisions and
+      outcomes.
+    expected_result: For two conditional writes using the same observed revision, at most one is confirmed; the
+      other returns conflict or an accurately classified failure.
+    expected_effects: Only effects permitted by the participating case contracts; preserve no-write/unknown distinctions.
+    observed_boundary: Case results, persisted state, revisions and operation counters at the selected store boundary.
+    configuration: Future selected implementation. This is a planned check, not an observed performance, durability
+      or concurrency result.
+    reference: null
+  - id: CHK-RNF-TASK-LIST-CONSISTENCY
+    purpose: 'The list represents one consistent snapshot of the authorized board. Origin: SRC-TASK-BRIEF (synthetic
+      teaching brief). Applicability: Applies under the explicitly stated case and tool conditions. This is an obligation
+      for a future implementation, not a measured claim about this repository.'
+    behavioral_test_refs: [BT-TASK-LIST]
+    criteria_refs: [AC-TASK-LIST-CONTENT]
+    case_refs: [UC-TASK-LIST]
+    preparation: Select and record the realization, environment and declared source applicability. Prepare the specific
+      population or concurrency schedule required by this obligation.
+    actor_context: Trusted context permitted for each participating invocation; preserve principal and board when
+      applicable.
+    action: Exercise listing alongside concurrent changes, verify against the chosen store's snapshot guarantee,
+      and inspect before/after write counters.
+    expected_result: Every returned Task belongs to the same board snapshot, appears exactly once, and has mutually
+      consistent fields/revision; no read changes a Task.
+    expected_effects: Only effects permitted by the participating case contracts; preserve no-write/unknown distinctions.
+    observed_boundary: Case results, persisted state, revisions and operation counters at the selected store boundary.
+    configuration: Future selected implementation. This is a planned check, not an observed performance, durability
+      or concurrency result.
+    reference: null
+  - id: CHK-OP-TASK-CREATE
+    purpose: Atomically insert one ready open Task if its identifier is absent.
+    behavioral_test_refs: [BT-TASK-CREATE]
+    criteria_refs: []
+    case_refs: [UC-TASK-CREATE]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-TASK-CREATE under success and each declared failure condition.
+    expected_result: 'Success: Uniqueness check and insertion are atomic. A duplicate does not overwrite an existing
+      Task.; A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat
+      entity-invariant validation. Loading raw records uses the canonical entity construction/hydration boundary
+      once; this is not duplicate validation of a ready Task.; A successful result confirms retention at revision
+      zero. Failures: DUPLICATE_ID: This outcome is not applied: the store guarantees that this operation made no
+      change.; STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence no write occurred;
+      otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not be
+      automatically retried. A read failure returns no usable snapshot and changes no task.'
+    expected_effects: 'Success: One Task is added on success. Failure effects: This outcome is not applied: the
+      store guarantees that this operation made no change.; For a write, return write_outcome=not_applied only with
+      evidence no write occurred; otherwise return write_outcome=unknown. Unknown is neither success nor proof of
+      no change, and must not be automatically retried. A read failure returns no usable snapshot and changes no
+      task.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  - id: CHK-OP-TASK-LOAD
+    purpose: Return a ready Task and its observed revision by exact identifier.
+    behavioral_test_refs: [BT-TASK-COMPLETE]
+    criteria_refs: []
+    case_refs: [UC-TASK-COMPLETE]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-TASK-LOAD under success and each declared failure condition.
+    expected_result: 'Success: No write occurs. Not-found is a confirmed absence, not a masked read error.; A Task
+      input is already valid according to ENT-TASK. Tools consume ready entities and do not repeat entity-invariant
+      validation. Loading raw records uses the canonical entity construction/hydration boundary once; this is not
+      duplicate validation of a ready Task.; Its revision describes the same observed record as its fields. Failures:
+      NOT_FOUND: Distinct from unavailable or malformed storage.; STORE_UNAVAILABLE: For a write, return write_outcome=not_applied
+      only with evidence no write occurred; otherwise return write_outcome=unknown. Unknown is neither success nor
+      proof of no change, and must not be automatically retried. A read failure returns no usable snapshot and changes
+      no task.; STORE_INVALID_STATE: Do not return a malformed ready Task, an empty success, or a partial list.
+      Report the integrity failure; no task is changed by the read.'
+    expected_effects: 'Success: No task is changed. Failure effects: Distinct from unavailable or malformed storage.;
+      For a write, return write_outcome=not_applied only with evidence no write occurred; otherwise return write_outcome=unknown.
+      Unknown is neither success nor proof of no change, and must not be automatically retried. A read failure returns
+      no usable snapshot and changes no task.; Do not return a malformed ready Task, an empty success, or a partial
+      list. Report the integrity failure; no task is changed by the read.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  - id: CHK-OP-TASK-COMPLETE
+    purpose: Atomically replace the observed Task with a ready completed Task only if its revision still matches.
+    behavioral_test_refs: [BT-TASK-COMPLETE]
+    criteria_refs: []
+    case_refs: [UC-TASK-COMPLETE]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-TASK-COMPLETE under success and each declared failure condition.
+    expected_result: 'Success: Existence/revision comparison and replacement are atomic; no lost update is reported
+      as success.; A Task input is already valid according to ENT-TASK. Tools consume ready entities and do not
+      repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration boundary
+      once; this is not duplicate validation of a ready Task.; Revision is expected_revision+1; identity and title
+      are unchanged. Failures: NOT_FOUND: This outcome is not applied: the store guarantees that this operation
+      made no change.; VERSION_CONFLICT: This outcome is not applied: the store guarantees that this operation made
+      no change.; STORE_UNAVAILABLE: For a write, return write_outcome=not_applied only with evidence no write occurred;
+      otherwise return write_outcome=unknown. Unknown is neither success nor proof of no change, and must not be
+      automatically retried. A read failure returns no usable snapshot and changes no task.'
+    expected_effects: 'Success: Status becomes completed and revision increases once on success. Failure effects:
+      This outcome is not applied: the store guarantees that this operation made no change.; This outcome is not
+      applied: the store guarantees that this operation made no change.; For a write, return write_outcome=not_applied
+      only with evidence no write occurred; otherwise return write_outcome=unknown. Unknown is neither success nor
+      proof of no change, and must not be automatically retried. A read failure returns no usable snapshot and changes
+      no task.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  - id: CHK-OP-TASK-LIST
+    purpose: Return one consistent snapshot of all Tasks in the authorized board.
+    behavioral_test_refs: [BT-TASK-LIST]
+    criteria_refs: []
+    case_refs: [UC-TASK-LIST]
+    preparation: Ready canonical entities/validated scalars; retain before-state and call counters. Exercise each
+      listed failure with a controlled fixture, including atomic conflicts or lost acknowledgement when declared.
+    actor_context: Not applicable to the tool itself; authorization belongs to the consuming case.
+    action: Invoke OP-TASK-LIST under success and each declared failure condition.
+    expected_result: 'Success: No partial list is returned as a complete snapshot. Concurrent later changes need
+      not appear in this snapshot.; A Task input is already valid according to ENT-TASK. Tools consume ready entities
+      and do not repeat entity-invariant validation. Loading raw records uses the canonical entity construction/hydration
+      boundary once; this is not duplicate validation of a ready Task.; Each matching Task appears exactly once;
+      an empty successful list means the board was empty at the snapshot instant. Failures: STORE_UNAVAILABLE: For
+      a write, return write_outcome=not_applied only with evidence no write occurred; otherwise return write_outcome=unknown.
+      Unknown is neither success nor proof of no change, and must not be automatically retried. A read failure returns
+      no usable snapshot and changes no task.; STORE_INVALID_STATE: Do not return a malformed ready Task, an empty
+      success, or a partial list. Report the integrity failure; no task is changed by the read.'
+    expected_effects: 'Success: No task is changed. Failure effects: For a write, return write_outcome=not_applied
+      only with evidence no write occurred; otherwise return write_outcome=unknown. Unknown is neither success nor
+      proof of no change, and must not be automatically retried. A read failure returns no usable snapshot and changes
+      no task.; Do not return a malformed ready Task, an empty success, or a partial list. Report the integrity
+      failure; no task is changed by the read.'
+    observed_boundary: Tool inputs, outcomes, canonical hydration and persisted state.
+    configuration: Chosen persistence implementation for atomicity/durability; instrumented doubles only establish
+      their injected fault paths.
+    reference: null
+  executions: []
+  unverified_risks: [No executable application or test realization is delivered; all domain scenarios remain planned.,
+    'Production identity authority, channel mechanism and persistence implementation remain unselected.', Source
+      assumptions and open issues retain their original status; technical review is not stakeholder approval.]
+  channel_obligations: []
+mirror:
+  root: docs/L2_MinervaBlueprints
+  documents: []
+  coverage: declared
+  include_patterns: []
+  exclusions: []
+traceability:
+- source_ref: ENT-TASK
+  target_refs: [ENT-TASK]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-TASK-ID
+  target_refs: [VLD-TASK-ID]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-TASK-NEW
+  target_refs: [VLD-TASK-NEW]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: VLD-TASK-COMPLETE
+  target_refs: [VLD-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: TOL-TASK-STORE
+  target_refs: [TOL-TASK-STORE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-TASK-CREATE
+  target_refs: [OP-TASK-CREATE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-TASK-LOAD
+  target_refs: [OP-TASK-LOAD]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-TASK-COMPLETE
+  target_refs: [OP-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: OP-TASK-LIST
+  target_refs: [OP-TASK-LIST]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: UC-TASK-CREATE
+  target_refs: [UC-TASK-CREATE, BT-TASK-CREATE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-TASK-CREATE-AUTH
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-CREATE-DATA
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-CREATE-RETAIN
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-CREATE-DUPLICATE
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-CREATE-FAILURE
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-TASK-CREATE-RETENTION
+  target_refs: [UC-TASK-CREATE]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-TASK-CREATE-AUTH
+  target_refs: [BT-TASK-CREATE, SC-TASK-CREATE-AUTH-ABSENT, SC-TASK-CREATE-AUTH-UNRESOLVED, SC-TASK-CREATE-AUTH-UNKNOWN,
+    SC-TASK-CREATE-AUTH-INSUFFICIENT, SC-TASK-CREATE-AUTH-EXPIRED, SC-TASK-CREATE-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-CREATE-SUCCESS
+  target_refs: [BT-TASK-CREATE, SC-TASK-CREATE-SUCCESS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-CREATE-INVALID
+  target_refs: [BT-TASK-CREATE, SC-TASK-CREATE-INVALID]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-CREATE-DUPLICATE
+  target_refs: [BT-TASK-CREATE, SC-TASK-CREATE-DUPLICATE]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-CREATE-UNKNOWN
+  target_refs: [BT-TASK-CREATE, SC-TASK-CREATE-UNKNOWN]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: UC-TASK-COMPLETE
+  target_refs: [UC-TASK-COMPLETE, BT-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-TASK-COMPLETE-AUTH
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-COMPLETE-ID
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-COMPLETE-LOAD
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-COMPLETE-TRANSITION
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-COMPLETE-WRITE
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-COMPLETE-FAILURE
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-TASK-COMPLETE-ATOMICITY
+  target_refs: [UC-TASK-COMPLETE]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-TASK-COMPLETE-AUTH
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-AUTH-ABSENT, SC-TASK-COMPLETE-AUTH-UNRESOLVED, SC-TASK-COMPLETE-AUTH-UNKNOWN,
+    SC-TASK-COMPLETE-AUTH-INSUFFICIENT, SC-TASK-COMPLETE-AUTH-EXPIRED, SC-TASK-COMPLETE-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-SUCCESS
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-SUCCESS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-MISSING
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-MISSING]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-INVALID
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-INVALID]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-ALREADY
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-ALREADY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-CONFLICT
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-CONFLICT]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-COMPLETE-UNKNOWN
+  target_refs: [BT-TASK-COMPLETE, SC-TASK-COMPLETE-UNKNOWN]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: UC-TASK-LIST
+  target_refs: [UC-TASK-LIST, BT-TASK-LIST]
+  relation: preserves
+  rationale: Preserves the identified source obligation in the declared L2 scope.
+- source_ref: RF-TASK-LIST-AUTH
+  target_refs: [UC-TASK-LIST]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-LIST-SNAPSHOT
+  target_refs: [UC-TASK-LIST]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RF-TASK-LIST-FAILURE
+  target_refs: [UC-TASK-LIST]
+  relation: preserves
+  rationale: Preserved in the case algorithm and source-linked scenario oracles.
+- source_ref: RNF-TASK-LIST-CONSISTENCY
+  target_refs: [UC-TASK-LIST]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: RNF-TASK-LIST-RETENTION
+  target_refs: [UC-TASK-LIST]
+  relation: preserves
+  rationale: Preserved case obligation; quality verification is linked to its canonical supporting check below.
+- source_ref: AC-TASK-LIST-AUTH
+  target_refs: [BT-TASK-LIST, SC-TASK-LIST-AUTH-ABSENT, SC-TASK-LIST-AUTH-UNRESOLVED, SC-TASK-LIST-AUTH-UNKNOWN,
+    SC-TASK-LIST-AUTH-INSUFFICIENT, SC-TASK-LIST-AUTH-EXPIRED, SC-TASK-LIST-AUTH-ANONYMOUS]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-LIST-CONTENT
+  target_refs: [BT-TASK-LIST, SC-TASK-LIST-CONTENT]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-LIST-EMPTY
+  target_refs: [BT-TASK-LIST, SC-TASK-LIST-EMPTY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: AC-TASK-LIST-INTEGRITY
+  target_refs: [BT-TASK-LIST, SC-TASK-LIST-INTEGRITY]
+  relation: verifies
+  rationale: One logical test owns this criterion; the identified scenarios state preparation, action and oracle.
+- source_ref: RNF-TASK-CREATE-RETENTION
+  target_refs: [CHK-RNF-TASK-CREATE-RETENTION]
+  relation: verifies
+  rationale: One canonical quality check preserves the source obligation and all affected cases.
+- source_ref: RNF-TASK-LIST-RETENTION
+  target_refs: [CHK-RNF-TASK-CREATE-RETENTION]
+  relation: verifies
+  rationale: Reference to the same canonical quality obligation, not an independently redefined target.
+- source_ref: RNF-TASK-COMPLETE-ATOMICITY
+  target_refs: [CHK-RNF-TASK-COMPLETE-ATOMICITY]
+  relation: verifies
+  rationale: One canonical quality check preserves the source obligation and all affected cases.
+- source_ref: RNF-TASK-LIST-CONSISTENCY
+  target_refs: [CHK-RNF-TASK-LIST-CONSISTENCY]
+  relation: verifies
+  rationale: One canonical quality check preserves the source obligation and all affected cases.
+- source_ref: OP-TASK-CREATE
+  target_refs: [CHK-OP-TASK-CREATE]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.
+- source_ref: OP-TASK-LOAD
+  target_refs: [CHK-OP-TASK-LOAD]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.
+- source_ref: OP-TASK-COMPLETE
+  target_refs: [CHK-OP-TASK-COMPLETE]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.
+- source_ref: OP-TASK-LIST
+  target_refs: [CHK-OP-TASK-LIST]
+  relation: verifies
+  rationale: Supporting checks preserve tool guarantees without claiming domain executions.

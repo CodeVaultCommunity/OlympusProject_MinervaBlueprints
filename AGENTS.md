@@ -2,18 +2,18 @@
 
 ## Select the edition
 
-Respect an edition requested by the user. This repository currently contains Alpha-v0.1.0; choose its manual and tooling together. Do not substitute another model/profile version silently. Root READMEs are illustrated introductions; versioning/Alpha-v0.1.0/README.md is normative and README.pt-br.md is its translation.
+Respect the requested edition. The current Alpha-v0.1.0 is unpublished and its in-place reorganization was explicitly authorized by the owner. Do not create another edition unless requested. Root READMEs introduce the project; the edition README is navigation. `versioning/Alpha-v0.1.0/specification/model.md` is normative and `model.pt-br.md` is its translation.
 
 ## Locate contracts
 
-Read the selected edition manual, relevant profile guide and verification/REQUIREMENTS.md before implementation changes. Check verification/source-baselines.json for the pinned OAL and Atlas references. Preserve the separate meanings of specification, realization and observed evidence.
+Read the selected model, YAML profile, `specification/conformance.md`, `integrations/atlas/mapping.md` and `verification/REQUIREMENTS.md` before implementation changes. Check `verification/source-baselines.json` for pinned OAL and Atlas inputs. Preserve specification, realization and observation as distinct objects.
 
-For an application ecosystem, docs/ at the root is recommended. Use L1_AtlasSpecifications, L2_MinervaBlueprints, L3_Vulcan and Shared for the adopted materials. The per-file YAML mirror belongs in L2. L3 documents concrete organization, composition, execution and evidence. Libraries and abstract base classes remain optional.
+Minerva includes no Atlas-specific reader or translation engine. Integration is documented; examples elaborate the official Atlas minimal, task-board and composition cases with their source identities and contracts. The source catalogue is authored Minerva data, checked for internal consistency; its fidelity to L1 requires review. Do not add retired implementations or backward-compatibility fixtures for unpublished drafts.
 
-## Maintain the edition
+For adopting applications, root `docs/` is recommended, with `L1_AtlasSpecifications`, `L2_MinervaBlueprints`, `L3_Vulcan` and `Shared` for adopted materials. The per-file mirror belongs to L2. Libraries and abstract base classes remain optional.
 
-Keep English and Portuguese aligned, preserve IDs, update links and validate examples using edition-local commands. The requirements catalog distinguishes source obligations and design decisions; do not promote code observations or test passes into stakeholder approval. Mark limitations and unsupported profiles explicitly. Preserve historical edition bytes when adding future versions.
+## Maintain and verify
 
-## Verify and distribute
+Keep English and Portuguese aligned, preserve source IDs and frozen upstream bytes, update links and use edition-local commands. Record added decisions and limits. Never equate a code observation or validator pass with stakeholder acceptance.
 
-Run the edition tests and example checks and inspect changed artwork. From the root, use scripts/check_repository.py and scripts/tests. Update evidence before generating CONTENT-SHA256.json. Stage intended delivery files, generate the inventory last, verify it and commit locally. Follow docs/releasing.md for ZIP creation and extraction checks. The final commit and ZIP digest belong in an external receipt to avoid circular hashes. A ZIP request does not imply permission to push or publish remotely.
+Run edition tests, examples and `tests/fixtures/counterexamples/check.py`; from the root run `scripts/check_repository.py` and `scripts/tests`. Inspect changed artwork. Keep environments/build products outside the delivery tree. Update observed evidence before generating the root inventory. Stage intended files, generate `CONTENT-SHA256.json` last, verify and commit locally. Follow `docs/releasing.md` for packaging. Final commit and ZIP digests belong in an external receipt. Local delivery does not authorize remote publication.

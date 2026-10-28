@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1330" height="1450" viewBox="0 0 1330 1450">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#536978"/></marker></defs>
+<text x="50" y="42" font-family="DejaVu Sans,Arial,sans-serif" font-size="25" font-weight="bold" fill="#193b52">Submit request · structured flow</text>
+<polyline points="320,130.0 370,130.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="327.0" y="118.0" width="40" height="22" rx="4" fill="white"/>
+<text x="331.0" y="135.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E1</text>
+<polyline points="505.0,180 505.0,250" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="487.0" y="203.0" width="40" height="22" rx="4" fill="white"/>
+<text x="491.0" y="220.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E2</text>
+<polyline points="640,130.0 690,130.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="647.0" y="118.0" width="40" height="22" rx="4" fill="white"/>
+<text x="651.0" y="135.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E3</text>
+<polyline points="825.0,520 825.0,590" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="807.0" y="543.0" width="40" height="22" rx="4" fill="white"/>
+<text x="811.0" y="560.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E4</text>
+<polyline points="960,640.0 993.0,640.0 993.0,470.0 1010,470.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="975.0" y="543.0" width="40" height="22" rx="4" fill="white"/>
+<text x="979.0" y="560.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E5</text>
+<polyline points="825.0,690 825.0,760" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="807.0" y="713.0" width="40" height="22" rx="4" fill="white"/>
+<text x="811.0" y="730.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E6</text>
+<polyline points="825.0,860 825.0,930" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="807.0" y="883.0" width="40" height="22" rx="4" fill="white"/>
+<text x="811.0" y="900.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E7</text>
+<polyline points="960,810.0 1010,810.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="967.0" y="798.0" width="40" height="22" rx="4" fill="white"/>
+<text x="971.0" y="815.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E8</text>
+<polyline points="690,810.0 640,810.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="647.0" y="798.0" width="40" height="22" rx="4" fill="white"/>
+<text x="651.0" y="815.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E9</text>
+<polyline points="825.0,180 825.0,250" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="807.0" y="203.0" width="40" height="22" rx="4" fill="white"/>
+<text x="811.0" y="220.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E10</text>
+<polyline points="825.0,350 825.0,420" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="807.0" y="373.0" width="40" height="22" rx="4" fill="white"/>
+<text x="811.0" y="390.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E11</text>
+<polyline points="960,300.0 977.0,300.0 977.0,470.0 1010,470.0" fill="none" stroke="#536978" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="959.0" y="373.0" width="40" height="22" rx="4" fill="white"/>
+<text x="963.0" y="390.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14" fill="#193b52">E12</text>
+<rect x="50" y="80" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="64" y="107" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Start</text>
+<text x="64" y="168" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">start</text>
+<rect x="370" y="80" width="270" height="100" rx="12" fill="#fff3dd" stroke="#36566b" stroke-width="2"/>
+<text x="384" y="107" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Actor permitted?</text>
+<text x="384" y="168" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">decision</text>
+<rect x="370" y="250" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="384" y="277" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Refuse: actor not</text>
+<text x="384" y="300" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">permitted</text>
+<text x="384" y="338" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">refusal</text>
+<rect x="690" y="420" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="447" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Apply</text>
+<text x="704" y="470" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">VLD-REQUEST-QUANTITY</text>
+<text x="704" y="508" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">validation</text>
+<rect x="690" y="590" width="270" height="100" rx="12" fill="#fff3dd" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="617" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Quantity valid?</text>
+<text x="704" y="678" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">decision</text>
+<rect x="1010" y="420" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="1024" y="447" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Invalid code or</text>
+<text x="1024" y="470" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">quantity</text>
+<text x="1024" y="508" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">refusal</text>
+<rect x="690" y="760" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="787" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Store request</text>
+<text x="704" y="848" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">operation</text>
+<rect x="1010" y="760" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="1024" y="787" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Report</text>
+<text x="1024" y="810" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">STORE_UNAVAILABLE</text>
+<text x="1024" y="848" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">failure</text>
+<rect x="690" y="930" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="957" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Request confirmed</text>
+<text x="704" y="1018" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">result</text>
+<rect x="370" y="760" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="384" y="787" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Duplicate code; no</text>
+<text x="384" y="810" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">change</text>
+<text x="384" y="848" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">refusal</text>
+<rect x="690" y="80" width="270" height="100" rx="12" fill="#edf4f6" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="107" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Apply code validity</text>
+<text x="704" y="168" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">validation</text>
+<rect x="690" y="250" width="270" height="100" rx="12" fill="#fff3dd" stroke="#36566b" stroke-width="2"/>
+<text x="704" y="277" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#193b52">Code valid?</text>
+<text x="704" y="338" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#627987">decision</text>
+<text x="50" y="1100" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E1 · E-REQ-1 · next</text>
+<text x="50" y="1140" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E2 · E-REQ-2 · no</text>
+<text x="50" y="1180" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E3 · E-REQ-3 · yes</text>
+<text x="50" y="1220" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E4 · E-REQ-4 · next</text>
+<text x="50" y="1260" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E5 · E-REQ-5 · fail</text>
+<text x="50" y="1300" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E6 · E-REQ-6 · pass</text>
+<text x="50" y="1340" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E7 · E-REQ-7 · stored</text>
+<text x="470" y="1100" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E8 · E-REQ-8 · STORE_UNAVAILABLE</text>
+<text x="470" y="1140" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E9 · E-REQ-DUPLICATE · DUPLICATE_CODE</text>
+<text x="470" y="1180" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E10 · E-REQ-CODE-1 · next</text>
+<text x="470" y="1220" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E11 · E-REQ-CODE-2 · pass</text>
+<text x="470" y="1260" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#36566b">E12 · E-REQ-CODE-3 · fail</text>
+</svg>

@@ -1,0 +1,137 @@
+{
+  "passed": true,
+  "fixture_count": 12,
+  "results": [
+    {
+      "name": "unknown-source-entity",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "SOURCE_REF_UNRESOLVED"
+      ]
+    },
+    {
+      "name": "unknown-rule-origin",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "SOURCE_REF_UNRESOLVED"
+      ]
+    },
+    {
+      "name": "wrong-source-kind",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "SOURCE_REF_WRONG_TYPE"
+      ]
+    },
+    {
+      "name": "missing-behavioral-test",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "ADMV_EMPTY",
+        "TEST_BIJECTION",
+        "REF_UNRESOLVED",
+        "SHARED_CRITERION_LINK",
+        "REF_UNRESOLVED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "CRITERION_UNCOVERED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED",
+        "REF_UNRESOLVED"
+      ]
+    },
+    {
+      "name": "wrong-reference-kind",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "REF_WRONG_TYPE"
+      ]
+    },
+    {
+      "name": "entity-revalidation",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "ENTITY_REVALIDATION"
+      ]
+    },
+    {
+      "name": "broken-graph",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "GRAPH_EDGE",
+        "GRAPH_UNREACHABLE",
+        "GRAPH_UNREACHABLE",
+        "GRAPH_UNREACHABLE",
+        "GRAPH_UNREACHABLE",
+        "GRAPH_UNREACHABLE",
+        "GRAPH_UNREACHABLE"
+      ]
+    },
+    {
+      "name": "unsupported-profile",
+      "matched_expectation": true,
+      "actual_exit_code": 2,
+      "diagnostic_codes": [
+        "PROFILE_UNSUPPORTED"
+      ]
+    },
+    {
+      "name": "draft-is-inconclusive",
+      "matched_expectation": true,
+      "actual_exit_code": 4,
+      "diagnostic_codes": [
+        "DRAFT_INCOMPLETE"
+      ]
+    },
+    {
+      "name": "duplicate-yaml-key",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "YAML_INVALID"
+      ]
+    },
+    {
+      "name": "unsafe-tag",
+      "matched_expectation": true,
+      "actual_exit_code": 1,
+      "diagnostic_codes": [
+        "YAML_INVALID"
+      ]
+    },
+    {
+      "name": "valid-model",
+      "matched_expectation": true,
+      "actual_exit_code": 0,
+      "diagnostic_codes": []
+    }
+  ]
+}

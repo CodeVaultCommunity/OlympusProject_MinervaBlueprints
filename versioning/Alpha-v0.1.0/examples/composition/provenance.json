@@ -1,0 +1,17 @@
+{
+  "source_repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+  "source_commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+  "source_path": "versioning/Stable-v1.0.0/examples/composition/example.atlas.json",
+  "source_document_id": "ATLAS-EX-COMPOSITION",
+  "source_revision": "2",
+  "source_sha256": "63a65c44f9fb4151c00389a954e9ce87531754c7c19076743b6dd6693ff62f96",
+  "derivation": "AI-assisted editorial construction with source-text extraction and explicitly authored scenarios; no translation engine is included.",
+  "case_ids": [
+    "UC-BOOKING-LOOKUP",
+    "UC-BOOKING-CREATE",
+    "UC-BOOKING-CANCEL"
+  ],
+  "criteria_count": 18,
+  "review_status": "technical_review_recorded; owner_acceptance_pending",
+  "executed_domain_tests": false
+}

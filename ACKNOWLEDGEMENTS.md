@@ -6,4 +6,4 @@ The repository inventory, archive builder and archive checker are adapted from A
 
 The project and Olympus icons were supplied by the user and retained byte for byte. Decorative hero artwork was created with AI assistance; the assets guide identifies its reproducible assembly and sources. Diagrams are editable SVG and are not generated as semantic bitmap drawings.
 
-The example L1 contract is a separate manual reconstruction of the previous Vulcan demo. It is not the Task Board instance published in Atlas. Review and execution evidence are recorded with their actual scope; no personal approval or remote CI execution is fabricated.
+The example L1 packages are exact copies of the identified official Atlas minimal, task-board and composition examples, including TaskBoard revisions and minimal-example resources. Their retained license and source hashes identify attribution. L2 examples were authored with AI assistance and reviewed against those sources; no translation engine is distributed. Review and execution evidence state their actual scope, without asserting personal approval or remote CI execution.
