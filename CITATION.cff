@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use Minerva Blueprints, please cite this Alpha edition."
+title: "Minerva Blueprints"
+version: "Alpha-v0.1.0"
+date-released: "2026-10-28"
+type: software
+license: MIT
+authors:
+  - family-names: "Alkimim"
+    given-names: "Douglas de Oliveira"
+abstract: "Olympus Project model at OAL L2 ADMV, with reference tooling and examples."

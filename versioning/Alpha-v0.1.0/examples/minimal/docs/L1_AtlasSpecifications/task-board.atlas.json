@@ -1,0 +1,2437 @@
+{
+  "format": "atlas-json/Stable-v1.0.0",
+  "atlas": {
+    "document_id": "ATLAS-VULCAN-TASKBOARD",
+    "title": {
+      "text": "Vulcan TaskBoard teaching contract"
+    },
+    "subtitle": {
+      "text": "A reconstructed didactic L1 source for the Minerva and Vulcan Alpha examples"
+    },
+    "revision": "1",
+    "spec_version": "Stable-v1.0.0",
+    "profile_version": "Stable-v1.0.0",
+    "translator_version": "1.0.0",
+    "language": "en",
+    "status": "draft",
+    "authors": [
+      {
+        "name": {
+          "text": "Douglas de Oliveira Alkimim"
+        },
+        "role": {
+          "text": "Project concept and model author; example prepared with AI assistance for review"
+        }
+      }
+    ],
+    "created": "2026-10-28",
+    "updated": "2026-10-28",
+    "keywords": [
+      {
+        "text": "Olympus"
+      },
+      {
+        "text": "TaskBoard"
+      },
+      {
+        "text": "didactic"
+      },
+      {
+        "text": "reconstructed"
+      }
+    ],
+    "structure": [
+      {
+        "id": "SEC-CONTEXT",
+        "level": 1,
+        "title": {
+          "text": "Origin and scope"
+        },
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "A complete didactic contract under the selected scope, prepared for review. It is a manual reconstruction and has no independent stakeholder approval. L4 channel choices and concrete implementations are documented separately."
+          }
+        ],
+        "items": [
+          "ACT-TASK-USER"
+        ]
+      },
+      {
+        "id": "SEC-ENTITIES",
+        "level": 1,
+        "title": {
+          "text": "Canonical task validity"
+        },
+        "blocks": [],
+        "items": [
+          "ENT-TASK"
+        ]
+      },
+      {
+        "id": "SEC-TOOLS",
+        "level": 1,
+        "title": {
+          "text": "Required capabilities"
+        },
+        "blocks": [],
+        "items": [
+          "TOL-TASK-STORE"
+        ]
+      },
+      {
+        "id": "SEC-CASES",
+        "level": 1,
+        "title": {
+          "text": "Cases and acceptance"
+        },
+        "blocks": [],
+        "items": [
+          "UC-TASK-001",
+          "UC-TASK-002",
+          "UC-TASK-003"
+        ]
+      }
+    ],
+    "actors": [
+      {
+        "id": "ACT-TASK-USER",
+        "name": {
+          "text": "Task-board user"
+        },
+        "kind": "role",
+        "description": [
+          {
+            "type": "paragraph",
+            "text": "The initiating actor must be resolved by a trusted boundary and hold the permission required by the selected case."
+          }
+        ]
+      }
+    ],
+    "vocabulary": [],
+    "types": [],
+    "entities": [
+      {
+        "id": "ENT-TASK",
+        "name": {
+          "text": "Task"
+        },
+        "meaning": [
+          {
+            "type": "paragraph",
+            "text": "A retained unit of work. The entity owns its intrinsic validity and completion behavior, without tool or use-case dependencies."
+          }
+        ],
+        "identity": {
+          "description": [
+            {
+              "type": "paragraph",
+              "text": "Task identity is its application-assigned identifier, preserved exactly through completion."
+            }
+          ],
+          "fields": [
+            "FLD-TASK-ID"
+          ]
+        },
+        "fields": [
+          {
+            "id": "FLD-TASK-ID",
+            "name": {
+              "text": "task_id"
+            },
+            "type": "text",
+            "cardinality": "1",
+            "required": true,
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Application-assigned opaque identifier; callers supply no identifier on creation."
+              }
+            ],
+            "constraints": [
+              {
+                "type": "paragraph",
+                "text": "Nonempty text; stable for the lifetime of this task."
+              }
+            ],
+            "examples": {
+              "valid": [
+                {
+                  "text": "example-id"
+                }
+              ],
+              "invalid": [
+                {
+                  "text": ""
+                }
+              ]
+            }
+          },
+          {
+            "id": "FLD-TASK-TITLE",
+            "name": {
+              "text": "title"
+            },
+            "type": "text",
+            "cardinality": "1",
+            "required": true,
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Trimmed work description."
+              }
+            ],
+            "constraints": [
+              {
+                "type": "paragraph",
+                "text": "One through 120 characters after surrounding whitespace is removed."
+              }
+            ],
+            "examples": {
+              "valid": [
+                {
+                  "text": "Review blueprint"
+                }
+              ],
+              "invalid": [
+                {
+                  "text": "   "
+                }
+              ]
+            }
+          },
+          {
+            "id": "FLD-TASK-COMPLETED",
+            "name": {
+              "text": "completed"
+            },
+            "type": "boolean",
+            "cardinality": "1",
+            "required": true,
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "False for a newly created task; true after completion."
+              }
+            ],
+            "constraints": [
+              {
+                "type": "paragraph",
+                "text": "Boolean only."
+              }
+            ],
+            "examples": {
+              "valid": [
+                {
+                  "text": "false"
+                }
+              ],
+              "invalid": [
+                {
+                  "text": "unknown"
+                }
+              ]
+            }
+          }
+        ],
+        "relationships": [],
+        "states": [
+          {
+            "id": "ST-TASK-PENDING",
+            "name": {
+              "text": "Pending"
+            },
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "completed is false."
+              }
+            ]
+          },
+          {
+            "id": "ST-TASK-DONE",
+            "name": {
+              "text": "Completed"
+            },
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "completed is true."
+              }
+            ]
+          }
+        ],
+        "transitions": [
+          {
+            "id": "TRN-TASK-COMPLETE",
+            "name": {
+              "text": "Complete"
+            },
+            "from": "ST-TASK-PENDING",
+            "to": "ST-TASK-DONE",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Set completed to true and retain identity and title."
+              }
+            ]
+          },
+          {
+            "id": "TRN-TASK-REPEAT",
+            "name": {
+              "text": "Repeat completion"
+            },
+            "from": "ST-TASK-DONE",
+            "to": "ST-TASK-DONE",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Return the same completed state. No guarantee about the number of low-level writes is asserted."
+              }
+            ]
+          }
+        ],
+        "validations": [
+          {
+            "id": "VLD-TASK-ID",
+            "name": {
+              "text": "Task identifier"
+            },
+            "scope": "field",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "An existing task identifier is nonempty text and remains unchanged."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "Task identifier"
+                },
+                "source": "input",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "An existing task identifier is nonempty text and remains unchanged."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "id": "C-VLD-TASK-ID",
+                "condition": {
+                  "text": "The identifier is text with at least one non-whitespace character."
+                },
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The identifier is text with at least one non-whitespace character."
+                  }
+                ]
+              }
+            ],
+            "results": [
+              {
+                "outcome": "pass",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "The condition holds; retain the canonical valid value."
+                  }
+                ]
+              },
+              {
+                "outcome": "fail",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "Reject invalid input before retention; preserve previously stored tasks."
+                  }
+                ]
+              }
+            ],
+            "flow": "GRAPH-VLD-TASK-ID"
+          },
+          {
+            "id": "VLD-TASK-TITLE",
+            "name": {
+              "text": "Task title"
+            },
+            "scope": "field",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Trim surrounding whitespace; the resulting title contains 1 to 120 characters. This normalization and validity rule has one canonical owner."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "Task title"
+                },
+                "source": "input",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "Trim surrounding whitespace; the resulting title contains 1 to 120 characters. This normalization and validity rule has one canonical owner."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "id": "C-VLD-TASK-TITLE",
+                "condition": {
+                  "text": "The input is text and its trimmed form has a length from 1 through 120."
+                },
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The input is text and its trimmed form has a length from 1 through 120."
+                  }
+                ]
+              }
+            ],
+            "results": [
+              {
+                "outcome": "pass",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "The condition holds; retain the canonical valid value."
+                  }
+                ]
+              },
+              {
+                "outcome": "fail",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "Reject invalid input before retention; preserve previously stored tasks."
+                  }
+                ]
+              }
+            ],
+            "flow": "GRAPH-VLD-TASK-TITLE"
+          },
+          {
+            "id": "VLD-TASK-COMPLETED",
+            "name": {
+              "text": "Completion flag"
+            },
+            "scope": "field",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "The completion flag is a boolean. Completing a task sets it to true, including when it was already true."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "Completion flag"
+                },
+                "source": "input",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The completion flag is a boolean. Completing a task sets it to true, including when it was already true."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "id": "C-VLD-TASK-COMPLETED",
+                "condition": {
+                  "text": "The completion field is a boolean."
+                },
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The completion field is a boolean."
+                  }
+                ]
+              }
+            ],
+            "results": [
+              {
+                "outcome": "pass",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "The condition holds; retain the canonical valid value."
+                  }
+                ]
+              },
+              {
+                "outcome": "fail",
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "Reject invalid input before retention; preserve previously stored tasks."
+                  }
+                ]
+              }
+            ],
+            "flow": "GRAPH-VLD-TASK-COMPLETED"
+          }
+        ],
+        "examples": [
+          {
+            "id": "EX-TASK-VALID",
+            "kind": "valid",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "A newly retained task."
+              }
+            ],
+            "data": {
+              "task_id": "example-id",
+              "title": "Review blueprint",
+              "completed": false
+            }
+          },
+          {
+            "id": "EX-TASK-INVALID",
+            "kind": "invalid",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Blank title fails canonical validity."
+              }
+            ],
+            "data": {
+              "task_id": "example-id",
+              "title": "   ",
+              "completed": false
+            }
+          }
+        ],
+        "assumptions": [
+          "ASM-DEMO-SCOPE"
+        ],
+        "open_issues": []
+      }
+    ],
+    "tools": [
+      {
+        "id": "TOL-TASK-STORE",
+        "name": {
+          "text": "Task retention capability"
+        },
+        "purpose": [
+          {
+            "type": "paragraph",
+            "text": "Provide creation, listing, lookup and update for one task collection. The L1 contract selects no database, route, framework or implementation class."
+          }
+        ],
+        "operations": [
+          {
+            "id": "OP-TASK-CREATE",
+            "name": {
+              "text": "Create retained task"
+            },
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Create retained task."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "title"
+                },
+                "type": "text",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "Raw title to normalize through canonical entity construction."
+                  }
+                ],
+                "required": true
+              }
+            ],
+            "results": [
+              {
+                "name": {
+                  "text": "task"
+                },
+                "type": "ENT-TASK",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "Retained task with a fresh identifier, trimmed title and completed false."
+                  }
+                ],
+                "guarantees": [
+                  {
+                    "type": "paragraph",
+                    "text": "Retained task with a fresh identifier, trimmed title and completed false."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "type": "paragraph",
+                "text": "Ready entities already satisfy intrinsic rules. Hydration of raw values uses canonical construction. Tools do not decide actor authorization."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "On success, one valid task is added. Invalid titles cause no retained task."
+              }
+            ],
+            "failures": [
+              {
+                "code": "STORAGE_FAILURE",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The storage capability could not confirm its result."
+                  }
+                ],
+                "consumer_distinction": [
+                  {
+                    "type": "paragraph",
+                    "text": "Propagate failure distinctly from success and empty data. A failure alone is not proof that no write occurred; this demo offers no retry or versioned-concurrency protocol."
+                  }
+                ]
+              }
+            ],
+            "guarantees": [
+              {
+                "type": "paragraph",
+                "text": "A successful write remains visible to a new normal store instance over the same retained collection. No multi-client conflict detection, distributed durability or cross-application transaction is promised."
+              }
+            ]
+          },
+          {
+            "id": "OP-TASK-LIST",
+            "name": {
+              "text": "List retained tasks"
+            },
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "List retained tasks."
+              }
+            ],
+            "inputs": [],
+            "results": [
+              {
+                "name": {
+                  "text": "tasks"
+                },
+                "type": "ENT-TASK",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "Zero or more ready Task entities in insertion order."
+                  }
+                ],
+                "guarantees": [
+                  {
+                    "type": "paragraph",
+                    "text": "Zero or more ready Task entities in insertion order."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "type": "paragraph",
+                "text": "Ready entities already satisfy intrinsic rules. Hydration of raw values uses canonical construction. Tools do not decide actor authorization."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Read the complete collection; do not mutate any task."
+              }
+            ],
+            "failures": [
+              {
+                "code": "STORAGE_FAILURE",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The storage capability could not confirm its result."
+                  }
+                ],
+                "consumer_distinction": [
+                  {
+                    "type": "paragraph",
+                    "text": "Propagate failure distinctly from success and empty data. A failure alone is not proof that no write occurred; this demo offers no retry or versioned-concurrency protocol."
+                  }
+                ]
+              }
+            ],
+            "guarantees": [
+              {
+                "type": "paragraph",
+                "text": "A successful write remains visible to a new normal store instance over the same retained collection. No multi-client conflict detection, distributed durability or cross-application transaction is promised."
+              }
+            ]
+          },
+          {
+            "id": "OP-TASK-GET",
+            "name": {
+              "text": "Read one task"
+            },
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Read one task."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "task_id"
+                },
+                "type": "text",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "Exact task identifier."
+                  }
+                ],
+                "required": true
+              }
+            ],
+            "results": [
+              {
+                "name": {
+                  "text": "task"
+                },
+                "type": "ENT-TASK",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "A ready Task if present; absence is a distinct result."
+                  }
+                ],
+                "guarantees": [
+                  {
+                    "type": "paragraph",
+                    "text": "A ready Task if present; absence is a distinct result."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "type": "paragraph",
+                "text": "Ready entities already satisfy intrinsic rules. Hydration of raw values uses canonical construction. Tools do not decide actor authorization."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Read without mutation."
+              }
+            ],
+            "failures": [
+              {
+                "code": "STORAGE_FAILURE",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The storage capability could not confirm its result."
+                  }
+                ],
+                "consumer_distinction": [
+                  {
+                    "type": "paragraph",
+                    "text": "Propagate failure distinctly from success and empty data. A failure alone is not proof that no write occurred; this demo offers no retry or versioned-concurrency protocol."
+                  }
+                ]
+              }
+            ],
+            "guarantees": [
+              {
+                "type": "paragraph",
+                "text": "A successful write remains visible to a new normal store instance over the same retained collection. No multi-client conflict detection, distributed durability or cross-application transaction is promised."
+              }
+            ]
+          },
+          {
+            "id": "OP-TASK-SAVE",
+            "name": {
+              "text": "Retain a completed task"
+            },
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Retain a completed task."
+              }
+            ],
+            "inputs": [
+              {
+                "name": {
+                  "text": "task"
+                },
+                "type": "ENT-TASK",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "A ready Task after its canonical completion behavior."
+                  }
+                ],
+                "required": true
+              }
+            ],
+            "results": [
+              {
+                "name": {
+                  "text": "task"
+                },
+                "type": "ENT-TASK",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The retained completed Task."
+                  }
+                ],
+                "guarantees": [
+                  {
+                    "type": "paragraph",
+                    "text": "The retained completed Task."
+                  }
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "type": "paragraph",
+                "text": "Ready entities already satisfy intrinsic rules. Hydration of raw values uses canonical construction. Tools do not decide actor authorization."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Update the existing task; a confirmed absent task is not created."
+              }
+            ],
+            "failures": [
+              {
+                "code": "STORAGE_FAILURE",
+                "meaning": [
+                  {
+                    "type": "paragraph",
+                    "text": "The storage capability could not confirm its result."
+                  }
+                ],
+                "consumer_distinction": [
+                  {
+                    "type": "paragraph",
+                    "text": "Propagate failure distinctly from success and empty data. A failure alone is not proof that no write occurred; this demo offers no retry or versioned-concurrency protocol."
+                  }
+                ]
+              }
+            ],
+            "guarantees": [
+              {
+                "type": "paragraph",
+                "text": "A successful write remains visible to a new normal store instance over the same retained collection. No multi-client conflict detection, distributed durability or cross-application transaction is promised."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "use_cases": [
+      {
+        "id": "UC-TASK-001",
+        "name": {
+          "text": "Create task"
+        },
+        "objective": [
+          {
+            "type": "paragraph",
+            "text": "Create task within the selected task collection."
+          }
+        ],
+        "actors": [
+          {
+            "actor": "ACT-TASK-USER",
+            "permission": {
+              "text": "tasks:create"
+            },
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "The initiating actor supplies trusted resolved context through the caller boundary; each invoked case checks its own permission."
+              }
+            ]
+          }
+        ],
+        "trigger": [
+          {
+            "type": "paragraph",
+            "text": "The task-board user requests create task."
+          }
+        ],
+        "context": [
+          {
+            "type": "paragraph",
+            "text": "A trusted caller boundary supplies actor identity, resolution state, known-actor status and permissions. Raw business input cannot grant these privileges. Anonymous execution is not admitted."
+          }
+        ],
+        "inputs": [
+          {
+            "name": {
+              "text": "title"
+            },
+            "type": "text",
+            "meaning": [
+              {
+                "type": "paragraph",
+                "text": "A task title before canonical trimming and length validation."
+              }
+            ],
+            "required": true
+          }
+        ],
+        "entry_conditions": [
+          {
+            "type": "paragraph",
+            "text": "The selected collection is configured. Context is evaluated before protected domain work; invalid context follows the refusal path."
+          }
+        ],
+        "entities": [
+          {
+            "entity": "ENT-TASK",
+            "validations": [
+              "VLD-TASK-ID",
+              "VLD-TASK-TITLE",
+              "VLD-TASK-COMPLETED"
+            ],
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Canonical task validity and completion behavior."
+              }
+            ]
+          }
+        ],
+        "tools": [
+          {
+            "tool": "TOL-TASK-STORE",
+            "operation": "OP-TASK-CREATE",
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Perform the required retention operation after authorization."
+              }
+            ]
+          }
+        ],
+        "calls": [],
+        "outcomes": [
+          {
+            "id": "OUT-UC-TASK-001-SUCCESS",
+            "kind": "success",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Return the result specified by the acceptance criteria."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Only the authorized effects stated by this case occur."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-001-DENIED",
+            "kind": "refusal",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Caller context does not authorize this case."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "No tool is invoked; no task is read or changed."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-001-FAILURE",
+            "kind": "failure",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Report invalid input, confirmed absence where relevant, or storage failure distinctly from success."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Invalid title and confirmed absence do not create a task. A storage error does not by itself establish the outcome of a write."
+              }
+            ]
+          }
+        ],
+        "functional_requirements": [
+          {
+            "id": "RF-TASK-001-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:create."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-001"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-001-AUTH",
+              "N-UC-TASK-001-DENIED"
+            ]
+          },
+          {
+            "id": "RF-TASK-001-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Given a valid title, return one retained Task with a fresh nonempty application-assigned identifier, trimmed title and completed false."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-001"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-001-WORK",
+              "N-UC-TASK-001-SUCCESS",
+              "N-UC-TASK-001-FAIL"
+            ]
+          },
+          {
+            "id": "RF-TASK-001-INVALID",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A blank title, a non-text title or a title longer than 120 characters after trimming is rejected without adding a task."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-001"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-001-WORK",
+              "N-UC-TASK-001-SUCCESS",
+              "N-UC-TASK-001-FAIL"
+            ]
+          },
+          {
+            "id": "RF-TASK-001-PERSISTENCE",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "After confirmed creation and a normal reopening of the same storage, list returns the task once with the same identifier, title and completion flag."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-001"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-001-WORK",
+              "N-UC-TASK-001-SUCCESS",
+              "N-UC-TASK-001-FAIL"
+            ]
+          }
+        ],
+        "nonfunctional_requirements": [],
+        "flows": {
+          "main": "GRAPH-UC-TASK-001",
+          "subflows": []
+        },
+        "flow_text": [
+          {
+            "type": "paragraph",
+            "text": "Receive trusted caller context. Authorize the case. On refusal, stop before tools. Otherwise perform the specified canonical behavior and tool operations, return the successful result or the relevant failure. See the case-specific criteria for distinctions."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "id": "AC-TASK-001-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:create."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-001-AUTH"
+            ]
+          },
+          {
+            "id": "AC-TASK-001-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Given a valid title, return one retained Task with a fresh nonempty application-assigned identifier, trimmed title and completed false."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-001-SUCCESS"
+            ]
+          },
+          {
+            "id": "AC-TASK-001-INVALID",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A blank title, a non-text title or a title longer than 120 characters after trimming is rejected without adding a task."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-001-INVALID"
+            ]
+          },
+          {
+            "id": "AC-TASK-001-PERSISTENCE",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "After confirmed creation and a normal reopening of the same storage, list returns the task once with the same identifier, title and completion flag."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-001-PERSISTENCE"
+            ]
+          }
+        ],
+        "traceability": [
+          {
+            "id": "TRC-UC-TASK-001",
+            "source": "SRC-DEMO-RECONSTRUCTION",
+            "targets": [
+              "RF-TASK-001-AUTH",
+              "RF-TASK-001-SUCCESS",
+              "RF-TASK-001-INVALID",
+              "RF-TASK-001-PERSISTENCE",
+              "AC-TASK-001-AUTH",
+              "AC-TASK-001-SUCCESS",
+              "AC-TASK-001-INVALID",
+              "AC-TASK-001-PERSISTENCE"
+            ],
+            "note": [
+              {
+                "type": "paragraph",
+                "text": "Manual didactic reconstruction; preserved contract is evaluated against this document, not against the different Task Board example in the Atlas repository."
+              }
+            ]
+          }
+        ],
+        "assumptions": [
+          "ASM-DEMO-SCOPE"
+        ],
+        "sources": [
+          "SRC-DEMO-RECONSTRUCTION"
+        ],
+        "open_issues": []
+      },
+      {
+        "id": "UC-TASK-002",
+        "name": {
+          "text": "List tasks"
+        },
+        "objective": [
+          {
+            "type": "paragraph",
+            "text": "List tasks within the selected task collection."
+          }
+        ],
+        "actors": [
+          {
+            "actor": "ACT-TASK-USER",
+            "permission": {
+              "text": "tasks:read"
+            },
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "The initiating actor supplies trusted resolved context through the caller boundary; each invoked case checks its own permission."
+              }
+            ]
+          }
+        ],
+        "trigger": [
+          {
+            "type": "paragraph",
+            "text": "The task-board user requests list tasks."
+          }
+        ],
+        "context": [
+          {
+            "type": "paragraph",
+            "text": "A trusted caller boundary supplies actor identity, resolution state, known-actor status and permissions. Raw business input cannot grant these privileges. Anonymous execution is not admitted."
+          }
+        ],
+        "inputs": [],
+        "entry_conditions": [
+          {
+            "type": "paragraph",
+            "text": "The selected collection is configured. Context is evaluated before protected domain work; invalid context follows the refusal path."
+          }
+        ],
+        "entities": [
+          {
+            "entity": "ENT-TASK",
+            "validations": [
+              "VLD-TASK-ID",
+              "VLD-TASK-TITLE",
+              "VLD-TASK-COMPLETED"
+            ],
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Canonical task validity and completion behavior."
+              }
+            ]
+          }
+        ],
+        "tools": [
+          {
+            "tool": "TOL-TASK-STORE",
+            "operation": "OP-TASK-LIST",
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Perform the required retention operation after authorization."
+              }
+            ]
+          }
+        ],
+        "calls": [],
+        "outcomes": [
+          {
+            "id": "OUT-UC-TASK-002-SUCCESS",
+            "kind": "success",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Return the result specified by the acceptance criteria."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Only the authorized effects stated by this case occur."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-002-DENIED",
+            "kind": "refusal",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Caller context does not authorize this case."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "No tool is invoked; no task is read or changed."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-002-FAILURE",
+            "kind": "failure",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Report invalid input, confirmed absence where relevant, or storage failure distinctly from success."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Invalid title and confirmed absence do not create a task. A storage error does not by itself establish the outcome of a write."
+              }
+            ]
+          }
+        ],
+        "functional_requirements": [
+          {
+            "id": "RF-TASK-002-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:read."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-002"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-002-AUTH",
+              "N-UC-TASK-002-DENIED"
+            ]
+          },
+          {
+            "id": "RF-TASK-002-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Return all retained ready tasks in insertion order, with no task mutation; propagate storage failure instead of returning fabricated data."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-002"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-002-WORK",
+              "N-UC-TASK-002-SUCCESS",
+              "N-UC-TASK-002-FAIL"
+            ]
+          },
+          {
+            "id": "RF-TASK-002-EMPTY",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A confirmed empty collection returns an empty list. A storage failure is a distinct failure, not an empty collection."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-002"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-002-WORK",
+              "N-UC-TASK-002-SUCCESS",
+              "N-UC-TASK-002-FAIL"
+            ]
+          }
+        ],
+        "nonfunctional_requirements": [],
+        "flows": {
+          "main": "GRAPH-UC-TASK-002",
+          "subflows": []
+        },
+        "flow_text": [
+          {
+            "type": "paragraph",
+            "text": "Receive trusted caller context. Authorize the case. On refusal, stop before tools. Otherwise perform the specified canonical behavior and tool operations, return the successful result or the relevant failure. See the case-specific criteria for distinctions."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "id": "AC-TASK-002-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:read."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-002-AUTH"
+            ]
+          },
+          {
+            "id": "AC-TASK-002-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Return all retained ready tasks in insertion order, with no task mutation; propagate storage failure instead of returning fabricated data."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-002-SUCCESS"
+            ]
+          },
+          {
+            "id": "AC-TASK-002-EMPTY",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A confirmed empty collection returns an empty list. A storage failure is a distinct failure, not an empty collection."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-002-EMPTY"
+            ]
+          }
+        ],
+        "traceability": [
+          {
+            "id": "TRC-UC-TASK-002",
+            "source": "SRC-DEMO-RECONSTRUCTION",
+            "targets": [
+              "RF-TASK-002-AUTH",
+              "RF-TASK-002-SUCCESS",
+              "RF-TASK-002-EMPTY",
+              "AC-TASK-002-AUTH",
+              "AC-TASK-002-SUCCESS",
+              "AC-TASK-002-EMPTY"
+            ],
+            "note": [
+              {
+                "type": "paragraph",
+                "text": "Manual didactic reconstruction; preserved contract is evaluated against this document, not against the different Task Board example in the Atlas repository."
+              }
+            ]
+          }
+        ],
+        "assumptions": [
+          "ASM-DEMO-SCOPE"
+        ],
+        "sources": [
+          "SRC-DEMO-RECONSTRUCTION"
+        ],
+        "open_issues": []
+      },
+      {
+        "id": "UC-TASK-003",
+        "name": {
+          "text": "Complete task"
+        },
+        "objective": [
+          {
+            "type": "paragraph",
+            "text": "Complete task within the selected task collection."
+          }
+        ],
+        "actors": [
+          {
+            "actor": "ACT-TASK-USER",
+            "permission": {
+              "text": "tasks:complete"
+            },
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "The initiating actor supplies trusted resolved context through the caller boundary; each invoked case checks its own permission."
+              }
+            ]
+          }
+        ],
+        "trigger": [
+          {
+            "type": "paragraph",
+            "text": "The task-board user requests complete task."
+          }
+        ],
+        "context": [
+          {
+            "type": "paragraph",
+            "text": "A trusted caller boundary supplies actor identity, resolution state, known-actor status and permissions. Raw business input cannot grant these privileges. Anonymous execution is not admitted."
+          }
+        ],
+        "inputs": [
+          {
+            "name": {
+              "text": "task_id"
+            },
+            "type": "text",
+            "meaning": [
+              {
+                "type": "paragraph",
+                "text": "The exact identifier of the task to complete."
+              }
+            ],
+            "required": true
+          }
+        ],
+        "entry_conditions": [
+          {
+            "type": "paragraph",
+            "text": "The selected collection is configured. Context is evaluated before protected domain work; invalid context follows the refusal path."
+          }
+        ],
+        "entities": [
+          {
+            "entity": "ENT-TASK",
+            "validations": [
+              "VLD-TASK-ID",
+              "VLD-TASK-TITLE",
+              "VLD-TASK-COMPLETED"
+            ],
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Canonical task validity and completion behavior."
+              }
+            ]
+          }
+        ],
+        "tools": [
+          {
+            "tool": "TOL-TASK-STORE",
+            "operation": "OP-TASK-GET",
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Perform the required retention operation after authorization."
+              }
+            ]
+          },
+          {
+            "tool": "TOL-TASK-STORE",
+            "operation": "OP-TASK-SAVE",
+            "purpose": [
+              {
+                "type": "paragraph",
+                "text": "Perform the required retention operation after authorization."
+              }
+            ]
+          }
+        ],
+        "calls": [],
+        "outcomes": [
+          {
+            "id": "OUT-UC-TASK-003-SUCCESS",
+            "kind": "success",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Return the result specified by the acceptance criteria."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Only the authorized effects stated by this case occur."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-003-DENIED",
+            "kind": "refusal",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Caller context does not authorize this case."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "No tool is invoked; no task is read or changed."
+              }
+            ]
+          },
+          {
+            "id": "OUT-UC-TASK-003-FAILURE",
+            "kind": "failure",
+            "description": [
+              {
+                "type": "paragraph",
+                "text": "Report invalid input, confirmed absence where relevant, or storage failure distinctly from success."
+              }
+            ],
+            "effects": [
+              {
+                "type": "paragraph",
+                "text": "Invalid title and confirmed absence do not create a task. A storage error does not by itself establish the outcome of a write."
+              }
+            ]
+          }
+        ],
+        "functional_requirements": [
+          {
+            "id": "RF-TASK-003-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:complete."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-003"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-003-AUTH",
+              "N-UC-TASK-003-DENIED"
+            ]
+          },
+          {
+            "id": "RF-TASK-003-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Find the task, apply its canonical completion behavior and retain completed true while preserving its identifier and title."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-003"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-003-WORK",
+              "N-UC-TASK-003-SUCCESS",
+              "N-UC-TASK-003-FAIL"
+            ]
+          },
+          {
+            "id": "RF-TASK-003-MISSING",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A confirmed missing identifier produces task-not-found and does not create a task."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-003"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-003-WORK",
+              "N-UC-TASK-003-SUCCESS",
+              "N-UC-TASK-003-FAIL"
+            ]
+          },
+          {
+            "id": "RF-TASK-003-IDEMPOTENT",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Completing an already completed task succeeds with the same identifier, title and completed true. The contract does not require the implementation to skip a low-level update."
+              }
+            ],
+            "scope": "case",
+            "applies_to": [
+              "UC-TASK-003"
+            ],
+            "flow_refs": [
+              "N-UC-TASK-003-WORK",
+              "N-UC-TASK-003-SUCCESS",
+              "N-UC-TASK-003-FAIL"
+            ]
+          }
+        ],
+        "nonfunctional_requirements": [],
+        "flows": {
+          "main": "GRAPH-UC-TASK-003",
+          "subflows": []
+        },
+        "flow_text": [
+          {
+            "type": "paragraph",
+            "text": "Receive trusted caller context. Authorize the case. On refusal, stop before tools. Otherwise perform the specified canonical behavior and tool operations, return the successful result or the relevant failure. See the case-specific criteria for distinctions."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "id": "AC-TASK-003-AUTH",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Reject absent, unresolved, unknown or insufficient caller context before any tool invocation. Allow only a known resolved actor with tasks:complete."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-003-AUTH"
+            ]
+          },
+          {
+            "id": "AC-TASK-003-SUCCESS",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Find the task, apply its canonical completion behavior and retain completed true while preserving its identifier and title."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-003-SUCCESS"
+            ]
+          },
+          {
+            "id": "AC-TASK-003-MISSING",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "A confirmed missing identifier produces task-not-found and does not create a task."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-003-MISSING"
+            ]
+          },
+          {
+            "id": "AC-TASK-003-IDEMPOTENT",
+            "statement": [
+              {
+                "type": "paragraph",
+                "text": "Completing an already completed task succeeds with the same identifier, title and completed true. The contract does not require the implementation to skip a low-level update."
+              }
+            ],
+            "verifies": [
+              "RF-TASK-003-IDEMPOTENT"
+            ]
+          }
+        ],
+        "traceability": [
+          {
+            "id": "TRC-UC-TASK-003",
+            "source": "SRC-DEMO-RECONSTRUCTION",
+            "targets": [
+              "RF-TASK-003-AUTH",
+              "RF-TASK-003-SUCCESS",
+              "RF-TASK-003-MISSING",
+              "RF-TASK-003-IDEMPOTENT",
+              "AC-TASK-003-AUTH",
+              "AC-TASK-003-SUCCESS",
+              "AC-TASK-003-MISSING",
+              "AC-TASK-003-IDEMPOTENT"
+            ],
+            "note": [
+              {
+                "type": "paragraph",
+                "text": "Manual didactic reconstruction; preserved contract is evaluated against this document, not against the different Task Board example in the Atlas repository."
+              }
+            ]
+          }
+        ],
+        "assumptions": [
+          "ASM-DEMO-SCOPE"
+        ],
+        "sources": [
+          "SRC-DEMO-RECONSTRUCTION"
+        ],
+        "open_issues": []
+      }
+    ],
+    "boundaries": [],
+    "graphs": [
+      {
+        "id": "GRAPH-VLD-TASK-ID",
+        "kind": "flow",
+        "owner": {
+          "kind": "validation",
+          "id": "VLD-TASK-ID"
+        },
+        "title": {
+          "text": "Task identifier"
+        },
+        "nodes": [
+          {
+            "id": "N-VLD-TASK-ID-START",
+            "type": "start",
+            "label": {
+              "text": "Candidate"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-ID-CHECK",
+            "type": "decision",
+            "label": {
+              "text": "The identifier is text with at least one non-whitespace character."
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-ID-PASS",
+            "type": "end",
+            "label": {
+              "text": "Valid value"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-ID-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Invalid value"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-VLD-TASK-ID-E1",
+            "from": "N-VLD-TASK-ID-START",
+            "to": "N-VLD-TASK-ID-CHECK",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-ID-E2",
+            "from": "N-VLD-TASK-ID-CHECK",
+            "to": "N-VLD-TASK-ID-PASS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-ID-E3",
+            "from": "N-VLD-TASK-ID-CHECK",
+            "to": "N-VLD-TASK-ID-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "GRAPH-VLD-TASK-TITLE",
+        "kind": "flow",
+        "owner": {
+          "kind": "validation",
+          "id": "VLD-TASK-TITLE"
+        },
+        "title": {
+          "text": "Task title"
+        },
+        "nodes": [
+          {
+            "id": "N-VLD-TASK-TITLE-START",
+            "type": "start",
+            "label": {
+              "text": "Candidate"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-TITLE-CHECK",
+            "type": "decision",
+            "label": {
+              "text": "The input is text and its trimmed form has a length from 1 through 120."
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-TITLE-PASS",
+            "type": "end",
+            "label": {
+              "text": "Valid value"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-TITLE-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Invalid value"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-VLD-TASK-TITLE-E1",
+            "from": "N-VLD-TASK-TITLE-START",
+            "to": "N-VLD-TASK-TITLE-CHECK",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-TITLE-E2",
+            "from": "N-VLD-TASK-TITLE-CHECK",
+            "to": "N-VLD-TASK-TITLE-PASS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-TITLE-E3",
+            "from": "N-VLD-TASK-TITLE-CHECK",
+            "to": "N-VLD-TASK-TITLE-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "GRAPH-VLD-TASK-COMPLETED",
+        "kind": "flow",
+        "owner": {
+          "kind": "validation",
+          "id": "VLD-TASK-COMPLETED"
+        },
+        "title": {
+          "text": "Completion flag"
+        },
+        "nodes": [
+          {
+            "id": "N-VLD-TASK-COMPLETED-START",
+            "type": "start",
+            "label": {
+              "text": "Candidate"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-COMPLETED-CHECK",
+            "type": "decision",
+            "label": {
+              "text": "The completion field is a boolean."
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-COMPLETED-PASS",
+            "type": "end",
+            "label": {
+              "text": "Valid value"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-VLD-TASK-COMPLETED-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Invalid value"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-VLD-TASK-COMPLETED-E1",
+            "from": "N-VLD-TASK-COMPLETED-START",
+            "to": "N-VLD-TASK-COMPLETED-CHECK",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-COMPLETED-E2",
+            "from": "N-VLD-TASK-COMPLETED-CHECK",
+            "to": "N-VLD-TASK-COMPLETED-PASS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-VLD-TASK-COMPLETED-E3",
+            "from": "N-VLD-TASK-COMPLETED-CHECK",
+            "to": "N-VLD-TASK-COMPLETED-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "GRAPH-UC-TASK-001",
+        "kind": "flow",
+        "owner": {
+          "kind": "use_case",
+          "id": "UC-TASK-001"
+        },
+        "title": {
+          "text": "Create task"
+        },
+        "nodes": [
+          {
+            "id": "N-UC-TASK-001-START",
+            "type": "start",
+            "label": {
+              "text": "Receive request"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-001-AUTH",
+            "type": "decision",
+            "label": {
+              "text": "Known resolved actor has tasks:create?"
+            },
+            "requirement_refs": [
+              "RF-TASK-001-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-001-DENIED",
+            "type": "refusal",
+            "label": {
+              "text": "Refuse before tools"
+            },
+            "requirement_refs": [
+              "RF-TASK-001-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-001-WORK",
+            "type": "action",
+            "label": {
+              "text": "Perform the case contract"
+            },
+            "requirement_refs": [
+              "RF-TASK-001-SUCCESS",
+              "RF-TASK-001-INVALID",
+              "RF-TASK-001-PERSISTENCE"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-001-RESULT",
+            "type": "decision",
+            "label": {
+              "text": "Operation succeeded?"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-001-SUCCESS",
+            "type": "end",
+            "label": {
+              "text": "Return specified result"
+            },
+            "requirement_refs": [
+              "RF-TASK-001-SUCCESS",
+              "RF-TASK-001-INVALID",
+              "RF-TASK-001-PERSISTENCE"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-001-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Report specified failure"
+            },
+            "requirement_refs": [
+              "RF-TASK-001-SUCCESS",
+              "RF-TASK-001-INVALID",
+              "RF-TASK-001-PERSISTENCE"
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-UC-TASK-001-E1",
+            "from": "N-UC-TASK-001-START",
+            "to": "N-UC-TASK-001-AUTH",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-001-E2",
+            "from": "N-UC-TASK-001-AUTH",
+            "to": "N-UC-TASK-001-DENIED",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-001-E3",
+            "from": "N-UC-TASK-001-AUTH",
+            "to": "N-UC-TASK-001-WORK",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-001-E4",
+            "from": "N-UC-TASK-001-WORK",
+            "to": "N-UC-TASK-001-RESULT",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-001-E5",
+            "from": "N-UC-TASK-001-RESULT",
+            "to": "N-UC-TASK-001-SUCCESS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-001-E6",
+            "from": "N-UC-TASK-001-RESULT",
+            "to": "N-UC-TASK-001-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "GRAPH-UC-TASK-002",
+        "kind": "flow",
+        "owner": {
+          "kind": "use_case",
+          "id": "UC-TASK-002"
+        },
+        "title": {
+          "text": "List tasks"
+        },
+        "nodes": [
+          {
+            "id": "N-UC-TASK-002-START",
+            "type": "start",
+            "label": {
+              "text": "Receive request"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-002-AUTH",
+            "type": "decision",
+            "label": {
+              "text": "Known resolved actor has tasks:read?"
+            },
+            "requirement_refs": [
+              "RF-TASK-002-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-002-DENIED",
+            "type": "refusal",
+            "label": {
+              "text": "Refuse before tools"
+            },
+            "requirement_refs": [
+              "RF-TASK-002-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-002-WORK",
+            "type": "action",
+            "label": {
+              "text": "Perform the case contract"
+            },
+            "requirement_refs": [
+              "RF-TASK-002-SUCCESS",
+              "RF-TASK-002-EMPTY"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-002-RESULT",
+            "type": "decision",
+            "label": {
+              "text": "Operation succeeded?"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-002-SUCCESS",
+            "type": "end",
+            "label": {
+              "text": "Return specified result"
+            },
+            "requirement_refs": [
+              "RF-TASK-002-SUCCESS",
+              "RF-TASK-002-EMPTY"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-002-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Report specified failure"
+            },
+            "requirement_refs": [
+              "RF-TASK-002-SUCCESS",
+              "RF-TASK-002-EMPTY"
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-UC-TASK-002-E1",
+            "from": "N-UC-TASK-002-START",
+            "to": "N-UC-TASK-002-AUTH",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-002-E2",
+            "from": "N-UC-TASK-002-AUTH",
+            "to": "N-UC-TASK-002-DENIED",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-002-E3",
+            "from": "N-UC-TASK-002-AUTH",
+            "to": "N-UC-TASK-002-WORK",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-002-E4",
+            "from": "N-UC-TASK-002-WORK",
+            "to": "N-UC-TASK-002-RESULT",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-002-E5",
+            "from": "N-UC-TASK-002-RESULT",
+            "to": "N-UC-TASK-002-SUCCESS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-002-E6",
+            "from": "N-UC-TASK-002-RESULT",
+            "to": "N-UC-TASK-002-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "GRAPH-UC-TASK-003",
+        "kind": "flow",
+        "owner": {
+          "kind": "use_case",
+          "id": "UC-TASK-003"
+        },
+        "title": {
+          "text": "Complete task"
+        },
+        "nodes": [
+          {
+            "id": "N-UC-TASK-003-START",
+            "type": "start",
+            "label": {
+              "text": "Receive request"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-003-AUTH",
+            "type": "decision",
+            "label": {
+              "text": "Known resolved actor has tasks:complete?"
+            },
+            "requirement_refs": [
+              "RF-TASK-003-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-003-DENIED",
+            "type": "refusal",
+            "label": {
+              "text": "Refuse before tools"
+            },
+            "requirement_refs": [
+              "RF-TASK-003-AUTH"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-003-WORK",
+            "type": "action",
+            "label": {
+              "text": "Perform the case contract"
+            },
+            "requirement_refs": [
+              "RF-TASK-003-SUCCESS",
+              "RF-TASK-003-MISSING",
+              "RF-TASK-003-IDEMPOTENT"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-003-RESULT",
+            "type": "decision",
+            "label": {
+              "text": "Operation succeeded?"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "N-UC-TASK-003-SUCCESS",
+            "type": "end",
+            "label": {
+              "text": "Return specified result"
+            },
+            "requirement_refs": [
+              "RF-TASK-003-SUCCESS",
+              "RF-TASK-003-MISSING",
+              "RF-TASK-003-IDEMPOTENT"
+            ]
+          },
+          {
+            "id": "N-UC-TASK-003-FAIL",
+            "type": "end",
+            "label": {
+              "text": "Report specified failure"
+            },
+            "requirement_refs": [
+              "RF-TASK-003-SUCCESS",
+              "RF-TASK-003-MISSING",
+              "RF-TASK-003-IDEMPOTENT"
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "GRAPH-UC-TASK-003-E1",
+            "from": "N-UC-TASK-003-START",
+            "to": "N-UC-TASK-003-AUTH",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-003-E2",
+            "from": "N-UC-TASK-003-AUTH",
+            "to": "N-UC-TASK-003-DENIED",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-003-E3",
+            "from": "N-UC-TASK-003-AUTH",
+            "to": "N-UC-TASK-003-WORK",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-003-E4",
+            "from": "N-UC-TASK-003-WORK",
+            "to": "N-UC-TASK-003-RESULT",
+            "label": {
+              "text": ""
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-003-E5",
+            "from": "N-UC-TASK-003-RESULT",
+            "to": "N-UC-TASK-003-SUCCESS",
+            "label": {
+              "text": "yes"
+            },
+            "requirement_refs": []
+          },
+          {
+            "id": "GRAPH-UC-TASK-003-E6",
+            "from": "N-UC-TASK-003-RESULT",
+            "to": "N-UC-TASK-003-FAIL",
+            "label": {
+              "text": "no"
+            },
+            "requirement_refs": []
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "resources": [],
+    "assumptions": [
+      {
+        "id": "ASM-DEMO-SCOPE",
+        "statement": [
+          {
+            "type": "paragraph",
+            "text": "This is a single task collection for a local teaching example. Identity resolution is supplied by the caller boundary. Anonymous execution, editing, deletion, concurrency tokens and multiple boards are outside the selected contract."
+          }
+        ],
+        "status": "open"
+      }
+    ],
+    "decisions": [],
+    "open_issues": [],
+    "sources": [
+      {
+        "id": "SRC-DEMO-RECONSTRUCTION",
+        "title": {
+          "text": "Vulcan Alpha TaskBoard behavior and reviewed teaching choices"
+        },
+        "uri": "urn:olympus:vulcan-taskboard:reconstruction:1",
+        "revision": "1",
+        "accessed": "2026-10-28",
+        "note": [
+          {
+            "type": "paragraph",
+            "text": "Manually reconstructed from the prior Vulcan Alpha example and the requirements discussion. This is not the Atlas repository Task Board example, an independent stakeholder brief, stakeholder approval, or an automatic derivation."
+          }
+        ]
+      }
+    ],
+    "history": [
+      {
+        "id": "HIST-DEMO-1",
+        "version": "1",
+        "date": "2026-10-28",
+        "description": [
+          {
+            "type": "paragraph",
+            "text": "Authored a distinct didactic contract: application-assigned identifiers, trimmed titles, boolean completion and idempotent repeated completion. Atlas model/profile are Stable-v1.0.0; Minerva and Vulcan editions are Alpha-v0.1.0."
+          }
+        ]
+      }
+    ],
+    "presentation": {
+      "markdown": {
+        "include_toc": true
+      },
+      "latex": {
+        "documentclass": "article",
+        "class_options": [
+          "11pt"
+        ],
+        "paper": "a4paper",
+        "toc": true,
+        "figure_width": "0.8\\linewidth"
+      }
+    },
+    "extensions": {
+      "olympus": {
+        "origin": "manual_reconstruction",
+        "source_baseline": "Vulcan-Architecture Alpha-v0.1.0-Alkimim",
+        "responsibility": "AI-assisted preparation for Douglas de Oliveira Alkimim; no human review or approval asserted"
+      }
+    }
+  }
+}

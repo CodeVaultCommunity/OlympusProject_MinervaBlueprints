@@ -1,0 +1,110 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY
+source:
+  path: apps/TaskBoard/usecases/TaskManagement/UseCase_CompleteTask.py
+  app: TaskBoard
+  language: python
+  state: observed
+  sha256: 6072fb42ad91bb39d4006e3b4e1d34c481914b30ffe98ebc8ed830f658b7fe32
+  purpose: 'UC-TASK-003: completing an existing task twice has the same observable result.'
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK
+  code_name: UseCase_CompleteTask
+  kind: class
+  role: use_case
+  model_refs:
+  - UC-TASK-003
+  description: 'UC-TASK-003: completing an existing task twice has the same observable result.'
+  attributes:
+  - name: task_store
+    description: Injected persistence capability.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK-OP-INIT
+    code_name: __init__
+    contract_scope: technical
+    native_signature: '__init__(self, task_store: Tool_SqliteTaskStore) -> None'
+    description: Receive the already selected storage capability; do not select drivers, connect to a database
+      or resolve global collaborators.
+    inputs: []
+    outputs: []
+    technical_parameters:
+    - name: task_store
+      description: Concrete capability selected by AppComposition; no interface/base class is required.
+    behavior:
+      summary: Receive the already selected storage capability; do not select drivers, connect to a database or
+        resolve global collaborators.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK-OP-COMPLETETASK
+    code_name: completeTask
+    contract_scope: operational
+    native_signature: 'completeTask(self, actor_context: Entity_ActorContext | None, task_id: str) -> Entity_Task'
+    description: Authorize tasks:complete before reading or mutating tasks, validate the identifier, load the
+      entity, and complete/save it only if still pending. A completed task is returned without another write.
+    inputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Local actor context supplied by the trusted composition/caller, or explicit absence; the use
+        case always authorizes it.
+      required: true
+    - name: task_id
+      type:
+        kind: primitive
+        name: string
+      description: Identifier of an existing task; nonempty text.
+      required: true
+    outputs:
+    - name: task
+      type:
+        kind: entity
+        ref: ENT-TASK
+      description: Task entity with its canonical title and completion state.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Authorize tasks:complete before reading or mutating tasks, validate the identifier, load the entity,
+        and complete/save it only if still pending. A completed task is returned without another write.
+      steps:
+      - Dependencies are prepared by the composition; authorization is checked by this case, including direct
+        invocations.
+      preconditions: []
+      postconditions: []
+      effects:
+      - Delegate only after the actor policy permits the operation.
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK
+  target: apps.TaskBoard.entities.Entity_ActorContext
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK
+  target: apps.TaskBoard.entities.Entity_Task
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-COMPLETETASK-PY-USECASE-COMPLETETASK
+  target: apps.TaskBoard.tools.Tool_SqliteTaskStore
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

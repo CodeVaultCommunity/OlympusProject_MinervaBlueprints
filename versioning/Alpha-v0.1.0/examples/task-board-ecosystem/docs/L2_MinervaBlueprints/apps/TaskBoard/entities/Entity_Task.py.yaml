@@ -1,0 +1,161 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY
+source:
+  path: apps/TaskBoard/entities/Entity_Task.py
+  app: TaskBoard
+  language: python
+  state: observed
+  sha256: 9528d654501ca196e4fbc5d2e3b65c0355f06e6f82491f13f2c2f9de6a46320d
+  purpose: Task data and the intrinsic pending -> completed state transition.
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK
+  code_name: Entity_Task
+  kind: class
+  role: entity
+  model_refs:
+  - ENT-TASK
+  description: Task data and the intrinsic pending -> completed state transition.
+  attributes:
+  - name: _task_id
+    description: Internal task identity, exposed through getId.
+    native_type: See observed source annotation or use.
+  - name: _task_title
+    description: Internal immutable title value object; getTitle exposes only its primitive text value.
+    native_type: ValueObject_TaskTitle
+  - name: _completed
+    description: Internal intrinsic completion flag, exposed through isCompleted.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK-OP-INIT
+    code_name: __init__
+    contract_scope: operational
+    native_signature: '__init__(self, task_id: str, title: str, completed: bool=False) -> None'
+    description: Validate the task identifier and boolean state, then construct the internal ValueObject_TaskTitle
+      from primitive title text.
+    inputs:
+    - name: task_id
+      type:
+        kind: primitive
+        name: string
+      description: Identifier of an existing task; nonempty text.
+      required: true
+    - name: title
+      type:
+        kind: primitive
+        name: string
+      description: Task title, normalized and validated by Entity_Task through its internal value object.
+      required: true
+    - name: completed
+      type:
+        kind: primitive
+        name: boolean
+      description: Initial completion state; defaults to false when omitted.
+      required: false
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Validate the task identifier and boolean state, then construct the internal ValueObject_TaskTitle
+        from primitive title text.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK-OP-GETID
+    code_name: getId
+    contract_scope: operational
+    native_signature: getId(self) -> str
+    description: Return this task identity without infrastructure access.
+    inputs: []
+    outputs:
+    - name: task_id
+      type:
+        kind: primitive
+        name: string
+      description: Task identity.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Return this task identity without infrastructure access.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK-OP-GETTITLE
+    code_name: getTitle
+    contract_scope: operational
+    native_signature: getTitle(self) -> str
+    description: Project the internal title value object to primitive normalized text.
+    inputs: []
+    outputs:
+    - name: title
+      type:
+        kind: primitive
+        name: string
+      description: Normalized task title.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Project the internal title value object to primitive normalized text.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK-OP-ISCOMPLETED
+    code_name: isCompleted
+    contract_scope: operational
+    native_signature: isCompleted(self) -> bool
+    description: Read the current completion flag.
+    inputs: []
+    outputs:
+    - name: completed
+      type:
+        kind: primitive
+        name: boolean
+      description: True after the intrinsic completion transition.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Read the current completion flag.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK-OP-COMPLETE
+    code_name: complete
+    contract_scope: operational
+    native_signature: complete(self) -> None
+    description: Set _completed to true. Repeating the transition preserves the completed state; persistence is
+      a separate collaborator responsibility.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Set _completed to true. Repeating the transition preserves the completed state; persistence is
+        a separate collaborator responsibility.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Mutate only this entity instance to its completed state.
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-ENTITIES-ENTITY-TASK-PY-ENTITY-TASK
+  target: apps.TaskBoard.value_objects.ValueObject_TaskTitle
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

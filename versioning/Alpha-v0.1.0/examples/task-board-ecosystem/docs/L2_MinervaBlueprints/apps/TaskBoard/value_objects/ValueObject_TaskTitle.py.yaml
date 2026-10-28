@@ -1,0 +1,78 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-VALUE-OBJECTS-VALUEOBJECT-TASKTITLE-PY
+source:
+  path: apps/TaskBoard/value_objects/ValueObject_TaskTitle.py
+  app: TaskBoard
+  language: python
+  state: observed
+  sha256: b31261c7ed64413e725b045fffe5527751f8de209233bb954a316c2d9c7aa44c
+  purpose: A value is immutable; only Entity_Task uses it in production code.
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-TASKBOARD-VALUE-OBJECTS-VALUEOBJECT-TASKTITLE-PY-VALUEOBJECT-TASKTITLE
+  code_name: ValueObject_TaskTitle
+  kind: class
+  role: value_object
+  model_refs:
+  - RULE-TASK-TITLE
+  description: A value is immutable; only Entity_Task uses it in production code.
+  attributes:
+  - name: value
+    description: Normalized immutable title; 1..120 characters after stripping.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-VALUE-OBJECTS-VALUEOBJECT-TASKTITLE-PY-VALUEOBJECT-TASKTITLE-OP-POST-INIT
+    code_name: __post_init__
+    contract_scope: operational
+    native_signature: __post_init__(self) -> None
+    description: Normalize leading/trailing whitespace once and reject non-text or titles outside 1..120 characters.
+      frozen=True and slots=True preserve value immutability; dataclass equality compares value.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Normalize leading/trailing whitespace once and reject non-text or titles outside 1..120 characters.
+        frozen=True and slots=True preserve value immutability; dataclass equality compares value.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-VALUE-OBJECTS-VALUEOBJECT-TASKTITLE-PY-VALUEOBJECT-TASKTITLE-OP-GETVALUE
+    code_name: getValue
+    contract_scope: operational
+    native_signature: getValue(self) -> str
+    description: Return the normalized primitive string; do not expose a value object across another component
+      contract.
+    inputs: []
+    outputs:
+    - name: value
+      type:
+        kind: primitive
+        name: string
+      description: Normalized title text.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Return the normalized primitive string; do not expose a value object across another component contract.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-VALUE-OBJECTS-VALUEOBJECT-TASKTITLE-PY-VALUEOBJECT-TASKTITLE
+  target: dataclasses
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

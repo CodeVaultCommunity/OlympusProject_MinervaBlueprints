@@ -1,0 +1,50 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: blueprint
+oal_edition: Stable-v1.0.0
+document:
+  id: MINERVA-STARTER
+  revision: '1'
+  status: draft
+  nature: designed
+  title: New project blueprint
+  responsible: Assign the responsible model author before review.
+  scope: Declare the selected project and source cases before review.
+  limitations:
+  - This starter is structurally valid and intentionally incomplete.
+  decisions: []
+source_l1:
+  model: Atlas Specifications
+  model_version: Stable-v1.0.0
+  artifact: null
+  document_id: Unselected source
+  revision: Unselected revision
+  case_ids: []
+  sha256: null
+adpm:
+  types: []
+  entities: []
+  tools: []
+  cases: []
+  rules: []
+  dependencies: []
+  domains: []
+  composition:
+    selection_location: To be modelled.
+    description: No application decisions have been supplied.
+    lifetimes: []
+  graphs: []
+advs:
+  behavioral_tests: []
+  supporting_checks: []
+  executions: []
+  unverified_risks:
+  - No behavior has been specified or verified.
+  channel_obligations: []
+mirror:
+  root: docs/L2_MinervaBlueprints
+  documents: []
+  coverage: declared
+  include_patterns: []
+  exclusions: []

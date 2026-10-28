@@ -1,0 +1,354 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY
+source:
+  path: apps/TaskBoard/tests/Test_Boundaries.py
+  app: TaskBoard
+  language: python
+  state: observed
+  sha256: aa4e3e1dfa5ceafc92a4a07faf20a506cbf920969d63344f78db9ab5abb8322a
+  purpose: Supporting checks for channel projection and interoperability, beyond the three ADVS identities.
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  code_name: Test_Boundaries
+  kind: class
+  role: support
+  model_refs: []
+  description: Supporting checks for channel projection and interoperability, beyond the three ADVS identities.
+  attributes:
+  - name: db_path
+    description: Temporary shared SQLite path.
+    native_type: See observed source annotation or use.
+  - name: url
+    description: Owned ephemeral loopback HTTP base URL.
+    native_type: See observed source annotation or use.
+  - name: temp_directory
+    description: Owned tempfile fixture.
+    native_type: See observed source annotation or use.
+  - name: app
+    description: Owned composition fixture.
+    native_type: See observed source annotation or use.
+  - name: server
+    description: Owned ThreadingHTTPServer fixture.
+    native_type: See observed source annotation or use.
+  - name: thread
+    description: Owned server thread.
+    native_type: See observed source annotation or use.
+  - name: root
+    description: Filesystem path to the example root.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-SETUP
+    code_name: setUp
+    contract_scope: technical
+    native_signature: setUp(self) -> None
+    description: Create an isolated temporary SQLite file and a fresh composition for each test; boundary tests
+      additionally start a loopback HTTP server on an ephemeral port.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Create an isolated temporary SQLite file and a fresh composition for each test; boundary tests
+        additionally start a loopback HTTP server on an ephemeral port.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Create isolated test resources.
+      - Prepare only the fixture owned by this test.
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TEARDOWN
+    code_name: tearDown
+    contract_scope: technical
+    native_signature: tearDown(self) -> None
+    description: Release fixture resources created by this test; boundary fixtures also stop/join their HTTP server
+      thread.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Release fixture resources created by this test; boundary fixtures also stop/join their HTTP server
+        thread.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Remove the owned temporary fixture.
+      - Stop owned HTTP resources when present.
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-REQUESTDATA
+    code_name: requestData
+    contract_scope: technical
+    native_signature: requestData(self, path, token='demo-editor', data=None)
+    description: Issue one HTTP request to the owned fixture with a selected token and optional JSON object, returning
+      status and decoded JSON.
+    inputs:
+    - name: path
+      type:
+        kind: primitive
+        name: string
+      description: Relative fixture route.
+      required: true
+    - name: token
+      type:
+        kind: primitive
+        name: string
+      description: Opaque test identity.
+      required: true
+    - name: data
+      type:
+        kind: entity
+        ref: ENT-TASK
+        nullable: true
+      description: Optional object; absence selects GET.
+      required: true
+    outputs:
+    - name: status
+      type:
+        kind: primitive
+        name: integer
+      description: HTTP success status.
+      required: true
+    - name: payload
+      type:
+        kind: entity
+        ref: ENT-TASK
+      description: Decoded public response.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Issue one HTTP request to the owned fixture with a selected token and optional JSON object, returning
+        status and decoded JSON.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Exercise the local HTTP boundary.
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTHTTPCLIANDLEGACYSHAREPUBLICCONTRACTS
+    code_name: testHttpCliAndLegacySharePublicContracts
+    contract_scope: technical
+    native_signature: testHttpCliAndLegacySharePublicContracts(self) -> None
+    description: 'Supporting integration test: HTTP creates, a CLI subprocess observes the same SQLite record,
+      CLI completes it, HTTP observes completion, and a LegacyReports subprocess consumes only the public HTTP
+      projection.'
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: 'Supporting integration test: HTTP creates, a CLI subprocess observes the same SQLite record, CLI
+        completes it, HTTP observes completion, and a LegacyReports subprocess consumes only the public HTTP projection.'
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTCHANNELREJECTSUNTRUSTEDORINSUFFICIENTCONTEXT
+    code_name: testChannelRejectsUntrustedOrInsufficientContext
+    contract_scope: technical
+    native_signature: testChannelRejectsUntrustedOrInsufficientContext(self) -> None
+    description: 'Supporting channel test: unknown/read-only/missing tokens cannot write, JSON-supplied permissions
+      are rejected, storage stays empty and CLI returns its forbidden status.'
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: 'Supporting channel test: unknown/read-only/missing tokens cannot write, JSON-supplied permissions
+        are rejected, storage stays empty and CLI returns its forbidden status.'
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTBROWSERPAGEANDHTTPFAILUREPROJECTION
+    code_name: testBrowserPageAndHttpFailureProjection
+    contract_scope: technical
+    native_signature: testBrowserPageAndHttpFailureProjection(self) -> None
+    description: 'Supporting channel test: browser page is served, invalid/oversized/extra-field payloads produce
+      422, and completion of a missing task produces 404.'
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: 'Supporting channel test: browser page is served, invalid/oversized/extra-field payloads produce
+        422, and completion of a missing task produces 404.'
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTMALFORMEDBODIESANDSTORAGEPROJECTION
+    code_name: testMalformedBodiesAndStorageProjection
+    contract_scope: technical
+    native_signature: testMalformedBodiesAndStorageProjection(self) -> None
+    description: Implements testMalformedBodiesAndStorageProjection as observed in the companion source; review
+      its source for algorithm details.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Implements testMalformedBodiesAndStorageProjection as observed in the companion source; review
+        its source for algorithm details.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTCLIEXITCODESANDARBITRARYWORKINGDIRECTORY
+    code_name: testCliExitCodesAndArbitraryWorkingDirectory
+    contract_scope: technical
+    native_signature: testCliExitCodesAndArbitraryWorkingDirectory(self) -> None
+    description: Implements testCliExitCodesAndArbitraryWorkingDirectory as observed in the companion source;
+      review its source for algorithm details.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Implements testCliExitCodesAndArbitraryWorkingDirectory as observed in the companion source; review
+        its source for algorithm details.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES-OP-TESTLEGACYREPORTSUSESDOCUMENTEDUPSTREAMFAILURE
+    code_name: testLegacyReportsUsesDocumentedUpstreamFailure
+    contract_scope: technical
+    native_signature: testLegacyReportsUsesDocumentedUpstreamFailure(self) -> None
+    description: Implements testLegacyReportsUsesDocumentedUpstreamFailure as observed in the companion source;
+      review its source for algorithm details.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Implements testLegacyReportsUsesDocumentedUpstreamFailure as observed in the companion source;
+        review its source for algorithm details.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: contextlib
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: functools
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: http.server
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: io
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: json
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: os
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: pathlib
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: sqlite3
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: subprocess
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: sys
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: tempfile
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: threading
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: unittest
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: unittest.mock
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: urllib.error
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: urllib.request
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: apps.TaskBoard.boundaries.Boundary_Http
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: apps.TaskBoard.boundaries.Boundary_Cli
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-TESTS-TEST-BOUNDARIES-PY-TEST-BOUNDARIES
+  target: apps.TaskBoard.composition.AppComposition
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

@@ -1,0 +1,2053 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:olympus:minerva:yaml:0.1.0",
+  "title": "Minerva YAML 0.1.0",
+  "description": "Representation schema; validation is not proof of behavioral correctness or OAL certification.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/blueprint"
+    },
+    {
+      "$ref": "#/$defs/source"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "data_type": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "primitive"
+            },
+            "name": {
+              "enum": [
+                "string",
+                "integer",
+                "number",
+                "boolean",
+                "bytes",
+                "null"
+              ]
+            },
+            "nullable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "entity"
+            },
+            "ref": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+            },
+            "nullable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "ref"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "type"
+            },
+            "ref": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+            },
+            "nullable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "ref"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "$ref": "#/$defs/data_type"
+            },
+            "nullable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "items"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "map"
+            },
+            "values": {
+              "$ref": "#/$defs/data_type"
+            },
+            "nullable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "datum": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/data_type"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "cardinality": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "type",
+        "required"
+      ],
+      "additionalProperties": false
+    },
+    "failure": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effects": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome_certainty": {
+          "enum": [
+            "not_applied",
+            "unknown",
+            "not_applicable"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "condition",
+        "result",
+        "effects",
+        "outcome_certainty"
+      ],
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_ref": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "origin_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "kind": {
+          "enum": [
+            "invariant",
+            "contextual",
+            "authorization",
+            "transition"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "statement",
+        "owner_ref",
+        "origin_refs",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "graph": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "owner_ref": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "kind": {
+          "enum": [
+            "flow",
+            "state_machine"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entry": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "kind": {
+                "enum": [
+                  "start",
+                  "action",
+                  "decision",
+                  "state",
+                  "end",
+                  "failure"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "description"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "from": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "to": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "condition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "from",
+              "to",
+              "condition"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "owner_ref",
+        "kind",
+        "summary",
+        "entry",
+        "nodes",
+        "edges"
+      ],
+      "additionalProperties": false
+    },
+    "behavior": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "postconditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "graph_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "summary",
+        "steps",
+        "preconditions",
+        "postconditions",
+        "effects",
+        "graph_refs"
+      ],
+      "additionalProperties": false
+    },
+    "permission": {
+      "type": "object",
+      "properties": {
+        "context_input": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trust_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_permissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "allowed_actor_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 1
+        },
+        "deny_contexts": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "absent",
+              "unresolved",
+              "unknown",
+              "insufficient"
+            ]
+          },
+          "minItems": 4
+        },
+        "anonymous_allowed": {
+          "type": "boolean"
+        },
+        "authentication": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_effects": {
+          "const": true
+        }
+      },
+      "required": [
+        "context_input",
+        "trust_source",
+        "required_permissions",
+        "allowed_actor_refs",
+        "deny_contexts",
+        "anonymous_allowed",
+        "authentication",
+        "before_effects"
+      ],
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "source_case_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "app": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "collaborators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "rule_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "permission": {
+          "$ref": "#/$defs/permission"
+        },
+        "behavior": {
+          "$ref": "#/$defs/behavior"
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/failure"
+          },
+          "minItems": 0
+        },
+        "domain_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "source_case_id",
+        "app",
+        "name",
+        "objective",
+        "inputs",
+        "outputs",
+        "collaborators",
+        "rule_refs",
+        "permission",
+        "behavior",
+        "failures",
+        "domain_ref"
+      ],
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "source_entity_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "meaning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "invariant_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "construction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "behavior": {
+          "$ref": "#/$defs/behavior"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "source_entity_id",
+        "name",
+        "meaning",
+        "fields",
+        "invariant_refs",
+        "construction",
+        "behavior",
+        "dependencies"
+      ],
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "guarantees": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/failure"
+          },
+          "minItems": 0
+        },
+        "ready_entity_assumption": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical_construction_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "revalidates_rule_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "contextual_conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "condition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "object": {
+                "type": "string",
+                "minLength": 1
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "responsibility": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "condition",
+              "object",
+              "purpose",
+              "responsibility"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "purpose",
+        "inputs",
+        "outputs",
+        "conditions",
+        "guarantees",
+        "effects",
+        "failures",
+        "ready_entity_assumption",
+        "canonical_construction_refs",
+        "revalidates_rule_refs",
+        "contextual_conditions"
+      ],
+      "additionalProperties": false
+    },
+    "tool": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/operation"
+          },
+          "minItems": 1
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "technical_selection": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "purpose",
+        "operations",
+        "dependencies",
+        "technical_selection"
+      ],
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "consumer_ref": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "provider_ref": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "relation": {
+          "enum": [
+            "uses_type",
+            "calls",
+            "injects",
+            "structural"
+          ]
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context_forwarding": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "consumer_ref",
+        "provider_ref",
+        "relation",
+        "purpose",
+        "context_forwarding"
+      ],
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "category": {
+          "enum": [
+            "success",
+            "alternative",
+            "failure",
+            "limit",
+            "authorization",
+            "channel",
+            "support"
+          ]
+        },
+        "preparation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_context": {
+          "enum": [
+            "allowed",
+            "absent",
+            "unresolved",
+            "unknown",
+            "insufficient",
+            "anonymous",
+            "not_applicable"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configuration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_result": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_effects": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criteria_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "obligation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "applicability": {
+          "enum": [
+            "applicable",
+            "not_applicable"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "check_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "preparation",
+        "actor_context",
+        "action",
+        "observed_boundary",
+        "configuration",
+        "expected_result",
+        "expected_effects",
+        "criteria_refs",
+        "obligation_refs",
+        "applicability",
+        "rationale",
+        "check_refs"
+      ],
+      "additionalProperties": false
+    },
+    "behavioral_test": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "case_ref": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "source_case_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "criteria_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "minItems": 1
+        },
+        "supporting_check_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "implemented"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "case_ref",
+        "source_case_id",
+        "criteria_refs",
+        "scenarios",
+        "supporting_check_refs",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "supporting_check": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "behavioral_test_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "criteria_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "case_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "preparation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_context": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_result": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_effects": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configuration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+                },
+                "symbol": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "enum": [
+                    "planned",
+                    "observed"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "symbol",
+                "status"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "purpose",
+        "behavioral_test_refs",
+        "criteria_refs",
+        "case_refs",
+        "preparation",
+        "actor_context",
+        "action",
+        "expected_result",
+        "expected_effects",
+        "observed_boundary",
+        "configuration",
+        "reference"
+      ],
+      "additionalProperties": false
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "check_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 1
+        },
+        "implementation_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "enum": [
+            "passed",
+            "failed",
+            "inconclusive",
+            "not_run"
+          ]
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "report": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "check_refs",
+        "implementation_revision",
+        "environment",
+        "result",
+        "observed_at",
+        "report",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "reviewed"
+          ]
+        },
+        "nature": {
+          "enum": [
+            "designed",
+            "reconstructed",
+            "mixed"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "responsible": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "kind": {
+                "enum": [
+                  "inherited",
+                  "decision",
+                  "assumption",
+                  "open_issue",
+                  "observation"
+                ]
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "review_status": {
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "statement",
+              "source",
+              "review_status"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "status",
+        "nature",
+        "title",
+        "responsible",
+        "scope",
+        "limitations",
+        "decisions"
+      ],
+      "additionalProperties": false
+    },
+    "mirror_operation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "code_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_scope": {
+          "enum": [
+            "operational",
+            "technical"
+          ]
+        },
+        "native_signature": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/datum"
+          },
+          "minItems": 0
+        },
+        "technical_parameters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "description"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "behavior": {
+          "$ref": "#/$defs/behavior"
+        }
+      },
+      "required": [
+        "id",
+        "code_name",
+        "contract_scope",
+        "native_signature",
+        "description",
+        "inputs",
+        "outputs",
+        "technical_parameters",
+        "behavior"
+      ],
+      "additionalProperties": false
+    },
+    "mirror_unit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "code_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "class",
+            "struct",
+            "function",
+            "module"
+          ]
+        },
+        "role": {
+          "enum": [
+            "use_case",
+            "tool",
+            "entity",
+            "value_object",
+            "boundary",
+            "composition",
+            "test",
+            "support",
+            "legacy"
+          ]
+        },
+        "model_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+          },
+          "minItems": 0
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "native_type": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "native_type"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mirror_operation"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "code_name",
+        "kind",
+        "role",
+        "model_refs",
+        "description",
+        "attributes",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "minerva-yaml"
+        },
+        "model_version": {
+          "const": "Alpha-v0.1.0"
+        },
+        "profile_version": {
+          "const": "0.1.0"
+        },
+        "kind": {
+          "const": "source"
+        },
+        "document_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+            },
+            "app": {
+              "type": "string",
+              "minLength": 1
+            },
+            "language": {
+              "type": "string",
+              "minLength": 1
+            },
+            "state": {
+              "enum": [
+                "planned",
+                "observed"
+              ]
+            },
+            "sha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observation": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "path",
+            "app",
+            "language",
+            "state",
+            "sha256",
+            "purpose",
+            "observation"
+          ],
+          "additionalProperties": false
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mirror_unit"
+          },
+          "minItems": 0
+        },
+        "graphs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/graph"
+          },
+          "minItems": 0
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from_unit": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "import",
+                  "call",
+                  "resource"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "planned",
+                  "observed"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "from_unit",
+              "target",
+              "kind",
+              "basis",
+              "description"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "format",
+        "model_version",
+        "profile_version",
+        "kind",
+        "document_id",
+        "source",
+        "units",
+        "graphs",
+        "dependencies",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "blueprint": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "minerva-yaml"
+        },
+        "model_version": {
+          "const": "Alpha-v0.1.0"
+        },
+        "profile_version": {
+          "const": "0.1.0"
+        },
+        "kind": {
+          "const": "blueprint"
+        },
+        "oal_edition": {
+          "const": "Stable-v1.0.0"
+        },
+        "document": {
+          "$ref": "#/$defs/document"
+        },
+        "source_l1": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "model_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "artifact": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "document_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "case_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+              },
+              "minItems": 0
+            },
+            "sha256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "model",
+            "model_version",
+            "artifact",
+            "document_id",
+            "revision",
+            "case_ids",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "adpm": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                  },
+                  "base": {
+                    "enum": [
+                      "string",
+                      "integer",
+                      "number",
+                      "boolean",
+                      "bytes"
+                    ]
+                  },
+                  "constraints": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  }
+                },
+                "required": [
+                  "id",
+                  "base",
+                  "constraints"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "entities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/entity"
+              },
+              "minItems": 0
+            },
+            "tools": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/tool"
+              },
+              "minItems": 0
+            },
+            "cases": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/case"
+              },
+              "minItems": 0
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rule"
+              },
+              "minItems": 0
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/dependency"
+              },
+              "minItems": 0
+            },
+            "domains": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "case_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                    },
+                    "minItems": 0
+                  },
+                  "access_policy": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "purpose",
+                  "case_refs",
+                  "access_policy"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "composition": {
+              "type": "object",
+              "properties": {
+                "selection_location": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "lifetimes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "element_ref": {
+                        "type": "string",
+                        "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                      },
+                      "scope": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "ownership": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "element_ref",
+                      "scope",
+                      "ownership"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0
+                }
+              },
+              "required": [
+                "selection_location",
+                "description",
+                "lifetimes"
+              ],
+              "additionalProperties": false
+            },
+            "graphs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/graph"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "types",
+            "entities",
+            "tools",
+            "cases",
+            "rules",
+            "dependencies",
+            "domains",
+            "composition",
+            "graphs"
+          ],
+          "additionalProperties": false
+        },
+        "advs": {
+          "type": "object",
+          "properties": {
+            "behavioral_tests": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/behavioral_test"
+              },
+              "minItems": 0
+            },
+            "supporting_checks": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/supporting_check"
+              },
+              "minItems": 0
+            },
+            "executions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/execution"
+              },
+              "minItems": 0
+            },
+            "unverified_risks": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "channel_obligations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "case_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+                    },
+                    "minItems": 0
+                  }
+                },
+                "required": [
+                  "id",
+                  "source",
+                  "statement",
+                  "case_refs"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "behavioral_tests",
+            "supporting_checks",
+            "executions",
+            "unverified_risks",
+            "channel_obligations"
+          ],
+          "additionalProperties": false
+        },
+        "mirror": {
+          "type": "object",
+          "properties": {
+            "root": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+              },
+              "minItems": 0
+            },
+            "coverage": {
+              "enum": [
+                "declared",
+                "complete"
+              ]
+            },
+            "include_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "exclusions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "pattern": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "pattern",
+                  "reason"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "root",
+            "documents",
+            "coverage",
+            "include_patterns",
+            "exclusions"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "model_version",
+        "profile_version",
+        "kind",
+        "oal_edition",
+        "document",
+        "source_l1",
+        "adpm",
+        "advs",
+        "mirror"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

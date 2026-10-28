@@ -1,0 +1,104 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY
+source:
+  path: apps/TaskBoard/usecases/TaskManagement/UseCase_ListTasks.py
+  app: TaskBoard
+  language: python
+  state: planned
+  sha256: null
+  purpose: 'UC-TASK-002: authorization also applies to direct and read-only invocations.'
+  observation: Planned structure and signatures, not an observed code snapshot.
+units:
+- id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS
+  code_name: UseCase_ListTasks
+  kind: class
+  role: use_case
+  model_refs:
+  - UC-TASK-002
+  description: 'UC-TASK-002: authorization also applies to direct and read-only invocations.'
+  attributes:
+  - name: task_store
+    description: Injected persistence capability.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS-OP-INIT
+    code_name: __init__
+    contract_scope: technical
+    native_signature: '__init__(self, task_store: Tool_SqliteTaskStore) -> None'
+    description: Receive the already selected storage capability; do not select drivers, connect to a database
+      or resolve global collaborators.
+    inputs: []
+    outputs: []
+    technical_parameters:
+    - name: task_store
+      description: Concrete capability selected by AppComposition; no interface/base class is required.
+    behavior:
+      summary: Receive the already selected storage capability; do not select drivers, connect to a database or
+        resolve global collaborators.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS-OP-LISTTASKS
+    code_name: listTasks
+    contract_scope: operational
+    native_signature: 'listTasks(self, actor_context: Entity_ActorContext | None) -> list[Entity_Task]'
+    description: Authorize tasks:read before any task read, then ask the injected store for the ordered entity
+      collection.
+    inputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Local actor context supplied by the trusted composition/caller, or explicit absence; the use
+        case always authorizes it.
+      required: true
+    outputs:
+    - name: tasks
+      type:
+        kind: array
+        items:
+          kind: entity
+          ref: ENT-TASK
+      description: Task entities in SQLite row-insertion order.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Authorize tasks:read before any task read, then ask the injected store for the ordered entity collection.
+      steps:
+      - Dependencies are prepared by the composition; authorization is checked by this case, including direct
+        invocations.
+      preconditions: []
+      postconditions: []
+      effects:
+      - Delegate only after the actor policy permits the operation.
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS
+  target: apps.TaskBoard.entities.Entity_ActorContext
+  kind: import
+  basis: planned
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS
+  target: apps.TaskBoard.entities.Entity_Task
+  kind: import
+  basis: planned
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-USECASES-TASKMANAGEMENT-USECASE-LISTTASKS-PY-USECASE-LISTTASKS
+  target: apps.TaskBoard.tools.Tool_SqliteTaskStore
+  kind: import
+  basis: planned
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

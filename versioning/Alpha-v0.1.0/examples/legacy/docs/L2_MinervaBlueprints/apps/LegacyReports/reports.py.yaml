@@ -1,0 +1,384 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-LEGACYREPORTS-REPORTS-PY
+source:
+  path: apps/LegacyReports/reports.py
+  app: LegacyReports
+  language: python
+  state: observed
+  sha256: 8bec86f867da59162795a8bc99546e19004c3e6e41f2023d1e4b3742043cb7d5
+  purpose: 'An intentionally non-Vulcan application: functions and a class share one source.
+
+
+    Its only integration with TaskBoard is the published HTTP contract. There are
+
+    no imports of TaskBoard components and no access to its SQLite file.'
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  code_name: fetch_tasks
+  kind: function
+  role: legacy
+  model_refs: []
+  description: Fetch the published GET /tasks response using an opaque read token, require a tasks list and string/string/boolean
+    task fields, and return the normalized list of public snapshots.
+  attributes: []
+  operations:
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS-OP-FETCH-TASKS
+    code_name: fetch_tasks
+    contract_scope: operational
+    native_signature: fetch_tasks(upstream_url, token)
+    description: Fetch the published GET /tasks response using an opaque read token, require a tasks list and
+      string/string/boolean task fields, and return the normalized list of public snapshots.
+    inputs:
+    - name: upstream_url
+      type:
+        kind: primitive
+        name: string
+      description: Public TaskBoard base URL.
+      required: true
+    - name: token
+      type:
+        kind: primitive
+        name: string
+      description: Opaque token configured for the report consumer.
+      required: true
+    outputs:
+    - name: tasks
+      type:
+        kind: array
+        items:
+          kind: entity
+          ref: ENT-TASK
+      description: Validated task snapshots, not imported TaskBoard classes.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Fetch the published GET /tasks response using an opaque read token, require a tasks list and string/string/boolean
+        task fields, and return the normalized list of public snapshots.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Read the published GET /tasks contract.
+      graph_refs: []
+- id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-SUMMARIZE-TASKS
+  code_name: summarize_tasks
+  kind: function
+  role: legacy
+  model_refs: []
+  description: Count total and completed public snapshots; pending is total minus completed. This existing legacy
+    function retains its original snake_case name.
+  attributes: []
+  operations:
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-SUMMARIZE-TASKS-OP-SUMMARIZE-TASKS
+    code_name: summarize_tasks
+    contract_scope: operational
+    native_signature: summarize_tasks(tasks)
+    description: Count total and completed public snapshots; pending is total minus completed. This existing legacy
+      function retains its original snake_case name.
+    inputs:
+    - name: tasks
+      type:
+        kind: array
+        items:
+          kind: entity
+          ref: ENT-TASK
+      description: Previously validated public snapshots.
+      required: true
+    outputs:
+    - name: total
+      type:
+        kind: primitive
+        name: integer
+      description: Total number of tasks.
+      required: true
+    - name: completed
+      type:
+        kind: primitive
+        name: integer
+      description: Number of completed tasks.
+      required: true
+    - name: pending
+      type:
+        kind: primitive
+        name: integer
+      description: Number of pending tasks.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Count total and completed public snapshots; pending is total minus completed. This existing legacy
+        function retains its original snake_case name.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+- id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-CREATE-REPORT
+  code_name: create_report
+  kind: function
+  role: legacy
+  model_refs: []
+  description: Fetch public task snapshots and feed them to the existing summary function; no TaskBoard module
+    or database is accessed.
+  attributes: []
+  operations:
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-CREATE-REPORT-OP-CREATE-REPORT
+    code_name: create_report
+    contract_scope: operational
+    native_signature: create_report(upstream_url, token)
+    description: Fetch public task snapshots and feed them to the existing summary function; no TaskBoard module
+      or database is accessed.
+    inputs:
+    - name: upstream_url
+      type:
+        kind: primitive
+        name: string
+      description: Published provider base URL.
+      required: true
+    - name: token
+      type:
+        kind: primitive
+        name: string
+      description: Configured opaque read token.
+      required: true
+    outputs:
+    - name: total
+      type:
+        kind: primitive
+        name: integer
+      description: Total number of tasks.
+      required: true
+    - name: completed
+      type:
+        kind: primitive
+        name: integer
+      description: Completed tasks.
+      required: true
+    - name: pending
+      type:
+        kind: primitive
+        name: integer
+      description: Pending tasks.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Fetch public task snapshots and feed them to the existing summary function; no TaskBoard module
+        or database is accessed.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Read the published GET /tasks contract.
+      graph_refs: []
+- id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-REPORTSHANDLER
+  code_name: ReportsHandler
+  kind: class
+  role: legacy
+  model_refs: []
+  description: 'An intentionally non-Vulcan application: functions and a class share one source.
+
+
+    Its only integration with TaskBoard is the published HTTP contract. There are
+
+    no imports of TaskBoard components and no access to its SQLite file.'
+  attributes:
+  - name: upstream_url
+    description: Public provider URL.
+    native_type: See observed source annotation or use.
+  - name: token
+    description: Opaque read token configured for the service.
+    native_type: See observed source annotation or use.
+  - name: instance_id
+    description: Owned service instance identity.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-REPORTSHANDLER-OP-INIT
+    code_name: __init__
+    contract_scope: technical
+    native_signature: __init__(self, *args, upstream_url, token, instance_id='standalone', **kwargs)
+    description: Store the reporting service configuration and initialize the standard HTTP handler.
+    inputs: []
+    outputs: []
+    technical_parameters:
+    - name: args
+      description: HTTP framework positional arguments.
+    - name: kwargs
+      description: HTTP framework keyword arguments.
+    - name: upstream_url
+      description: Public provider base URL.
+    - name: token
+      description: Configured read token.
+    - name: instance_id
+      description: Launcher instance identity.
+    behavior:
+      summary: Store the reporting service configuration and initialize the standard HTTP handler.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-REPORTSHANDLER-OP-SEND-JSON
+    code_name: send_json
+    contract_scope: operational
+    native_signature: send_json(self, status, payload)
+    description: Encode the supplied report/error/health object and send JSON with its status and length.
+    inputs:
+    - name: status
+      type:
+        kind: primitive
+        name: integer
+      description: HTTP status.
+      required: true
+    - name: payload
+      type:
+        kind: entity
+        ref: ENT-TASK
+      description: Published report, error or health object.
+      required: true
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Encode the supplied report/error/health object and send JSON with its status and length.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Send the selected HTTP representation.
+      graph_refs: []
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-REPORTSHANDLER-OP-DO-GET
+    code_name: do_GET
+    contract_scope: technical
+    native_signature: do_GET(self)
+    description: Expose /health without reading provider data and / or /report by calling create_report. Map provider
+      failures to 502 and unknown paths to 404.
+    inputs: []
+    outputs: []
+    technical_parameters: []
+    behavior:
+      summary: Expose /health without reading provider data and / or /report by calling create_report. Map provider
+        failures to 502 and unknown paths to 404.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - For reports, read the public upstream then send the local projection.
+      graph_refs: []
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-REPORTSHANDLER-OP-LOG-MESSAGE
+    code_name: log_message
+    contract_scope: technical
+    native_signature: log_message(self, format, *args)
+    description: Suppress standard HTTP request logs.
+    inputs: []
+    outputs: []
+    technical_parameters:
+    - name: format
+      description: HTTP logging format.
+    - name: args
+      description: HTTP logging arguments.
+    behavior:
+      summary: Suppress standard HTTP request logs.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+- id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-MAIN
+  code_name: main
+  kind: function
+  role: legacy
+  model_refs: []
+  description: Select report task or HTTP service, configure the public upstream, and execute the existing reporting
+    functions. Report errors produce JSON and exit status 5.
+  attributes: []
+  operations:
+  - id: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-MAIN-OP-MAIN
+    code_name: main
+    contract_scope: operational
+    native_signature: main(argv=None)
+    description: Select report task or HTTP service, configure the public upstream, and execute the existing reporting
+      functions. Report errors produce JSON and exit status 5.
+    inputs:
+    - name: argv
+      type:
+        kind: array
+        items:
+          kind: primitive
+          name: string
+      description: Explicit argument list or process arguments.
+      required: true
+    outputs:
+    - name: exit_code
+      type:
+        kind: primitive
+        name: integer
+      description: 0 successful task/server shutdown; 5 failed report task.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Select report task or HTTP service, configure the public upstream, and execute the existing reporting
+        functions. Report errors produce JSON and exit status 5.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: argparse
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: functools
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: json
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: os
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: http.server
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: urllib.error
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: urllib.parse
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-LEGACYREPORTS-REPORTS-PY-FETCH-TASKS
+  target: urllib.request
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.
+- Standalone legacy binding excerpt, not complete L2 coverage. Entity references acquire their meaning in the
+  complete TaskBoard blueprint.

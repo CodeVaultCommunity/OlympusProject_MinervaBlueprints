@@ -1,0 +1,156 @@
+{
+  "results": [
+    {
+      "example": "minimal",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 1,
+        "behavioral_tests": 1,
+        "criteria": 3,
+        "scenarios": 8,
+        "graphs": 2,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    },
+    {
+      "example": "task-board-ecosystem",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 16,
+        "cases": 3,
+        "behavioral_tests": 3,
+        "criteria": 11,
+        "scenarios": 28,
+        "graphs": 4,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    },
+    {
+      "example": "planned",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "declared_adpm_and_advs",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 2,
+        "cases": 1,
+        "behavioral_tests": 1,
+        "criteria": 3,
+        "scenarios": 8,
+        "graphs": 2,
+        "code_files": 0
+      },
+      "diagnostics": [],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    },
+    {
+      "example": "legacy",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "consistency",
+      "layer_coverage": "source_record_only",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 0,
+        "behavioral_tests": 0,
+        "criteria": 0,
+        "scenarios": 0,
+        "graphs": 0,
+        "code_files": 0
+      },
+      "diagnostics": [
+        {
+          "code": "SOURCE_SCOPE",
+          "severity": "info",
+          "document": "/tmp/olympus-isolated-minerva-ffurhe9i/edition/examples/legacy/docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml",
+          "element": "$",
+          "message": "A source record alone does not constitute ADMV coverage."
+        }
+      ],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    },
+    {
+      "example": "starter-structure-only",
+      "tool_version": "0.1.0a0",
+      "model_version": "Alpha-v0.1.0",
+      "profile_version": "0.1.0",
+      "status": "passed",
+      "exit_code": 0,
+      "validation_level": "structure",
+      "layer_coverage": "not_assessed",
+      "code_check": "not_requested",
+      "counts": {
+        "documents": 1,
+        "cases": 0,
+        "behavioral_tests": 0,
+        "criteria": 0,
+        "scenarios": 0,
+        "graphs": 0,
+        "code_files": 0
+      },
+      "diagnostics": [
+        {
+          "code": "STRUCTURE_ONLY",
+          "severity": "info",
+          "document": "/tmp/olympus-isolated-minerva-ffurhe9i/edition/implementations/yaml/starter.minerva.yaml",
+          "element": "$",
+          "message": "Only the representation schema was checked; ADMV consistency was not evaluated."
+        }
+      ],
+      "limitations": [
+        "Structural and consistency checks do not prove behavioral correctness, sufficient scenarios or OAL conformance.",
+        "Project code and YAML command text are never executed or imported.",
+        "Textual rules, trust policies, algorithm equivalence and contextual-condition adequacy require review.",
+        "Python code inspection, when requested, checks top-level names and hashes; it does not prove runtime behavior."
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,104 @@
+{
+  "captured": "2026-10-28",
+  "algorithm": "SHA-256",
+  "note": "Immutable input snapshots, distinct from the active root delivery inventory. Public HEADs checked on this date; copied source bytes preserved.",
+  "files": [
+    {
+      "source": "OAL Open Analysis Layers",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers",
+      "commit": "0cc54a19df324ac54857b92b068931cc1b090a10",
+      "source_path": "versioning/Stable-v1.0.0/README.md",
+      "snapshot_path": "verification/sources/oal/README.md.txt",
+      "size_bytes": 63838,
+      "sha256": "d6ad987008c200460af919eff3b03989dca5a3b0f7e14d7a9d5b4e67f598b2da"
+    },
+    {
+      "source": "OAL Open Analysis Layers",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers",
+      "commit": "0cc54a19df324ac54857b92b068931cc1b090a10",
+      "source_path": "versioning/Stable-v1.0.0/README.pt-br.md",
+      "snapshot_path": "verification/sources/oal/README.pt-br.md.txt",
+      "size_bytes": 69716,
+      "sha256": "52e0f59f7f4ead7d9a94a924bc5b339196e4d1aa68c467b7200780b81a3cc1e9"
+    },
+    {
+      "source": "OAL Open Analysis Layers",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers",
+      "commit": "0cc54a19df324ac54857b92b068931cc1b090a10",
+      "source_path": "LICENSE",
+      "snapshot_path": "verification/sources/oal/LICENSE",
+      "size_bytes": 1106,
+      "sha256": "dfee2cfbba02ad5b688116a71e4870843ab88cce92cf01c97dafa7e428c74fd7"
+    },
+    {
+      "source": "Atlas Specifications",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/README.md",
+      "snapshot_path": "verification/sources/atlas/README.md.txt",
+      "size_bytes": 72150,
+      "sha256": "b06bfc70b65ce567cc7d03ab281c1c13529ef5eaa0e96037c19ca64aa36b10a1"
+    },
+    {
+      "source": "Atlas Specifications",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/README.pt-br.md",
+      "snapshot_path": "verification/sources/atlas/README.pt-br.md.txt",
+      "size_bytes": 65813,
+      "sha256": "22d1695d0c723eb516b35d3afe4e92ea637977b885b6c64b4f80be593026fb6e"
+    },
+    {
+      "source": "Atlas Specifications",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "LICENSE",
+      "snapshot_path": "verification/sources/atlas/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
+    },
+    {
+      "source": "Atlas Specifications",
+      "edition": "Stable-v1.0.0",
+      "repository": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications",
+      "commit": "b5941830515d9968bb7f313301f1abe25fb6f8aa",
+      "source_path": "versioning/Stable-v1.0.0/implementations/json/atlas.schema.json",
+      "snapshot_path": "verification/sources/atlas/atlas.schema.json",
+      "size_bytes": 55891,
+      "sha256": "c695b889a86ca51942559fb2d88c7d4e192f312eff8dfb3fa2e1e74a92c8cb8f"
+    },
+    {
+      "source": "Prior combined Vulcan proposal",
+      "edition": "Alpha-v0.1.0-Alkimim",
+      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
+      "source_path": "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+      "snapshot_path": "verification/sources/legacy-vulcan/README.pt-br.md.txt",
+      "size_bytes": 42411,
+      "sha256": "3d4c0571bb1ea9218cf2250d93a7a76a0c7bf4a8f270926eba3f4628e5c8d04b"
+    },
+    {
+      "source": "Prior combined Vulcan proposal",
+      "edition": "Alpha-v0.1.0-Alkimim",
+      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
+      "source_path": "versioning/Alpha-v0.1.0-Alkimim/references/YAML-FORMAT.pt-br.md",
+      "snapshot_path": "verification/sources/legacy-vulcan/YAML-FORMAT.pt-br.md.txt",
+      "size_bytes": 14504,
+      "sha256": "9e69d0e04cc220bf89f8b23927b1bebda00bbf6525bfc868aba9061f6e9148c3"
+    },
+    {
+      "source": "Prior combined Vulcan proposal",
+      "edition": "Alpha-v0.1.0-Alkimim",
+      "source_archive_sha256": "9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4",
+      "source_path": "LICENSE",
+      "snapshot_path": "verification/sources/legacy-vulcan/LICENSE",
+      "size_bytes": 1084,
+      "sha256": "7dc6c48f35573ce6766c5abca1e634c56b82ffef632b5f45a0d60c2a1c03b7de"
+    }
+  ]
+}

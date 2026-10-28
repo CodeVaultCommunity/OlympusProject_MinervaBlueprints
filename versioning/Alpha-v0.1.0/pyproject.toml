@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "olympus-minerva-blueprints"
+version = "0.1.0a0"
+description = "Minerva Blueprints L2 model representation and read-only consistency validator"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3", "jsonschema==4.25.1"]
+license = {file = "LICENSE"}
+authors = [{name = "Douglas de Oliveira Alkimim"}]
+
+[project.scripts]
+minerva-validate = "minerva_blueprints.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["minerva_blueprints*"]
+
+[tool.setuptools.package-data]
+minerva_blueprints = ["schemas/*.json"]

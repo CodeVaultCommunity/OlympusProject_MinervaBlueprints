@@ -1,0 +1,1524 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: blueprint
+oal_edition: Stable-v1.0.0
+document:
+  id: MINERVA-TASKBOARD
+  revision: '1'
+  status: reviewed
+  nature: reconstructed
+  title: Didactic TaskBoard program and verification blueprint
+  responsible: 'Project author: Douglas de Oliveira Alkimim. This alpha example was prepared and technically reviewed
+    with AI assistance; project-owner approval is pending.'
+  scope: Three reconstructed TaskBoard cases. LegacyReports appears as an integration source record; no invented
+    legacy program cases.
+  limitations:
+  - This is a manually reconstructed teaching source, not a derivation of the TaskBoard published in the Atlas repository.
+  - Program text and expected scenarios require semantic review; successful consistency checks are not proof of
+    runtime behavior.
+  - Minerva copies of source records preserve observations from the companion Vulcan example. Source code is delivered
+    by that companion example.
+  - reviewed denotes technical review for this candidate edition, not approval by the project owner. The user has
+    not approved this alpha delivery.
+  decisions:
+  - id: DEC-TASKBOARD-ORIGIN
+    kind: observation
+    statement: This blueprint was authored from the revised Vulcan teaching example and its explicitly reconstructed
+      Atlas source.
+    source: Companion Vulcan Ecosystem Alpha-v0.1.0 and local Atlas artifact.
+    review_status: reviewed
+  - id: DEC-TASKBOARD-CONTEXT
+    kind: decision
+    statement: Represent invocation context as a local entity distinct from business payload data. No universal
+      base class is imposed.
+    source: Selected realization and OAL actor-context obligation.
+    review_status: reviewed
+  - id: DEC-OWNER-REVIEW
+    kind: open_issue
+    statement: Obtain project-owner review of this candidate model and its teaching examples.
+    source: Current delivery review remains pending.
+    review_status: draft
+source_l1:
+  model: Atlas Specifications
+  model_version: Stable-v1.0.0
+  artifact: docs/L1_AtlasSpecifications/task-board.atlas.json
+  document_id: ATLAS-VULCAN-TASKBOARD
+  revision: '1'
+  case_ids:
+  - UC-TASK-001
+  - UC-TASK-002
+  - UC-TASK-003
+  sha256: e9a71a546814888cf0f7e577c79595a0136024c062a9187d5a457c04ba76a886
+adpm:
+  types: []
+  entities:
+  - id: ENT-TASK
+    source_entity_id: ENT-TASK
+    name: Task
+    meaning: An identified item retained in the shared local task list.
+    fields:
+    - name: task_id
+      type:
+        kind: primitive
+        name: string
+      description: Stable generated identity.
+      required: true
+    - name: title
+      type:
+        kind: primitive
+        name: string
+      description: Canonical stripped title.
+      required: true
+    - name: completed
+      type:
+        kind: primitive
+        name: boolean
+      description: Whether the task is completed.
+      required: true
+    invariant_refs:
+    - RULE-TASK-ID
+    - RULE-TASK-TITLE
+    - RULE-TASK-COMPLETED
+    construction: Entity_Task constructs its internal ValueObject_TaskTitle. The tool uses that canonical construction
+      for raw inputs and hydration.
+    behavior:
+      summary: Preserve identity and title; complete changes pending to completed and repeating completion keeps
+        the same state.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs:
+      - GRAPH-TASK-STATE
+    dependencies: []
+  - id: ENT-ACTOR-CONTEXT
+    source_entity_id: null
+    name: Actor context
+    meaning: Local implementation representation of trusted caller context; never trusted merely because it appears
+      in request JSON.
+    fields:
+    - name: actor_id
+      type:
+        kind: primitive
+        name: string
+        nullable: true
+      description: Resolved caller identity or explicit absence.
+      required: true
+    - name: permissions
+      type:
+        kind: array
+        items:
+          kind: primitive
+          name: string
+      description: Trusted permissions supplied by the selected resolver.
+      required: true
+    - name: resolution
+      type:
+        kind: primitive
+        name: string
+      description: Resolution state.
+      required: true
+    - name: known_actor
+      type:
+        kind: primitive
+        name: boolean
+      description: Whether the caller is recognized.
+      required: true
+    invariant_refs:
+    - RULE-ACTOR-CONTEXT
+    construction: Entity_ActorContext applies canonical field-type validation. Each case still checks whether the
+      context authorizes its operation.
+    behavior:
+      summary: Represent trusted context; canPerform requires resolved, known, nonblank identity and the requested
+        permission.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+    dependencies: []
+  tools:
+  - id: TOL-TASK-STORE
+    name: Task persistence capability
+    purpose: Provide task persistence under declared local storage semantics.
+    operations:
+    - id: OP-TASK-CREATE
+      name: Create task
+      purpose: Generate a UUID4 hex identity, construct a valid Task and retain it.
+      inputs:
+      - name: title
+        type:
+          kind: primitive
+          name: string
+        description: Raw title to be canonically constructed.
+        required: true
+      outputs:
+      - name: task
+        type:
+          kind: entity
+          ref: ENT-TASK
+        description: The new retained Task.
+        required: true
+      conditions:
+      - The selected persistence resource is prepared by composition.
+      guarantees:
+      - The canonical entity exists before insertion.
+      - A confirmed result remains readable after normal reopen of the same database.
+      effects:
+      - Insert exactly one new task on confirmed success.
+      failures:
+      - id: FAIL-STORE-CREATE
+        condition: Storage or filesystem operation fails.
+        result: Propagate the storage failure; no automatic retry.
+        effects: Failure does not establish whether a write was applied.
+        outcome_certainty: unknown
+      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
+        rows and raw title are constructed canonically.
+      canonical_construction_refs:
+      - ENT-TASK
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    - id: OP-TASK-LIST
+      name: List task
+      purpose: Read and canonically hydrate retained tasks.
+      inputs: []
+      outputs:
+      - name: tasks
+        type:
+          kind: array
+          items:
+            kind: entity
+            ref: ENT-TASK
+        description: Tasks in insertion order.
+        required: true
+      conditions:
+      - The selected persistence resource is prepared by composition.
+      guarantees:
+      - An empty store returns an empty collection.
+      - Order is insertion order, not UUID sort.
+      effects: []
+      failures:
+      - id: FAIL-STORE-LIST
+        condition: Storage or filesystem operation fails.
+        result: Propagate the storage failure; no automatic retry.
+        effects: No domain write is requested.
+        outcome_certainty: not_applicable
+      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
+        rows and raw title are constructed canonically.
+      canonical_construction_refs:
+      - ENT-TASK
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    - id: OP-TASK-GET
+      name: Get task
+      purpose: Read one retained task by identity.
+      inputs:
+      - name: task_id
+        type:
+          kind: primitive
+          name: string
+        description: Identity to look up.
+        required: true
+      outputs:
+      - name: task
+        type:
+          kind: entity
+          ref: ENT-TASK
+          nullable: true
+        description: Task or absence.
+        required: true
+      conditions:
+      - The selected persistence resource is prepared by composition.
+      guarantees:
+      - Return absence when identity is not retained.
+      effects: []
+      failures:
+      - id: FAIL-STORE-GET
+        condition: Storage or filesystem operation fails.
+        result: Propagate the storage failure; no automatic retry.
+        effects: No domain write is requested.
+        outcome_certainty: not_applicable
+      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
+        rows and raw title are constructed canonically.
+      canonical_construction_refs:
+      - ENT-TASK
+      revalidates_rule_refs: []
+      contextual_conditions: []
+    - id: OP-TASK-SAVE
+      name: Save task
+      purpose: Persist the supplied ready entity.
+      inputs:
+      - name: task
+        type:
+          kind: entity
+          ref: ENT-TASK
+        description: Already valid Task.
+        required: true
+      outputs:
+      - name: task
+        type:
+          kind: entity
+          ref: ENT-TASK
+        description: Task after confirmed update.
+        required: true
+      conditions:
+      - The selected persistence resource is prepared by composition.
+      guarantees:
+      - Ready entity invariants are assumed and not revalidated.
+      - A missing retained row produces LookupError.
+      effects:
+      - Update the matching retained row.
+      failures:
+      - id: FAIL-STORE-SAVE
+        condition: Storage or filesystem operation fails.
+        result: Propagate the storage failure; no automatic retry.
+        effects: Failure does not establish whether a write was applied.
+        outcome_certainty: unknown
+      ready_entity_assumption: A ready Task satisfies RULE-TASK-ID, RULE-TASK-TITLE and RULE-TASK-COMPLETED; raw
+        rows and raw title are constructed canonically.
+      canonical_construction_refs: []
+      revalidates_rule_refs: []
+      contextual_conditions:
+      - id: COND-SAVE-ROW
+        condition: Exactly one retained row must match the supplied identity.
+        object: persistent row
+        purpose: Distinguish update success from absence.
+        responsibility: Persistence capability evaluates affected row count.
+    dependencies: []
+    technical_selection: Vulcan AppComposition selects Tool_SqliteTaskStore; the logical contract does not require
+      a Python base class or a database brand.
+  cases:
+  - id: UC-TASK-001
+    source_case_id: UC-TASK-001
+    app: TaskBoard
+    name: Create task
+    objective: Create task while preserving the reconstructed demo contract.
+    inputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Invocation context supplied by the trusted resolver or explicit absence; this is not a business
+        payload field.
+      required: true
+    - name: title
+      type:
+        kind: primitive
+        name: string
+      description: Raw title supplied by the caller.
+      required: true
+    outputs:
+    - name: task
+      type:
+        kind: entity
+        ref: ENT-TASK
+      description: Created task.
+      required: true
+    collaborators:
+    - TOL-TASK-STORE
+    - OP-TASK-CREATE
+    - ENT-TASK
+    - ENT-ACTOR-CONTEXT
+    rule_refs:
+    - RULE-TASK-001-AUTH
+    permission:
+      context_input: actor_context
+      trust_source: Declared local resolver maps configured opaque demo tokens to fixed caller contexts; direct
+        callers supply a trusted context under this explicit trust assumption.
+      required_permissions:
+      - tasks:create
+      allowed_actor_refs:
+      - ACT-TASK-USER
+      deny_contexts:
+      - absent
+      - unresolved
+      - unknown
+      - insufficient
+      anonymous_allowed: false
+      authentication: This local demonstration resolves configured opaque credentials; it does not claim production
+        identity infrastructure.
+      before_effects: true
+    behavior:
+      summary: Create task under the selected capability contract.
+      steps:
+      - Authorize the supplied context.
+      - Invoke OP-TASK-CREATE; the capability generates identity and performs canonical construction before storage.
+      - Return the retained entity or propagate the documented refusal/failure.
+      preconditions: []
+      postconditions: []
+      effects:
+      - A confirmed creation retains one new task.
+      graph_refs:
+      - GRAPH-TASK-001
+    failures:
+    - id: FAIL-TASK-001-AUTH
+      condition: Context absent, unresolved, unknown or insufficient.
+      result: PermissionError.
+      effects: No task capability is called.
+      outcome_certainty: not_applied
+    - id: FAIL-TASK-001-STORE
+      condition: A selected persistence operation fails.
+      result: Propagate the failure.
+      effects: Do not infer a successful write or safe retry from an unavailable result.
+      outcome_certainty: unknown
+    - id: FAIL-TASK-001-DATA
+      condition: Raw title or task identity violates the declared data contract.
+      result: ValueError or LookupError according to the condition.
+      effects: No forbidden domain mutation.
+      outcome_certainty: not_applied
+    domain_ref: DOMAIN-TASK-MANAGEMENT
+  - id: UC-TASK-002
+    source_case_id: UC-TASK-002
+    app: TaskBoard
+    name: List tasks
+    objective: List tasks while preserving the reconstructed demo contract.
+    inputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Invocation context supplied by the trusted resolver or explicit absence; this is not a business
+        payload field.
+      required: true
+    outputs:
+    - name: tasks
+      type:
+        kind: array
+        items:
+          kind: entity
+          ref: ENT-TASK
+      description: Current tasks in insertion order.
+      required: true
+    collaborators:
+    - TOL-TASK-STORE
+    - OP-TASK-LIST
+    - ENT-TASK
+    - ENT-ACTOR-CONTEXT
+    rule_refs:
+    - RULE-TASK-002-AUTH
+    permission:
+      context_input: actor_context
+      trust_source: Declared local resolver maps configured opaque demo tokens to fixed caller contexts; direct
+        callers supply a trusted context under this explicit trust assumption.
+      required_permissions:
+      - tasks:read
+      allowed_actor_refs:
+      - ACT-TASK-USER
+      deny_contexts:
+      - absent
+      - unresolved
+      - unknown
+      - insufficient
+      anonymous_allowed: false
+      authentication: This local demonstration resolves configured opaque credentials; it does not claim production
+        identity infrastructure.
+      before_effects: true
+    behavior:
+      summary: List tasks under the selected capability contract.
+      steps:
+      - Authorize the supplied context.
+      - Invoke OP-TASK-LIST.
+      - Return the collection, including an empty collection.
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs:
+      - GRAPH-TASK-002
+    failures:
+    - id: FAIL-TASK-002-AUTH
+      condition: Context absent, unresolved, unknown or insufficient.
+      result: PermissionError.
+      effects: No task capability is called.
+      outcome_certainty: not_applied
+    - id: FAIL-TASK-002-STORE
+      condition: A selected persistence operation fails.
+      result: Propagate the failure.
+      effects: Do not infer a successful write or safe retry from an unavailable result.
+      outcome_certainty: unknown
+    domain_ref: DOMAIN-TASK-MANAGEMENT
+  - id: UC-TASK-003
+    source_case_id: UC-TASK-003
+    app: TaskBoard
+    name: Complete task
+    objective: Complete task while preserving the reconstructed demo contract.
+    inputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Invocation context supplied by the trusted resolver or explicit absence; this is not a business
+        payload field.
+      required: true
+    - name: task_id
+      type:
+        kind: primitive
+        name: string
+      description: Nonempty text identity.
+      required: true
+    outputs:
+    - name: task
+      type:
+        kind: entity
+        ref: ENT-TASK
+      description: Completed task.
+      required: true
+    collaborators:
+    - TOL-TASK-STORE
+    - OP-TASK-GET
+    - OP-TASK-SAVE
+    - ENT-TASK
+    - ENT-ACTOR-CONTEXT
+    rule_refs:
+    - RULE-TASK-003-AUTH
+    permission:
+      context_input: actor_context
+      trust_source: Declared local resolver maps configured opaque demo tokens to fixed caller contexts; direct
+        callers supply a trusted context under this explicit trust assumption.
+      required_permissions:
+      - tasks:complete
+      allowed_actor_refs:
+      - ACT-TASK-USER
+      deny_contexts:
+      - absent
+      - unresolved
+      - unknown
+      - insufficient
+      anonymous_allowed: false
+      authentication: This local demonstration resolves configured opaque credentials; it does not claim production
+        identity infrastructure.
+      before_effects: true
+    behavior:
+      summary: Complete task under the selected capability contract.
+      steps:
+      - Authorize the supplied context before lookup.
+      - Validate the identity and invoke OP-TASK-GET.
+      - Refuse missing task.
+      - If pending, apply the entity transition and invoke OP-TASK-SAVE.
+      - If already completed, return unchanged without another save.
+      preconditions: []
+      postconditions: []
+      effects:
+      - A pending retained task becomes completed on confirmed success.
+      graph_refs:
+      - GRAPH-TASK-003
+    failures:
+    - id: FAIL-TASK-003-AUTH
+      condition: Context absent, unresolved, unknown or insufficient.
+      result: PermissionError.
+      effects: No task capability is called.
+      outcome_certainty: not_applied
+    - id: FAIL-TASK-003-STORE
+      condition: A selected persistence operation fails.
+      result: Propagate the failure.
+      effects: Do not infer a successful write or safe retry from an unavailable result.
+      outcome_certainty: unknown
+    - id: FAIL-TASK-003-DATA
+      condition: Raw title or task identity violates the declared data contract.
+      result: ValueError or LookupError according to the condition.
+      effects: No forbidden domain mutation.
+      outcome_certainty: not_applied
+    domain_ref: DOMAIN-TASK-MANAGEMENT
+  rules:
+  - id: RULE-TASK-ID
+    statement: Task identity is nonempty text and is preserved after construction.
+    owner_ref: ENT-TASK
+    origin_refs: []
+    kind: invariant
+  - id: RULE-TASK-TITLE
+    statement: Canonical title is stripped text with 1 through 120 characters.
+    owner_ref: ENT-TASK
+    origin_refs: []
+    kind: invariant
+  - id: RULE-TASK-COMPLETED
+    statement: Completion is boolean; completion preserves identity and title.
+    owner_ref: ENT-TASK
+    origin_refs: []
+    kind: transition
+  - id: RULE-ACTOR-CONTEXT
+    statement: Caller identity is text or absent, permissions are a tuple of text, resolution is text and known_actor
+      is boolean.
+    owner_ref: ENT-ACTOR-CONTEXT
+    origin_refs: []
+    kind: invariant
+  - id: RULE-TASK-001-AUTH
+    statement: Require resolved, known, nonblank caller identity and tasks:create before protected effects.
+    owner_ref: UC-TASK-001
+    origin_refs: []
+    kind: authorization
+  - id: RULE-TASK-002-AUTH
+    statement: Require resolved, known, nonblank caller identity and tasks:read before protected effects.
+    owner_ref: UC-TASK-002
+    origin_refs: []
+    kind: authorization
+  - id: RULE-TASK-003-AUTH
+    statement: Require resolved, known, nonblank caller identity and tasks:complete before protected effects.
+    owner_ref: UC-TASK-003
+    origin_refs: []
+    kind: authorization
+  dependencies:
+  - id: DEP-TASK-001-1
+    consumer_ref: UC-TASK-001
+    provider_ref: TOL-TASK-STORE
+    relation: calls
+    purpose: Declared collaborator for create task.
+    context_forwarding: null
+  - id: DEP-TASK-001-2
+    consumer_ref: UC-TASK-001
+    provider_ref: OP-TASK-CREATE
+    relation: calls
+    purpose: Declared collaborator for create task.
+    context_forwarding: null
+  - id: DEP-TASK-001-3
+    consumer_ref: UC-TASK-001
+    provider_ref: ENT-TASK
+    relation: uses_type
+    purpose: Declared collaborator for create task.
+    context_forwarding: null
+  - id: DEP-TASK-001-4
+    consumer_ref: UC-TASK-001
+    provider_ref: ENT-ACTOR-CONTEXT
+    relation: uses_type
+    purpose: Declared collaborator for create task.
+    context_forwarding: null
+  - id: DEP-TASK-002-1
+    consumer_ref: UC-TASK-002
+    provider_ref: TOL-TASK-STORE
+    relation: calls
+    purpose: Declared collaborator for list tasks.
+    context_forwarding: null
+  - id: DEP-TASK-002-2
+    consumer_ref: UC-TASK-002
+    provider_ref: OP-TASK-LIST
+    relation: calls
+    purpose: Declared collaborator for list tasks.
+    context_forwarding: null
+  - id: DEP-TASK-002-3
+    consumer_ref: UC-TASK-002
+    provider_ref: ENT-TASK
+    relation: uses_type
+    purpose: Declared collaborator for list tasks.
+    context_forwarding: null
+  - id: DEP-TASK-002-4
+    consumer_ref: UC-TASK-002
+    provider_ref: ENT-ACTOR-CONTEXT
+    relation: uses_type
+    purpose: Declared collaborator for list tasks.
+    context_forwarding: null
+  - id: DEP-TASK-003-1
+    consumer_ref: UC-TASK-003
+    provider_ref: TOL-TASK-STORE
+    relation: calls
+    purpose: Declared collaborator for complete task.
+    context_forwarding: null
+  - id: DEP-TASK-003-2
+    consumer_ref: UC-TASK-003
+    provider_ref: OP-TASK-GET
+    relation: calls
+    purpose: Declared collaborator for complete task.
+    context_forwarding: null
+  - id: DEP-TASK-003-3
+    consumer_ref: UC-TASK-003
+    provider_ref: OP-TASK-SAVE
+    relation: calls
+    purpose: Declared collaborator for complete task.
+    context_forwarding: null
+  - id: DEP-TASK-003-4
+    consumer_ref: UC-TASK-003
+    provider_ref: ENT-TASK
+    relation: uses_type
+    purpose: Declared collaborator for complete task.
+    context_forwarding: null
+  - id: DEP-TASK-003-5
+    consumer_ref: UC-TASK-003
+    provider_ref: ENT-ACTOR-CONTEXT
+    relation: uses_type
+    purpose: Declared collaborator for complete task.
+    context_forwarding: null
+  domains:
+  - id: DOMAIN-TASK-MANAGEMENT
+    name: Task management
+    purpose: Group the three task application objectives.
+    case_refs:
+    - UC-TASK-001
+    - UC-TASK-002
+    - UC-TASK-003
+    access_policy: Grouping does not authorize execution; each case checks its own permission.
+  composition:
+    selection_location: Companion Vulcan AppComposition selects the concrete persistence capability.
+    description: The selected capability is provided explicitly to prepared cases; no global service locator or
+      mandatory abstract base.
+    lifetimes:
+    - element_ref: UC-TASK-001
+      scope: One prepared instance per composition.
+      ownership: Composition owns and supplies the collaborator.
+    - element_ref: UC-TASK-002
+      scope: One prepared instance per composition.
+      ownership: Composition owns and supplies the collaborator.
+    - element_ref: UC-TASK-003
+      scope: One prepared instance per composition.
+      ownership: Composition owns and supplies the collaborator.
+    - element_ref: TOL-TASK-STORE
+      scope: Capability lives with composition; each SQLite operation owns and closes its connection.
+      ownership: Concrete capability owns technical resources.
+  graphs:
+  - id: GRAPH-TASK-STATE
+    owner_ref: ENT-TASK
+    kind: state_machine
+    summary: Task completion is idempotent.
+    entry: STATE-TASK-PENDING
+    nodes:
+    - id: STATE-TASK-PENDING
+      kind: state
+      description: A new task is pending.
+    - id: STATE-TASK-COMPLETED
+      kind: state
+      description: The task is completed.
+    edges:
+    - id: EDGE-TASK-COMPLETE
+      from: STATE-TASK-PENDING
+      to: STATE-TASK-COMPLETED
+      condition: Authorized completion of a retained task.
+      action: Set completion true.
+    - id: EDGE-TASK-REPEAT
+      from: STATE-TASK-COMPLETED
+      to: STATE-TASK-COMPLETED
+      condition: Completion is requested again.
+      action: Preserve identity, title and completion; no second task.
+  - id: GRAPH-TASK-001
+    owner_ref: UC-TASK-001
+    kind: flow
+    summary: Create task including authorization and failure.
+    entry: NODE-001-RECEIVE
+    nodes:
+    - id: NODE-001-RECEIVE
+      kind: start
+      description: Receive invocation data and trusted context.
+    - id: NODE-001-AUTHORIZE
+      kind: decision
+      description: Apply the case permission policy.
+    - id: NODE-001-EXECUTE
+      kind: action
+      description: Perform the declared case steps and capability calls.
+    - id: NODE-001-RETURN
+      kind: end
+      description: Return the documented result.
+    - id: NODE-001-FAIL
+      kind: failure
+      description: Return or raise the documented refusal/failure.
+    edges:
+    - id: EDGE-001-1
+      from: NODE-001-RECEIVE
+      to: NODE-001-AUTHORIZE
+      condition: Invocation received.
+      action: ''
+    - id: EDGE-001-2
+      from: NODE-001-AUTHORIZE
+      to: NODE-001-FAIL
+      condition: Context is not permitted.
+      action: ''
+    - id: EDGE-001-3
+      from: NODE-001-AUTHORIZE
+      to: NODE-001-EXECUTE
+      condition: Context satisfies the case policy.
+      action: ''
+    - id: EDGE-001-4
+      from: NODE-001-EXECUTE
+      to: NODE-001-FAIL
+      condition: A specified data, absence or storage failure occurs.
+      action: ''
+    - id: EDGE-001-5
+      from: NODE-001-EXECUTE
+      to: NODE-001-RETURN
+      condition: The specified operation succeeds.
+      action: ''
+  - id: GRAPH-TASK-002
+    owner_ref: UC-TASK-002
+    kind: flow
+    summary: List tasks including authorization and failure.
+    entry: NODE-002-RECEIVE
+    nodes:
+    - id: NODE-002-RECEIVE
+      kind: start
+      description: Receive invocation data and trusted context.
+    - id: NODE-002-AUTHORIZE
+      kind: decision
+      description: Apply the case permission policy.
+    - id: NODE-002-EXECUTE
+      kind: action
+      description: Perform the declared case steps and capability calls.
+    - id: NODE-002-RETURN
+      kind: end
+      description: Return the documented result.
+    - id: NODE-002-FAIL
+      kind: failure
+      description: Return or raise the documented refusal/failure.
+    edges:
+    - id: EDGE-002-1
+      from: NODE-002-RECEIVE
+      to: NODE-002-AUTHORIZE
+      condition: Invocation received.
+      action: ''
+    - id: EDGE-002-2
+      from: NODE-002-AUTHORIZE
+      to: NODE-002-FAIL
+      condition: Context is not permitted.
+      action: ''
+    - id: EDGE-002-3
+      from: NODE-002-AUTHORIZE
+      to: NODE-002-EXECUTE
+      condition: Context satisfies the case policy.
+      action: ''
+    - id: EDGE-002-4
+      from: NODE-002-EXECUTE
+      to: NODE-002-FAIL
+      condition: A specified data, absence or storage failure occurs.
+      action: ''
+    - id: EDGE-002-5
+      from: NODE-002-EXECUTE
+      to: NODE-002-RETURN
+      condition: The specified operation succeeds.
+      action: ''
+  - id: GRAPH-TASK-003
+    owner_ref: UC-TASK-003
+    kind: flow
+    summary: Complete task including authorization and failure.
+    entry: NODE-003-RECEIVE
+    nodes:
+    - id: NODE-003-RECEIVE
+      kind: start
+      description: Receive invocation data and trusted context.
+    - id: NODE-003-AUTHORIZE
+      kind: decision
+      description: Apply the case permission policy.
+    - id: NODE-003-EXECUTE
+      kind: action
+      description: Perform the declared case steps and capability calls.
+    - id: NODE-003-RETURN
+      kind: end
+      description: Return the documented result.
+    - id: NODE-003-FAIL
+      kind: failure
+      description: Return or raise the documented refusal/failure.
+    edges:
+    - id: EDGE-003-1
+      from: NODE-003-RECEIVE
+      to: NODE-003-AUTHORIZE
+      condition: Invocation received.
+      action: ''
+    - id: EDGE-003-2
+      from: NODE-003-AUTHORIZE
+      to: NODE-003-FAIL
+      condition: Context is not permitted.
+      action: ''
+    - id: EDGE-003-3
+      from: NODE-003-AUTHORIZE
+      to: NODE-003-EXECUTE
+      condition: Context satisfies the case policy.
+      action: ''
+    - id: EDGE-003-4
+      from: NODE-003-EXECUTE
+      to: NODE-003-FAIL
+      condition: A specified data, absence or storage failure occurs.
+      action: ''
+    - id: EDGE-003-5
+      from: NODE-003-EXECUTE
+      to: NODE-003-RETURN
+      condition: The specified operation succeeds.
+      action: ''
+advs:
+  behavioral_tests:
+  - id: BT-TASK-001
+    case_ref: UC-TASK-001
+    source_case_id: UC-TASK-001
+    criteria_refs:
+    - AC-TASK-001-AUTH
+    - AC-TASK-001-SUCCESS
+    - AC-TASK-001-INVALID
+    - AC-TASK-001-PERSISTENCE
+    scenarios:
+    - id: SC-TASK-001-AUTH-ALLOWED
+      category: authorization
+      preparation: Prepare a fresh store and the declared allowed caller context.
+      actor_context: allowed
+      action: Invoke create task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Authorization permits the case to evaluate its remaining contract.
+      expected_effects: Only effects of the permitted case result.
+      criteria_refs:
+      - AC-TASK-001-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-AUTH-ABSENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared absent caller context.
+      actor_context: absent
+      action: Invoke create task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-001-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Prepare a fresh store and the declared unresolved caller context.
+      actor_context: unresolved
+      action: Invoke create task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-001-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-AUTH-UNKNOWN
+      category: authorization
+      preparation: Prepare a fresh store and the declared unknown caller context.
+      actor_context: unknown
+      action: Invoke create task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-001-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared insufficient caller context.
+      actor_context: insufficient
+      action: Invoke create task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-001-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-SUCCESS
+      category: success
+      preparation: Use a resolved editor and a title with outer whitespace.
+      actor_context: allowed
+      action: Create a task.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return a new UUID4 hex identity, stripped title and completed false.
+      expected_effects: One task is retained.
+      criteria_refs:
+      - AC-TASK-001-SUCCESS
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-INVALID
+      category: failure
+      preparation: Use a resolved editor and empty, whitespace-only, overlong or nontext title.
+      actor_context: allowed
+      action: Attempt creation.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Canonical title validation refuses the input.
+      expected_effects: No task is inserted.
+      criteria_refs:
+      - AC-TASK-001-INVALID
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-PERSISTENCE
+      category: alternative
+      preparation: Create one valid task, then compose a new application using the same temporary database.
+      actor_context: allowed
+      action: List through the new instance.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: The same identity and normalized title remain visible.
+      expected_effects: The stored task is preserved across normal reopen.
+      criteria_refs:
+      - AC-TASK-001-PERSISTENCE
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-001
+    - id: SC-TASK-001-CHANNEL
+      category: channel
+      preparation: Prepare the temporary SQLite composition and configured HTTP/CLI test actor. For completion refusal,
+        retain a pending task and choose demo-reader.
+      actor_context: allowed
+      action: Invoke the specified boundary using the configured test actor.
+      observed_boundary: The external channel identified by CHANNEL-TASK-CREATE-HTTP.
+      configuration: Local loopback or subprocess fixture with temporary SQLite; test credentials are explicit.
+      expected_result: HTTP 201 and a primitive task projection; later list observes that task.
+      expected_effects: Creation retains exactly the task returned by HTTP; denied completion preserves the pending
+        task and all stored fields.
+      criteria_refs: []
+      obligation_refs:
+      - CHANNEL-TASK-CREATE-HTTP
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-HTTP-CREATE
+    - id: SC-TASK-001-STORAGE-FAILURE
+      category: failure
+      preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject
+        sqlite3.OperationalError at sqlite3.connect before storage access.
+      actor_context: allowed
+      action: Invoke createTask with valid title and tasks:create while sqlite3.connect raises before opening the
+        database.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Propagate sqlite3.OperationalError; do not return a successful result or an invented empty
+        collection.
+      expected_effects: No task row is inserted in this pre-connection failure fixture.
+      criteria_refs: []
+      obligation_refs: []
+      applicability: applicable
+      rationale: Connection failure is deliberately injected before any storage access; ambiguous write outcomes
+        are outside this scenario.
+      check_refs:
+      - CHECK-TASK-STORAGE-FAILURE
+    supporting_check_refs:
+    - CHECK-TASK-001
+    - CHECK-TASK-AUTH-ORDER
+    - CHECK-TASK-STORAGE-FAILURE
+    - CHECK-HTTP-CREATE
+    status: implemented
+  - id: BT-TASK-002
+    case_ref: UC-TASK-002
+    source_case_id: UC-TASK-002
+    criteria_refs:
+    - AC-TASK-002-AUTH
+    - AC-TASK-002-SUCCESS
+    - AC-TASK-002-EMPTY
+    scenarios:
+    - id: SC-TASK-002-AUTH-ALLOWED
+      category: authorization
+      preparation: Prepare a fresh store and the declared allowed caller context.
+      actor_context: allowed
+      action: Invoke list tasks.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Authorization permits the case to evaluate its remaining contract.
+      expected_effects: Only effects of the permitted case result.
+      criteria_refs:
+      - AC-TASK-002-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-AUTH-ABSENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared absent caller context.
+      actor_context: absent
+      action: Invoke list tasks.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-002-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Prepare a fresh store and the declared unresolved caller context.
+      actor_context: unresolved
+      action: Invoke list tasks.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-002-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-AUTH-UNKNOWN
+      category: authorization
+      preparation: Prepare a fresh store and the declared unknown caller context.
+      actor_context: unknown
+      action: Invoke list tasks.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-002-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared insufficient caller context.
+      actor_context: insufficient
+      action: Invoke list tasks.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-002-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-SUCCESS
+      category: success
+      preparation: Retain two tasks using authorized creation and provide read permission.
+      actor_context: allowed
+      action: List tasks.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return both tasks in insertion order with their canonical fields.
+      expected_effects: No domain mutation.
+      criteria_refs:
+      - AC-TASK-002-SUCCESS
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-EMPTY
+      category: alternative
+      preparation: Prepare a fresh empty database and a resolved reader.
+      actor_context: allowed
+      action: List tasks.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return an empty collection.
+      expected_effects: No domain mutation.
+      criteria_refs:
+      - AC-TASK-002-EMPTY
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-002
+    - id: SC-TASK-002-STORAGE-FAILURE
+      category: failure
+      preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject
+        sqlite3.OperationalError at sqlite3.connect before storage access.
+      actor_context: allowed
+      action: Invoke listTasks with tasks:read while sqlite3.connect raises before opening the database.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Propagate sqlite3.OperationalError; do not return a successful result or an invented empty
+        collection.
+      expected_effects: No write is requested and retained task data stays unchanged.
+      criteria_refs:
+      - AC-TASK-002-SUCCESS
+      - AC-TASK-002-EMPTY
+      obligation_refs: []
+      applicability: applicable
+      rationale: Connection failure is deliberately injected before any storage access; ambiguous write outcomes
+        are outside this scenario.
+      check_refs:
+      - CHECK-TASK-STORAGE-FAILURE
+    supporting_check_refs:
+    - CHECK-TASK-002
+    - CHECK-TASK-AUTH-ORDER
+    - CHECK-TASK-STORAGE-FAILURE
+    status: implemented
+  - id: BT-TASK-003
+    case_ref: UC-TASK-003
+    source_case_id: UC-TASK-003
+    criteria_refs:
+    - AC-TASK-003-AUTH
+    - AC-TASK-003-SUCCESS
+    - AC-TASK-003-MISSING
+    - AC-TASK-003-IDEMPOTENT
+    scenarios:
+    - id: SC-TASK-003-AUTH-ALLOWED
+      category: authorization
+      preparation: Prepare a fresh store and the declared allowed caller context.
+      actor_context: allowed
+      action: Invoke complete task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Authorization permits the case to evaluate its remaining contract.
+      expected_effects: Only effects of the permitted case result.
+      criteria_refs:
+      - AC-TASK-003-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-AUTH-ABSENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared absent caller context.
+      actor_context: absent
+      action: Invoke complete task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-003-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-AUTH-UNRESOLVED
+      category: authorization
+      preparation: Prepare a fresh store and the declared unresolved caller context.
+      actor_context: unresolved
+      action: Invoke complete task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-003-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-AUTH-UNKNOWN
+      category: authorization
+      preparation: Prepare a fresh store and the declared unknown caller context.
+      actor_context: unknown
+      action: Invoke complete task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-003-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-AUTH-INSUFFICIENT
+      category: authorization
+      preparation: Prepare a fresh store and the declared insufficient caller context.
+      actor_context: insufficient
+      action: Invoke complete task.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: PermissionError before capability access.
+      expected_effects: No capability call and no protected mutation.
+      criteria_refs:
+      - AC-TASK-003-AUTH
+      obligation_refs: []
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-SUCCESS
+      category: success
+      preparation: Retain a pending task and provide complete permission.
+      actor_context: allowed
+      action: Complete by its identity and reopen the same database.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return the same identity and title with completed true, visible after reopen.
+      expected_effects: Persist completion.
+      criteria_refs:
+      - AC-TASK-003-SUCCESS
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-MISSING
+      category: failure
+      preparation: Provide complete permission and an unknown, empty or nontext identity.
+      actor_context: allowed
+      action: Attempt completion.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return the documented invalid-identity or missing-task failure.
+      expected_effects: No stored task is changed.
+      criteria_refs:
+      - AC-TASK-003-MISSING
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-IDEMPOTENT
+      category: alternative
+      preparation: Retain a completed task and provide complete permission.
+      actor_context: allowed
+      action: Complete the same identity again.
+      observed_boundary: Direct case invocation and subsequent read when specified.
+      configuration: Temporary SQLite database, same selected file across recomposition when needed.
+      expected_result: Return the same completed task; no new identity.
+      expected_effects: No duplicate task or additional save is required.
+      criteria_refs:
+      - AC-TASK-003-IDEMPOTENT
+      obligation_refs: []
+      applicability: applicable
+      rationale: Exercises the named criterion of the reconstructed didactic Atlas source.
+      check_refs:
+      - CHECK-TASK-003
+    - id: SC-TASK-003-CHANNEL
+      category: channel
+      preparation: Prepare the temporary SQLite composition and configured HTTP/CLI test actor. For completion refusal,
+        retain a pending task and choose demo-reader.
+      actor_context: insufficient
+      action: Invoke the specified boundary using the configured test actor.
+      observed_boundary: The external channel identified by CHANNEL-TASK-COMPLETE-CLI-DENIED.
+      configuration: Local loopback or subprocess fixture with temporary SQLite; test credentials are explicit.
+      expected_result: CLI exit 3, JSON on stderr and no change to task completion.
+      expected_effects: Creation retains exactly the task returned by HTTP; denied completion preserves the pending
+        task and all stored fields.
+      criteria_refs: []
+      obligation_refs:
+      - CHANNEL-TASK-COMPLETE-CLI-DENIED
+      applicability: applicable
+      rationale: This context is relevant to the explicit deny-by-default case contract.
+      check_refs:
+      - CHECK-CLI-AUTH
+    - id: SC-TASK-003-STORAGE-FAILURE
+      category: failure
+      preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject
+        sqlite3.OperationalError at sqlite3.connect before storage access.
+      actor_context: allowed
+      action: Invoke completeTask for the retained pending task with tasks:complete while sqlite3.connect raises
+        before opening the database.
+      observed_boundary: Direct case invocation.
+      configuration: Prepared case and instrumented or temporary persistence capability.
+      expected_result: Propagate sqlite3.OperationalError; do not return a successful result or an invented empty
+        collection.
+      expected_effects: The retained task remains pending with the same ID and title in this pre-connection failure
+        fixture.
+      criteria_refs: []
+      obligation_refs: []
+      applicability: applicable
+      rationale: Connection failure is deliberately injected before any storage access; ambiguous write outcomes
+        are outside this scenario.
+      check_refs:
+      - CHECK-TASK-STORAGE-FAILURE
+    supporting_check_refs:
+    - CHECK-TASK-003
+    - CHECK-TASK-AUTH-ORDER
+    - CHECK-TASK-STORAGE-FAILURE
+    - CHECK-CLI-AUTH
+    status: implemented
+  supporting_checks:
+  - id: CHECK-TASK-001
+    purpose: Executable support for the directly linked behavioral test; existence is not an execution result.
+    behavioral_test_refs:
+    - BT-TASK-001
+    criteria_refs: []
+    case_refs:
+    - UC-TASK-001
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Invoke the directly named test method and its subcases.
+    expected_result: Assertions satisfy the declared case scenarios.
+    expected_effects: Only the effects permitted by the scenario occur.
+    observed_boundary: Direct prepared application cases.
+    configuration: Python unittest with local SQLite and temporary files.
+    reference:
+      path: apps/TaskBoard/tests/Test_TaskCases.py
+      symbol: Test_TaskCases.testCreateTask
+      status: observed
+  - id: CHECK-TASK-002
+    purpose: Executable support for the directly linked behavioral test; existence is not an execution result.
+    behavioral_test_refs:
+    - BT-TASK-002
+    criteria_refs: []
+    case_refs:
+    - UC-TASK-002
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Invoke the directly named test method and its subcases.
+    expected_result: Assertions satisfy the declared case scenarios.
+    expected_effects: Only the effects permitted by the scenario occur.
+    observed_boundary: Direct prepared application cases.
+    configuration: Python unittest with local SQLite and temporary files.
+    reference:
+      path: apps/TaskBoard/tests/Test_TaskCases.py
+      symbol: Test_TaskCases.testListTasks
+      status: observed
+  - id: CHECK-TASK-003
+    purpose: Executable support for the directly linked behavioral test; existence is not an execution result.
+    behavioral_test_refs:
+    - BT-TASK-003
+    criteria_refs: []
+    case_refs:
+    - UC-TASK-003
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Invoke the directly named test method and its subcases.
+    expected_result: Assertions satisfy the declared case scenarios.
+    expected_effects: Only the effects permitted by the scenario occur.
+    observed_boundary: Direct prepared application cases.
+    configuration: Python unittest with local SQLite and temporary files.
+    reference:
+      path: apps/TaskBoard/tests/Test_TaskCases.py
+      symbol: Test_TaskCases.testCompleteTask
+      status: observed
+  - id: CHECK-TASK-AUTH-ORDER
+    purpose: Shared support verifies that denied direct calls do not access the injected store.
+    behavioral_test_refs:
+    - BT-TASK-001
+    - BT-TASK-002
+    - BT-TASK-003
+    criteria_refs:
+    - AC-TASK-001-AUTH
+    - AC-TASK-002-AUTH
+    - AC-TASK-003-AUTH
+    case_refs:
+    - UC-TASK-001
+    - UC-TASK-002
+    - UC-TASK-003
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Run testAuthorizationPrecedesDependencyAccess with its explicitly prepared direct calls and injected
+      failures.
+    expected_result: Each selected denial raises PermissionError; the injected store has no recorded calls.
+    expected_effects: No protected read or write occurs before valid authorization.
+    observed_boundary: Direct prepared application cases.
+    configuration: Python unittest with local SQLite and temporary files.
+    reference:
+      path: apps/TaskBoard/tests/Test_TaskCases.py
+      symbol: Test_TaskCases.testAuthorizationPrecedesDependencyAccess
+      status: observed
+  - id: CHECK-TASK-STORAGE-FAILURE
+    purpose: Support distinguishes canonical construction from connection failure and observes no update when the
+      injected connection fails.
+    behavioral_test_refs:
+    - BT-TASK-001
+    - BT-TASK-002
+    - BT-TASK-003
+    criteria_refs:
+    - AC-TASK-002-SUCCESS
+    - AC-TASK-002-EMPTY
+    case_refs:
+    - UC-TASK-001
+    - UC-TASK-002
+    - UC-TASK-003
+    preparation: Prepare known permitted actors and local SQLite; retain a pending task for completion. Inject sqlite3.OperationalError
+      at sqlite3.connect before storage access.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Invoke creation, listing or completion as selected by the scenario while the connection factory is unavailable;
+      restore it before checking retained state.
+    expected_result: Valid inputs propagate sqlite3.OperationalError; listing does not fabricate an empty collection.
+      Invalid raw title still fails canonical construction before connection.
+    expected_effects: The injected pre-access failure inserts or changes no row. Listing requests no write. This
+      setup makes no claim about failure during or after commit.
+    observed_boundary: Direct prepared application cases.
+    configuration: Python unittest with local SQLite and temporary files.
+    reference:
+      path: apps/TaskBoard/tests/Test_TaskCases.py
+      symbol: Test_TaskCases.testStorageFailureAndCanonicalConstruction
+      status: observed
+  - id: CHECK-HTTP-CREATE
+    purpose: Verify a referenced L4 interaction obligation through the implemented boundary.
+    behavioral_test_refs:
+    - BT-TASK-001
+    criteria_refs: []
+    case_refs:
+    - UC-TASK-001
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Execute the named boundary supporting check.
+    expected_result: HTTP 201 and a primitive task projection; later list observes that task.
+    expected_effects: Only the effects permitted by the scenario occur.
+    observed_boundary: HTTP or CLI boundary described in docs/Shared/interaction.md.
+    configuration: Local loopback or subprocess fixture with temporary SQLite; test credentials are explicit.
+    reference:
+      path: apps/TaskBoard/tests/Test_Boundaries.py
+      symbol: Test_Boundaries.testHttpCliAndLegacySharePublicContracts
+      status: observed
+  - id: CHECK-CLI-AUTH
+    purpose: Verify a referenced L4 interaction obligation through the implemented boundary.
+    behavioral_test_refs:
+    - BT-TASK-003
+    criteria_refs: []
+    case_refs:
+    - UC-TASK-003
+    preparation: Use the temporary database and trusted test composition described in the case scenarios.
+    actor_context: Each supported scenario supplies the specified context or deliberate absence.
+    action: Execute the named boundary supporting check.
+    expected_result: CLI exit 3, JSON on stderr and no change to task completion.
+    expected_effects: Only the effects permitted by the scenario occur.
+    observed_boundary: HTTP or CLI boundary described in docs/Shared/interaction.md.
+    configuration: Local loopback or subprocess fixture with temporary SQLite; test credentials are explicit.
+    reference:
+      path: apps/TaskBoard/tests/Test_Boundaries.py
+      symbol: Test_Boundaries.testChannelRejectsUntrustedOrInsufficientContext
+      status: observed
+  executions: []
+  unverified_risks:
+  - No test execution is claimed by this blueprint. Consult the companion Vulcan execution report for observed configurations.
+  - Distributed recovery, production authentication and exhaustive storage failure behavior are not established.
+  channel_obligations:
+  - id: CHANNEL-TASK-CREATE-HTTP
+    source: L4 decision in docs/Shared/interaction.md, HTTP POST /tasks; represented by boundary code in the companion
+      realization.
+    statement: Authorized creation returns HTTP 201 and the task projection with task_id, title and completed.
+    case_refs:
+    - UC-TASK-001
+  - id: CHANNEL-TASK-COMPLETE-CLI-DENIED
+    source: L4 decision in docs/Shared/interaction.md, CLI complete refusal.
+    statement: A caller without tasks:complete receives structured stderr and CLI exit code 3; task state remains
+      unchanged.
+    case_refs:
+    - UC-TASK-003
+mirror:
+  root: docs/L2_MinervaBlueprints
+  documents:
+  - docs/L2_MinervaBlueprints/apps/LegacyReports/reports.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/boundaries/Boundary_Cli.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/boundaries/Boundary_Http.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/composition/AppComposition.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/entities/Entity_ActorContext.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/entities/Entity_Task.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/main.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_Boundaries.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_Launcher.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/tests/Test_TaskCases.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/tools/Tool_SqliteTaskStore.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_CompleteTask.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/usecases/TaskManagement/UseCase_ListTasks.py.yaml
+  - docs/L2_MinervaBlueprints/apps/TaskBoard/value_objects/ValueObject_TaskTitle.py.yaml
+  coverage: complete
+  include_patterns:
+  - apps/**/*.py
+  exclusions: []

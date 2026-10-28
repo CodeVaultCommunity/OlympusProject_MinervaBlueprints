@@ -1,0 +1,3193 @@
+{
+  "catalog_revision": "0.1",
+  "status": "proposed_for_review",
+  "title": "Levantamento de requisitos do Minerva e do Vulcan",
+  "project": "Olympus Project",
+  "date": "2026-10-27",
+  "timezone": "America/Sao_Paulo",
+  "language": "pt-BR",
+  "recipient": "Douglas de Oliveira Alkimim",
+  "purpose": "Consolidar requisitos existentes e propostas de evolução, com fontes, critérios de aceite, lacunas e distribuição de responsabilidade entre Minerva L2 e Vulcan L3.",
+  "scope_note": "Este levantamento não executa a migração dos repositórios e não aprova automaticamente as propostas locais. A inspeção deste levantamento leu fontes e evidências históricas; não reexecutou a suíte dos aplicativos. Esta atualização incorpora a organização documental solicitada e conserva os 80 IDs. Não move arquivos dos exemplos nem cria os repositórios.",
+  "classification": {
+    "priority": {
+      "P0": "Contrato central, preservação das decisões vigentes ou condição para sustentar a declaração pretendida. Muitos itens já existem e devem ser conservados.",
+      "P1": "Qualidade, representação, ferramentas e distribuição da primeira entrega revisada.",
+      "P2": "Evolução futura, registrada separadamente e fora dos 80 requisitos desta revisão."
+    },
+    "origin": {
+      "USER": "Decisão expressa pelo usuário",
+      "OAL": "Obrigação da referência OAL no escopo adotado",
+      "ATLAS": "Contrato ou precedente do Atlas, aplicável quando selecionado",
+      "EXISTING": "Regra, documentação ou realização do pacote Alpha anterior",
+      "PROPOSAL": "Acréscimo ou revisão proposto neste levantamento"
+    },
+    "decision_status": {
+      "established": "Base existente em instrução do usuário, norma aplicável ou material anterior; não significa nova aprovação individual de todos os detalhes.",
+      "proposed": "Acréscimo ou alteração local recomendado para avaliação."
+    },
+    "evidence_state": {
+      "demonstrated_previous": "Existe realização e/ou evidência histórica delimitada na Alpha. Não significa que todos os critérios novos já passaram ou que ocorreu nova execução.",
+      "documented": "Regra descrita, sem demonstração executável correspondente na configuração analisada.",
+      "partial": "Há material reaproveitável, mas falta formalização, extração, integração ou verificação no novo escopo.",
+      "absent": "A capacidade descrita ainda precisa ser acrescentada ou a proposta ainda não foi aplicada.",
+      "not_assessed": "Não houve avaliação suficiente para concluir."
+    }
+  },
+  "counts": {
+    "total": 80,
+    "by_project": {
+      "MIN": 30,
+      "VUL": 30,
+      "INT": 12,
+      "REP": 8
+    },
+    "by_priority": {
+      "P0": 64,
+      "P1": 16
+    },
+    "by_evidence": {
+      "partial": 52,
+      "absent": 5,
+      "demonstrated_previous": 21,
+      "documented": 2
+    }
+  },
+  "sources": [
+    {
+      "id": "U",
+      "title": "Decisões do usuário nesta conversa",
+      "description": "Organização apps e docs, aplicativos heterogêneos, quatro estruturas, nomes, YAML, entradas e saídas, inicialização, exemplos e posicionamento Atlas L1, Minerva L2 e Vulcan L3. As sugestões da resposta anterior permanecem distinguíveis das decisões expressas.",
+      "url": null
+    },
+    {
+      "id": "E",
+      "title": "Vulcan Architecture Alpha v0.1.0 Alkimim",
+      "description": "Pacote entregue com 112 arquivos. SHA-256 9cd791872af6fb2dd68f80e908676c895f93b8ebb6a4b236a3e1107e17ab0dc4. A edição usa OAL Alpha-v0.2.0-Alkimim, revisão 5755a4e4a5b31a9614da5d409d03d1db9cf1e20c.",
+      "url": "../sources/legacy-vulcan/README.pt-br.md.txt"
+    },
+    {
+      "id": "O",
+      "title": "OAL Stable v1.0.0",
+      "description": "Regras entre camadas e seções ADMV, ADPM, ADVS, ADI e ADIB. Revisão pública fixada: 0cc54a19df324ac54857b92b068931cc1b090a10.",
+      "url": "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md"
+    },
+    {
+      "id": "O2",
+      "title": "Exemplo OAL de modelo de programa e cenários",
+      "description": "Modelo didático L2, condições de validade, template e contraexemplo. Referência para programa e verificação integrados, sem pressupor que Minerva já exista.",
+      "url": "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/examples/models/l2-program-scenarios/MODEL.pt-br.md"
+    },
+    {
+      "id": "A",
+      "title": "Atlas Specifications Stable v1.0.0",
+      "description": "Modelo L1, representações e contratos de preservação. Revisão pública fixada: b5941830515d9968bb7f313301f1abe25fb6f8aa.",
+      "url": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications/blob/b5941830515d9968bb7f313301f1abe25fb6f8aa/versioning/Stable-v1.0.0/README.pt-br.md"
+    },
+    {
+      "id": "A2",
+      "title": "Instância Atlas Task Board",
+      "description": "Exemplo de projeto com identificador de tarefa recebido, quadro autorizado, revisão e contratos de persistência. Possui diferenças substantivas em relação ao demo Vulcan entregue.",
+      "url": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications/blob/b5941830515d9968bb7f313301f1abe25fb6f8aa/versioning/Stable-v1.0.0/examples/task-board/example.atlas.json"
+    },
+    {
+      "id": "N",
+      "title": "Propostas deste levantamento",
+      "description": "Acréscimos e revisões recomendados para separar os projetos. Prioridade não equivale a aprovação nem a compromisso de implementação.",
+      "url": null
+    },
+    {
+      "id": "U2",
+      "title": "Organização documental por camadas definida pelo usuário",
+      "description": "Atualização desta conversa: docs/ recomendado na raiz; L1_AtlasSpecifications, L2_MinervaBlueprints e L3_Vulcan; pasta de apoio com nome a recomendar; confirmação explícita de que o espelho por arquivo pertence a L2. Shared é a convenção de nome sugerida nesta revisão.",
+      "url": null
+    }
+  ],
+  "scope_matrix": [
+    [
+      "Atlas Specifications",
+      "L1 UCS",
+      "Comportamento e obrigações de origem",
+      "Preservar fontes e contratos selecionados"
+    ],
+    [
+      "Minerva Blueprints",
+      "L2 ADMV",
+      "Modelo do programa e especificação da verificação",
+      "Definir modelo, perfil YAML e validação"
+    ],
+    [
+      "Vulcan Ecosystem",
+      "L3 ADI",
+      "Organização e realização em código",
+      "Revisar modelo e manter perfil Vulcan Architecture"
+    ],
+    [
+      "Interação",
+      "L4 ADIB",
+      "Botões, rotas, comandos e representações",
+      "Classificar e referenciar nos exemplos"
+    ]
+  ],
+  "baseline_findings": [
+    {
+      "title": "Base executável aproveitável",
+      "text": "O pacote anterior inclui TaskBoard, LegacyReports, composição concreta, HTTP e CLI, SQLite, inicialização completa e seletiva, documentação e verificadores. A separação proposta aproveita essa realização.",
+      "refs": [
+        "E"
+      ]
+    },
+    {
+      "title": "ADPM e ADVS já existem em texto",
+      "text": "docs/_modeling contém UCS, ADPM e ADVS, com três casos, testes comportamentais e cenários de apoio. Falta organizá-los como instâncias de um modelo Minerva próprio, com condições de validade e cobertura estruturada dos critérios.",
+      "refs": [
+        "E",
+        "O"
+      ]
+    },
+    {
+      "title": "O schema atual documenta a realização",
+      "text": "Os tipos ecosystem, app e source combinam inventário, contratos, arquivos, execução e interação. O novo Minerva requer organização lógica ADPM e ADVS; a extração não é apenas mudança de nome do schema.",
+      "refs": [
+        "E"
+      ]
+    },
+    {
+      "title": "O exemplo Atlas tem outro contrato",
+      "text": "O Task Board do Atlas e o TaskBoard do Vulcan diferem em dados, efeitos, falhas, contexto e decisões. Uma integração precisa escolher uma baseline compatível e demonstrar preservação, além de mapear IDs.",
+      "refs": [
+        "E",
+        "A2"
+      ]
+    },
+    {
+      "title": "O espelho passa ao Minerva e docs torna-se recomendado",
+      "text": "A Alpha exige docs/ e um YAML por arquivo. A decisão atual recomenda docs/ na raiz e situa o espelho em L2_MinervaBlueprints/. L3_Vulcan reúne a documentação da organização, composição, execução e evidências. Os materiais existentes serão reclassificados e suas referências atualizadas.",
+      "refs": [
+        "E",
+        "U2"
+      ]
+    },
+    {
+      "title": "A edição ainda depende de recursos da raiz",
+      "text": "run_examples.py e scripts de verificação ficam na raiz do repositório anterior. A proposta de edições autossuficientes exige reorganizar esses recursos e verificar uma cópia isolada da edição.",
+      "refs": [
+        "E",
+        "N"
+      ]
+    }
+  ],
+  "ownership_matrix": [
+    [
+      "Contratos e critérios herdados",
+      "Atlas",
+      "Minerva referencia e refina; Vulcan realiza"
+    ],
+    [
+      "Papéis, dependências e algoritmos modelados",
+      "Minerva ADPM",
+      "Vínculos identificam a realização"
+    ],
+    [
+      "Cenários e resultados esperados",
+      "Minerva ADVS",
+      "Testes e execução permanecem distinguíveis"
+    ],
+    [
+      "Organização e composição concretas",
+      "Vulcan L3",
+      "Decisões da realização referenciam contratos e fichas L2"
+    ],
+    [
+      "Fichas por arquivo e vínculos com fontes",
+      "Minerva L2",
+      "Espelho em L2; conteúdo projetado e observado permanecem identificados"
+    ],
+    [
+      "Modos de execução e inicializador",
+      "Vulcan",
+      "Informação permanece mesmo se mudar o formato"
+    ],
+    [
+      "Gatilhos e representações de canal",
+      "L4",
+      "Mapeamentos e verificações são referenciados"
+    ],
+    [
+      "Hashes logs e resultados executados",
+      "Evidências da realização em L3",
+      "Referenciados pelos planos ADVS de L2"
+    ],
+    [
+      "Glossário referências e decisões transversais",
+      "Shared",
+      "Material de apoio com referências; sem nova camada ou duplicação canônica"
+    ]
+  ],
+  "taskboard_compatibility": [
+    [
+      "Identidade dos casos",
+      "UC-TASK-CREATE e nomes equivalentes",
+      "UC-TASK-001, 002 e 003",
+      "Mapear identidades sem presumir equivalência"
+    ],
+    [
+      "Identificador da tarefa",
+      "Recebido do chamador",
+      "UUID gerado pela ferramenta",
+      "Escolher contrato e realização coerentes"
+    ],
+    [
+      "Estado e revisão",
+      "Estado open ou completed; revisão",
+      "completed booleano; sem revisão",
+      "Modelar ou implementar os dados necessários"
+    ],
+    [
+      "Título",
+      "Preservação do texto de entrada",
+      "Normalização por strip",
+      "Resolver diferença observável de resultado"
+    ],
+    [
+      "Autorização e escopo",
+      "Principal e quadro confiáveis",
+      "Contexto didático de ator",
+      "Fixar escopo e premissas de confiança"
+    ],
+    [
+      "Conclusão repetida",
+      "Recusa already completed sem escrita",
+      "Operação idempotente aceita",
+      "Definir comportamento esperado na baseline"
+    ],
+    [
+      "Persistência",
+      "Revisão, conflitos e write outcome",
+      "Contrato síncrono didático mais simples",
+      "Demonstrar garantias e falhas selecionadas"
+    ]
+  ],
+  "decisions": [
+    {
+      "id": "DEC-01",
+      "title": "Organização documental por camadas",
+      "recommendation": "Recomendar docs/ na raiz com L1_AtlasSpecifications/, L2_MinervaBlueprints/, L3_Vulcan/ e uma pasta de apoio. O espelho por arquivo fica em L2; L3 documenta a organização e a realização. Recomenda-se Shared/ para o apoio e os assuntos transversais.",
+      "impact": "Incorpora a decisão expressa do usuário sobre docs/ e a responsabilidade do espelho. A localização é recomendada; a informação exigida por cada modelo continua necessária. Shared é o nome sugerido dentro da liberdade concedida.",
+      "requirements": [
+        "VUL-002",
+        "MIN-024",
+        "MIN-025",
+        "VUL-029",
+        "INT-005",
+        "INT-006",
+        "INT-011"
+      ],
+      "status": "user_defined"
+    },
+    {
+      "id": "DEC-02",
+      "title": "Modelo e representação Minerva",
+      "recommendation": "Definir o modelo semântico antes do perfil Minerva YAML; manter identidades lógicas independentes de caminhos.",
+      "impact": "O espelho em L2 organiza as fichas por arquivo, enquanto IDs preservam os elementos lógicos e permitem arquivos planejados e múltiplas estruturas legadas.",
+      "requirements": [
+        "MIN-002",
+        "MIN-004",
+        "MIN-024"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "DEC-03",
+      "title": "Contrato do primeiro exemplo integrado",
+      "recommendation": "Começar por uma instância Atlas específica e fiel ao contrato escolhido para o demo atual, com origem reconstruída ou didática explícita; tratar a implementação integral do Atlas Task Board publicado como outra decisão de escopo.",
+      "impact": "A revisão deve julgar as escolhas observadas antes de promovê-las a obrigações. Essa rota não comprova derivação automática nem uma origem independente de stakeholders.",
+      "requirements": [
+        "INT-003",
+        "INT-004",
+        "INT-010"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "DEC-04",
+      "title": "Perfil de integração independente",
+      "recommendation": "Publicar Minerva como base L2 e um perfil específico de vinculação à organização Vulcan, permitindo outras realizações por mapeamento explícito.",
+      "impact": "A integração recomendada não passa a exigir bibliotecas, herança ou um repositório separado por camada em cada produto.",
+      "requirements": [
+        "INT-009",
+        "MIN-006",
+        "VUL-016"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "DEC-05",
+      "title": "Edições autossuficientes",
+      "recommendation": "Colocar em cada edição seus lançadores, validadores, schemas, exemplos e dependências declaradas.",
+      "impact": "A raiz apresenta o projeto; uma edição copiada isoladamente conserva os comandos documentados.",
+      "requirements": [
+        "REP-003",
+        "REP-008"
+      ],
+      "status": "proposed"
+    },
+    {
+      "id": "DEC-06",
+      "title": "Convenção editorial",
+      "recommendation": "Manter apresentação ilustrada e documentação por edição em português e inglês, declarando a fonte normativa e preservando IDs equivalentes.",
+      "impact": "A recomendação conserva o padrão anterior, mas não presume aprovação individual de todo acréscimo editorial.",
+      "requirements": [
+        "REP-002",
+        "REP-004"
+      ],
+      "status": "proposed"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "MIN-001",
+      "title": "Cobertura integrada de modelagem e verificação",
+      "statement": "O Minerva deve definir ADPM e ADVS como componentes distinguíveis de uma única instância L2, com condições explícitas para declarar a cobertura de cada componente e do conjunto.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Uma instância sem ADPM ou ADVS não recebe declaração de cobertura completa de L2.",
+        "A especificação mapeia as obrigações dos dois componentes para construções Minerva."
+      ],
+      "rationale": "O catálogo documental por arquivo, isoladamente, não cobre o L2 pretendido.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#admv",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "MIN-002",
+      "title": "Modelo semântico independente da representação",
+      "statement": "O Minerva deve definir conceitos, relações, invariantes e condições de conformidade separadamente da sintaxe YAML; perfis de representação devem declarar como recuperam esse conteúdo.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "absent",
+      "action": "add",
+      "acceptance": [
+        "O modelo pode ser explicado sem nomes de chaves YAML.",
+        "Quando publicado, cada perfil de representação declara o mapeamento das construções normativas suportadas."
+      ],
+      "rationale": "Permite evoluir a representação sem redefinir a responsabilidade de L2.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-2"
+      ],
+      "dependencies": [
+        "MIN-001"
+      ]
+    },
+    {
+      "id": "MIN-003",
+      "title": "Identidade e versões do blueprint",
+      "statement": "Cada blueprint deve declarar identidade, revisão de conteúdo, versão do modelo Minerva, edição OAL, escopo, fontes L1 versionadas e responsável pela modelagem; a versão do perfil deve ser identificada quando uma representação for utilizada.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "O leitor identifica as bases exatas sem consultar uma versão mutável de origem.",
+        "Revisão de conteúdo, versão do modelo e versão do perfil são distinguíveis."
+      ],
+      "rationale": "Permite avaliar mudanças e reproduzir o contexto da modelagem.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-3",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-002"
+      ]
+    },
+    {
+      "id": "MIN-004",
+      "title": "Elementos lógicos independentes dos arquivos",
+      "statement": "Casos, entidades, ferramentas, operações, regras e verificações devem possuir identidades próprias, preservadas quando arquivos forem renomeados ou reorganizados. Cada ficha do espelho Minerva pode representar uma ou várias estruturas, com vínculos explícitos entre os elementos e seus arquivos projetados ou existentes.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "absent",
+      "action": "add",
+      "acceptance": [
+        "Renomear ou mover um arquivo atualiza os caminhos e preserva as identidades dos elementos que mantêm suas responsabilidades.",
+        "Um arquivo legado com várias classes, estruturas ou funções possui uma ficha com múltiplas unidades; um elemento realizado em vários arquivos mantém uma identidade lógica e vínculos explícitos."
+      ],
+      "rationale": "O espelho organiza documentos por arquivo; identidades próprias mantêm a continuidade dos elementos modelados.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "USER descrição de aplicativos legados e múltiplas estruturas",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/LegacyReports/reports.py.yaml",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/schemas/vulcan.schema.json",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "MIN-003"
+      ]
+    },
+    {
+      "id": "MIN-005",
+      "title": "Contrato e comportamento de cada caso de programa",
+      "statement": "Cada caso ADPM deve identificar seu caso L1 de origem e descrever objetivo, colaboradores, precondições, decisões, resultados, efeitos e caminhos de falha, preservando o contrato e delimitando as decisões acrescentadas pela modelagem.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Cada caso no escopo tem uma origem L1 resolvível e nenhum caso adicional fica sem especificação.",
+        "A revisão recupera resultados e efeitos tanto do sucesso quanto das alternativas relevantes."
+      ],
+      "rationale": "Transforma descrições dispersas em contratos de programa verificáveis.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-10",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-003",
+        "MIN-004"
+      ]
+    },
+    {
+      "id": "MIN-006",
+      "title": "Entradas e saídas semanticamente tipadas",
+      "statement": "As operações devem declarar nomes, significados, tipos, cardinalidades, obrigatoriedade e resultados de entrada e saída, separando dados operacionais de colaboradores injetados e recursos técnicos. O perfil de integração Vulcan deve explicitar a restrição a primitivos, entidades e coleções tipadas.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "O exemplo distingue entrada de negócio, contexto de ator e dependência técnica.",
+        "Uma referência de entidade ou tipo inexistente produz diagnóstico."
+      ],
+      "rationale": "Preserva o contrato de dados solicitado sem confundir injeção com argumento operacional.",
+      "evidence_refs": [
+        "USER entradas e saídas primitivas ou entidades",
+        "USER interfaces e abstrações opcionais",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/schemas/vulcan.schema.json",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/references/YAML-FORMAT.pt-br.md#6-dados-operacionais-e-colaboradores-técnicos"
+      ],
+      "dependencies": [
+        "MIN-004",
+        "MIN-005"
+      ]
+    },
+    {
+      "id": "MIN-007",
+      "title": "Propriedade das regras das entidades",
+      "statement": "Cada entidade modelada deve declarar seus dados, relações, invariantes e comportamento delegado, identificando a localização canônica de cada regra e preservando a independência de entidades em relação a casos de uso e ferramentas.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Cada regra possui responsável identificável e referência à definição de origem.",
+        "Uma dependência de entidade para ferramenta ou caso é rejeitada na revisão do modelo."
+      ],
+      "rationale": "Evita duplicação ou deslocamento silencioso das regras de validade.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-8",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-004",
+        "MIN-006"
+      ]
+    },
+    {
+      "id": "MIN-008",
+      "title": "Contratos de ferramentas sem abstração de linguagem obrigatória",
+      "statement": "Cada ferramenta deve declarar capacidades, operações, condições de uso, resultados, efeitos, garantias e falhas separadamente do mecanismo de realização; satisfazer o contrato não deve exigir herança, interface abstrata ou biblioteca específica.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Uma realização concreta sem classe abstrata pode ser vinculada ao mesmo contrato.",
+        "O contrato descreve comportamento observável além da assinatura dos métodos."
+      ],
+      "rationale": "Mantém a arquitetura e o modelo independentes da futura biblioteca facilitadora.",
+      "evidence_refs": [
+        "USER correção sobre AbsVulcan e bibliotecas opcionais",
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-9",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-006"
+      ]
+    },
+    {
+      "id": "MIN-009",
+      "title": "Validação canônica e condições contextuais",
+      "statement": "Contratos de ferramentas devem distinguir entidades prontas, que já satisfazem suas invariantes, de dados brutos a hidratar; condições contextuais devem identificar objeto, finalidade e responsabilidade, sem repetir a validação interna da entidade.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Um contraexemplo com validação redundante de entidade é identificado.",
+        "A hidratação referencia a construção canônica; unicidade ou concorrência são condições contextuais separadas."
+      ],
+      "rationale": "Preserva a responsabilidade das regras sem eliminar garantias necessárias da ferramenta.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-8",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-007",
+        "MIN-008"
+      ]
+    },
+    {
+      "id": "MIN-010",
+      "title": "Garantias observáveis da persistência",
+      "statement": "Quando houver persistência, o modelo deve explicitar as capacidades de leitura e alteração, a responsabilidade pelos dados e as garantias pertinentes de atomicidade, concorrência e falha, incluindo resultado desconhecido quando uma falha não prova ausência de efeito.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "O exemplo diferencia falha sem efeito de resultado desconhecido quando aplicável.",
+        "Uma consulta prévia não substitui uma garantia atômica exigida pelo contrato."
+      ],
+      "rationale": "Permite verificar a semântica da persistência independentemente do banco escolhido.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-9",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/UCS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-008",
+        "MIN-009"
+      ]
+    },
+    {
+      "id": "MIN-011",
+      "title": "Dependências e composição explícitas",
+      "statement": "O modelo deve registrar colaboradores recebidos por casos e ferramentas, contratos exigidos, ponto de seleção de realizações e composição; tempos de vida e domínios devem ser documentados quando escolhidos, sem impor pastas ou contêiner de injeção.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "As dependências necessárias são recuperáveis sem buscas globais implícitas.",
+        "Quando há domínio ou tempo de vida escolhido, seus limites e consequências aparecem no modelo."
+      ],
+      "rationale": "Expõe decisões de composição preservando a liberdade de organização L3.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "USER descrição de dependências",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-005",
+        "MIN-008"
+      ]
+    },
+    {
+      "id": "MIN-012",
+      "title": "Contexto de ator e autorização por caso",
+      "statement": "Cada caso deve declarar a entrada do contexto de ator, origem e premissas de confiança, condições de autorização e recusa por padrão antes de efeitos protegidos; participação anônima e autenticação exigida devem ser decisões explícitas do contrato.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Contextos ausente, não resolvido, desconhecido e insuficiente têm recusa modelada.",
+        "Anonimato explícito é distinguido de ausência de contexto."
+      ],
+      "rationale": "A permissão do caso deve permanecer efetiva em chamadas diretas e por canais.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-10",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-005"
+      ]
+    },
+    {
+      "id": "MIN-013",
+      "title": "Composição entre casos com preservação do contrato",
+      "statement": "Chamadas entre casos devem indicar dependência, contrato utilizado, contexto de ator transmitido e resultados; o caso chamado mantém sua própria autorização e qualquer delegação ou atuação em nome de outro participante precisa de regra explícita.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Um exemplo de composição mostra a política aplicada por ambos os casos.",
+        "Uma chamada interna não é aceita como justificativa automática para ampliar permissões."
+      ],
+      "rationale": "A baseline já documenta contexto e autorização em composição, mas o exemplo executável não demonstra chamada entre casos.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-7",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md#va-10--composição-entre-casos-e-ferramentas"
+      ],
+      "dependencies": [
+        "MIN-011",
+        "MIN-012"
+      ]
+    },
+    {
+      "id": "MIN-014",
+      "title": "Descrição semântica recuperável do comportamento",
+      "statement": "Os elementos comportamentais devem possuir descrição semântica suficiente para recuperar sequência, condições, alternativas, falhas e efeitos; texto estruturado ou pseudocódigo pode ser complementado por fluxograma ou máquina de estados conforme a natureza do comportamento.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "A revisão consegue identificar decisões e resultados sem ler a implementação.",
+        "Diagramas complementares não omitem condições indispensáveis presentes no contrato textual."
+      ],
+      "rationale": "Atende à documentação semântica solicitada sem exigir um desenho inadequado para todo elemento.",
+      "evidence_refs": [
+        "USER preferência por fluxogramas ou máquinas de estados",
+        "OAL Stable-v1.0.0 README.pt-br.md#adpm",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-005",
+        "MIN-007",
+        "MIN-008"
+      ]
+    },
+    {
+      "id": "MIN-015",
+      "title": "Grafos com semântica e identidade",
+      "statement": "O perfil Minerva deve representar grafos por nós e transições identificáveis, com proprietário, tipo, condições e resultados; a semântica de fluxo, estado inicial, término, erro e transição deve estar definida para os tipos de grafo suportados.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "ATLAS",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Um grafo resolve todos os elementos referenciados e distingue finais de sucesso e falha quando presentes.",
+        "Um diagrama de L1 é identificado por origem, sem ser reclassificado apenas por estar em YAML."
+      ],
+      "rationale": "Permite interpretar e verificar a representação gráfica.",
+      "evidence_refs": [
+        "USER preferência por grafos",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-12",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-004",
+        "MIN-014"
+      ]
+    },
+    {
+      "id": "MIN-016",
+      "title": "Decisões acrescentadas e pendências explícitas",
+      "statement": "A modelagem deve distinguir obrigações herdadas, decisões acrescentadas, premissas, pendências e observações de código, mantendo sua origem e estado de revisão; alterações da implementação não devem substituir automaticamente decisões normativas do blueprint.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Uma decisão nova possui origem, justificativa e responsável recuperáveis.",
+        "Um exemplo de divergência preserva simultaneamente a intenção e o estado observado."
+      ],
+      "rationale": "Evita tratar engenharia reversa ou observação como aprovação implícita.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-16",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": [
+        "MIN-003"
+      ]
+    },
+    {
+      "id": "MIN-017",
+      "title": "Identidade dos testes comportamentais",
+      "statement": "A ADVS deve manter exatamente um teste comportamental diretamente vinculado a cada caso UCS no escopo, admitindo vários cenários e verificações de apoio sem criar identidades comportamentais adicionais para o mesmo caso.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Caso sem teste comportamental e vínculo direto duplicado são detectados.",
+        "Vários cenários ou funções de teste podem realizar a mesma identidade lógica de teste comportamental."
+      ],
+      "rationale": "Preserva a correspondência OAL sem impor um arquivo ou uma função por teste.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-004",
+        "MIN-005"
+      ]
+    },
+    {
+      "id": "MIN-018",
+      "title": "Contrato completo dos cenários de verificação",
+      "statement": "Cada cenário ou verificação de apoio deve definir preparação, precondições, ação, resultado e efeitos esperados, limite observado e configuração pertinente; cenários de caso devem declarar o contexto de ator, inclusive sua ausência deliberada.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Um cenário sem resultado esperado ou limite observado é considerado incompleto.",
+        "Aplicabilidade e justificativa são registradas quando uma condição não se aplica."
+      ],
+      "rationale": "Torna o comportamento esperado verificável sem depender de interpretação do implementador.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-017"
+      ]
+    },
+    {
+      "id": "MIN-019",
+      "title": "Cobertura rastreável dos critérios de aceite",
+      "statement": "Cada critério de aceite no escopo deve estar relacionado ao teste comportamental pertinente e aos cenários ou verificações de apoio que o cobrem; critérios de integração compartilhados devem preservar sua definição canônica e todos os casos afetados.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Um critério sem cobertura declarada aparece no relatório de lacunas.",
+        "Critério compartilhado não gera caso de uso nem teste comportamental direto artificial."
+      ],
+      "rationale": "A Alpha relaciona expectativas a casos e testes em prosa; falta cobertura inequívoca por critério no modelo Minerva e sua representação estruturada. IDs de critérios são uma escolha de representação, não sintaxe imposta pelo OAL.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-10",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/UCS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/UCS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-017",
+        "MIN-018"
+      ]
+    },
+    {
+      "id": "MIN-020",
+      "title": "Verificação de autorização e ausência de efeitos proibidos",
+      "statement": "A ADVS deve especificar os cenários pertinentes de autorização concedida e negada, incluindo contexto ausente, não resolvido, desconhecido e insuficiente, e verificar a ausência de efeitos protegidos antes de autorização válida.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Os cenários observam efeitos de domínio ou persistência além da mensagem de erro.",
+        "Participação anônima é exercitada somente quando admitida pelo contrato."
+      ],
+      "rationale": "Verifica a política do caso além de controles visuais ou de rota.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-012",
+        "MIN-018"
+      ]
+    },
+    {
+      "id": "MIN-021",
+      "title": "Alternativas e falhas pertinentes ao contrato",
+      "statement": "A ADVS deve cobrir alternativas, falhas e limites declarados, incluindo garantias de entidades e ferramentas necessárias às alegações de conformidade, e identificar riscos ou condições relevantes ainda sem cenário de verificação.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Cada alternativa, falha e limite pertinente tem cenário ou verificação associado; lacunas explícitas impedem uma declaração de cobertura completa.",
+        "Condições não verificadas são visíveis e não recebem aprovação por omissão."
+      ],
+      "rationale": "Evita que o caminho de sucesso seja apresentado como cobertura suficiente.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-009",
+        "MIN-010",
+        "MIN-018"
+      ]
+    },
+    {
+      "id": "MIN-022",
+      "title": "Distinção entre plano realização e execução da verificação",
+      "statement": "O modelo deve distinguir a verificação especificada, sua realização em teste ou procedimento e a evidência observada de execução; esses registros podem compartilhar arquivos, mantendo significados, versões e estados recuperáveis.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "split",
+      "acceptance": [
+        "Um teste apenas referenciado não aparece como executado.",
+        "Uma evidência identifica configuração e revisão avaliadas; ausência ou inconclusão não equivale a aprovação."
+      ],
+      "rationale": "Mantém o blueprint utilizável antes da implementação e evita falsas evidências.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-018"
+      ]
+    },
+    {
+      "id": "MIN-023",
+      "title": "Verificação de obrigações de interação referenciadas",
+      "statement": "Quando decisões de L4 acrescentarem obrigações observáveis, a ADVS deve permitir referenciá-las e especificar seus cenários, preservando a autoria de L4 sobre canal, representação e interação e a origem de restrições externas já especificadas em L1.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "split",
+      "acceptance": [
+        "Uma obrigação de rota ou CLI aponta sua origem e sua verificação.",
+        "O documento não apresenta uma escolha de canal como regra intrínseca do Minerva ou novo caso de domínio."
+      ],
+      "rationale": "Permite verificar integrações sem absorver a responsabilidade de L4.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#advs",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-11",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md"
+      ],
+      "dependencies": [
+        "MIN-016",
+        "MIN-019"
+      ]
+    },
+    {
+      "id": "MIN-024",
+      "title": "Perfil YAML e espelho documental em L2",
+      "statement": "O perfil YAML Minerva deve definir o espelho por arquivo em L2, com uma ficha para cada fonte no escopo declarado, preservando subpastas e a extensão original antes de .yaml. O perfil deve versionar campos, tipos, extensões e regras para valores ausentes, nulos, vazios e desconhecidos, distinguindo conteúdo projetado, observado e pendente.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "ATLAS",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Na organização recomendada, apps/<App>/<Arquivo.ext> corresponde a docs/L2_MinervaBlueprints/apps/<App>/<Arquivo.ext>.yaml, preservando todos os subdiretórios. Arquivos Task.py e Task.go geram fichas distintas.",
+        "Cada ficha identifica nome, caminho, objetivo, unidades e membros, descrição semântica, entradas, saídas e dependências, diretamente ou por referências. O escopo e as exclusões do espelho são declarados.",
+        "Schema e guia concordam; uma versão incompatível é recusada explicitamente. Observações do código não substituem automaticamente decisões projetadas."
+      ],
+      "rationale": "O usuário definiu o espelho como documentação Minerva em L2. A ficha preserva o conteúdo semântico solicitado e a correspondência com a fonte.",
+      "evidence_refs": [
+        "USER escolha de YAML",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-15",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/schemas/vulcan.schema.json",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/references/YAML-FORMAT.pt-br.md",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "MIN-002",
+        "MIN-004"
+      ]
+    },
+    {
+      "id": "MIN-025",
+      "title": "Raiz do blueprint referências e empacotamento",
+      "statement": "O pacote Minerva deve declarar sua raiz documental, resolver referências e transportar recursos e fichas do espelho. Recomenda-se docs/L2_MinervaBlueprints/; uma localização alternativa deve declarar o caminho equivalente e preservar o mapeamento. Fichas de arquivos planejados devem poder existir antes da implementação.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O pacote continua resolvendo referências após ser movido integralmente; referências não resolvidas indicam documento e elemento responsáveis.",
+        "Uma ficha de arquivo planejado é válida sem a fonte presente, com situação explícita. Uma alegação de cobertura do código realizado exige verificar a correspondência com as fontes do escopo.",
+        "A ausência do caminho recomendado não reprova o pacote isoladamente; a raiz alternativa e o mapeamento são recuperáveis."
+      ],
+      "rationale": "Concilia o espelho em L2 com modelagem anterior ao código, portabilidade e localização documental recomendada.",
+      "evidence_refs": [
+        "USER ecossistema com vários aplicativos e documentação hierárquica",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/schemas/vulcan.schema.json",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/references/YAML-FORMAT.pt-br.md",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "MIN-003",
+        "MIN-004",
+        "MIN-024"
+      ]
+    },
+    {
+      "id": "MIN-026",
+      "title": "Leitura YAML previsível",
+      "statement": "A ferramenta de leitura deve fixar o subconjunto YAML aceito, recusar chaves duplicadas e construções não suportadas, preservar distinções de tipos e tratar o documento como dados, sem executar código ou comandos presentes em seu conteúdo.",
+      "priority": "P1",
+      "origin": [
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Fixtures com chave duplicada, tag executável e tipo incompatível falham com diagnóstico.",
+        "Texto de comando declarado permanece texto durante leitura e validação."
+      ],
+      "rationale": "Evita interpretações divergentes do mesmo contrato documental.",
+      "evidence_refs": [
+        "PROPOSAL perfil de leitura para Minerva YAML",
+        "VULCAN_BASELINE:scripts/validate_examples.py"
+      ],
+      "dependencies": [
+        "MIN-024"
+      ]
+    },
+    {
+      "id": "MIN-027",
+      "title": "Validação estrutural e de consistência",
+      "statement": "O validador deve conferir schema, identidades, referências tipadas, relações permitidas, cobertura declarada de casos e critérios e cardinalidade dos testes comportamentais, separando essas verificações da revisão semântica que exige julgamento humano.",
+      "priority": "P1",
+      "origin": [
+        "OAL",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Fixtures isoladas detectam ID duplicado, referência errada, caso sem teste e critério sem vínculo.",
+        "Aprovação estrutural não é rotulada como prova de suficiência dos cenários ou correção do programa."
+      ],
+      "rationale": "O verificador atual resolve arquivos e unidades; falta conferir formalmente as relações ADPM e ADVS e cobertura de critérios.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 examples/models/l2-program-scenarios/MODEL.pt-br.md",
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "VULCAN_BASELINE:scripts/validate_examples.py",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/verification/documentation.json"
+      ],
+      "dependencies": [
+        "MIN-017",
+        "MIN-019",
+        "MIN-024",
+        "MIN-025",
+        "MIN-026"
+      ]
+    },
+    {
+      "id": "MIN-028",
+      "title": "Validação dos grafos suportados",
+      "statement": "Para cada tipo de grafo oferecido, o validador deve verificar propriedade, referências de nós e arestas e condições topológicas definidas pelo perfil, preservando ciclos legítimos e distinguindo diagnóstico estrutural de correção semântica do algoritmo.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Aresta para nó ausente falha; laço permitido pelo tipo de grafo permanece válido.",
+        "Uma imagem derivada aponta o grafo estruturado que representa."
+      ],
+      "rationale": "Fluxos e máquinas de estados precisam de regras próprias, além de sintaxe YAML válida.",
+      "evidence_refs": [
+        "USER preferência por fluxograma ou máquina de estados",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-12",
+        "VULCAN_BASELINE:scripts/validate_examples.py",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/verification/documentation.json"
+      ],
+      "dependencies": [
+        "MIN-015",
+        "MIN-027"
+      ]
+    },
+    {
+      "id": "MIN-029",
+      "title": "Diagnósticos utilizáveis em revisão e automação",
+      "statement": "O validador de referência deve oferecer diagnósticos com código, severidade, documento, elemento e motivo, além de saída legível por máquina e resultado inequívoco para sucesso, falha, entrada não suportada e avaliação inconclusiva.",
+      "priority": "P1",
+      "origin": [
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "Uma execução de integração contínua distingue falha de validação de erro operacional.",
+        "O mesmo problema pode ser localizado no texto do relatório e na saída estruturada."
+      ],
+      "rationale": "A baseline oferece códigos, caminhos, mensagens e JSON, mas não distingue todos os estados propostos.",
+      "evidence_refs": [
+        "PROPOSAL ferramenta de referência Minerva",
+        "VULCAN_BASELINE:scripts/validate_examples.py"
+      ],
+      "dependencies": [
+        "MIN-027",
+        "MIN-028"
+      ]
+    },
+    {
+      "id": "MIN-030",
+      "title": "Exemplos válidos e contraexemplos do modelo",
+      "statement": "O Minerva deve fornecer um blueprint completo com ADPM e ADVS, um exemplo de espelho para aplicação legada, um recorte com arquivos planejados e contraexemplos relevantes, com resultados esperados declarados.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "PROPOSAL",
+        "EXISTING"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "extract",
+      "acceptance": [
+        "O exemplo completo mantém suas fichas em L2, preserva extensões, resolve referências e cobre seus critérios declarados.",
+        "O exemplo legado representa várias estruturas de um arquivo e declara se é blueprint reconstruído ou recorte de vinculação; o exemplo planejado é válido antes do código existir.",
+        "Contraexemplos falham pelo motivo previsto; uma divergência entre o projetado e o observado permanece identificável."
+      ],
+      "rationale": "Oferece evidência revisável sobre a aplicabilidade do novo modelo.",
+      "evidence_refs": [
+        "USER pedido de exemplos e suporte a outras arquiteturas",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md",
+        "VULCAN_BASELINE:versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/LegacyReports/reports.py.yaml",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "MIN-001",
+        "MIN-025",
+        "MIN-027"
+      ]
+    },
+    {
+      "id": "VUL-001",
+      "title": "Identidade e escopo do modelo L3",
+      "statement": "O Vulcan Ecosystem deve definir a organização reutilizável de realização em código no L3 do OAL, distinguindo o ecossistema, seu perfil Vulcan Architecture e as responsabilidades de L2 e L4 presentes em exemplos integrados.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "A declaração de conformidade identifica modelo, edição OAL, perfil, objeto e escopo.",
+        "O texto revisado posiciona Minerva e documentação de canais sem atribuir todas as responsabilidades ao L3."
+      ],
+      "rationale": "A Alpha alterna o nome do repositório Vulcan Architecture e a definição de Ecosystem como cooperação; precisa refletir a decisão mais recente.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "README.pt-br.md",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-002",
+      "title": "Organização da raiz e aplicativos",
+      "statement": "A raiz de cada projeto que instancia o ecossistema deve manter apps/ para código, com uma pasta identificada por aplicativo e um mecanismo implementado de entrada. Recomenda-se docs/ na raiz, organizada por camada nos diretórios L1_AtlasSpecifications/, L2_MinervaBlueprints/ e L3_Vulcan/, com Shared/ como nome sugerido para apoio e conteúdo transversal.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Os aplicativos são localizáveis em apps/ e a entrada da raiz inicia o ecossistema sem depender de um diretório de trabalho implícito.",
+        "A documentação informa sua localização. As pastas recomendadas correspondem aos modelos adotados; uma localização alternativa é aceita quando mantém referências e informações exigidas."
+      ],
+      "rationale": "O usuário tornou docs/ uma recomendação e organizou seu conteúdo por camada. Apps e inicializador continuam exigidos no ecossistema instanciado; o repositório da especificação conserva sua organização editorial.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/launch.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/README.pt-br.md",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-003",
+      "title": "Inventário e conformidade por aplicativo",
+      "statement": "Cada aplicativo deve declarar identidade, linguagens, perfil arquitetural, modos disponíveis e escopo de conformidade; a participação no ecossistema deve ser distinguida da adoção de Vulcan Architecture.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "revise",
+      "acceptance": [
+        "O inventário distingue TaskBoard como Vulcan e LegacyReports como outra arquitetura.",
+        "Nenhuma conformidade de um aplicativo é inferida apenas da presença no mesmo repositório."
+      ],
+      "rationale": "O inventário existente deve alimentar a documentação L3 do ecossistema e referenciar as fontes L1 e L2, sem impor formato único.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/vulcan.yaml",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/_app.yaml",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/LegacyReports/_app.yaml",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "VUL-001"
+      ]
+    },
+    {
+      "id": "VUL-004",
+      "title": "Participação fiel de aplicativos legados",
+      "statement": "Aplicativos de outras arquiteturas devem poder participar sem refatoração obrigatória, documentando suas operações públicas reais e identificando interiores indisponíveis ou não avaliados.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "O legado mantém várias funções ou estruturas em arquivo quando sua arquitetura assim o exigir.",
+        "A descrição não inventa classes, símbolos ou papéis internos ausentes."
+      ],
+      "rationale": "A interoperabilidade depende dos contratos publicados, sem impor o perfil de organização interno ao legado.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/LegacyReports/reports.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/LegacyReports/reports.py.yaml"
+      ],
+      "dependencies": [
+        "VUL-003"
+      ]
+    },
+    {
+      "id": "VUL-005",
+      "title": "Áreas do perfil Vulcan Architecture",
+      "statement": "Aplicativos que adotem Vulcan Architecture devem organizar o núcleo em usecases/, tools/, entities/ e value_objects/, admitindo composição, configuração, testes e boundaries como áreas de suporte identificadas.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "As quatro áreas são identificáveis como irmãs no núcleo.",
+        "Não são criadas classes artificiais para preencher áreas sem necessidade, nem escondidas regras de domínio nas áreas de suporte."
+      ],
+      "rationale": "Mantém os quatro papéis definidos pelo usuário e evita confundir suporte com um novo papel central.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard"
+      ],
+      "dependencies": [
+        "VUL-003"
+      ]
+    },
+    {
+      "id": "VUL-006",
+      "title": "Domínios dos casos de uso",
+      "statement": "Cada caso do perfil Vulcan Architecture deve pertencer a usecases/<Domain>/, com responsabilidade e política de acesso recuperáveis; a pasta não concede autorização.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Cada caso tem um domínio identificado e finalidade documentada.",
+        "A política é aplicada pelo caso mesmo quando invocado fora de sua interface."
+      ],
+      "rationale": "Agrupamento por domínio é uma escolha local Vulcan, preservada como tal, e não uma exigência universal do OAL.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/_app.yaml"
+      ],
+      "dependencies": [
+        "VUL-005",
+        "VUL-015"
+      ]
+    },
+    {
+      "id": "VUL-007",
+      "title": "Uma estrutura principal por arquivo",
+      "statement": "Cada arquivo de implementação do perfil deve definir uma classe ou struct principal e seus membros associados; estruturas independentes adicionais exigem arquivos próprios, inclusive no suporte.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "A inspeção não encontra duas classes independentes no mesmo arquivo do perfil estrito.",
+        "Exceções técnicas obrigatórias da linguagem são identificadas e não escondem operações de aplicação."
+      ],
+      "rationale": "Preserva a unidade de organização solicitada, respeitando arquivos técnicos sem criar dispensas gerais.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/entities/Entity_Task.py",
+        "scripts/validate_examples.py"
+      ],
+      "dependencies": [
+        "VUL-005"
+      ]
+    },
+    {
+      "id": "VUL-008",
+      "title": "Convenções de nomes",
+      "statement": "O perfil deve fixar nomes de estruturas com prefixo de papel e PascalCase, métodos em camelCase, atributos em snake_case e nome-base de arquivo idêntico ao da estrutura principal.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Há exemplos válidos e inválidos de Entity_, ValueObject_, Tool_ e UseCase_.",
+        "A inspeção detecta divergências de nome-base e grafia, respeitando exceções documentadas."
+      ],
+      "rationale": "Concretiza o padrão híbrido escolhido e torna seu cumprimento verificável.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py",
+        "scripts/validate_examples.py"
+      ],
+      "dependencies": [
+        "VUL-007"
+      ]
+    },
+    {
+      "id": "VUL-009",
+      "title": "Adaptações de linguagem declaradas",
+      "statement": "O modelo deve definir como adaptar unidade de arquivo e nomes às exigências de C, Go e outras linguagens, mantendo responsabilidades e declarando o perfil adaptado utilizado.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "documented",
+      "action": "revise",
+      "acceptance": [
+        "C pode relacionar struct, typedef e funções associadas, inclusive pares de declaração e implementação.",
+        "Go documenta exportação de identificadores e métodos associados; a edição distingue descrição de perfil de exemplo efetivamente executado."
+      ],
+      "rationale": "As regras C/Go estão descritas, mas a Alpha não demonstra implementações nessas linguagens.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/verification/README.pt-br.md"
+      ],
+      "dependencies": [
+        "VUL-007",
+        "VUL-008"
+      ]
+    },
+    {
+      "id": "VUL-010",
+      "title": "Value objects encapsulados",
+      "statement": "Value objects do perfil devem ser imutáveis, representar valores com invariantes e igualdade pertinentes e operar sem infraestrutura; seu consumo direto de produção deve permanecer nas entidades.",
+      "priority": "P0",
+      "origin": [
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Alterações não conseguem produzir um value object inválido por mutação pública.",
+        "Casos, ferramentas e interfaces públicas não recebem ou retornam value objects diretamente."
+      ],
+      "rationale": "Essa restrição é uma decisão do perfil Vulcan já documentado; não deve ser atribuída como regra universal do OAL.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/value_objects/ValueObject_TaskTitle.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/entities/Entity_Task.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-011",
+      "title": "Entidades e validade canônica",
+      "statement": "Entidades devem preservar suas invariantes na construção e nas alterações permitidas, sem depender de casos, ferramentas ou infraestrutura; o comportamento alocado a cada entidade deve permanecer identificável.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Construção e alterações inválidas são recusadas pelas regras canônicas.",
+        "As dependências de entidade não incluem acesso externo ou implementação de canal."
+      ],
+      "rationale": "Centraliza validade sem impor que toda entidade tenha identidade persistente ou banco de dados.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/entities/Entity_Task.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_TaskCases.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-012",
+      "title": "Ferramentas concretas e garantias",
+      "statement": "Ferramentas devem realizar capacidades técnicas segundo os contratos do programa, sem assumir autorização ou regras de domínio; entidades prontas não sofrem revalidação intrínseca duplicada, e hidratação usa construção canônica.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "A ferramenta declara resultados, efeitos, falhas e garantias relevantes.",
+        "A revisão distingue invariantes da entidade de condições contextuais como existência, concorrência e atomicidade."
+      ],
+      "rationale": "Mantém responsabilidade de domínio identificável e garantias técnicas verificáveis na configuração realizada.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tools/Tool_SqliteTaskStore.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-013",
+      "title": "Núcleo invocável por caso",
+      "statement": "Cada caso deve materializar a identidade e o comportamento do modelo selecionado e permanecer invocável sem exigir HTTP, CLI ou outro canal específico.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Os mesmos casos são exercitados diretamente e pelos adaptadores de canal.",
+        "Auxiliares físicos não criam identidades extras de caso sem revisão das fontes."
+      ],
+      "rationale": "A organização do código deve preservar o objetivo e contrato do caso em todos os caminhos de invocação.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_TaskCases.py",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-014",
+      "title": "Dados operacionais e injeção separados",
+      "statement": "Dados de entrada e saída do núcleo devem ser primitivos, entidades ou coleções tipadas desses valores; colaboradores e recursos técnicos devem ser identificados como dependências, separados do contrato operacional.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Assinaturas e documentação distinguem dados operacionais de conexões, clientes, callbacks e framework.",
+        "Ausência, retorno vazio, precisão e representações públicas são declarados quando alteram o significado."
+      ],
+      "rationale": "Evita disfarçar mecanismos técnicos como entidades e preserva o contrato independente da linguagem.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py.yaml"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-015",
+      "title": "Autorização antes de efeitos",
+      "statement": "Cada caso deve receber contexto de ator por caminho explícito e aplicar sua autorização antes de efeitos de domínio, recusando contexto ausente, não resolvido, desconhecido ou insuficiente; anonimato exige admissão explícita.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Cenários de chamada direta e de canal comprovam recusa sem mutação.",
+        "A origem e as premissas de confiança do contexto são declaradas; o exemplo não apresenta tokens didáticos como autenticação de produção."
+      ],
+      "rationale": "Permissão deve permanecer efetiva independentemente da interface que expõe o caso.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/composition/AppComposition.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_TaskCases.py",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-016",
+      "title": "Composição explícita e biblioteca opcional",
+      "statement": "A seleção e a injeção dos colaboradores devem ocorrer em local identificável de composição; o modelo não deve exigir classes AbsVulcan, interfaces abstratas, Container ou framework de injeção.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Um exemplo funcional compõe classes concretas sem biblioteca Vulcan.",
+        "Casos recebem os colaboradores necessários, sem buscar provedores em estado global nem receber o container inteiro.",
+        "A documentação L3 identifica o ponto de composição, as realizações selecionadas e os contratos L2 referenciados."
+      ],
+      "rationale": "Preserva a distinção solicitada entre organização arquitetural e biblioteca de conveniência.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/composition/AppComposition.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-017",
+      "title": "Dependências e chamadas entre componentes",
+      "statement": "O perfil deve documentar as dependências concretas entre casos e entre ferramentas como grafos explícitos e acíclicos, vinculados às dependências lógicas de L2; deve impedir ferramentas de consumir casos e preservar contexto e autorização nas chamadas compostas.",
+      "priority": "P0",
+      "origin": [
+        "EXISTING",
+        "USER"
+      ],
+      "decision_status": "established",
+      "evidence_state": "documented",
+      "action": "revise",
+      "acceptance": [
+        "Um contraexemplo com ciclo de dependências é recusado ou apontado pela avaliação.",
+        "Chamadas entre casos não ampliam permissões; laços de algoritmo são distinguidos de ciclos entre componentes."
+      ],
+      "rationale": "A permissão de composição entre ferramentas e a exigência de aciclicidade são escolhas locais já publicadas.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "scripts/validate_examples.py",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-018",
+      "title": "Resultados falhas e efeitos",
+      "statement": "Implementações devem distinguir sucesso, ausência, falha e resultados parciais ou efeitos incertos quando previstos, preservando o significado do contrato em exceções, variantes ou códigos de retorno.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "retain",
+      "acceptance": [
+        "Os erros observáveis correspondem aos resultados definidos no modelo.",
+        "Se houver execução diferida ou cancelamento, o contrato distingue conclusão, interrupção e garantia efetiva de reversão."
+      ],
+      "rationale": "A Alpha demonstra um subconjunto síncrono; não comprova todos os modos citados pela norma.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tools/Tool_SqliteTaskStore.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_Boundaries.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-019",
+      "title": "Vida útil e liberação de recursos",
+      "statement": "O ponto de composição e as ferramentas devem declarar a vida útil pertinente de colaboradores, conexões e recursos, e garantir liberação nos caminhos de sucesso e falha.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "retain",
+      "acceptance": [
+        "A revisão identifica proprietário e escopo dos recursos utilizados.",
+        "As verificações cobrem o encerramento dos recursos relevantes no exemplo e indicam escopos não exercitados."
+      ],
+      "rationale": "O código utiliza contextos explícitos de conexão, mas não demonstra todos os possíveis recursos de aplicativos futuros.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tools/Tool_SqliteTaskStore.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/composition/AppComposition.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-020",
+      "title": "Separação das interfaces de interação",
+      "statement": "Nos aplicativos que adotem Vulcan Architecture e nos escopos OAL avaliados, o código de canal deve adaptar contexto, dados e resultados ao núcleo, mantendo decisões de domínio nos responsáveis e identificando a interação como L4; legados expõem suas operações reais.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "revise",
+      "acceptance": [
+        "Canais de aplicativos Vulcan invocam casos preparados sem acessar persistência de domínio diretamente; a integração com legado referencia seus handlers reais sem inventar classes.",
+        "A declaração do exemplo separa comportamento do núcleo e obrigações específicas dos canais."
+      ],
+      "rationale": "A presença física de boundaries/ no aplicativo não altera sua responsabilidade de interação.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/boundaries/Boundary_Cli.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/boundaries/Boundary_Http.py"
+      ],
+      "dependencies": [
+        "VUL-001",
+        "VUL-013"
+      ]
+    },
+    {
+      "id": "VUL-021",
+      "title": "Comunicação por contratos públicos",
+      "statement": "Aplicativos devem integrar-se por operações públicas documentadas, sem imports privados ou acesso direto ao armazenamento de domínio de outro aplicativo; representação, compatibilidade e falhas devem ser explícitas.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "LegacyReports consome o contrato publicado do TaskBoard e não sua implementação ou banco.",
+        "A documentação distingue API pública de biblioteca e canais que exigem serialização."
+      ],
+      "rationale": "Preserva isolamento sem obrigar todos os aplicativos a se comunicarem por rede.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/LegacyReports/reports.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_Boundaries.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-022",
+      "title": "Inicialização completa e seletiva",
+      "statement": "A raiz do ecossistema deve fornecer um mecanismo real para descobrir aplicativos, iniciar todos os modos padrão declarados ou um subconjunto selecionado e informar falhas.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "A execução demonstrativa inicia todos os aplicativos e uma seleção individual.",
+        "A seleção completa não executa silenciosamente tarefas de manutenção fora dos modos padrão."
+      ],
+      "rationale": "Um catálogo de comandos sozinho não atende ao requisito de inicializar o projeto.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/launch.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_Launcher.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-023",
+      "title": "Contrato de execução por modo",
+      "statement": "Cada modo de aplicativo deve identificar mecanismo de execução, diretório de trabalho, configuração, parâmetros, dependências, prontidão ou conclusão e encerramento, sem impor Docker ou linguagem universal.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "revise",
+      "acceptance": [
+        "A configuração necessária e o modo padrão de cada app são recuperáveis.",
+        "Serviço persistente e tarefa concluída são distinguidos; mecanismos não demonstrados são declarados como tal."
+      ],
+      "rationale": "Os modos CLI e HTTP já existem. Seus metadados integram a documentação L3 da execução e permanecem disponíveis quando docs/ usa localização alternativa.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/TaskBoard/_app.yaml",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/LegacyReports/_app.yaml",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/launch.py",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-024",
+      "title": "Política de dependências de inicialização",
+      "statement": "O inicializador deve declarar se amplia a seleção com dependências obrigatórias ou falha quando faltam, respeitando ordem de prontidão e recusando esperas circulares.",
+      "priority": "P0",
+      "origin": [
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Selecionar LegacyReports inclui TaskBoard segundo a política declarada.",
+        "Um erro de seleção ou dependência não é apresentado como inicialização bem-sucedida."
+      ],
+      "rationale": "O launcher atual implementa expansão explícita; outros inicializadores podem escolher a política de recusa.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/launch.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_Launcher.py"
+      ],
+      "dependencies": [
+        "VUL-022",
+        "VUL-023"
+      ]
+    },
+    {
+      "id": "VUL-025",
+      "title": "Prontidão e recursos pertencentes à execução",
+      "statement": "O inicializador deve comprovar a condição de prontidão declarada, detectar falhas de serviços gerenciados e encerrar apenas os recursos pertencentes à execução ou colocados explicitamente sob sua gestão.",
+      "priority": "P0",
+      "origin": [
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Porta ocupada por serviço alheio não é aceita como prontidão do aplicativo iniciado.",
+        "Falha parcial ou interrupção encerra os filhos gerenciados e preserva o serviço alheio."
+      ],
+      "rationale": "A evidência existente usa identificação da instância e teste de propriedade dos processos.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/launch.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_Launcher.py"
+      ],
+      "dependencies": [
+        "VUL-022"
+      ]
+    },
+    {
+      "id": "VUL-026",
+      "title": "Integração dos testes derivados da ADVS",
+      "statement": "O modelo deve definir como os testes comportamentais e verificações de apoio da ADVS são realizados e executados contra o núcleo, mantendo vínculos com casos e critérios.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "revise",
+      "acceptance": [
+        "Um comando documentado executa os testes contra a configuração selecionada.",
+        "Os três casos atuais mantêm identidades lógicas e cenários associados; a migração futura referencia a ADVS selecionada."
+      ],
+      "rationale": "A suíte existe, mas seu vínculo com um futuro Minerva ainda precisa ser estabelecido.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/tests/Test_TaskCases.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/verification/execution.json",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-027",
+      "title": "Evidência observada e limites de verificação",
+      "statement": "Relatórios de realização devem registrar versão, ambiente, comando, resultados e limites, distinguindo testes configurados, não executados, ignorados, falhos e concluídos.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "demonstrated_previous",
+      "action": "retain",
+      "acceptance": [
+        "Os registros históricos preservam Linux e Python 3.12.14 como configuração observada da Alpha; novas execuções identificam seu ambiente real.",
+        "CI, sintaxe JavaScript e testes HTTP não são apresentados como execuções GitHub ou navegação ponta a ponta."
+      ],
+      "rationale": "Evita ampliar indevidamente a evidência existente a outras plataformas, linguagens ou canais.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/examples/verification/execution.json",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/verification/README.pt-br.md",
+        ".github/workflows/verify.yml",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-028",
+      "title": "Versões das fontes e impacto de mudanças",
+      "statement": "A realização deve apontar para fontes L2 versionadas e registrar como alterações de contratos, permissões, dados e dependências afetam o código e suas verificações.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "A declaração identifica as versões de ADPM e ADVS consumidas e desvios pertinentes.",
+        "Uma alteração de contrato demonstra os elementos e verificações afetados, preservando identidades quando o significado permanece."
+      ],
+      "rationale": "A Alpha prevê essa rastreabilidade, mas usa modelagem própria conjunta e ainda não instancia Minerva.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADVS.pt-br.md",
+        "https://github.com/CodeVaultCommunity/OAL_OpenAnalysisLayers/blob/0cc54a19df324ac54857b92b068931cc1b090a10/versioning/Stable-v1.0.0/README.pt-br.md#adi"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "VUL-029",
+      "title": "Documentação da organização e realização em L3",
+      "statement": "O Vulcan deve documentar a organização e a realização do ecossistema: aplicativos e perfis, decisões concretas, composição, recursos, configuração, execução, integrações realizadas e evidências. Recomenda-se reunir esse conteúdo em docs/L3_Vulcan/, referenciando os contratos e o espelho por arquivo mantidos em L2_MinervaBlueprints/.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O leitor identifica como os aplicativos são organizados, compostos, integrados e executados e quais versões e escopos foram avaliados.",
+        "A documentação L3 acrescenta decisões concretas e evidências; contratos, algoritmos, fichas por arquivo e cenários especificados são referenciados em L2, com uma definição canônica por informação.",
+        "O uso de outra localização documental não reprova o ecossistema isoladamente; as informações exigidas e seus vínculos permanecem recuperáveis."
+      ],
+      "rationale": "A confirmação do usuário reserva o espelho ao Minerva. A documentação L3 passa a explicar a realização do ecossistema e mantém as informações operacionais já presentes na Alpha.",
+      "evidence_refs": [
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "versioning/Alpha-v0.1.0-Alkimim/schemas/vulcan.schema.json",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "VUL-001",
+        "VUL-002",
+        "VUL-028"
+      ]
+    },
+    {
+      "id": "VUL-030",
+      "title": "Avaliação estrutural com escopo explícito",
+      "statement": "A avaliação Vulcan deve publicar regras verificáveis de organização e contraexemplos, delimitando quais condições são inspecionadas automaticamente e quais exigem revisão semântica ou execução.",
+      "priority": "P1",
+      "origin": [
+        "EXISTING",
+        "PROPOSAL",
+        "USER"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O avaliador informa linguagens e estruturas suportadas, regras avaliadas e violações encontradas.",
+        "A avaliação da organização e documentação L3 distingue-se da validação do modelo e espelho Minerva em L2. Conformidade estrutural não certifica comportamento."
+      ],
+      "rationale": "O validador atual mistura YAML, referências e inspeção AST Python; sua separação precisa preservar os limites publicados.",
+      "evidence_refs": [
+        "scripts/validate_examples.py",
+        "versioning/Alpha-v0.1.0-Alkimim/examples/verification/documentation.json",
+        "versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": [
+        "VUL-007",
+        "VUL-008",
+        "VUL-029"
+      ]
+    },
+    {
+      "id": "INT-001",
+      "title": "Fixar versões e escopo da integração",
+      "statement": "Cada integração deve identificar a edição OAL, os modelos Atlas, Minerva e Vulcan selecionados, suas versões, perfis e o escopo efetivamente coberto.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "PROPOSAL"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Um registro identifica as fontes imutáveis, os modelos e as versões dos artefatos do exemplo integrado.",
+        "Versão incompatível ou escopo não avaliado recebe diagnóstico explícito, sem aprovação presumida."
+      ],
+      "rationale": "A camada compartilhada e nomes semelhantes não estabelecem compatibilidade entre modelos e instâncias.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regras 2 e 6",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-2",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md, Referência OAL"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-002",
+      "title": "Preservar identidades dos casos entre camadas",
+      "statement": "A integração deve manter correspondência explícita entre cada caso Atlas, seu caso ADPM, seu teste comportamental ADVS e sua identidade invocável na realização Vulcan.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "A matriz detecta casos faltantes, extras e vínculos diretamente duplicados no escopo declarado.",
+        "Nomes locais diferentes possuem correspondência documentada; mudança de identidade registra predecessores, sucessores e motivo."
+      ],
+      "rationale": "O Atlas Task Board usa UC-TASK-CREATE, UC-TASK-COMPLETE e UC-TASK-LIST; o pacote Vulcan anterior adotou identificadores numéricos.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regra 3",
+        "Atlas Stable-v1.0.0 examples/task-board/example.atlas.json",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-003",
+      "title": "Verificar preservação dos contratos",
+      "statement": "O mapeamento Atlas–Minerva–Vulcan deve comparar entradas, resultados, efeitos, falhas, regras e permissões; conservar IDs ou aprovar schemas não basta para declarar preservação.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS",
+        "PROPOSAL"
+      ],
+      "decision_status": "established",
+      "evidence_state": "absent",
+      "action": "add",
+      "acceptance": [
+        "Uma matriz registra, obrigação por obrigação, a realização, verificação e eventual lacuna.",
+        "O exemplo resolve explicitamente diferenças como identificador fornecido versus gerado, revisão da tarefa e resultado desconhecido de gravação."
+      ],
+      "rationale": "Os exemplos Task Board existentes não podem ser considerados equivalentes apenas por possuírem operações de criar, concluir e listar.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regras 7 e 8",
+        "Atlas Stable-v1.0.0 examples/task-board/example.atlas.json, UC-TASK-CREATE e operações de persistência",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/apps/TaskBoard/usecases/TaskManagement/UseCase_CreateTask.py",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-004",
+      "title": "Registrar proveniência e responsabilidade da derivação",
+      "statement": "Cada derivação deve registrar fontes e destinos versionados, pessoa responsável identificada, escopo, decisões acrescentadas e obrigações preservadas, distinguindo modelagem manual de construção ou execução de transformador.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O exemplo identifica quem realizou ou aprovou cada passagem e suas fontes fixadas.",
+        "O registro não apresenta coexistência de documentos, conversão de formato ou geração por IA como prova de um motor determinístico."
+      ],
+      "rationale": "O histórico precisa permitir reconstruir decisões e limitar corretamente as declarações de automação.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regras 2, 7, 8 e 9",
+        "Atlas Stable-v1.0.0 README.pt-br.md#translation",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/UCS.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-005",
+      "title": "Definir vínculo independente da disposição física",
+      "statement": "O perfil de integração deve relacionar elementos Minerva a arquivos, símbolos e versões da realização, preservando identidades lógicas diante de renomeações e permitindo vários arquivos por elemento ou vários elementos por arquivo legado.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "split",
+      "acceptance": [
+        "A renomeação de um arquivo altera o vínculo físico sem recriar a identidade do caso.",
+        "Um exemplo legado representa múltiplas estruturas no mesmo arquivo e preserva seus vínculos sem fingir adesão à regra Vulcan de uma estrutura por arquivo.",
+        "O espelho Minerva em L2 fornece a correspondência por arquivo; documentos L3 referenciam suas identidades e versões sem manter uma segunda ficha canônica da mesma fonte."
+      ],
+      "rationale": "O vínculo físico é registrado no espelho Minerva em L2 e conserva as identidades lógicas diante de reorganizações.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regra 1",
+        "Decisões do usuário sobre apps legados e múltiplas estruturas documentadas",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-006",
+      "title": "Separar decisões projetadas de observações do código",
+      "statement": "Documentos compartilhados devem identificar a fonte autoritativa de cada informação e distinguir contratos projetados, decisões de realização, inventários observados e evidências de execução.",
+      "priority": "P0",
+      "origin": [
+        "ATLAS",
+        "OAL",
+        "PROPOSAL",
+        "USER"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "split",
+      "acceptance": [
+        "Uma divergência entre código e blueprint é registrada antes de qualquer atualização da fonte autoritativa.",
+        "Hashes, caminhos e resultados observados não substituem a definição de comportamento nem são tratados como aprovação semântica.",
+        "Na organização por camadas, Shared contém apoio e conteúdo transversal com referências às definições canônicas. Uma informação não ganha duas versões autoritativas por aparecer em pastas diferentes."
+      ],
+      "rationale": "A geração de documentação a partir de código não deve transformar automaticamente uma regressão em requisito aprovado.",
+      "evidence_refs": [
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-5",
+        "OAL Stable-v1.0.0 README.pt-br.md#advs regra 5 e #adi regra 5",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/ADPM.md, Traceability",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-007",
+      "title": "Manter análise de impacto entre modelos",
+      "statement": "Alterações em contratos, permissões, dependências ou interação devem identificar elementos, versões, verificações e realizações afetadas, com situação explícita de atualização ou reavaliação.",
+      "priority": "P0",
+      "origin": [
+        "OAL",
+        "ATLAS"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Uma mudança demonstrativa lista a origem alterada, os blueprints, código e cenários afetados.",
+        "Artefatos ainda não atualizados aparecem como pendentes ou não avaliados, nunca como conformes por herança."
+      ],
+      "rationale": "Referências estáveis permitem rastrear mudanças, mas a propagação e sua verificação também precisam ser registradas.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regra 4",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-16"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-008",
+      "title": "Identificar a responsabilidade dos contratos de interação",
+      "statement": "Os pacotes devem distinguir o contrato invocável do núcleo e as escolhas de canal L4, preservando mapeamentos entre estímulos, casos, entradas, resultados e falhas sem transferir decisões de domínio à fronteira.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "ATLAS"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "split",
+      "acceptance": [
+        "Cada botão, rota, comando ou evento aponta para os casos expostos e a representação correspondente; os vínculos inversos são recuperáveis.",
+        "Restrições externas mantêm sua origem L1; escolhas da solução são classificadas L4 e suas obrigações observáveis alimentam a verificação.",
+        "Documentos de interação conservam a identificação de L4 quando incluídos em material transversal ou referenciados por L2 e L3."
+      ],
+      "rationale": "Manifestações físicas e YAMLs podem reunir informações de camadas distintas sem apagar a responsabilidade de cada uma.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#adib",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-11",
+        "Pedido do usuário sobre botão, caso executado e retorno",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-009",
+      "title": "Permitir adoção independente mediante perfil explícito",
+      "statement": "Minerva e Vulcan devem publicar um perfil de integração próprio e permitir outros modelos de origem ou destino por mapeamento declarado, sem exigir bibliotecas de classes abstratas ou dividir toda aplicação em repositórios separados.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "OAL",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "absent",
+      "action": "add",
+      "acceptance": [
+        "O perfil informa capacidades exigidas, versões suportadas e construções não cobertas.",
+        "A documentação distingue separação dos modelos da disposição física do código e dos documentos de um produto.",
+        "A adoção de uma camada não exige as demais pastas nem documentos vazios; quando usados outros modelos, as fontes e os mapeamentos são declarados."
+      ],
+      "rationale": "A modularidade mantém a integração recomendada e respeita a convivência com outras arquiteturas e ferramentas.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regras 1 e 8",
+        "Decisões do usuário sobre liberdade de linguagem e arquitetura e bibliotecas opcionais",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-010",
+      "title": "Entregar demonstração integrada com escopo verificado",
+      "statement": "Uma demonstração deve ligar uma instância Atlas compatível, um blueprint Minerva completo no escopo escolhido e uma realização Vulcan, distinguindo verificações estruturais, revisão semântica e execução observada.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O exemplo fixa suas três instâncias, mostra a matriz de casos e critérios e oferece comandos de verificação reproduzíveis.",
+        "Os relatórios identificam o que passou, falhou ou não foi executado; referências a testes e CI configurada não contam como execução."
+      ],
+      "rationale": "O TaskBoard anterior oferece uma realização inicial aproveitável; falta demonstrar seu contrato exato com Atlas e Minerva.",
+      "evidence_refs": [
+        "Pedido do usuário por exemplos para verificar a implementação do modelo",
+        "OAL Stable-v1.0.0 README.pt-br.md#conformance",
+        "Atlas Stable-v1.0.0 examples/task-board/example.atlas.json",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/verification/execution.json"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-011",
+      "title": "Migrar a proposta anterior com correspondência explícita",
+      "statement": "A extração deve classificar cada requisito e família de artefatos da edição Vulcan anterior como preservada, movida, dividida, revisada ou descontinuada, com destino e justificativa.",
+      "priority": "P0",
+      "origin": [
+        "EXISTING",
+        "PROPOSAL",
+        "USER"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "absent",
+      "action": "add",
+      "acceptance": [
+        "Os requisitos ECO, VA, DOC e OAL anteriores possuem destino ou justificativa de descontinuação.",
+        "Schemas e manifestos são classificados por conteúdo; a extração não se resume a renomear todos os YAMLs como Minerva.",
+        "A migração transfere fichas por arquivo para L2 e reclassifica inventário, composição, execução e evidências em L3, atualizando referências e histórico."
+      ],
+      "rationale": "A migração deve conservar as decisões úteis e tornar visíveis as mudanças em relação ao que já foi entregue.",
+      "evidence_refs": [
+        "Proposta de separação discutida nesta conversa",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "INT-012",
+      "title": "Delimitar conformidade por app e por perfil",
+      "statement": "Uma integração deve declarar quais apps, módulos e perfis foram avaliados, distinguindo participação no ecossistema, adesão à Vulcan Architecture e preservação dos contratos Minerva.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "O exemplo legado mantém contratos públicos documentados e escopo próprio, sem alegação implícita de adesão à arquitetura recomendada.",
+        "Uma declaração geral do projeto não encobre partes excluídas, incompatíveis ou não avaliadas."
+      ],
+      "rationale": "A flexibilidade exigida para apps existentes precisa coexistir com declarações de conformidade precisas.",
+      "evidence_refs": [
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers regra 6",
+        "Decisões do usuário sobre apps de arquiteturas distintas",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/task-board-ecosystem/docs/_modeling/UCS.md, Interfaces"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-001",
+      "title": "Publicar identidades e escopos dos dois projetos",
+      "statement": "Cada repositório deve apresentar seu nome, vínculo ao Olympus, camada OAL, objeto normativo, capacidades fornecidas e limites; Minerva e Vulcan devem ter versões próprias e referências recíprocas.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "PROPOSAL"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "A apresentação identifica Minerva como L2 com ADPM e ADVS e Vulcan como L3.",
+        "O nome de uma biblioteca, formato ou exemplo não substitui a identidade do modelo nem amplia seu escopo."
+      ],
+      "rationale": "O leitor precisa distinguir modelos, representações, bibliotecas e artefatos de projeto.",
+      "evidence_refs": [
+        "Posicionamento explícito dos projetos pelo usuário",
+        "OAL Stable-v1.0.0 README.pt-br.md#oal-layers",
+        "Atlas README.pt-br.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-002",
+      "title": "Manter documentação bilíngue e por edição",
+      "statement": "Cada projeto deve oferecer apresentação ilustrada na raiz e manual de referência por edição, em inglês e português, com escopo, regras identificáveis, exemplos, instruções e limites de conformidade.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "retain",
+      "acceptance": [
+        "As duas línguas apresentam os mesmos IDs e obrigações, e o idioma normativo é declarado.",
+        "O manual de edição permanece legível sem imagens; a apresentação da raiz aponta para a edição correta e seus comandos."
+      ],
+      "rationale": "Reaproveita o padrão editorial do OAL e do pacote Vulcan, mantendo uma referência precisa por versão.",
+      "evidence_refs": [
+        "OAL README.md e README.pt-br.md",
+        "OAL versioning/Stable-v1.0.0/README.md e README.pt-br.md",
+        "Pedido do usuário para seguir o padrão OAL e criar README por versão",
+        "Vulcan Alpha-v0.1.0-Alkimim/README.pt-br.md",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/README.pt-br.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-003",
+      "title": "Distribuir edições autossuficientes",
+      "statement": "Cada edição deve conter localmente seus exemplos, schemas, validadores, requisitos de execução e lançadores, com dependências externas declaradas e sem selecionar silenciosamente recursos de outra edição.",
+      "priority": "P1",
+      "origin": [
+        "EXISTING",
+        "PROPOSAL",
+        "USER"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Uma cópia isolada da pasta da edição executa os comandos documentados após instalar somente as dependências declaradas.",
+        "O lançador de exemplos da edição utiliza recursos dessa edição, com mensagens claras para dependências ausentes.",
+        "Os exemplos de aplicação conservam a organização documental por camadas e referências portáveis; o repositório de especificação não precisa ser reorganizado como um aplicativo."
+      ],
+      "rationale": "A distribuição atual do OAL e do Atlas oferece isolamento por edição; o Vulcan anterior tinha runner e scripts comuns na raiz.",
+      "evidence_refs": [
+        "OAL versioning/Stable-v1.0.0/run_examples.py",
+        "Atlas versioning/Stable-v1.0.0/README.pt-br.md, início e seção Iniciar uma especificação",
+        "Vulcan Alpha-v0.1.0-Alkimim/run_examples.py",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-004",
+      "title": "Manter imagens verificáveis e fontes editáveis",
+      "statement": "As imagens devem apresentar corretamente camadas, responsabilidades e integração; diagramas semânticos devem possuir descrição textual e fonte editável, separadas de imagens decorativas.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "As imagens novas representam ADPM e ADVS na mesma L2 e mantêm as escolhas de interação identificadas como L4.",
+        "Os diagramas podem ser regenerados de suas fontes, possuem texto alternativo e não são a única fonte de uma regra."
+      ],
+      "rationale": "A separação dos projetos exige revisar as ilustrações anteriores sem perder acessibilidade ou rastreabilidade.",
+      "evidence_refs": [
+        "Pedido do usuário por imagens",
+        "OAL assets/README.pt-br.md e assets/sources/",
+        "Atlas Stable-v1.0.0 README.pt-br.md#model-12",
+        "Vulcan Alpha-v0.1.0-Alkimim/assets/sources/vulcan-ecosystem-pt-br.svg",
+        "Vulcan Alpha-v0.1.0-Alkimim/assets/sources/vulcan-oal-position-pt-br.svg"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-005",
+      "title": "Organizar entradas para adoção e revisão",
+      "statement": "Os repositórios devem distinguir documentos iniciais para preencher, exemplos completos, recortes ilustrativos e contraexemplos, com roteiro de leitura e comandos pertinentes a cada tipo.",
+      "priority": "P1",
+      "origin": [
+        "USER",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Um novo usuário identifica qual arquivo copiar, qual exemplo executar e qual material serve apenas para leitura.",
+        "Um documento inicial estruturalmente válido não é apresentado como especificação completa ou implementação verificada.",
+        "O exemplo integrado demonstra as pastas recomendadas, o espelho em L2 e documentação própria de realização em L3."
+      ],
+      "rationale": "O conteúdo precisa apoiar uso real e revisão dos modelos, além de explicar os conceitos.",
+      "evidence_refs": [
+        "Atlas Stable-v1.0.0 README.pt-br.md#quick-start",
+        "OAL versioning/Stable-v1.0.0/examples/models/l2-program-scenarios/MODEL.pt-br.md, seção Template, exemplo e contraexemplo",
+        "Pedido do usuário por exemplos",
+        "USER organização documental por camadas e espelho por arquivo em L2"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-006",
+      "title": "Publicar verificações e evidências com limites",
+      "statement": "A entrega deve oferecer verificações estruturais, testes pertinentes e revisão documental reproduzíveis, identificando ambientes, resultados, itens não executados e limites da automação.",
+      "priority": "P0",
+      "origin": [
+        "USER",
+        "OAL",
+        "EXISTING"
+      ],
+      "decision_status": "established",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "Os registros separam schema, referências, regras de organização, comportamento e interação efetivamente exercitados.",
+        "CI configurada, hashes corretos ou testes presentes não são descritos como execução observada nem certificação semântica."
+      ],
+      "rationale": "O objetivo do repositório é permitir verificar o modelo e seus exemplos com evidência proporcional ao que foi exercitado.",
+      "evidence_refs": [
+        "OAL versioning/Stable-v1.0.0/README.pt-br.md#verification e #conformance",
+        "Pedido do usuário para verificar a implementação do modelo",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/examples/verification/execution.json"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-007",
+      "title": "Preservar autoria licença e integridade da distribuição",
+      "statement": "Cada entrega deve identificar autores e créditos de fontes, licença aplicável, referência de citação e inventário de conteúdo da distribuição, sem atribuir autoria ou revisão que não ocorreu.",
+      "priority": "P1",
+      "origin": [
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "retain",
+      "acceptance": [
+        "Licença, créditos e citação identificam corretamente o próprio projeto e as fontes reutilizadas.",
+        "O inventário identifica caminhos e hashes dos arquivos distribuídos e exclui artefatos temporários, credenciais e bancos de demonstração gerados."
+      ],
+      "rationale": "A divisão deve conservar proveniência editorial e permitir conferir o conteúdo exato de cada pacote.",
+      "evidence_refs": [
+        "OAL LICENSE, CITATION.cff e CONTENT-SHA256.json",
+        "Vulcan Alpha-v0.1.0-Alkimim/LICENSE",
+        "Vulcan Alpha-v0.1.0-Alkimim/CITATION.cff",
+        "Vulcan Alpha-v0.1.0-Alkimim/ACKNOWLEDGEMENTS.md",
+        "Vulcan Alpha-v0.1.0-Alkimim/CONTENT-SHA256.json"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "REP-008",
+      "title": "Registrar evolução e preservar edições históricas",
+      "statement": "As novas edições devem publicar alterações, compatibilidade e instruções de migração, preservando a edição anterior e distinguindo requisitos propostos, aprovados, implementados e verificados.",
+      "priority": "P1",
+      "origin": [
+        "OAL",
+        "EXISTING",
+        "PROPOSAL"
+      ],
+      "decision_status": "proposed",
+      "evidence_state": "partial",
+      "action": "revise",
+      "acceptance": [
+        "A extração para Minerva possui registro de origem e mudança de responsabilidade, sem reescrever a história da Alpha existente.",
+        "Versão do modelo, revisão de instância, versão do perfil e versão da ferramenta são distinguíveis e suas compatibilidades são publicadas."
+      ],
+      "rationale": "O levantamento é uma base de evolução; sua existência não significa que todas as propostas já foram aprovadas ou realizadas.",
+      "evidence_refs": [
+        "OAL versioning/Stable-v1.0.0/COMPATIBILITY.pt-br.md",
+        "Atlas versioning/Stable-v1.0.0/README.pt-br.md#versions e #model-3",
+        "Vulcan Alpha-v0.1.0-Alkimim/CHANGELOG.md",
+        "Vulcan Alpha-v0.1.0-Alkimim/versioning/Alpha-v0.1.0-Alkimim/references/MIGRATION.pt-br.md"
+      ],
+      "dependencies": []
+    }
+  ],
+  "migration_map": [
+    {
+      "old_id": "ECO-01",
+      "old_title": "Raiz e inventário de aplicativos",
+      "action": "split",
+      "target_ids": [
+        "VUL-002",
+        "VUL-003",
+        "VUL-022",
+        "VUL-029"
+      ],
+      "note": "Preservar apps/ e entrada na raiz; recomendar docs/ organizado por camada. Inventário e operação documental ficam em L3.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-02",
+      "old_title": "Aplicativos heterogêneos",
+      "action": "retain",
+      "target_ids": [
+        "VUL-003",
+        "VUL-004",
+        "INT-012"
+      ],
+      "note": "Manter participação heterogênea com documentação fiel e escopo de conformidade explícito, sem exigir refatoração do legado.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-03",
+      "old_title": "Documentação espelhada das fontes",
+      "action": "revise",
+      "target_ids": [
+        "MIN-024",
+        "MIN-025",
+        "INT-005",
+        "VUL-029"
+      ],
+      "note": "Transferir o espelho por arquivo para Minerva L2, conforme decisão do usuário, preservando cobertura e exclusões declaradas. A localização docs/ é recomendada.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-04",
+      "old_title": "Caminhos, colisões e identidade",
+      "action": "split",
+      "target_ids": [
+        "MIN-004",
+        "MIN-024",
+        "MIN-025",
+        "INT-005"
+      ],
+      "note": "Identidades lógicas e referências permanecem no modelo e na integração; caminhos, colisões e substituições do espelho são definidos pelo perfil Minerva em L2.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-05",
+      "old_title": "Catálogo canônico de boundaries",
+      "action": "split",
+      "target_ids": [
+        "VUL-003",
+        "VUL-021",
+        "INT-006",
+        "INT-008"
+      ],
+      "note": "Manter descoberta e propriedade dos contratos públicos no ecossistema, classificando escolhas de canal como L4 e evitando definições autoritativas concorrentes.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-06",
+      "old_title": "Mapeamento das interações para implementações",
+      "action": "split",
+      "target_ids": [
+        "VUL-020",
+        "INT-008",
+        "INT-002",
+        "MIN-023"
+      ],
+      "note": "O mapeamento de interação conserva responsabilidade L4, enquanto identidades e obrigações verificáveis se vinculam ao núcleo e à ADVS.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-07",
+      "old_title": "Comunicação entre aplicativos",
+      "action": "retain",
+      "target_ids": [
+        "VUL-021",
+        "VUL-018",
+        "INT-003"
+      ],
+      "note": "Preservar comunicação por contratos públicos e a semântica de dados e falhas, com serialização apenas quando exigida pelo canal.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-08",
+      "old_title": "Inicialização completa e seletiva",
+      "action": "retain",
+      "target_ids": [
+        "VUL-022",
+        "VUL-023"
+      ],
+      "note": "Manter inicializador real na raiz e seleção dos modos padrão, sem converter o manifesto de comandos em substituto da execução.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-09",
+      "old_title": "Contratos de execução e dependências",
+      "action": "split",
+      "target_ids": [
+        "VUL-023",
+        "VUL-024",
+        "VUL-025",
+        "VUL-019"
+      ],
+      "note": "Distribuir o contrato operacional entre modos, dependências de inicialização, prontidão e gestão de recursos, permanecendo responsabilidade Vulcan.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "ECO-10",
+      "old_title": "Escopo documental e de execução",
+      "action": "split",
+      "target_ids": [
+        "MIN-024",
+        "VUL-003",
+        "VUL-004",
+        "VUL-027",
+        "VUL-029",
+        "INT-012"
+      ],
+      "note": "Distinguir a cobertura do modelo e espelho em L2 da documentação operacional e evidências de execução em L3, com escopo por aplicativo.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-01",
+      "old_title": "Quatro áreas centrais e suporte",
+      "action": "retain",
+      "target_ids": [
+        "VUL-005",
+        "VUL-020"
+      ],
+      "note": "Manter as quatro áreas do perfil e suportes identificados, distinguindo o código de canal L4 presente nos exemplos.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-02",
+      "old_title": "Uma estrutura por arquivo de fonte",
+      "action": "retain",
+      "target_ids": [
+        "VUL-007",
+        "VUL-009"
+      ],
+      "note": "Preservar uma estrutura principal por arquivo e exceções técnicas justificadas nos perfis de linguagem.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-03",
+      "old_title": "Nomes e perfis de linguagem",
+      "action": "retain",
+      "target_ids": [
+        "VUL-008",
+        "VUL-009"
+      ],
+      "note": "Manter prefixos, convenções e correspondência entre arquivo e estrutura, declarando adaptações exigidas pela linguagem.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-04",
+      "old_title": "Value objects",
+      "action": "retain",
+      "target_ids": [
+        "VUL-010",
+        "VUL-014"
+      ],
+      "note": "Preservar imutabilidade e encapsulamento dos value objects no perfil Vulcan, sem impô-los como dados operacionais públicos.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-05",
+      "old_title": "Entidades e invariantes",
+      "action": "split",
+      "target_ids": [
+        "VUL-011",
+        "MIN-007",
+        "VUL-019"
+      ],
+      "note": "Separar a modelagem das regras canônicas das entidades de sua realização, mantendo propriedade e vida útil pertinentes explícitas.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-06",
+      "old_title": "Ferramentas e garantias técnicas",
+      "action": "split",
+      "target_ids": [
+        "VUL-012",
+        "MIN-008",
+        "MIN-009",
+        "MIN-010"
+      ],
+      "note": "Extrair contratos e garantias para a modelagem e manter no Vulcan a implementação técnica e o uso da construção canônica das entidades.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-07",
+      "old_title": "Casos de uso e núcleo invocável",
+      "action": "split",
+      "target_ids": [
+        "VUL-013",
+        "MIN-005",
+        "INT-002"
+      ],
+      "note": "Relacionar o contrato projetado à operação invocável concreta, preservando identidade sem transformar auxiliares em novos casos.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-08",
+      "old_title": "Domínios de acesso",
+      "action": "split",
+      "target_ids": [
+        "VUL-006",
+        "MIN-011"
+      ],
+      "note": "Manter a pasta de domínio como escolha do perfil Vulcan e registrar no Minerva os limites e relações de domínio efetivamente modelados.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-09",
+      "old_title": "Contexto de ator e autorização",
+      "action": "split",
+      "target_ids": [
+        "VUL-015",
+        "MIN-012",
+        "MIN-020",
+        "INT-003"
+      ],
+      "note": "Modelar a autorização no Minerva, realizá-la no caso Vulcan e verificar sua preservação inclusive em chamada direta.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-10",
+      "old_title": "Composição entre casos e ferramentas",
+      "action": "split",
+      "target_ids": [
+        "VUL-017",
+        "MIN-011",
+        "MIN-013"
+      ],
+      "note": "Distinguir a composição lógica dos contratos e as regras concretas de dependência do perfil Vulcan, preservando contexto e autorização.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-11",
+      "old_title": "Seleção explícita de colaboradores",
+      "action": "split",
+      "target_ids": [
+        "VUL-016",
+        "VUL-019",
+        "MIN-011"
+      ],
+      "note": "Manter seleção concreta e liberação de recursos no Vulcan, com composição e dependências planejadas no Minerva e biblioteca opcional.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-12",
+      "old_title": "Dados operacionais e dependências técnicas",
+      "action": "split",
+      "target_ids": [
+        "VUL-014",
+        "MIN-006",
+        "INT-008"
+      ],
+      "note": "Separar tipos semânticos modelados, restrição de dados do perfil Vulcan e projeções de representação do canal.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-13",
+      "old_title": "Resultados, falhas e efeitos",
+      "action": "split",
+      "target_ids": [
+        "VUL-018",
+        "MIN-005",
+        "MIN-008",
+        "MIN-010"
+      ],
+      "note": "Modelar resultados e efeitos observáveis e preservar sua realização, incluindo contratos específicos de fluxos, cancelamento e resultados incertos quando usados.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-14",
+      "old_title": "Boundaries e responsabilidade do núcleo",
+      "action": "retain",
+      "target_ids": [
+        "VUL-020",
+        "INT-008"
+      ],
+      "note": "Manter a separação do núcleo e do código de interação, conservando o contrato técnico de canal e a classificação L4.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-15",
+      "old_title": "Documentação do comportamento",
+      "action": "split",
+      "target_ids": [
+        "MIN-014",
+        "MIN-015",
+        "MIN-028",
+        "VUL-029",
+        "INT-006"
+      ],
+      "note": "Manter descrições semânticas e grafos nas fichas e no modelo L2, identificando conteúdo projetado e observado. L3 referencia esse conteúdo e registra decisões de realização.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-16",
+      "old_title": "Integração da verificação",
+      "action": "split",
+      "target_ids": [
+        "VUL-026",
+        "VUL-027",
+        "MIN-017",
+        "MIN-022",
+        "INT-002"
+      ],
+      "note": "Separar especificação da verificação, integração executável e resultados observados, preservando os vínculos com cada caso e critério.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "VA-17",
+      "old_title": "Evolução e declarações arquiteturais",
+      "action": "split",
+      "target_ids": [
+        "VUL-028",
+        "VUL-030",
+        "INT-007",
+        "INT-012"
+      ],
+      "note": "Preservar análise de impacto e avaliação do perfil, ampliando a rastreabilidade para as versões Minerva e seu escopo de integração.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-01",
+      "old_title": "Três tipos de documento",
+      "action": "split",
+      "target_ids": [
+        "MIN-024",
+        "MIN-025",
+        "MIN-026",
+        "VUL-003",
+        "VUL-023",
+        "VUL-029",
+        "INT-008"
+      ],
+      "note": "Reclassificar os envelopes: source acompanha o espelho L2; inventário e operação de app/ecosystem alimentam L3. Contratos de canal mantêm identificação L4.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-02",
+      "old_title": "Identidade e finalidade da fonte",
+      "action": "revise",
+      "target_ids": [
+        "MIN-003",
+        "MIN-004",
+        "MIN-024",
+        "INT-005",
+        "INT-006"
+      ],
+      "note": "Identidade, caminho, objetivo e observações por arquivo integram a ficha do espelho Minerva em L2, com IDs lógicos e origem explícita.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-03",
+      "old_title": "Unidades e membros",
+      "action": "split",
+      "target_ids": [
+        "MIN-004",
+        "MIN-006",
+        "MIN-024",
+        "VUL-007",
+        "VUL-004",
+        "INT-005"
+      ],
+      "note": "Unidades e membros são descritos nas fichas L2, incluindo múltiplas estruturas legadas. A regra de uma estrutura principal por arquivo continua no perfil de código Vulcan.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-04",
+      "old_title": "Tipos, referências e definições canônicas",
+      "action": "split",
+      "target_ids": [
+        "MIN-006",
+        "MIN-007",
+        "MIN-025",
+        "VUL-014",
+        "VUL-021",
+        "INT-006"
+      ],
+      "note": "Definições e referências semânticas ficam em L2; L3 referencia essas definições ao descrever tipos e integrações realizados.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-05",
+      "old_title": "Dependências e evidência de composição",
+      "action": "split",
+      "target_ids": [
+        "MIN-011",
+        "VUL-016",
+        "VUL-019",
+        "VUL-024",
+        "INT-005"
+      ],
+      "note": "Registrar dependências lógicas em L2 e composição, recursos e dependências de inicialização concretos em L3, preservando os vínculos entre eles.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-06",
+      "old_title": "Bindings de boundary",
+      "action": "split",
+      "target_ids": [
+        "INT-008",
+        "VUL-020",
+        "MIN-006",
+        "MIN-023"
+      ],
+      "note": "Preservar a classificação L4 dos contratos de interação; L2 referencia tipos e cenários, e L3 documenta a realização concreta dos canais e integrações.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-07",
+      "old_title": "Evidência e atualização",
+      "action": "split",
+      "target_ids": [
+        "VUL-027",
+        "VUL-028",
+        "MIN-022",
+        "INT-006",
+        "INT-007"
+      ],
+      "note": "Concentrar evidências de execução em L3; L2 mantém a especificação da verificação e referências à correspondência observada e às revisões avaliadas.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "DOC-08",
+      "old_title": "Limites da validação",
+      "action": "split",
+      "target_ids": [
+        "MIN-027",
+        "MIN-029",
+        "VUL-030",
+        "REP-006",
+        "INT-012"
+      ],
+      "note": "Separar validação do modelo e espelho L2 da avaliação da organização e documentação L3, mantendo diagnósticos e limites explícitos.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "OAL-01",
+      "old_title": "Objeto declarado e baselines",
+      "action": "revise",
+      "target_ids": [
+        "VUL-001",
+        "MIN-001",
+        "INT-001",
+        "REP-001"
+      ],
+      "note": "Atualizar as declarações para os dois modelos e a baseline OAL selecionada, conservando a distinção entre modelo, artefato e transformador.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "OAL-02",
+      "old_title": "Materialização e identidade dos casos",
+      "action": "split",
+      "target_ids": [
+        "VUL-013",
+        "VUL-028",
+        "MIN-005",
+        "MIN-017",
+        "INT-002",
+        "INT-003"
+      ],
+      "note": "Preservar a correspondência de casos e contratos, identificando o Minerva como fonte L2 quando adotado e registrando diferenças entre os exemplos existentes.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "OAL-03",
+      "old_title": "Preservação de autorização e verificação",
+      "action": "split",
+      "target_ids": [
+        "VUL-015",
+        "VUL-026",
+        "MIN-012",
+        "MIN-020",
+        "INT-003"
+      ],
+      "note": "Distribuir autorização e verificação entre sua especificação e realização, mantendo visíveis recusas, falhas e cenários não executados.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "OAL-04",
+      "old_title": "Registros de derivação e alteração",
+      "action": "retain",
+      "target_ids": [
+        "INT-004",
+        "INT-007",
+        "VUL-028",
+        "MIN-003",
+        "MIN-016"
+      ],
+      "note": "Conservar proveniência e responsabilidade nominal, distinguindo fontes reconstruídas e decisões acrescentadas de evidência externa e automação demonstrada.",
+      "decision_status": "proposed"
+    },
+    {
+      "old_id": "OAL-05",
+      "old_title": "Responsabilidade de boundary e escopo",
+      "action": "split",
+      "target_ids": [
+        "INT-008",
+        "VUL-020",
+        "MIN-023",
+        "INT-012"
+      ],
+      "note": "Manter contratos e escolhas de canal identificados como L4, com cenários pertinentes referenciados e declarações limitadas ao escopo realmente avaliado.",
+      "decision_status": "proposed"
+    }
+  ],
+  "roadmap": [
+    {
+      "step": 1,
+      "title": "Fixar fronteiras e baselines",
+      "result": "Identidades e fontes fixadas; organização docs/ por camadas e espelho L2 incorporados; demais decisões locais identificadas; correspondência dos 40 requisitos antigos atualizada.",
+      "requirements": [
+        "VUL-001",
+        "MIN-001",
+        "INT-001",
+        "INT-011",
+        "REP-001"
+      ]
+    },
+    {
+      "step": 2,
+      "title": "Formalizar o Minerva",
+      "result": "Modelo ADPM e ADVS, perfil YAML com espelho em L2, exemplos de arquivo planejado e legado, critérios vinculados e contraexemplos com diagnósticos esperados.",
+      "requirements": [
+        "MIN-002",
+        "MIN-004",
+        "MIN-017",
+        "MIN-019",
+        "MIN-024",
+        "MIN-027",
+        "MIN-030"
+      ]
+    },
+    {
+      "step": 3,
+      "title": "Revisar o Vulcan",
+      "result": "Regras de código preservadas, documentação própria L3 para organização e realização, referências ao L2, avaliação com escopos separados e edição executável isolada.",
+      "requirements": [
+        "VUL-005",
+        "VUL-016",
+        "VUL-022",
+        "VUL-029",
+        "VUL-030",
+        "REP-003"
+      ]
+    },
+    {
+      "step": 4,
+      "title": "Demonstrar a integração",
+      "result": "Uma baseline Atlas compatível, blueprint Minerva, código Vulcan e verificações relacionados obrigação por obrigação, com desvios resolvidos ou visíveis.",
+      "requirements": [
+        "INT-002",
+        "INT-003",
+        "INT-004",
+        "INT-005",
+        "INT-010"
+      ]
+    },
+    {
+      "step": 5,
+      "title": "Preparar a edição pública",
+      "result": "Manuais, imagens, exemplos, licença, inventário, relatórios e instruções de migração coerentes com o conteúdo distribuído.",
+      "requirements": [
+        "REP-002",
+        "REP-004",
+        "REP-005",
+        "REP-006",
+        "REP-007",
+        "REP-008"
+      ]
+    }
+  ],
+  "release_gates": [
+    "A declaração de Minerva mapeia os assuntos de ADPM e ADVS e identifica seu domínio de aplicação.",
+    "A declaração de Vulcan identifica a organização L3 e separa participação no ecossistema de adesão ao perfil de arquitetura.",
+    "O blueprint completo resolve referências, mantém correspondência de casos e testes comportamentais e apresenta cobertura declarada de seus critérios.",
+    "A revisão semântica compara entradas, resultados, efeitos, falhas e permissões com a baseline Atlas selecionada.",
+    "A realização pode ser invocada diretamente e por seus canais declarados, preservando autorização e contratos no escopo avaliado.",
+    "A inicialização completa e seletiva funciona na configuração declarada, com tratamento de dependências, prontidão e encerramento.",
+    "Resultados de execução novos identificam a revisão avaliada e são separados dos registros históricos; itens não executados permanecem explícitos.",
+    "Uma cópia isolada de cada edição mantém seus recursos e comandos; documentação, fontes de diagramas, exemplos e distribuição concordam.",
+    "O exemplo integrado demonstra o espelho em L2 e a documentação própria de realização em L3; caminhos alternativos permanecem válidos quando declarados e rastreáveis."
+  ],
+  "future_options": [
+    "Geradores automáticos Atlas para Minerva e Minerva para código, com contrato e evidência próprios de transformação.",
+    "Editor visual e navegação interativa pelos blueprints, sem criar outra fonte autoritativa concorrente.",
+    "Analisadores de código e exemplos adicionais em C, Go ou outra linguagem, antes de ampliar declarações de suporte verificado.",
+    "Demonstração de aplicativos com mecanismos distintos de inicialização, como contêiner e processo local, se esse perfil for priorizado."
+  ],
+  "non_goals": [
+    "Criar uma biblioteca obrigatória de classes abstratas ou um framework de execução.",
+    "Tornar Docker, Python, SQLite, HTTP ou uma ferramenta de injeção requisitos universais.",
+    "Exigir refatoração de todo aplicativo legado para Vulcan Architecture.",
+    "Declarar um modelo L4 do Olympus, um gerador determinístico ou cobertura completa das quatro camadas sem definições e evidências próprias.",
+    "Usar hash, schema válido, imagem ou CI configurada como prova isolada de correção comportamental."
+  ],
+  "documentation_layout": {
+    "status": "user_defined_with_recommended_details",
+    "root": "docs/",
+    "root_requirement": "recommended",
+    "alternative_locations": "Aceitas quando declaradas, com referências resolvidas e informações exigidas recuperáveis.",
+    "folders": [
+      {
+        "path": "L1_AtlasSpecifications/",
+        "purpose": "Especificações de origem, casos, regras e critérios de aceite Atlas."
+      },
+      {
+        "path": "L2_MinervaBlueprints/",
+        "purpose": "ADPM, ADVS e espelho YAML por arquivo, com contratos, elementos, comportamento e vínculos."
+      },
+      {
+        "path": "L3_Vulcan/",
+        "purpose": "Organização do ecossistema, decisões de realização, composição, execução, integração concreta e evidências."
+      },
+      {
+        "path": "Shared/",
+        "purpose": "Glossário, referências e decisões transversais. Nome sugerido para a pasta de apoio."
+      }
+    ],
+    "folder_scope": "Criar as pastas correspondentes aos modelos e materiais adotados. A organização não obriga documentos vazios nem adesão a todas as camadas.",
+    "l2_mirror": {
+      "source_pattern": "apps/<App>/<caminho>/<Arquivo.ext>",
+      "document_pattern": "docs/L2_MinervaBlueprints/apps/<App>/<caminho>/<Arquivo.ext>.yaml",
+      "example_source": "apps/TaskBoard/entities/Entity_Task.py",
+      "example_document": "docs/L2_MinervaBlueprints/apps/TaskBoard/entities/Entity_Task.py.yaml",
+      "source_statuses": [
+        "planned",
+        "implemented"
+      ],
+      "content_origins": [
+        "designed",
+        "observed",
+        "pending"
+      ],
+      "rules": [
+        "Preservar subdiretórios e extensão original, com uma ficha por fonte no escopo declarado.",
+        "Representar múltiplas estruturas de arquivos legados por unidades identificadas na mesma ficha.",
+        "Manter IDs lógicos estáveis, declarações de escopo e exclusões e vínculos com versões de código.",
+        "Permitir arquivos planejados; alegações sobre cobertura do código realizado exigem verificação própria.",
+        "Relacionar documentos agregados ADPM e ADVS às fichas, preservando contratos e critérios canônicos."
+      ]
+    },
+    "l3_documents": [
+      {
+        "example_path": "ecosystem.yaml",
+        "purpose": "Inventário de apps, perfis, versões, localização dos documentos e pontos de entrada."
+      },
+      {
+        "example_path": "apps/<App>/architecture.md",
+        "purpose": "Organização concreta, adaptações de linguagem, decisões técnicas, composição e recursos."
+      },
+      {
+        "example_path": "apps/<App>/execution.yaml",
+        "purpose": "Modos, comandos, configuração, dependências de inicialização, prontidão e encerramento."
+      },
+      {
+        "example_path": "integrations/",
+        "purpose": "Realizações selecionadas das integrações públicas e referências aos contratos L2 e de interação."
+      },
+      {
+        "example_path": "evidence/",
+        "purpose": "Resultados observados de testes e verificações, com revisão, ambiente, comando e limites."
+      }
+    ],
+    "l3_format_note": "Os nomes e extensões acima são exemplos. O Vulcan exige informação recuperável; não impõe YAML a toda a documentação L3.",
+    "shared_policy": "Shared reúne apoio e assuntos transversais, referencia definições canônicas e preserva a identificação de conteúdos de outras camadas, inclusive interação L4 quando presente."
+  },
+  "change_history": [
+    {
+      "update_id": "DOCS-01",
+      "catalog_revision": "0.1",
+      "date": "2026-10-27",
+      "summary": "Atualização da revisão 0.1: docs/ recomendado, organização por camada, espelho em L2 e documentação de realização em L3.",
+      "requirements_changed": [
+        "MIN-004",
+        "MIN-024",
+        "MIN-025",
+        "MIN-030",
+        "VUL-002",
+        "VUL-003",
+        "VUL-016",
+        "VUL-017",
+        "VUL-023",
+        "VUL-029",
+        "VUL-030",
+        "INT-005",
+        "INT-006",
+        "INT-008",
+        "INT-009",
+        "INT-011",
+        "REP-003",
+        "REP-005"
+      ],
+      "identifiers_preserved": true
+    }
+  ],
+  "distribution_note": "Published copy of the agreed requirements catalog; the original private artifact link is replaced by the frozen source snapshot. Requirement IDs and wording are preserved."
+}

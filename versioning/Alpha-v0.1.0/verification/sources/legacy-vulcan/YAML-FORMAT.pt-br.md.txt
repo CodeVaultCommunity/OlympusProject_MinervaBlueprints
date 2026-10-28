@@ -1,0 +1,124 @@
+# Formato documental YAML Vulcan 0.1.0
+
+[English](YAML-FORMAT.md) · [Especificação do modelo](../README.pt-br.md) · [JSON Schema](../schemas/vulcan.schema.json) · [Exemplos](../examples/README.pt-br.md)
+
+Os YAMLs são documentação declarativa. Eles descrevem fontes, contratos e ciclo de vida; não constituem uma linguagem de instruções ou um runtime de aplicação. O exemplo executável usa um launcher Python comum, que não interpreta comandos do YAML. Outros projetos podem escolher seus próprios mecanismos e ferramentas.
+
+A edição `Alpha-v0.1.0-Alkimim` e o `format_version: "0.1.0"` identificam objetos diferentes. Uma futura edição pode explicar uma mudança de formato sem modificar silenciosamente arquivos antigos.
+
+## 1. Três tipos documentais
+
+| `kind` | Local canônico | Responsabilidade |
+|---|---|---|
+| `ecosystem` | `vulcan.yaml` na raiz | Inventário de apps, mapeamento documental, índice de boundaries e início completo/seletivo. |
+| `app` | `docs/<App>/_app.yaml` | Perfil, domínios, boundaries canônicas, dados públicos e modos de execução do app. |
+| `source` | Um YAML por fonte no caminho espelhado | Unidades, atributos, operações, dependências, comportamento, origem e evidências. |
+
+Os campos comuns são `format_version`, `kind` e `status`. `proposal` identifica uma proposta documental; `documented` identifica uma descrição do objeto declarado. Nenhum estado é resultado de execução ou certificado de conformidade. Campos próprios de evidência distinguem fonte ilustrativa ausente, bytes observados e escopo de revisão.
+
+O schema rejeita campos estruturais desconhecidos. Os objetos explicitamente abertos de schema de conteúdo contêm descrições JSON Schema de payloads; não autorizam novas categorias arbitrárias de dados públicos.
+
+## 2. Caminhos, cobertura e propriedade
+
+Os caminhos usam `/` e são relativos à raiz do ecossistema, independentemente do diretório do leitor. O mapeamento normal substitui `apps/` por `docs/` e acrescenta `.yaml` ao nome completo. Assim, `apps/TaskBoard/entities/Entity_Task.py` corresponde a `docs/TaskBoard/entities/Entity_Task.py.yaml`. Preservar `.py` diferencia arquivos `.ts`, `.c` ou `.h` de mesmo nome-base.
+
+`documentation.overrides` registra exceções por fonte, documento e justificativa quando existir colisão entre arquivo/diretório ou nome reservado. Cada destino permanece único. A exceção não permite omitir fontes nem renomear silenciosamente um app existente.
+
+A cobertura inclui fontes legadas e vendored mantidas no projeto. Exclusões de cache, dependência instalada e saída derivada de build exigem categoria e motivo. O nome de uma pasta não basta para omitir uma fonte mantida. O exemplo executável documenta todo Python em `apps`, incluindo testes; o launcher da raiz e os artefatos adicionais de modelagem são identificados separadamente.
+
+`source_documents` é o inventário canônico por app. A identidade do app e o caminho de uma ficha devem corresponder à raiz declarada. Referências internas a fontes/unidades permanecem no próprio app; comunicação com outro app usa referência a boundary pública.
+
+## 3. Manifesto do ecossistema
+
+`apps` contém IDs documentais e caminhos de manifestos. `boundary_catalog` referencia identidades app/boundary sem copiar contratos editáveis dos manifestos. `documentation` registra mapeamento, exceções, cobertura e exclusões justificadas.
+
+`launcher` descreve o mecanismo proposto ou implementado. Seu estado é `implemented` ou `proposed_not_implemented`; o primeiro exige um ponto de entrada. Esse ponto pode ser comando com vetor de argumentos, declaração Docker Compose ou registro no hospedeiro. Um comando documentado não prova que foi executado com sucesso.
+
+A seleção pode usar apenas `app_id` ou app/boundary/modo, conforme as capacidades reais. `default_mode: explicit_selection` exige escolha do chamador; `all` descreve um padrão automático do perfil completo. “Todos” usa o modo padrão declarado de cada app, sem executar todos os comandos de manutenção.
+
+`dependency_policy` é `expand_required` ou `fail_if_missing`. A primeira inclui dependências obrigatórias; a segunda recusa uma seleção incompleta. Dependências não podem ser ignoradas silenciosamente. O launcher do exemplo seleciona os nomes `TaskBoard` e `LegacyReports`; os IDs documentais continuam `task_board` e `legacy_reports`.
+
+## 4. Manifesto do app e boundaries
+
+`architecture_profile` pode ser `vulcan`, `other` ou `legacy`. Ele declara a organização da fonte, não a idade ou qualidade do app. `domains` registra identidade, diretório, casos integrantes e política local. A pasta não concede permissão.
+
+Cada boundary identifica proprietário, tipo, referência de implementação, domínios pertinentes, modos de execução e operações. HTTP/navegador, CLI, eventos e canais genéricos são suportados sem exigir que todo app implemente todos eles.
+
+Uma operação usa a forma singular `handler_kind` e `operation_ref`, ou várias `invocations` com `coordination` explícita. As formas são exclusivas. Múltiplas chamadas declaram ordem, paralelismo ou grafo de dependências, política de falha e relações entre resultados. Na forma plural, nomes como `create.task` qualificam a saída pelo ID da chamada. Coordenação de apresentação não pode esconder uma nova decisão de aplicação/negócio.
+
+| Campo de canal | Significado |
+|---|---|
+| `http.method`, `path` | Método e localização pública. |
+| `input_bindings` | Origem, localização e transformação de cada entrada lógica. |
+| `request_projection` | Schema público do corpo ou `null` quando o contrato não usa corpo. |
+| `responses` | Código, saídas/falhas vinculadas e schema público da resposta. |
+| `cli.command`, `arguments` | Sintaxe real e parâmetros obrigatórios/opcionais. |
+| `stdout_projection`, `exit_codes` | Representação e correspondência de resultado do processo. |
+| `ui_triggers` | Identidade do controle, evento e operação-alvo. |
+| `channel` | Entradas, saídas, bindings, entrega, ordem e confirmação de canal genérico/evento. |
+
+A boundary TaskBoard resolve tokens opacos pelo resolvedor configurado na composição. Ela não constrói permissões confiáveis a partir do JSON do cliente. Cada caso ainda autoriza o contexto recebido, incluindo chamadas diretas ao núcleo.
+
+`external_types` nomeia entidades documentais de dados públicos sem fonte local de classe de entidade: por exemplo, um snapshot JSON recebido pelo legado ou um objeto de resposta da boundary. Cada registro identifica origem e representação públicas. `code_name` preserva ou descreve a representação nativa; um rótulo como `TaskSnapshot (dict)` não afirma a existência de uma classe Python.
+
+Esses registros usam `usage_rule: public_contract_only_no_internal_import`. Uma projeção serializada é obrigatória quando o canal transporta dados serializados. `serialized_projection: null` cabe em uma API de biblioteca publicada que não serialize; a descrição e a referência precisam identificar os tipos públicos e garantias. Uma projeção nula nunca permite importar internos de outro app.
+
+## 5. Unidades e nomes das fontes
+
+O cabeçalho registra caminho, linguagem, categoria, origem gerada e finalidade. `units` descreve as estruturas realmente presentes. Um módulo legado baseado em funções pode conter várias unidades principais; uma fonte Vulcan de classe/struct tem exatamente uma estrutura, inclusive nas áreas de suporte.
+
+`organization.core_unit_file` identifica um arquivo central de objeto de valor, entidade, ferramenta ou caso. Esse arquivo exige uma classe ou struct principal. Configuração, marcador de pacote e função de entrada são descritos conforme sua natureza real; não se cria uma classe artificial para explicar arquivo vazio. Lista vazia de unidades exige justificativa.
+
+Cada unidade possui ID, nome no código, espécie da linguagem, papel arquitetural, indicador de principal e descrição semântica. Operações e atributos pertencem à unidade. Interfaces opcionais também ocupam arquivo próprio. Uma segunda classe não pode ser escondida por `principal: false`.
+
+Nomes de classes/structs coincidem com o nome-base completo da fonte. Prefixos centrais são `ValueObject_`, `Entity_`, `Tool_` e `UseCase_`; o sufixo semântico usa PascalCase. Métodos usam camelCase e atributos snake_case. O underscore privado Python é registrado fielmente, como em `_task_title`. IDs documentais e chaves YAML usam snake_case independentemente dos símbolos do código.
+
+`organization.naming_exceptions` registra símbolo exato, convenção afetada e motivo concreto da linguagem/API. O adaptador HTTP registra `do_GET`, `do_POST` e `log_message`, pois sua API exige essas grafias. Métodos reservados preservam seus nomes obrigatórios. A exceção possui escopo, não concede dispensa geral a uma pasta.
+
+## 6. Dados operacionais e colaboradores técnicos
+
+`data_inputs` e `data_outputs` contêm apenas primitivos ou entidades, incluindo coleções tipadas. Primitivos são string, integer, number, boolean, bytes e null. Arrays declaram itens; mapas declaram chaves primitivas e valores. Um transporte que aceita apenas chaves textuais precisa definir projeção sem perda para outros tipos lógicos de chave.
+
+Referências de entidade resolvem para uma unidade local de entidade ou um tipo documental público do catálogo do app. Não podem apontar para objeto de valor, ferramenta ou handle de SDK disfarçado de entidade. Objetos de valor possuem fichas canônicas próprias e são relacionados por `internal_value_objects` nas entidades; repete-se apenas a relação, não sua definição.
+
+Cada operação registra assinatura nativa, estado do contrato, estados de entradas/saídas, listas de dados tipados, semântica e modalidade de execução. Listas vazias com `documented` significam ausência de dados operacionais nesse lado; `pending` significa levantamento incompleto. Um colaborador de construtor não vira dado de negócio apenas por ser parâmetro.
+
+`native_binding` explica como resultados normalizados correspondem a tuplas, múltiplos retornos ou campos de dicionário. Por exemplo, os três resultados primitivos do resumo legado correspondem a `return['total']`, `return['completed']` e `return['pending']`.
+
+`technical_parameters`, `technical_attributes` e `injection` descrevem separadamente colaboradores, configuração, callbacks e handles. `technical_resources` descreve SDKs, bancos e serviços externos. Uma referência opcional de interface pode ser omitida; nenhuma interface é fabricada.
+
+`technical_outputs` fica restrito a mecanismos técnicos, como internos de composição/protocolo. Uma lista não vazia exige `contract_scope: technical` e motivo. Retornos operacionais públicos de ferramentas/casos não podem usar esse campo para expor conexões, requests de framework ou objetos de valor. O schema aplica a restrição ao núcleo público; a revisão ainda avalia se a classificação técnica é verdadeira.
+
+Falhas registram condições, significado dos dados e canal nativo, como exceção, retorno de erro, cancelamento ou saída de processo. `execution` distingue sincronismo, término por retorno/stream/callback/evento, ordem e cancelamento. O payload entregue por callback pode ser documentado; a função callback não é um tipo público de dado de domínio.
+
+## 7. Comportamento, fluxo e estado
+
+`behavior.summary` explica a semântica. Pré-condições, pós-condições, invariantes, efeitos e grafos estruturados acrescentam detalhes quando pertinentes.
+
+Um fluxo identifica entrada, nós de ação/decisão/término/falha, arestas e condições. Uma máquina identifica seu proprietário e se trata de entidade, invocação, recurso ou processo; registra estados, eventos, guardas, ações e transições. A máquina de conclusão pertence a `Entity_Task`, enquanto os fluxos dos casos descrevem autorização e chamada de capacidades.
+
+A aplicabilidade é `applicable`, `not_applicable` ou `pending`, com justificativa. Grafos inaplicáveis/pendentes são nulos. Omissão não prova trivialidade. Condições de grafo são texto descritivo; um leitor YAML não deve avaliá-las como código.
+
+O verificador resolve entradas e destinos. Não prova determinismo, cobertura completa de condições, equivalência entre grafo/código ou todos os caminhos de runtime. Diagramas visuais podem ser derivados dos dados mantendo uma única definição canônica.
+
+## 8. Dependências, fontes e evidências
+
+Dependências identificam unidade de origem, espécie da relação, alvo, descrição e base (`observed`, `declared`, `inferred` ou `illustrative`). O alvo é unidade/operação local, recurso ou boundary pública. Relações ferramenta–ferramenta e caso–caso devem ser acíclicas; laços de máquina de estados são outra relação.
+
+A rastreabilidade de casos preserva a identidade e vincula UCS, ADPM e ADVS. `mapped` significa referências registradas, não execução de motor ou certificação. As fontes do exemplo deixam explícito que modelagem e código foram elaborados manualmente em conjunto.
+
+`evidence` registra presença da fonte, SHA-256 observado, escopo de revisão e bases adicionais opcionais. Fonte ilustrativa ausente não recebe hash. Hash coincidente demonstra apenas identidade de bytes; um contrato referenciado pode mudar sem alterar o arquivo consumidor. Atualizar a fonte e suas fichas afetadas pertence à mesma mudança.
+
+## 9. Executar as verificações
+
+Na raiz do repositório:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python scripts/validate_examples.py --include-illustrative
+python scripts/validate_examples.py --json verification/documentation.json
+```
+
+O verificador lê YAML com rejeição de chaves duplicadas, aplica a estrutura Draft 2020-12, resolve referências, confere cobertura/digests, inspeciona classes/métodos/imports estáticos Python, relações/ciclos declarados, destinos de grafos e correspondência dos bindings com operações. Ele não executa comandos YAML nem importa módulos das aplicações.
+
+O schema é neutro em linguagem; as verificações AST fornecidas são específicas de Python. Correção semântica, adequação a produção, compatibilidade exata de transporte e comportamento observado exigem revisão/testes próprios. O formato e seu verificador Python não são uma biblioteca Vulcan obrigatória.

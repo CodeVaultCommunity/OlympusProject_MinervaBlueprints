@@ -1,0 +1,2606 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas-specification.local/schemas/Stable-v1.0.0/atlas.schema.json",
+  "title": "Atlas JSON document, Stable-v1.0.0",
+  "description": "Structural schema for the Atlas JSON profile. Referential and semantic invariants are enforced by the atlas-spec validator in addition to this schema.",
+  "type": "object",
+  "required": [
+    "format",
+    "atlas"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "format": {
+      "const": "atlas-json/Stable-v1.0.0"
+    },
+    "atlas": {
+      "$ref": "#/$defs/atlas"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+    },
+    "semanticVersion": {
+      "type": "string",
+      "const": "Stable-v1.0.0"
+    },
+    "nature": {
+      "type": "string",
+      "enum": [
+        "observed",
+        "desired",
+        "inference",
+        "assumption",
+        "open_issue",
+        "decision",
+        "note"
+      ]
+    },
+    "reviewStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "reviewed",
+        "approved",
+        "rejected",
+        "deprecated"
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Declared extension namespaces. Opaque to the translator and preserved value-for-value as typed JSON data; object member order is insignificant."
+    },
+    "textMetadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nature": {
+          "$ref": "#/$defs/nature"
+        },
+        "review_status": {
+          "$ref": "#/$defs/reviewStatus"
+        },
+        "meta": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "text": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nature": {
+          "$ref": "#/$defs/nature"
+        },
+        "review_status": {
+          "$ref": "#/$defs/reviewStatus"
+        },
+        "meta": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "blockBase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nature": {
+          "$ref": "#/$defs/nature"
+        },
+        "review_status": {
+          "$ref": "#/$defs/reviewStatus"
+        },
+        "meta": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "listItem": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nature": {
+          "$ref": "#/$defs/nature"
+        },
+        "review_status": {
+          "$ref": "#/$defs/reviewStatus"
+        },
+        "meta": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/listItem"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "block": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "paragraph",
+                "note",
+                "quote"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "level",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "const": "heading"
+            },
+            "level": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            },
+            "text": {
+              "type": "string"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "ordered",
+            "items"
+          ],
+          "properties": {
+            "type": {
+              "const": "list"
+            },
+            "ordered": {
+              "type": "boolean"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/listItem"
+              }
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "const": "code"
+            },
+            "language": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "const": "formula"
+            },
+            "display": {
+              "type": "boolean"
+            },
+            "text": {
+              "type": "string"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "resource"
+          ],
+          "properties": {
+            "type": {
+              "const": "figure"
+            },
+            "resource": {
+              "$ref": "#/$defs/id"
+            },
+            "caption": {
+              "$ref": "#/$defs/text"
+            },
+            "alt": {
+              "$ref": "#/$defs/text"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "columns",
+            "rows"
+          ],
+          "properties": {
+            "type": {
+              "const": "table"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            "caption": {
+              "$ref": "#/$defs/text"
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "nature": {
+              "$ref": "#/$defs/nature"
+            },
+            "review_status": {
+              "$ref": "#/$defs/reviewStatus"
+            },
+            "meta": {
+              "type": "object"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/block"
+      }
+    },
+    "texts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "idRefs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "id",
+        "level",
+        "title",
+        "blocks",
+        "items"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "blocks": {
+          "$ref": "#/$defs/blocks"
+        },
+        "items": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "author": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "role": {
+          "$ref": "#/$defs/text"
+        },
+        "contact": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "document_id",
+        "revision",
+        "spec_version",
+        "profile_version",
+        "translator_version",
+        "language",
+        "status",
+        "authors",
+        "created",
+        "updated"
+      ],
+      "properties": {
+        "document_id": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spec_version": {
+          "$ref": "#/$defs/semanticVersion"
+        },
+        "profile_version": {
+          "$ref": "#/$defs/semanticVersion"
+        },
+        "translator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "proposed",
+            "reviewed",
+            "approved",
+            "deprecated"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/author"
+          }
+        },
+        "created": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "updated": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "keywords": {
+          "$ref": "#/$defs/texts"
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "actor": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "system",
+            "organization",
+            "role",
+            "other"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "term": {
+      "type": "object",
+      "required": [
+        "id",
+        "term",
+        "definition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "term": {
+          "$ref": "#/$defs/text"
+        },
+        "definition": {
+          "$ref": "#/$defs/blocks"
+        },
+        "synonyms": {
+          "$ref": "#/$defs/texts"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "typeDef": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "definition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "definition": {
+          "$ref": "#/$defs/blocks"
+        },
+        "constraints": {
+          "$ref": "#/$defs/blocks"
+        },
+        "examples": {
+          "$ref": "#/$defs/texts"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entityField": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "cardinality",
+        "required",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cardinality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "constraints": {
+          "$ref": "#/$defs/blocks"
+        },
+        "examples": {
+          "type": "object",
+          "properties": {
+            "valid": {
+              "$ref": "#/$defs/texts"
+            },
+            "invalid": {
+              "$ref": "#/$defs/texts"
+            }
+          },
+          "additionalProperties": false
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "required": [
+        "id",
+        "target",
+        "kind",
+        "cardinality",
+        "description",
+        "structural"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "target": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "association",
+            "composition",
+            "aggregation",
+            "reference"
+          ]
+        },
+        "cardinality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "structural": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "transition": {
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "from": {
+          "$ref": "#/$defs/id"
+        },
+        "to": {
+          "$ref": "#/$defs/id"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "validationInput": {
+      "type": "object",
+      "required": [
+        "name",
+        "source",
+        "meaning"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "field",
+            "input",
+            "state",
+            "context",
+            "operation_result"
+          ]
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "validationCondition": {
+      "type": "object",
+      "required": [
+        "id",
+        "condition",
+        "meaning"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "condition": {
+          "$ref": "#/$defs/text"
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "validationResult": {
+      "type": "object",
+      "required": [
+        "outcome",
+        "description"
+      ],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "error",
+            "not_applicable"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "scope",
+        "statement",
+        "inputs",
+        "conditions",
+        "results",
+        "flow"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "field",
+            "between_fields",
+            "transition",
+            "entity"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/blocks"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validationInput"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validationCondition"
+          }
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validationResult"
+          }
+        },
+        "flow": {
+          "$ref": "#/$defs/id"
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entityExample": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "description",
+        "data"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "invalid"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "data": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "meaning",
+        "identity",
+        "fields",
+        "relationships",
+        "states",
+        "transitions",
+        "validations",
+        "examples"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "description",
+            "fields"
+          ],
+          "properties": {
+            "description": {
+              "$ref": "#/$defs/blocks"
+            },
+            "fields": {
+              "$ref": "#/$defs/idRefs"
+            },
+            "extensions": {
+              "$ref": "#/$defs/extensions"
+            }
+          },
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityField"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/state"
+          }
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transition"
+          }
+        },
+        "validations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validation"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityExample"
+          }
+        },
+        "assumptions": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "open_issues": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "toolInput": {
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "meaning",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "toolResult": {
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "meaning"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "guarantees": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "toolFailure": {
+      "type": "object",
+      "required": [
+        "code",
+        "meaning",
+        "consumer_distinction"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "consumer_distinction": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "purpose",
+        "inputs",
+        "conditions",
+        "results",
+        "effects",
+        "failures",
+        "guarantees"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "purpose": {
+          "$ref": "#/$defs/blocks"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/toolInput"
+          }
+        },
+        "conditions": {
+          "$ref": "#/$defs/blocks"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/toolResult"
+          }
+        },
+        "effects": {
+          "$ref": "#/$defs/blocks"
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/toolFailure"
+          }
+        },
+        "guarantees": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tool": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "purpose",
+        "operations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "purpose": {
+          "$ref": "#/$defs/blocks"
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "actorPermission": {
+      "type": "object",
+      "required": [
+        "actor",
+        "permission",
+        "description"
+      ],
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/id"
+        },
+        "permission": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ucInput": {
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "meaning",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entityUse": {
+      "type": "object",
+      "required": [
+        "entity",
+        "validations",
+        "purpose"
+      ],
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/id"
+        },
+        "validations": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "purpose": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "toolUse": {
+      "type": "object",
+      "required": [
+        "tool",
+        "operation",
+        "purpose"
+      ],
+      "properties": {
+        "tool": {
+          "$ref": "#/$defs/id"
+        },
+        "operation": {
+          "$ref": "#/$defs/id"
+        },
+        "purpose": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "caseCall": {
+      "type": "object",
+      "required": [
+        "use_case",
+        "contract",
+        "authorization"
+      ],
+      "properties": {
+        "use_case": {
+          "$ref": "#/$defs/id"
+        },
+        "contract": {
+          "$ref": "#/$defs/blocks"
+        },
+        "authorization": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "outcome": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "description",
+        "effects"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "success",
+            "refusal",
+            "failure",
+            "effect"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "effects": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "functionalRequirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "statement",
+        "scope",
+        "applies_to",
+        "flow_refs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/blocks"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "case",
+            "operation",
+            "interaction"
+          ]
+        },
+        "applies_to": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "flow_refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "nonfunctionalRequirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "scope",
+        "applies_to"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/blocks"
+        },
+        "reference_to": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "case",
+            "operation",
+            "interaction",
+            "system"
+          ]
+        },
+        "applies_to": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "applicability": {
+          "$ref": "#/$defs/blocks"
+        },
+        "criterion": {
+          "$ref": "#/$defs/blocks"
+        },
+        "metric": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "name",
+            "unit",
+            "target",
+            "operator"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/text"
+            },
+            "unit": {
+              "$ref": "#/$defs/text"
+            },
+            "target": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "operator": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "<=",
+                "<",
+                "=",
+                ">=",
+                ">",
+                null
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "measurement": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "start",
+            "end"
+          ],
+          "properties": {
+            "start": {
+              "$ref": "#/$defs/blocks"
+            },
+            "end": {
+              "$ref": "#/$defs/blocks"
+            }
+          },
+          "additionalProperties": false
+        },
+        "verification": {
+          "$ref": "#/$defs/blocks"
+        },
+        "references": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "acceptanceCriterion": {
+      "type": "object",
+      "required": [
+        "id",
+        "statement",
+        "verifies"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/blocks"
+        },
+        "verifies": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "traceLink": {
+      "type": "object",
+      "required": [
+        "id",
+        "source",
+        "targets"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source": {
+          "$ref": "#/$defs/id"
+        },
+        "targets": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "note": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "useCase": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "objective",
+        "actors",
+        "trigger",
+        "context",
+        "inputs",
+        "entry_conditions",
+        "entities",
+        "tools",
+        "calls",
+        "outcomes",
+        "functional_requirements",
+        "nonfunctional_requirements",
+        "flows",
+        "flow_text",
+        "acceptance_criteria",
+        "traceability",
+        "assumptions",
+        "sources",
+        "open_issues"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "objective": {
+          "$ref": "#/$defs/blocks"
+        },
+        "actors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/actorPermission"
+          }
+        },
+        "trigger": {
+          "$ref": "#/$defs/blocks"
+        },
+        "context": {
+          "$ref": "#/$defs/blocks"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ucInput"
+          }
+        },
+        "entry_conditions": {
+          "$ref": "#/$defs/blocks"
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityUse"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/toolUse"
+          }
+        },
+        "calls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/caseCall"
+          }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/outcome"
+          }
+        },
+        "functional_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/functionalRequirement"
+          }
+        },
+        "nonfunctional_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonfunctionalRequirement"
+          }
+        },
+        "flows": {
+          "type": "object",
+          "required": [
+            "main",
+            "subflows"
+          ],
+          "properties": {
+            "main": {
+              "$ref": "#/$defs/id"
+            },
+            "subflows": {
+              "$ref": "#/$defs/idRefs"
+            }
+          },
+          "additionalProperties": false
+        },
+        "flow_text": {
+          "$ref": "#/$defs/blocks"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/acceptanceCriterion"
+          }
+        },
+        "traceability": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/traceLink"
+          }
+        },
+        "assumptions": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "sources": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "open_issues": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mapping": {
+      "type": "object",
+      "required": [
+        "source",
+        "target",
+        "meaning"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "meaning": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "interaction": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "use_case",
+        "trigger",
+        "input_mapping",
+        "result_mapping",
+        "requirement_refs",
+        "resources"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "use_case": {
+          "$ref": "#/$defs/id"
+        },
+        "trigger": {
+          "$ref": "#/$defs/blocks"
+        },
+        "input_mapping": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapping"
+          }
+        },
+        "result_mapping": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/mapping"
+          }
+        },
+        "requirement_refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "resources": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "examples": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "boundary": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "modality",
+        "purpose",
+        "audience",
+        "interactions",
+        "assumptions",
+        "sources",
+        "open_issues"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "modality": {
+          "type": "string",
+          "enum": [
+            "web",
+            "app",
+            "cli",
+            "api",
+            "message",
+            "desktop",
+            "other"
+          ]
+        },
+        "purpose": {
+          "$ref": "#/$defs/blocks"
+        },
+        "audience": {
+          "$ref": "#/$defs/blocks"
+        },
+        "interactions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/interaction"
+          }
+        },
+        "assumptions": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "sources": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "open_issues": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graphCall": {
+      "type": "object",
+      "required": [
+        "kind",
+        "id"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "validation",
+            "tool",
+            "operation",
+            "use_case",
+            "entity"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graphNode": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "start",
+            "end",
+            "action",
+            "decision",
+            "validation",
+            "tool",
+            "operation",
+            "use_case",
+            "result",
+            "refusal",
+            "failure",
+            "effect",
+            "note",
+            "state",
+            "entity"
+          ]
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "call": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/graphCall"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inputs": {
+          "$ref": "#/$defs/blocks"
+        },
+        "outputs": {
+          "$ref": "#/$defs/blocks"
+        },
+        "requirement_refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "details": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graphEdge": {
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to",
+        "requirement_refs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "from": {
+          "$ref": "#/$defs/id"
+        },
+        "to": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "condition": {
+          "$ref": "#/$defs/blocks"
+        },
+        "requirement_refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "graph": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "owner",
+        "title",
+        "nodes",
+        "edges"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "flow",
+            "state",
+            "relations"
+          ]
+        },
+        "owner": {
+          "type": "object",
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "document",
+                "entity",
+                "validation",
+                "use_case"
+              ]
+            },
+            "id": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "additionalProperties": false
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/graphNode"
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/graphEdge"
+          }
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resourceVariant": {
+      "type": "object",
+      "required": [
+        "path",
+        "media_type",
+        "sha256",
+        "size",
+        "relation",
+        "derived_from"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "relation": {
+          "type": "string"
+        },
+        "derived_from": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "resource": {
+      "type": "object",
+      "required": [
+        "id",
+        "path",
+        "media_type",
+        "sha256",
+        "size",
+        "caption",
+        "alt",
+        "embedded_text"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "caption": {
+          "$ref": "#/$defs/blocks"
+        },
+        "alt": {
+          "$ref": "#/$defs/blocks"
+        },
+        "embedded_text": {
+          "$ref": "#/$defs/texts"
+        },
+        "derived_from_graph": {
+          "$ref": "#/$defs/id"
+        },
+        "drawing_source": {
+          "type": "object",
+          "required": [
+            "path",
+            "revision"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "revision": {
+              "type": "string"
+            },
+            "tool": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resourceVariant"
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "assumption": {
+      "type": "object",
+      "required": [
+        "id",
+        "statement",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/blocks"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "validated",
+            "refuted",
+            "withdrawn"
+          ]
+        },
+        "affected": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "context",
+        "decision",
+        "alternatives",
+        "consequences",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "context": {
+          "$ref": "#/$defs/blocks"
+        },
+        "decision": {
+          "$ref": "#/$defs/blocks"
+        },
+        "alternatives": {
+          "$ref": "#/$defs/blocks"
+        },
+        "consequences": {
+          "$ref": "#/$defs/blocks"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "accepted",
+            "superseded",
+            "rejected"
+          ]
+        },
+        "refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "openIssue": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "description",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "resolved",
+            "deferred",
+            "rejected"
+          ]
+        },
+        "refs": {
+          "$ref": "#/$defs/idRefs"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "accessed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "historyEntry": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "date",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "description": {
+          "$ref": "#/$defs/blocks"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "properties": {
+        "markdown": {
+          "type": "object",
+          "properties": {
+            "include_toc": {
+              "type": "boolean"
+            },
+            "text_fences": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "latex": {
+          "type": "object",
+          "properties": {
+            "documentclass": {
+              "type": "string"
+            },
+            "class_options": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "paper": {
+              "type": "string"
+            },
+            "toc": {
+              "type": "boolean"
+            },
+            "figure_width": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "atlas": {
+      "type": "object",
+      "required": [
+        "document_id",
+        "title",
+        "revision",
+        "spec_version",
+        "profile_version",
+        "translator_version",
+        "language",
+        "status",
+        "authors",
+        "created",
+        "updated",
+        "structure",
+        "actors",
+        "vocabulary",
+        "types",
+        "entities",
+        "tools",
+        "use_cases",
+        "boundaries",
+        "graphs",
+        "resources",
+        "assumptions",
+        "decisions",
+        "open_issues",
+        "sources",
+        "history",
+        "presentation",
+        "extensions"
+      ],
+      "properties": {
+        "document_id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spec_version": {
+          "$ref": "#/$defs/semanticVersion"
+        },
+        "profile_version": {
+          "$ref": "#/$defs/semanticVersion"
+        },
+        "translator_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "proposed",
+            "reviewed",
+            "approved",
+            "deprecated"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/author"
+          }
+        },
+        "created": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "updated": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "keywords": {
+          "$ref": "#/$defs/texts"
+        },
+        "notes": {
+          "$ref": "#/$defs/blocks"
+        },
+        "structure": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/actor"
+          }
+        },
+        "vocabulary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/term"
+          }
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/typeDef"
+          }
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entity"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tool"
+          }
+        },
+        "use_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/useCase"
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/boundary"
+          }
+        },
+        "graphs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/graph"
+          }
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assumption"
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision"
+          }
+        },
+        "open_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/openIssue"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/historyEntry"
+          }
+        },
+        "presentation": {
+          "$ref": "#/$defs/presentation"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "markdown_files": 47,
+  "local_links": 510,
+  "source_snapshots": 10,
+  "errors": [],
+  "limits": [
+    "External URLs are not fetched.",
+    "Structural documentation checks do not prove behavioral correctness."
+  ]
+}

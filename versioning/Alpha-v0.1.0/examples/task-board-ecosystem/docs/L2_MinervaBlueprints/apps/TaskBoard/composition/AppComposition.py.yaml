@@ -1,0 +1,141 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY
+source:
+  path: apps/TaskBoard/composition/AppComposition.py
+  app: TaskBoard
+  language: python
+  state: observed
+  sha256: 578a84a9a30e9c4ef42d03b0fa89ceefdd13903cfa2be3ee3a1391b89064553d
+  purpose: Select collaborators once and resolve demonstration identities at the trusted edge.
+  observation: Recorded from the companion Vulcan Ecosystem Alpha-v0.1.0 example. The record is L2 documentation;
+    source presence and hashes are checked only when requested.
+units:
+- id: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  code_name: AppComposition
+  kind: class
+  role: composition
+  model_refs: []
+  description: Select collaborators once and resolve demonstration identities at the trusted edge.
+  attributes:
+  - name: editor_token
+    description: Configured opaque local editor token.
+    native_type: See observed source annotation or use.
+  - name: reader_token
+    description: Configured opaque local reader token.
+    native_type: See observed source annotation or use.
+  - name: task_store
+    description: Concrete store selected by this composition.
+    native_type: See observed source annotation or use.
+  - name: create_task
+    description: Prepared use case.
+    native_type: See observed source annotation or use.
+  - name: list_tasks
+    description: Prepared use case.
+    native_type: See observed source annotation or use.
+  - name: complete_task
+    description: Prepared use case.
+    native_type: See observed source annotation or use.
+  operations:
+  - id: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION-OP-INIT
+    code_name: __init__
+    contract_scope: technical
+    native_signature: '__init__(self, db_path: str, editor_token: str=''demo-editor'', reader_token: str=''demo-reader'')
+      -> None'
+    description: Reject empty or identical demo tokens, construct one SQLite store and inject it into the three
+      use cases. The resulting collaborators belong to this composition instance.
+    inputs: []
+    outputs: []
+    technical_parameters:
+    - name: db_path
+      description: SQLite path shared by CLI/HTTP when both choose the same file.
+    - name: editor_token
+      description: Opaque local demo token mapped to editor permissions; default demo-editor.
+    - name: reader_token
+      description: Opaque local demo token mapped to read-only permissions; default demo-reader.
+    behavior:
+      summary: Reject empty or identical demo tokens, construct one SQLite store and inject it into the three
+        use cases. The resulting collaborators belong to this composition instance.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects:
+      - Initialize the store infrastructure; no domain operation is executed.
+      graph_refs: []
+  - id: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION-OP-RESOLVEACTOR
+    code_name: resolveActor
+    contract_scope: operational
+    native_signature: 'resolveActor(self, token: str | None) -> Entity_ActorContext | None'
+    description: Compare the supplied opaque token with the configured editor/reader tokens as UTF-8 bytes using
+      compare_digest. Construct the fixed local context for a match; return None for absent or unknown tokens.
+      Never accept permissions from HTTP JSON.
+    inputs:
+    - name: token
+      type:
+        kind: primitive
+        name: string
+        nullable: true
+      description: Opaque channel token or absence.
+      required: true
+    outputs:
+    - name: actor_context
+      type:
+        kind: entity
+        ref: ENT-ACTOR-CONTEXT
+        nullable: true
+      description: Resolved local demo actor, or explicit absence.
+      required: true
+    technical_parameters: []
+    behavior:
+      summary: Compare the supplied opaque token with the configured editor/reader tokens as UTF-8 bytes using
+        compare_digest. Construct the fixed local context for a match; return None for absent or unknown tokens.
+        Never accept permissions from HTTP JSON.
+      steps: []
+      preconditions: []
+      postconditions: []
+      effects: []
+      graph_refs: []
+graphs: []
+dependencies:
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: hmac
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: apps.TaskBoard.entities.Entity_ActorContext
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: apps.TaskBoard.tools.Tool_SqliteTaskStore
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: apps.TaskBoard.usecases.TaskManagement.UseCase_CreateTask
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: apps.TaskBoard.usecases.TaskManagement.UseCase_ListTasks
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+- from_unit: UNIT-APPS-TASKBOARD-COMPOSITION-APPCOMPOSITION-PY-APPCOMPOSITION
+  target: apps.TaskBoard.usecases.TaskManagement.UseCase_CompleteTask
+  kind: import
+  basis: observed
+  description: Top-level import observed in the companion Python source; not a claim that every imported name
+    is used.
+limitations:
+- Native names, signatures and imports are observations. Logical contracts and scenario expectations remain separate
+  blueprint records.
+- Snapshot text does not establish runtime behavior or production suitability.

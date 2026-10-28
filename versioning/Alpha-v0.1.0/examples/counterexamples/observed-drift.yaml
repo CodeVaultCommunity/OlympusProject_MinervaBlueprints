@@ -1,0 +1,49 @@
+format: minerva-yaml
+model_version: Alpha-v0.1.0
+profile_version: 0.1.0
+kind: source
+document_id: FILE-DRIFT-EXAMPLE
+source:
+  path: apps/Drift/Example.py
+  app: Drift
+  language: python
+  state: observed
+  sha256: cf55b013710559d6ff21d350e06329db99ce57c95135bf85e5b5d1af69b8a99d
+  purpose: Demonstrate observable divergence without rewriting intended semantics.
+  observation: Snapshot describes the original return-one file; current source intentionally returns two.
+units:
+- id: UNIT-DRIFT-CALCULATE
+  code_name: calculate
+  kind: function
+  role: legacy
+  model_refs: []
+  description: Intended operation whose current bytes diverge.
+  attributes: []
+  operations:
+  - id: OP-DRIFT-CALCULATE
+    code_name: calculate
+    contract_scope: operational
+    native_signature: calculate() -> int
+    description: Return the integer one.
+    inputs: []
+    outputs:
+    - name: result
+      description: The intended integer result.
+      required: true
+      type:
+        kind: primitive
+        name: integer
+    technical_parameters: []
+    behavior:
+      summary: Return the integer one as designed. Current observed bytes deliberately return two.
+      steps:
+      - Return one.
+      preconditions: []
+      postconditions:
+      - Result equals one.
+      effects: []
+      graph_refs: []
+graphs: []
+dependencies: []
+limitations:
+- The hash proves byte divergence; interpretation of the behavior remains a review obligation. No code is executed.
