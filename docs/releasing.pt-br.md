@@ -13,6 +13,7 @@ CONTENT-SHA256.json é o inventário ativo da distribuição. Registra algoritmo
 Prepare explicitamente as adições, mudanças e remoções no índice Git. O gerador lê os caminhos do índice e os bytes atuais sem normalização de fim de linha. Gere o inventário por último:
 
 ```bash
+python -m pip install -r scripts/requirements-dev.txt
 python scripts/check_repository.py
 python -m pytest scripts/tests
 python scripts/content_inventory.py --write

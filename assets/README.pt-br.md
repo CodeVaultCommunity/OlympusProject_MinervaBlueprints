@@ -28,7 +28,7 @@ No perfil Minerva desta edição, `source.state` distingue `planned` de `observe
 Use Python 3.10+, CairoSVG 2.8.2, suas bibliotecas de sistema Cairo e as fontes **DejaVu Sans** e **DejaVu Sans Mono**. Essas dependências servem apenas para reproduzir imagens, sem se tornarem dependências do modelo ou de aplicativos Vulcan.
 
 ```sh
-python -m pip install CairoSVG==2.8.2
+python -m pip install -r assets/requirements-artwork.txt
 python assets/sources/render_images.py
 ```
 

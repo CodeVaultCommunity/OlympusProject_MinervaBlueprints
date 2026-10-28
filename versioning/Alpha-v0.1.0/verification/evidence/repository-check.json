@@ -8,12 +8,6 @@
     "External URLs are not fetched.",
     "Structural documentation checks do not prove behavioral correctness."
   ],
-  "observed_at": "2026-10-28T13:06:34.657008+00:00",
-  "command": "python -B scripts/check_repository.py --json",
-  "additional_review_checks": [
-    "All recorded runtime input hashes still match.",
-    "All reviewed blueprint hashes still match.",
-    "All requirement coverage artifact paths resolve.",
-    "Authored Markdown checked for common UTF-8 mojibake sequences."
-  ]
+  "observed_at": "2026-10-28T13:28:57.129103+00:00",
+  "command": "python -B scripts/check_repository.py --json"
 }

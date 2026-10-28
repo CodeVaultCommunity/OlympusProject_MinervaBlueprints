@@ -13,7 +13,7 @@ Keep virtual environments, generated databases and temporary outputs outside the
 From the repository root, install the declared development dependencies and run:
 
 ```bash
-python -m pip install -r requirements-dev.txt
+python -m pip install -r scripts/requirements-dev.txt
 python scripts/check_repository.py
 python -m pytest scripts/tests
 ```

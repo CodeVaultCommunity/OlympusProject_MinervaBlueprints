@@ -13,8 +13,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "size_bytes": 834,
-      "sha256": "f8d0c980b7df7b4cb251e1bf0a656dd9a71400472196708f3b8ffba3e91ebcf3"
+      "size_bytes": 842,
+      "sha256": "343acf1c38759701df05e1af05013823ccc14fcce4f7ee83ce38f271070803cf"
     },
     {
       "path": ".gitignore",
@@ -33,8 +33,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "size_bytes": 1015,
-      "sha256": "de7b6bfe6c25551fc11847691f6c05db760ea4afd0ee0643cadfbe1604cdcb7e"
+      "size_bytes": 1192,
+      "sha256": "d000e0bdfc6e1643c553abd584356f0d9d1bf983a8b70d61b7056eefa77a3bd0"
     },
     {
       "path": "CITATION.cff",
@@ -78,13 +78,13 @@
     },
     {
       "path": "assets/README.md",
-      "size_bytes": 4683,
-      "sha256": "04fa7ebee95fb7744729bf26d59abb3e6277cc20cf1421a787f7987e52b53f03"
+      "size_bytes": 4702,
+      "sha256": "99e172547dae71147c1fd5092400dac4656558f3b151d9922d0fcd07df48fb50"
     },
     {
       "path": "assets/README.pt-br.md",
-      "size_bytes": 4996,
-      "sha256": "2097ac7b0752a00349ca677adfef7ca88ce31af993c50247c760a6a9804c20e8"
+      "size_bytes": 5015,
+      "sha256": "e7013bf9d06a68bf0bf6fe75e200a42fcfd138e4e326f31ebd8aa3a9ced306c5"
     },
     {
       "path": "assets/asset-metadata.json",
@@ -140,6 +140,11 @@
       "path": "assets/olympus-icon.png",
       "size_bytes": 1633020,
       "sha256": "ce7e0f8f710aadd693a1d1e5c009644af9195533983f02ed54fe9a4b6a4985f9"
+    },
+    {
+      "path": "assets/requirements-artwork.txt",
+      "size_bytes": 31,
+      "sha256": "9cc9be1825d4ed4823d536d6814f1a131c81473a06d97626a0380c3a567fc6d8"
     },
     {
       "path": "assets/sources/ARTWORK-PROMPT.md",
@@ -223,23 +228,13 @@
     },
     {
       "path": "docs/releasing.md",
-      "size_bytes": 5001,
-      "sha256": "977004d17bd0f61992309eb12333a80395a705f3145c6c30cc1a2d702e483149"
+      "size_bytes": 5009,
+      "sha256": "9b6d94165ac0a3efb617bf70a23a0b67fbca6a05a7764aca1a73f1b8d8824229"
     },
     {
       "path": "docs/releasing.pt-br.md",
-      "size_bytes": 2430,
-      "sha256": "d250f86fd1164872f83d2a3f169df7571aa6824f2e6fc66ca2c1845a96112c3c"
-    },
-    {
-      "path": "requirements-artwork.txt",
-      "size_bytes": 31,
-      "sha256": "9cc9be1825d4ed4823d536d6814f1a131c81473a06d97626a0380c3a567fc6d8"
-    },
-    {
-      "path": "requirements-dev.txt",
-      "size_bytes": 47,
-      "sha256": "4ecb17fe1779cab55da20fc2fb865c9d3b8aa5d88bc608ddcbbbc2c646c13d5e"
+      "size_bytes": 2484,
+      "sha256": "26b88e16d0857a40213a323092a26eda55c2c0e8a184adc6bef0e1bed22b01e6"
     },
     {
       "path": "scripts/build_distribution.py",
@@ -260,6 +255,11 @@
       "path": "scripts/content_inventory.py",
       "size_bytes": 6006,
       "sha256": "4c74fcc036df7acc71265560a0660cd632f64bfb294a3e95b359250771780b3c"
+    },
+    {
+      "path": "scripts/requirements-dev.txt",
+      "size_bytes": 47,
+      "sha256": "4ecb17fe1779cab55da20fc2fb865c9d3b8aa5d88bc608ddcbbbc2c646c13d5e"
     },
     {
       "path": "scripts/tests/test_content_inventory.py",
@@ -758,8 +758,8 @@
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/evidence/checks.json",
-      "size_bytes": 19330,
-      "sha256": "84e3b1b60af0a74cf510ae3dc210a4406660d9dc918c85c079d02699f667454c"
+      "size_bytes": 39973,
+      "sha256": "72fb8be19e70929645b917ab57d35b569f3631318b60c965560f23c5775b93a8"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/evidence/counterexamples.stderr.txt",
@@ -803,8 +803,8 @@
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/evidence/repository-check.json",
-      "size_bytes": 625,
-      "sha256": "74ecbf0eadfa8a6716f1b55dbad3a1dda55129c7aa33ac1bc50b25a08ac58502"
+      "size_bytes": 359,
+      "sha256": "d0d8cbc7bb17b7cb134ee6c25d9f0ace491651853e98dac738892b43c6adff27"
     },
     {
       "path": "versioning/Alpha-v0.1.0/verification/evidence/repository-tests.stderr.txt",
