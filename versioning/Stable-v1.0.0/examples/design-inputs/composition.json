@@ -1,0 +1,12 @@
+{
+  "TOL-BOOKING-STORE": {
+    "name": "SQLite booking store",
+    "technology": "SQLite",
+    "algorithm": "Execute parameterized booking reads and state transitions through a repository adapter; hydrate entities through canonical constructors and map concurrency or availability failures to the declared abstract failures.",
+    "transaction": "Use one explicit transaction per state-changing operation and optimistic version checks for cancellation; never report success before commit confirmation.",
+    "configuration": ["database_path", "busy_timeout_ms"],
+    "lifecycle": "application_scope_factory_with_operation_scoped_connections",
+    "dependencies": ["sqlite3"],
+    "notes": ["Read and write operations share one concrete protocol implementation selected at composition."]
+  }
+}

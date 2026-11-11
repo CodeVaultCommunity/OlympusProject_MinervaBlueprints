@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "olympus-minerva-blueprints"
+version = "1.0.0"
+description = "Code-shaped Markdown blueprints and Atlas-to-Minerva importer"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3"]
+license = {file = "LICENSE"}
+authors = [{name = "Douglas de Oliveira Alkimim"}]
+
+[project.scripts]
+minerva-import-atlas = "minerva_blueprints.__main__:main_import"
+minerva-validate = "minerva_blueprints.__main__:main_validate"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["minerva_blueprints*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

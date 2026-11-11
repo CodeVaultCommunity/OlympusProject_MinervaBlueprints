@@ -2,18 +2,38 @@
 
 ## Select the edition
 
-Respect the requested edition. The current Alpha-v0.1.0 is unpublished and its in-place reorganization was explicitly authorized by the owner. Do not create another edition unless requested. Root READMEs introduce the project; the edition README is navigation. `versioning/Alpha-v0.1.0/specification/model.md` is normative and `model.pt-br.md` is its translation.
+Respect an explicitly requested edition. Otherwise select the highest numeric
+Stable edition under `versioning/`. Stable-v1.0.0 is the current edition;
+Alpha-v0.1.0 is historical and must not be silently used as a generator or
+contract for Stable work.
 
-## Locate contracts
+## Preserve the distributed source of truth
 
-Read the selected model, YAML profile, `specification/conformance.md`, `integrations/atlas/mapping.md` and `verification/REQUIREMENTS.md` before implementation changes. Check `verification/source-baselines.json` for pinned OAL and Atlas inputs. Preserve specification, realization and observation as distinct objects.
+For Stable-v1.0.0, `minerva.project.yaml` is discovery only. The listed strict
+Markdown modules are the semantic authority. Never move Atlas content into a
+central appendix or replace the modules with a summary blueprint.
 
-Minerva includes no Atlas-specific reader or translation engine. Integration is documented; examples elaborate the official Atlas minimal, task-board and composition cases with their source identities and contracts. The source catalogue is authored Minerva data, checked for internal consistency; its fidelity to L1 requires review. Do not add retired implementations or backward-compatibility fixtures for unpublished drafts.
+Every module contains one exact `atlas-source-json` record and one added
+`minerva-design-json` record. Together the modules must preserve the complete
+Atlas normalized hand-off and add generation-ready technical detail. Keep
+paths, IDs, source references, methods, collaborators, algorithms, failures,
+effects, and generation targets explicit.
 
-For adopting applications, root `docs/` is recommended, with `L1_AtlasSpecifications`, `L2_MinervaBlueprints`, `L3_Vulcan` and `Shared` for adopted materials. The per-file mirror belongs to L2. Libraries and abstract base classes remain optional.
+Abstract tools remain protocols. Concrete tools are technical Markdown designs
+with technology, lifecycle, configuration, transaction behavior, and error
+mapping; Minerva must not contain their executable implementation.
+
+`Boundary` means only an interaction interface that exposes use cases. Test
+scenarios and instrumentation use `observation_points`. Preserve use-case and
+entity-validation graphs and keep the knowledge graph complete.
 
 ## Maintain and verify
 
-Keep English and Portuguese aligned, preserve source IDs and frozen upstream bytes, update links and use edition-local commands. Record added decisions and limits. Never equate a code observation or validator pass with stakeholder acceptance.
+Edit the Atlas importer or external concrete-tool design inputs before
+regenerating importer-owned example trees. Run `python run_examples.py` and
+`python -m unittest discover -s tests -v` from the selected edition. A valid
+project proves structural/traceability consistency, not stakeholder approval.
 
-Run edition tests, examples and `tests/fixtures/counterexamples/check.py`; from the root run `scripts/check_repository.py` and `scripts/tests`. Inspect changed artwork. Keep environments/build products outside the delivery tree. Update observed evidence before generating the root inventory. Stage intended files, generate `CONTENT-SHA256.json` last, verify and commit locally. Follow `docs/releasing.md` for packaging. Final commit and ZIP digests belong in an external receipt. Local delivery does not authorize remote publication.
+Keep English and Portuguese aligned. Preserve upstream editions and the exact
+normalized Atlas payload. Do not publish, tag, push, or replace historical
+edition bytes without explicit authorization.

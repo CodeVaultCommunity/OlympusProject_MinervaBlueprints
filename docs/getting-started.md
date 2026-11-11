@@ -1,19 +1,22 @@
-# Author a Minerva blueprint
+# Get started with Minerva Blueprints
 
-[Português](getting-started.pt-br.md) · [Edition](../versioning/Alpha-v0.1.0/README.md)
+[Português brasileiro](getting-started.pt-br.md) · [Home](../README.md) · [Selected edition](../versioning/Stable-v1.0.0/README.md)
 
-1. Read the [minimal Atlas source](../versioning/Alpha-v0.1.0/examples/minimal/docs/L1_AtlasSpecifications/example.atlas.json). It specifies request submission, not TaskBoard listing. Note exact code preservation, positive integer quantity, authorization before collaborators, duplicate refusal and unknown-write outcomes.
-2. Read the [example overview](../versioning/Alpha-v0.1.0/examples/minimal/README.md), then locate `source_l1`, `adpm.cases` and `advs.behavioral_tests` in its blueprint. There is one source case, one program case and one logical behavioral test, with several scenarios.
-3. Copy the [starter](../versioning/Alpha-v0.1.0/implementations/yaml/starter.minerva.yaml). Identify source bytes, revision, scope and author. Declare the source catalogue after reviewing the source; it is not automatically imported.
-4. Write entities, canonical rules, tool capability contracts and the case algorithm. Record added design decisions explicitly. Keep concrete database and channel choices separate.
-5. Define scenarios with preparation, actor context, action, expected result/effects, boundary and configuration. Link criteria, rules and requirements. Shared quality obligations keep one canonical supporting check.
-6. Validate structure, then consistency. Review source fidelity separately. Keep a draft while substantive information is missing; technical review does not imply stakeholder approval.
-7. Add planned source bindings when a code design exists. `--verify-code` checks bytes and supported lexical names only. Execute realization tests separately and record actual evidence.
+Minerva Stable-v1.0.0 transforms an Atlas Stable-v1.1.0 normalized hand-off into a distributed tree of strict Markdown modules shaped like the future codebase. The modules collectively preserve all Atlas semantics and add generation-oriented technical design; they are not an Atlas appendix and they contain no executable implementation.
+
+Use Python 3.11 or later. From the repository root:
 
 ```bash
-cd versioning/Alpha-v0.1.0
-python validator/minerva_validate.py implementations/yaml/starter.minerva.yaml --structure-only
-python validator/minerva_validate.py examples/minimal/docs/L2_MinervaBlueprints/blueprint.yaml --root examples/minimal --json
+python -m pip install -e "versioning/Stable-v1.0.0"
+python versioning/Stable-v1.0.0/run_examples.py
+python -m pytest versioning/Stable-v1.0.0/tests
 ```
 
-No reader or translation engine is included. The [profile](../versioning/Alpha-v0.1.0/implementations/yaml/README.md) defines supported fields and the [assessment guide](../versioning/Alpha-v0.1.0/specification/conformance.md) defines what each result means.
+To import a normalized Atlas document, provide the application name and, when available, external concrete-tool design data:
+
+```bash
+minerva-import-atlas atlas.normalized.json output --app RequestRegister --tool-designs concrete-tools.json
+minerva-validate output
+```
+
+Read `minerva.project.yaml` only for discovery. The Markdown modules are the semantic authority. Each module combines its controlled Atlas source record with technical classes, methods, collaborators, algorithms, failures, effects, injection points, and generation targets. `Boundary` names only interaction adapters; behavioral tests use scenarios and `observation_points`.

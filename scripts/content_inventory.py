@@ -1,4 +1,4 @@
-"""Capture actual bytes of every indexed delivery file; verify by path and content."""
+"""Capture every present non-ignored delivery file; verify by path and content."""
 from __future__ import annotations
 
 import argparse
@@ -11,7 +11,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = "CONTENT-SHA256.json"
-SCOPE = "All Git-indexed delivery files, using actual working-tree bytes; stage new delivery files before generation."
+SCOPE = "All present non-ignored delivery files reported by Git, using actual working-tree bytes."
 
 
 def portable_path(name: str) -> str:
@@ -22,11 +22,16 @@ def portable_path(name: str) -> str:
 
 
 def tracked_files(root: Path) -> list[str]:
-    raw = subprocess.check_output(["git", "ls-files", "--cached", "-z"], cwd=root)
+    raw = subprocess.check_output(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=root
+    )
     paths = raw.decode("utf-8").split("\0")[:-1]
     if len(paths) != len(set(paths)):
-        raise ValueError("duplicate/unmerged paths in Git index")
-    return sorted(portable_path(path) for path in paths if path != INVENTORY)
+        raise ValueError("duplicate delivery paths reported by Git")
+    return sorted(
+        portable_path(path) for path in paths
+        if path != INVENTORY and (root / Path(*path.split("/"))).is_file()
+    )
 
 
 def read_file(root: Path, name: str) -> bytes:

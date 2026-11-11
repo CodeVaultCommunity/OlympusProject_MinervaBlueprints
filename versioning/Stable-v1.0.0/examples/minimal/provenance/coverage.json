@@ -1,0 +1,553 @@
+{
+  "format": "minerva-coverage/1.0.0",
+  "source_semantic_sha256": "e35fbe25ca79941ce67853b9932390145ea0a0a44409980ef95d1d15da603775",
+  "concept_count": 91,
+  "entries": [
+    {
+      "source_ref": "ACT-REQUESTER",
+      "source_kind": "actor",
+      "source_pointer": "/atlas/actors/0",
+      "module": "shared/actors/Actor_Requester.md"
+    },
+    {
+      "source_ref": "VOC-REQUEST-CODE",
+      "source_kind": "term",
+      "source_pointer": "/atlas/vocabulary/0",
+      "module": "project/vocabulary/Term_RequestCode.md"
+    },
+    {
+      "source_ref": "ENT-REQUEST",
+      "source_kind": "entity",
+      "source_pointer": "/atlas/entities/0",
+      "module": "apps/RequestRegister/entities/Entity_Request.md"
+    },
+    {
+      "source_ref": "FLD-REQUEST-CODE",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/0",
+      "module": "apps/RequestRegister/entities/Entity_Request.md"
+    },
+    {
+      "source_ref": "FLD-REQUEST-QUANTITY",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/1",
+      "module": "apps/RequestRegister/entities/Entity_Request.md"
+    },
+    {
+      "source_ref": "VLD-REQUEST-QUANTITY",
+      "source_kind": "entity_validation",
+      "source_pointer": "/atlas/entities/0/validations/0",
+      "module": "apps/RequestRegister/entities/Entity_Request.md"
+    },
+    {
+      "source_ref": "VLD-REQUEST-CODE",
+      "source_kind": "entity_validation",
+      "source_pointer": "/atlas/entities/0/validations/1",
+      "module": "apps/RequestRegister/entities/Entity_Request.md"
+    },
+    {
+      "source_ref": "TOL-REQUEST-STORE",
+      "source_kind": "abstract_tool",
+      "source_pointer": "/atlas/tools/0",
+      "module": "apps/RequestRegister/tools/abstract/AbstractTool_RequestStore.md"
+    },
+    {
+      "source_ref": "OP-REQUEST-STORE",
+      "source_kind": "abstract_tool_operation",
+      "source_pointer": "/atlas/tools/0/operations/0",
+      "module": "apps/RequestRegister/tools/abstract/AbstractTool_RequestStore.md"
+    },
+    {
+      "source_ref": "UC-REQUEST-SUBMIT",
+      "source_kind": "use_case",
+      "source_pointer": "/atlas/use_cases/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "OUT-REQUEST-CONFIRMED",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "OUT-REQUEST-INVALID",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/1",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "OUT-REQUEST-DENIED",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/2",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "OUT-REQUEST-STORE-FAILURE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/3",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "OUT-REQUEST-DUPLICATE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/4",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-01",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-02",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/1",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-03",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/2",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-04",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/3",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-05",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/4",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-06",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/5",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RF-REQUEST-07",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/6",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "RNF-REQUEST-01",
+      "source_kind": "nonfunctional_requirement",
+      "source_pointer": "/atlas/use_cases/0/nonfunctional_requirements/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-01",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-02",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/1",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-03",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/2",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-04",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/3",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-05",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/4",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-06",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/5",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "AC-REQUEST-SUBMIT-QUALITY",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/6",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "TRC-REQUEST-01",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/0/traceability/0",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "TRC-REQUEST-02",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/0/traceability/1",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "TRC-REQUEST-SUBMIT-ORIGIN",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/0/traceability/2",
+      "module": "apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md"
+    },
+    {
+      "source_ref": "BND-REQUEST-WEB",
+      "source_kind": "boundary",
+      "source_pointer": "/atlas/boundaries/0",
+      "module": "apps/RequestRegister/boundaries/Boundary_RequestRegisterWebForm.md"
+    },
+    {
+      "source_ref": "INT-REQUEST-SUBMIT",
+      "source_kind": "interaction",
+      "source_pointer": "/atlas/boundaries/0/interactions/0",
+      "module": "apps/RequestRegister/boundaries/Boundary_RequestRegisterWebForm.md"
+    },
+    {
+      "source_ref": "GRAPH-VLD-REQUEST-QUANTITY",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/0",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/0",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-READ",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/1",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-TYPE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/2",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-MIN",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/3",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-PASS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/4",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-FAIL-TYPE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/5",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-FAIL-MIN",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/6",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/0",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/1",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/2",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/3",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/4",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/5",
+      "module": "apps/RequestRegister/graphs/Graph_QuantityValidation.md"
+    },
+    {
+      "source_ref": "GRAPH-REQUEST-SUBMIT",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/1",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/0",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-PERM",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/1",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-DENY",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/2",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-VALIDATE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/3",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-QTYDEC",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/4",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-INVALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/5",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-STORE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/6",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-STOREERROR",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/7",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-SUCCESS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/8",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-DUPLICATE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/9",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-CODE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/10",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "N-REQ-CODE-VALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/11",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/0",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/1",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/2",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/3",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/4",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/5",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-7",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/6",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-8",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/7",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-DUPLICATE",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/8",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-CODE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/9",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-CODE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/10",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "E-REQ-CODE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/11",
+      "module": "apps/RequestRegister/graphs/Graph_SubmitRequest.md"
+    },
+    {
+      "source_ref": "GRAPH-VLD-REQUEST-CODE",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/2",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-CODE-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/0",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-CODE-CHECK",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/1",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-CODE-PASS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/2",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-REQ-CODE-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/3",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-CODE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/0",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-CODE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/1",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-REQ-CODE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/2",
+      "module": "apps/RequestRegister/graphs/Graph_RequestCodeValidity.md"
+    },
+    {
+      "source_ref": "RES-REQUEST-WIRE",
+      "source_kind": "resource",
+      "source_pointer": "/atlas/resources/0",
+      "module": "project/resources/ResRequestWire.md"
+    },
+    {
+      "source_ref": "RES-REQUEST-FLOW",
+      "source_kind": "resource",
+      "source_pointer": "/atlas/resources/1",
+      "module": "project/resources/ResRequestFlow.md"
+    },
+    {
+      "source_ref": "ASM-REQUEST-STORE-UNIQUE",
+      "source_kind": "assumption",
+      "source_pointer": "/atlas/assumptions/0",
+      "module": "project/assumptions/AsmRequestStoreUnique.md"
+    },
+    {
+      "source_ref": "DEC-MIN-TOOL-ABSTRACTION",
+      "source_kind": "decision",
+      "source_pointer": "/atlas/decisions/0",
+      "module": "project/decisions/DecMinToolAbstraction.md"
+    },
+    {
+      "source_ref": "OI-REQUEST-LATENCY",
+      "source_kind": "open_issue",
+      "source_pointer": "/atlas/open_issues/0",
+      "module": "project/open_issues/OiRequestLatency.md"
+    },
+    {
+      "source_ref": "SRC-REQUEST-BRIEF",
+      "source_kind": "source",
+      "source_pointer": "/atlas/sources/0",
+      "module": "project/sources/SrcRequestBrief.md"
+    },
+    {
+      "source_ref": "HIST-REQUEST-01",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/0",
+      "module": "project/history/HistRequest01.md"
+    },
+    {
+      "source_ref": "HIST-MIGRATION-STABLE",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/1",
+      "module": "project/history/HistMigrationStable.md"
+    },
+    {
+      "source_ref": "HIST-ATLAS-1-1",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/2",
+      "module": "project/history/HistAtlas11.md"
+    }
+  ]
+}

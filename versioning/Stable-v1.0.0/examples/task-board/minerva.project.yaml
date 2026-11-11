@@ -1,0 +1,42 @@
+format: minerva-project/1.0.0
+model_version: Stable-v1.0.0
+project_id: MINERVA-TASKBOARD
+app: TaskBoard
+source:
+  format: atlas-normalized/1.1.0
+  document_id: DOC-TASK-BOARD
+  revision: '3'
+  semantic_sha256: 5a111a98cebb832e38f0bf5ec517d0eadc62bf65afb0abdca9c530cb6398cae6
+  artifact: provenance/atlas.normalized.json
+semantic_authority: distributed_markdown_modules
+modules:
+- apps/TaskBoard/boundaries/Boundary_ChannelIndependentInteractionIllustration.md
+- apps/TaskBoard/composition/AppComposition.md
+- apps/TaskBoard/entities/Entity_Task.md
+- apps/TaskBoard/graphs/Graph_CompleteTask.md
+- apps/TaskBoard/graphs/Graph_CompletionTransition.md
+- apps/TaskBoard/graphs/Graph_CreateTask.md
+- apps/TaskBoard/graphs/Graph_ListTasks.md
+- apps/TaskBoard/graphs/Graph_NewTaskValidity.md
+- apps/TaskBoard/graphs/Graph_TaskIdentifier.md
+- apps/TaskBoard/tests/BehavioralTest_CompleteTask.md
+- apps/TaskBoard/tests/BehavioralTest_CreateTask.md
+- apps/TaskBoard/tests/BehavioralTest_ListTasks.md
+- apps/TaskBoard/tools/abstract/AbstractTool_TaskStore.md
+- apps/TaskBoard/tools/concrete/Tool_SqliteImplementationOfTaskStore.md
+- apps/TaskBoard/usecases/Main/UseCase_CompleteTask.md
+- apps/TaskBoard/usecases/Main/UseCase_CreateTask.md
+- apps/TaskBoard/usecases/Main/UseCase_ListTasks.md
+- project/Project.md
+- project/assumptions/AsmTaskIdentity.md
+- project/assumptions/AsmTaskSingleBoard.md
+- project/history/HistAtlas11.md
+- project/history/HistMigrationStable.md
+- project/history/HistTaskBoard01.md
+- project/history/HistTaskBoard03.md
+- project/sources/SrcTaskBrief.md
+- project/sources/SrcTaskOal.md
+- shared/actors/Actor_BoardMember.md
+- shared/types/Type_TaskStatus.md
+coverage: provenance/coverage.json
+knowledge_graph: knowledge/graph.json

@@ -19,7 +19,7 @@ import cairosvg
 PROJECT = 'minerva'
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent
-VERSION = 'Alpha-v0.1.0'
+VERSION = 'Stable-v1.0.0'
 NAVY = '#0b1d36'
 INK = '#15314f'
 MUTED = '#415e78'
@@ -297,7 +297,7 @@ def main():
         for kind, generate in generators.items():
             source = generate(pt)
             stem = f'{PROJECT}-{kind}-{language}'
-            (HERE/f'{stem}.svg').write_text(source,encoding='utf-8')
+            (HERE/f'{stem}.svg').write_text(source + '\n',encoding='utf-8',newline='\n')
             png_bytes = cairosvg.svg2png(bytestring=source.encode('utf-8'))
             temporary = ASSETS/f'.{stem}.png.tmp'
             temporary.write_bytes(png_bytes)

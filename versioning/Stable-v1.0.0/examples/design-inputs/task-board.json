@@ -1,0 +1,12 @@
+{
+  "TOL-TASK-STORE": {
+    "name": "SQLite task store",
+    "technology": "SQLite",
+    "algorithm": "Use board-scoped parameterized queries, hydrate Task entities canonically, enforce expected revision in update predicates, and translate affected-row counts and SQLite errors into the abstract result algebra.",
+    "transaction": "Use BEGIN IMMEDIATE for create and complete operations; compare expected revision before mutation and preserve the distinction between not_applied and unknown outcomes.",
+    "configuration": ["database_path", "board_id", "busy_timeout_ms"],
+    "lifecycle": "application_scope_per_board",
+    "dependencies": ["sqlite3"],
+    "notes": ["The composition root supplies a board-specific instance; use cases still enforce trusted actor context."]
+  }
+}

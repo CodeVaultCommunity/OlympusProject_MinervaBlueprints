@@ -1,46 +1,36 @@
-<p align="center"><img src="assets/minerva-banner-en.png" alt="Minerva Blueprints · Olympus Project · Alpha-v0.1.0" width="100%"></p>
+<p align="center"><img src="assets/minerva-banner-en.png" alt="Minerva Blueprints · Olympus Project" width="100%"></p>
 
 # Minerva Blueprints
 
-[Português brasileiro](README.pt-br.md)
+[Português brasileiro](README.pt-br.md) · [Stable-v1.0.0](versioning/Stable-v1.0.0/README.md) · [Verification](versioning/Stable-v1.0.0/verification/RELEASE.md)
 
-**An OAL L2 / ADMV model for program modeling and verification specification.** ADPM and ADVS remain connected through contracts, rules, dependencies, scenarios and traceability.
+Minerva is the OAL L2 layer between Atlas Specifications and Vulcan code. The
+Stable-v1.0.0 contract replaces the former central YAML blueprint with a
+distributed tree of strict Markdown modules shaped like the future codebase.
 
-This Alpha is unpublished and was revised in place with owner authorization. It includes a YAML profile and reference validator. **It includes no Atlas reader or translation engine.** Its examples are L2 elaborations of the same official Atlas examples; any future engine is a separate project.
+Each module preserves its complete Atlas semantics in `atlas-source-json` and
+adds generation-oriented technical design in `minerva-design-json`: targets,
+symbols, methods, collaborators, algorithms, failures, effects, tests, and
+graph links. Reading all listed modules reconstructs all of Atlas plus L2
+design; `minerva.project.yaml` is discovery only.
 
-[Start here](docs/getting-started.md) · [Alpha-v0.1.0](versioning/Alpha-v0.1.0/README.md) · [Normative model](versioning/Alpha-v0.1.0/specification/model.md)
+Abstract tools remain protocols. Concrete tools are detailed Markdown designs
+with technology, lifecycle, configuration, transactions, and error mappings —
+not executable L2 code. `Boundary` is reserved for interaction adapters;
+behavioral scenarios use `observation_points`.
 
-## Position in Olympus
-
-![OAL layers](assets/minerva-oal-position-en.png)
-
-Atlas supplies L1 when adopted; Minerva establishes L2; Vulcan may organize the L3 realization. Interaction choices belong to L4. An application can use root `docs/` with adopted materials in `L1_AtlasSpecifications`, `L2_MinervaBlueprints`, `L3_Vulcan` and `Shared`.
-
-![ADPM and ADVS](assets/minerva-model-en.png)
-
-## Examples and integration
-
-- [Minimal request register](versioning/Alpha-v0.1.0/examples/minimal/README.md)
-- [TaskBoard](versioning/Alpha-v0.1.0/examples/task-board/README.md), [revisions 2 / 3](versioning/Alpha-v0.1.0/examples/task-board/revisions/README.md)
-- [Booking composition](versioning/Alpha-v0.1.0/examples/composition/README.md)
-- [Atlas mapping](versioning/Alpha-v0.1.0/integrations/atlas/mapping.md)
-
-Source contracts, IDs and criteria are preserved; application code and domain executions are not supplied. Validation checks Minerva declarations and source integrity. Semantic review is separate.
-
-## Usage and organization
-
-```bash
-cd versioning/Alpha-v0.1.0
-python -m pip install .
-python run_examples.py --all
+```powershell
+cd versioning/Stable-v1.0.0
+python -m pip install -e .
+python run_examples.py
+python -m unittest discover -s tests -v
 ```
 
-Use Python 3.11+ in an environment outside the delivery tree. `specification/` contains rules; `implementations/`, the profile; `integrations/`, mappings; `minerva_blueprints/`, tooling; `examples/` and `tests/`, demonstrations and checks; `verification/`, sources, review and evidence. Each edition is self-contained.
+The maintained minimal, composition, and task-board examples preserve 477
+Atlas concepts in 76 Markdown modules and declare 31 downstream generation
+targets. Their knowledge graphs index Atlas concepts, technical modules,
+relationships, and abstract-to-concrete tool lineage.
 
-![Workflow](assets/minerva-workflow-en.png)
-
-[Verification](versioning/Alpha-v0.1.0/verification/VALIDATION.md) · [Release procedure](docs/releasing.md) · [Assets](assets/README.md) · [Acknowledgements](ACKNOWLEDGEMENTS.md)
-
-After extracting a distribution, run `python scripts/check_archive.py .` before creating caches inside it. In a Git checkout, use `python scripts/content_inventory.py --check`.
-
-Douglas de Oliveira Alkimim · Olympus Project · [MIT](LICENSE)
+The earlier [Alpha-v0.1.0](versioning/Alpha-v0.1.0/README.md) remains available
+as a historical edition. Concept and authorship: Douglas de Oliveira Alkimim.
+[MIT license](LICENSE).

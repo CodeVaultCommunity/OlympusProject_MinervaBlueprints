@@ -9,4 +9,9 @@ work/
 *.sqlite
 *.sqlite3
 *.db
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
 .DS_Store

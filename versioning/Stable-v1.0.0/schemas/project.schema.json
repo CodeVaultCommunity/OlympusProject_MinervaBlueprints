@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codevaultcommunity.github.io/minerva/schemas/project-1.0.0.json",
+  "title": "Minerva project discovery manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "model_version", "project_id", "app", "source", "semantic_authority", "modules", "coverage", "knowledge_graph"],
+  "properties": {
+    "format": {"const": "minerva-project/1.0.0"},
+    "model_version": {"const": "Stable-v1.0.0"},
+    "project_id": {"type": "string", "minLength": 1},
+    "app": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "document_id", "revision", "semantic_sha256", "artifact"],
+      "properties": {
+        "format": {"const": "atlas-normalized/1.1.0"},
+        "document_id": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "semantic_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "artifact": {"const": "provenance/atlas.normalized.json"}
+      }
+    },
+    "semantic_authority": {"const": "distributed_markdown_modules"},
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[^/].*\\.md$"}
+    },
+    "coverage": {"const": "provenance/coverage.json"},
+    "knowledge_graph": {"const": "knowledge/graph.json"}
+  }
+}
+

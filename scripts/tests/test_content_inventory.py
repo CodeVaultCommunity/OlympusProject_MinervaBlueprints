@@ -192,20 +192,18 @@ def checkout(files, tmp_path):
     return root
 
 
-def test_index_scope_tracks_intended_additions_and_deletions(checkout):
+def test_worktree_scope_tracks_nonignored_additions_and_deletions(checkout):
     assert inventory.check(checkout) == []
-    (checkout / "untracked.txt").write_bytes(b"local only")
-    assert inventory.check(checkout) == []
-    subprocess.run(["git", "add", "untracked.txt"], cwd=checkout, check=True)
+    (checkout / "untracked.txt").write_bytes(b"delivery")
     assert "added file: untracked.txt" in inventory.check(checkout)
-    subprocess.run(["git", "rm", "--cached", "a.txt"], cwd=checkout, check=True, capture_output=True)
+    (checkout / "a.txt").unlink()
     assert "missing file: a.txt" in inventory.check(checkout)
 
 
-def test_missing_indexed_file_rejected(checkout):
+def test_build_reflects_present_delivery_files(checkout):
     (checkout / "a.txt").unlink()
-    with pytest.raises(ValueError, match="missing file: a.txt"):
-        inventory.build(checkout)
+    manifest = inventory.build(checkout)
+    assert "a.txt" not in {row["path"] for row in manifest["files"]}
 
 
 def commit(checkout):

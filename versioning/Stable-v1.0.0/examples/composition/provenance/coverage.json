@@ -1,0 +1,1201 @@
+{
+  "format": "minerva-coverage/1.0.0",
+  "source_semantic_sha256": "7638f937e58c0da8e337ecb10dec63792e41a5a7235e36d88bcf65a0413a9463",
+  "concept_count": 199,
+  "entries": [
+    {
+      "source_ref": "ACT-BOOKING-CLERK",
+      "source_kind": "actor",
+      "source_pointer": "/atlas/actors/0",
+      "module": "shared/actors/Actor_BookingClerk.md"
+    },
+    {
+      "source_ref": "VOC-BOOKING",
+      "source_kind": "term",
+      "source_pointer": "/atlas/vocabulary/0",
+      "module": "project/vocabulary/Term_Booking.md"
+    },
+    {
+      "source_ref": "TYP-BOOKING-STATUS",
+      "source_kind": "type",
+      "source_pointer": "/atlas/types/0",
+      "module": "shared/types/Type_BookingStatus.md"
+    },
+    {
+      "source_ref": "ENT-BOOKING",
+      "source_kind": "entity",
+      "source_pointer": "/atlas/entities/0",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "FLD-BOOKING-CODE",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/0",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "FLD-BOOKING-TITLE",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/1",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "FLD-BOOKING-STATUS",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/2",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "FLD-BOOKING-VERSION",
+      "source_kind": "entity_field",
+      "source_pointer": "/atlas/entities/0/fields/3",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "VLD-BOOKING-CODE",
+      "source_kind": "entity_validation",
+      "source_pointer": "/atlas/entities/0/validations/0",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "VLD-BOOKING-CANCEL",
+      "source_kind": "entity_validation",
+      "source_pointer": "/atlas/entities/0/validations/1",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "VLD-BOOKING-TITLE",
+      "source_kind": "entity_validation",
+      "source_pointer": "/atlas/entities/0/validations/2",
+      "module": "apps/BookingDesk/entities/Entity_Booking.md"
+    },
+    {
+      "source_ref": "TOL-BOOKING-STORE",
+      "source_kind": "abstract_tool",
+      "source_pointer": "/atlas/tools/0",
+      "module": "apps/BookingDesk/tools/abstract/AbstractTool_BookingStore.md"
+    },
+    {
+      "source_ref": "OP-BOOKING-LOAD",
+      "source_kind": "abstract_tool_operation",
+      "source_pointer": "/atlas/tools/0/operations/0",
+      "module": "apps/BookingDesk/tools/abstract/AbstractTool_BookingStore.md"
+    },
+    {
+      "source_ref": "OP-BOOKING-SAVE",
+      "source_kind": "abstract_tool_operation",
+      "source_pointer": "/atlas/tools/0/operations/1",
+      "module": "apps/BookingDesk/tools/abstract/AbstractTool_BookingStore.md"
+    },
+    {
+      "source_ref": "UC-BOOKING-LOOKUP",
+      "source_kind": "use_case",
+      "source_pointer": "/atlas/use_cases/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-LOOKUP-FOUND",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-LOOKUP-NOTFOUND",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-LOOKUP-FAILURE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-LOOKUP-INVALID",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-LOOKUP-DENIED",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/0/outcomes/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-LOOKUP-01",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-LOOKUP-02",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-LOOKUP-03",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-LOOKUP-04",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-LOOKUP-AUTH",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/0/functional_requirements/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-LOOKUP-01",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-LOOKUP-02",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-LOOKUP-03",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-LOOKUP-INVALID",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-LOOKUP-AUTH",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/0/acceptance_criteria/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-LOOKUP-01",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/0/traceability/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-LOOKUP-ORIGIN",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/0/traceability/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md"
+    },
+    {
+      "source_ref": "UC-BOOKING-CREATE",
+      "source_kind": "use_case",
+      "source_pointer": "/atlas/use_cases/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CREATE-DONE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/1/outcomes/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CREATE-INVALID",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/1/outcomes/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CREATE-CONFLICT",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/1/outcomes/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CREATE-DENIED",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/1/outcomes/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-01",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-02",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-03",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-04",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-TITLE",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CREATE-AUTH",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/1/functional_requirements/5",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "RNF-BOOKING-CREATE-RESPONSE",
+      "source_kind": "nonfunctional_requirement",
+      "source_pointer": "/atlas/use_cases/1/nonfunctional_requirements/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-01",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-02",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-03",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-TITLE",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-AUTH",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CREATE-QUALITY",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/1/acceptance_criteria/5",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CREATE-01",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/1/traceability/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CREATE-02",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/1/traceability/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CREATE-ORIGIN",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/1/traceability/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md"
+    },
+    {
+      "source_ref": "UC-BOOKING-CANCEL",
+      "source_kind": "use_case",
+      "source_pointer": "/atlas/use_cases/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-DONE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-ALREADY",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-NOTFOUND",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-FAILURE",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-INVALID",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "OUT-BOOKING-CANCEL-DENIED",
+      "source_kind": "use_case_outcome",
+      "source_pointer": "/atlas/use_cases/2/outcomes/5",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-01",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-02",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-03",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-04",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-05",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RF-BOOKING-CANCEL-AUTH",
+      "source_kind": "functional_requirement",
+      "source_pointer": "/atlas/use_cases/2/functional_requirements/5",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "RNF-BOOKING-CANCEL-RESPONSE",
+      "source_kind": "nonfunctional_requirement",
+      "source_pointer": "/atlas/use_cases/2/nonfunctional_requirements/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-01",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-02",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-03",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-FAILURE",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/3",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-CONTEXT",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/4",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-AUTH",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/5",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "AC-BOOKING-CANCEL-QUALITY",
+      "source_kind": "acceptance_criterion",
+      "source_pointer": "/atlas/use_cases/2/acceptance_criteria/6",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CANCEL-01",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/2/traceability/0",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CANCEL-02",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/2/traceability/1",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "TRC-BOOKING-CANCEL-ORIGIN",
+      "source_kind": "trace_link",
+      "source_pointer": "/atlas/use_cases/2/traceability/2",
+      "module": "apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md"
+    },
+    {
+      "source_ref": "BND-BOOKING-CLI",
+      "source_kind": "boundary",
+      "source_pointer": "/atlas/boundaries/0",
+      "module": "apps/BookingDesk/boundaries/Boundary_BookingDeskCommandLine.md"
+    },
+    {
+      "source_ref": "INT-BOOKING-CREATE",
+      "source_kind": "interaction",
+      "source_pointer": "/atlas/boundaries/0/interactions/0",
+      "module": "apps/BookingDesk/boundaries/Boundary_BookingDeskCommandLine.md"
+    },
+    {
+      "source_ref": "INT-BOOKING-CANCEL",
+      "source_kind": "interaction",
+      "source_pointer": "/atlas/boundaries/0/interactions/1",
+      "module": "apps/BookingDesk/boundaries/Boundary_BookingDeskCommandLine.md"
+    },
+    {
+      "source_ref": "INT-BOOKING-LOOKUP",
+      "source_kind": "interaction",
+      "source_pointer": "/atlas/boundaries/0/interactions/2",
+      "module": "apps/BookingDesk/boundaries/Boundary_BookingDeskCommandLine.md"
+    },
+    {
+      "source_ref": "GRAPH-VLD-BOOKING-CODE",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/0",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-READ",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-EMPTY",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-LENGTH",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-CHARS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/4",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-PASS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/5",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CODE-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/0/nodes/6",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/3",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/4",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/5",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-7",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/6",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CODE-8",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/0/edges/7",
+      "module": "apps/BookingDesk/graphs/Graph_BookingCodeValidation.md"
+    },
+    {
+      "source_ref": "GRAPH-VLD-BOOKING-CANCEL",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CANCEL-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CANCEL-READ",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CANCEL-ACTIVE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CANCEL-PASS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-CANCEL-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/1/nodes/4",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CANCEL-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CANCEL-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CANCEL-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-CANCEL-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/1/edges/3",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md"
+    },
+    {
+      "source_ref": "GRAPH-BOOKING-LOOKUP",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/2",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-LOOKUP-AUTH",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-LOOKUP-DENIED",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-CODE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-CODEC",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/4",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-INVALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/5",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-LOAD",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/6",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-NOTFOUND",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/7",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/8",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-LOOK-FOUND",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/2/nodes/9",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/3",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/4",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/5",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-LOOK-7",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/6",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-LOOKUP-ALLOW",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/7",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-LOOKUP-DENY",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/2/edges/8",
+      "module": "apps/BookingDesk/graphs/Graph_LocateBooking.md"
+    },
+    {
+      "source_ref": "GRAPH-BOOKING-CREATE",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/3",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-CREATE-AUTH",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-CREATE-DENIED",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-CODE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-CODEC",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/4",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-INVALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/5",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-SAVE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/6",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-DUP",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/7",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/8",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-DONE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/9",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-TITLE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/10",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CREATE-TITLEVALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/3/nodes/11",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/3",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/4",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/5",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-7",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/6",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-TITLE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/7",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-TITLE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/8",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CREATE-TITLE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/9",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-CREATE-ALLOW",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/10",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-CREATE-DENY",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/3/edges/11",
+      "module": "apps/BookingDesk/graphs/Graph_CreateBooking.md"
+    },
+    {
+      "source_ref": "GRAPH-BOOKING-CANCEL",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/4",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-CANCEL-AUTH",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOKING-CANCEL-DENIED",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-LOOK",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-FOUND",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/4",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-NOTFOUND",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/5",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-VALIDATE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/6",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-VALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/7",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-ALREADY",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/8",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-SAVE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/9",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-ERROR",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/10",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-DONE",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/11",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-INVALID",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/12",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "N-BOOK-CANCEL-LOOKDENIED",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/4/nodes/13",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-4",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/3",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-5",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/4",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-6",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/5",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-7",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/6",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-8",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/7",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-9",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/8",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-INVALID",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/9",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-LOOKERROR",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/10",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOK-CANCEL-LOOKDENIED",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/11",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-CANCEL-ALLOW",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/12",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "E-BOOKING-CANCEL-DENY",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/4/edges/13",
+      "module": "apps/BookingDesk/graphs/Graph_CancelBooking.md"
+    },
+    {
+      "source_ref": "GRAPH-BOOKING-CANCEL-REFUSAL",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/5",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "N-BOOK-REFUSE-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/5/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "N-BOOK-REFUSE-ALREADY",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/5/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "N-BOOK-REFUSE-NOTFOUND",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/5/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "E-BOOK-REFUSE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/5/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "E-BOOK-REFUSE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/5/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md"
+    },
+    {
+      "source_ref": "GRAPH-VLD-BOOKING-TITLE",
+      "source_kind": "graph",
+      "source_pointer": "/atlas/graphs/6",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-TITLE-START",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/6/nodes/0",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-TITLE-CHECK",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/6/nodes/1",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-TITLE-PASS",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/6/nodes/2",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "N-VLD-BOOK-TITLE-FAIL",
+      "source_kind": "graph_node",
+      "source_pointer": "/atlas/graphs/6/nodes/3",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-TITLE-1",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/6/edges/0",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-TITLE-2",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/6/edges/1",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "E-VLD-BOOK-TITLE-3",
+      "source_kind": "graph_edge",
+      "source_pointer": "/atlas/graphs/6/edges/2",
+      "module": "apps/BookingDesk/graphs/Graph_BookingTitleValidity.md"
+    },
+    {
+      "source_ref": "SRC-BOOKING-BRIEF",
+      "source_kind": "source",
+      "source_pointer": "/atlas/sources/0",
+      "module": "project/sources/SrcBookingBrief.md"
+    },
+    {
+      "source_ref": "HIST-BOOKING-01",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/0",
+      "module": "project/history/HistBooking01.md"
+    },
+    {
+      "source_ref": "HIST-MIGRATION-STABLE",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/1",
+      "module": "project/history/HistMigrationStable.md"
+    },
+    {
+      "source_ref": "HIST-ATLAS-1-1",
+      "source_kind": "history_entry",
+      "source_pointer": "/atlas/history/2",
+      "module": "project/history/HistAtlas11.md"
+    }
+  ]
+}

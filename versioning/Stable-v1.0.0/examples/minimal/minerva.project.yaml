@@ -1,0 +1,36 @@
+format: minerva-project/1.0.0
+model_version: Stable-v1.0.0
+project_id: MINERVA-REQUESTREGISTER
+app: RequestRegister
+source:
+  format: atlas-normalized/1.1.0
+  document_id: ATLAS-EX-MINIMAL
+  revision: '2'
+  semantic_sha256: e35fbe25ca79941ce67853b9932390145ea0a0a44409980ef95d1d15da603775
+  artifact: provenance/atlas.normalized.json
+semantic_authority: distributed_markdown_modules
+modules:
+- apps/RequestRegister/boundaries/Boundary_RequestRegisterWebForm.md
+- apps/RequestRegister/composition/AppComposition.md
+- apps/RequestRegister/entities/Entity_Request.md
+- apps/RequestRegister/graphs/Graph_QuantityValidation.md
+- apps/RequestRegister/graphs/Graph_RequestCodeValidity.md
+- apps/RequestRegister/graphs/Graph_SubmitRequest.md
+- apps/RequestRegister/tests/BehavioralTest_SubmitRequest.md
+- apps/RequestRegister/tools/abstract/AbstractTool_RequestStore.md
+- apps/RequestRegister/tools/concrete/Tool_SqliteImplementationOfRequestStore.md
+- apps/RequestRegister/usecases/Main/UseCase_SubmitRequest.md
+- project/Project.md
+- project/assumptions/AsmRequestStoreUnique.md
+- project/decisions/DecMinToolAbstraction.md
+- project/history/HistAtlas11.md
+- project/history/HistMigrationStable.md
+- project/history/HistRequest01.md
+- project/open_issues/OiRequestLatency.md
+- project/resources/ResRequestFlow.md
+- project/resources/ResRequestWire.md
+- project/sources/SrcRequestBrief.md
+- project/vocabulary/Term_RequestCode.md
+- shared/actors/Actor_Requester.md
+coverage: provenance/coverage.json
+knowledge_graph: knowledge/graph.json

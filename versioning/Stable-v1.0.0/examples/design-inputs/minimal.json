@@ -1,0 +1,12 @@
+{
+  "TOL-REQUEST-STORE": {
+    "name": "SQLite request store",
+    "technology": "SQLite",
+    "algorithm": "Open a scoped SQLite connection, translate ready domain values to bound parameters, execute the conditional write, and translate the row/result into the abstract operation result without reimplementing entity invariants.",
+    "transaction": "Use BEGIN IMMEDIATE for the uniqueness-sensitive write; commit only after the stored result is known and roll back on a known failure. Preserve unknown outcome when commit confirmation is lost.",
+    "configuration": ["database_path"],
+    "lifecycle": "application_scope_factory_with_operation_scoped_connections",
+    "dependencies": ["sqlite3"],
+    "notes": ["No automatic retry is permitted for unknown write outcomes."]
+  }
+}

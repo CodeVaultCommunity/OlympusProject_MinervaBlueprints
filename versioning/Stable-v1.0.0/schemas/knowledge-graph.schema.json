@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codevaultcommunity.github.io/minerva/schemas/knowledge-graph-1.0.0.json",
+  "title": "Minerva agent navigation graph",
+  "type": "object",
+  "required": ["format", "model_version", "project_id", "nodes", "edges"],
+  "properties": {
+    "format": {"const": "minerva-knowledge-graph/1.0.0"},
+    "model_version": {"const": "Stable-v1.0.0"},
+    "project_id": {"type": "string", "minLength": 1},
+    "nodes": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "kind"], "properties": {"id": {"type": "string"}, "kind": {"type": "string"}}}
+    },
+    "edges": {
+      "type": "array",
+      "items": {"type": "object", "required": ["from", "to", "relation"], "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "relation": {"type": "string"}}}
+    }
+  }
+}
+

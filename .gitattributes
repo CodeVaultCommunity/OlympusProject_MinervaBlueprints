@@ -1,2 +1,30 @@
-# Inventory hashes canonical bytes without checkout newline rewriting.
-* -text
+* text=auto eol=lf
+
+*.json text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.tex text eol=lf
+*.sty text eol=lf
+*.svg text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+*.cff text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.pdf binary
+*.zip binary
+
+# Authored representations, pinned snapshots, raw evidence, and byte-sensitive
+# fixtures must retain their exact bytes. Last matching attribute wins.
+**/*.atlas.md -text
+**/*.atlas.tex -text
+versioning/*/verification/evidence/** -text
+versioning/*/verification/sources/** -text
+versioning/*/verification/runs/** -text
+versioning/*/verification/reviews/** -text
+versioning/*/tests/fixtures/** -text

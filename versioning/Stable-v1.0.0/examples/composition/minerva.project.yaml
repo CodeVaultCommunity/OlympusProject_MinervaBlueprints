@@ -1,0 +1,40 @@
+format: minerva-project/1.0.0
+model_version: Stable-v1.0.0
+project_id: MINERVA-BOOKINGDESK
+app: BookingDesk
+source:
+  format: atlas-normalized/1.1.0
+  document_id: ATLAS-EX-COMPOSITION
+  revision: '2'
+  semantic_sha256: 7638f937e58c0da8e337ecb10dec63792e41a5a7235e36d88bcf65a0413a9463
+  artifact: provenance/atlas.normalized.json
+semantic_authority: distributed_markdown_modules
+modules:
+- apps/BookingDesk/boundaries/Boundary_BookingDeskCommandLine.md
+- apps/BookingDesk/composition/AppComposition.md
+- apps/BookingDesk/entities/Entity_Booking.md
+- apps/BookingDesk/graphs/Graph_BookingCodeValidation.md
+- apps/BookingDesk/graphs/Graph_BookingTitleValidity.md
+- apps/BookingDesk/graphs/Graph_CancelBooking.md
+- apps/BookingDesk/graphs/Graph_CancellationRefusalSubflow.md
+- apps/BookingDesk/graphs/Graph_CancellationTransitionValidation.md
+- apps/BookingDesk/graphs/Graph_CreateBooking.md
+- apps/BookingDesk/graphs/Graph_LocateBooking.md
+- apps/BookingDesk/tests/BehavioralTest_CancelBooking.md
+- apps/BookingDesk/tests/BehavioralTest_CreateBooking.md
+- apps/BookingDesk/tests/BehavioralTest_LocateBooking.md
+- apps/BookingDesk/tools/abstract/AbstractTool_BookingStore.md
+- apps/BookingDesk/tools/concrete/Tool_SqliteImplementationOfBookingStore.md
+- apps/BookingDesk/usecases/Main/UseCase_CancelBooking.md
+- apps/BookingDesk/usecases/Main/UseCase_CreateBooking.md
+- apps/BookingDesk/usecases/Main/UseCase_LocateBooking.md
+- project/Project.md
+- project/history/HistAtlas11.md
+- project/history/HistBooking01.md
+- project/history/HistMigrationStable.md
+- project/sources/SrcBookingBrief.md
+- project/vocabulary/Term_Booking.md
+- shared/actors/Actor_BookingClerk.md
+- shared/types/Type_BookingStatus.md
+coverage: provenance/coverage.json
+knowledge_graph: knowledge/graph.json

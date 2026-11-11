@@ -2,7 +2,7 @@
 
 [Português brasileiro](README.pt-br.md)
 
-**Olympus Project · OAL L2 · ADMV (ADPM + ADVS) · Alpha-v0.1.0**
+**Olympus Project · OAL L2 · ADMV (ADPM + ADVS) · Stable-v1.0.0**
 
 The headers and diagrams follow the visual composition of Atlas Specifications: blue/teal, light and navy cards, explicit arrows, and transparent diagram backgrounds. Both languages express the same content. Images explain the model; the edition documentation defines requirements and contracts.
 

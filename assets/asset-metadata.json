@@ -1,7 +1,7 @@
 {
   "project": "Minerva Blueprints",
   "parent_project": "Olympus Project",
-  "version": "Alpha-v0.1.0",
+  "version": "Stable-v1.0.0",
   "layer": "OAL L2 · ADMV (ADPM + ADVS)",
   "created_on": "2026-10-28",
   "scope": "Header decoration and explanatory diagrams. Diagrams describe model relationships and a review workflow; they do not certify application conformity or automatic generation.",
@@ -51,7 +51,7 @@
   },
   "diagrams": {
     "authoring": "Native editable SVG text, geometry and connectors, composed by render_images.py. No generated imagery in the technical diagrams.",
-    "semantic_source": "Current Alpha-v0.1.0 model documentation and revised Minerva/Vulcan requirements.",
+    "semantic_source": "Current Stable-v1.0.0 model documentation and the Atlas-to-Minerva-to-Vulcan contracts.",
     "recommended_layout": "docs/L1_AtlasSpecifications/, docs/L2_MinervaBlueprints/, docs/L3_Vulcan/, docs/Shared/; only adopted models need corresponding folders.",
     "ownership": "The per-file mirror belongs to L2. L3 records concrete organization, composition, execution, integrations and evidence. Shared is support, not an OAL layer.",
     "minerva_state_alignment": "The Minerva diagram follows the edition schema: source.state planned/observed; document.nature designed/reconstructed/mixed. Observed source metadata is not proof of execution.",
@@ -71,7 +71,7 @@
     "network_required": false,
     "project_runtime_dependency": false,
     "bitmap_output_note": "Rendering is reproducible from the retained inputs. Different font or Cairo versions can alter pixels.",
-    "renderer_sha256": "205f39024e70e030a7207b5ab3c2526faa615a269482c9702d866873de51e644"
+    "renderer_sha256": "a702c953ca4d4b4f89f3b5f123b04579ac4a2fc4db6ed589512f728ba74d6862"
   },
   "attribution": {
     "atlas_visual_source": "https://github.com/CodeVaultCommunity/OlympusProject_AtlasSpecifications/tree/b5941830515d9968bb7f313301f1abe25fb6f8aa/assets",
@@ -94,8 +94,8 @@
         534
       ],
       "has_transparency": true,
-      "svg_sha256": "3ad994e31c4a6f0ef668b281c6429f1d22a2be7ed54c5999722f27896c5d6abb",
-      "png_sha256": "fa0b14a5831f6cf80439d17bf1f9546848d3804d61720a806d6e0aba3b802238"
+      "svg_sha256": "78d21d88aa6355e792c264125bcff1806b2bdafd9cf8a6ea352b54ad9431a002",
+      "png_sha256": "ff144f996002700fc229a431c898bef1f68d70e43a89818c311d1ac322e8a7c4"
     },
     {
       "id": "minerva-banner-pt-br",
@@ -108,8 +108,8 @@
         534
       ],
       "has_transparency": true,
-      "svg_sha256": "393accb804aeea08500221f1572fa380ca38d31d34cf277affffd50404682663",
-      "png_sha256": "701d1f20948a401623f912e78506168af84efca71ed87a5cdc1a4d7a5b939e07"
+      "svg_sha256": "adcf5f626c419a1104741b715ea30f7805ffa9d0ba11b85c52e279fbf9554dd7",
+      "png_sha256": "b2518b9847ca9aceee8acd5007ea7c919cb851cabae20bdf7b97985be4954857"
     },
     {
       "id": "minerva-oal-position-en",
@@ -122,8 +122,8 @@
         1080
       ],
       "has_transparency": true,
-      "svg_sha256": "e4a0026972792c278353ee873447eed96dd5cc54d19bb9a86b1424a63657a16c",
-      "png_sha256": "018fb27ca50634d85c0cb54f8c55df5bb2a7877a9170ec2007915b362cb2f063"
+      "svg_sha256": "4832e95c05d2617f1b9214858fdcbae24543eece4b2808d6b3ac539aef235f27",
+      "png_sha256": "87f0c6bf94e3cdb7fd8153ef413cf6527064a38d13f84ec307142df428b60537"
     },
     {
       "id": "minerva-oal-position-pt-br",
@@ -136,8 +136,8 @@
         1080
       ],
       "has_transparency": true,
-      "svg_sha256": "683fd80044b049ca80c41d2ffb9cb2fc6574f064c80ad62e0ee137e9f5710bb2",
-      "png_sha256": "283e7972038da04d6b5fa02adb64c69eb4800124cfaadc3ec605fa7078e55284"
+      "svg_sha256": "b49681554364853d8d28ce62027c692b1c7dcc428ebe506595ce03a2e676dc40",
+      "png_sha256": "3161dc5206eb61031b1657102950da6e9aedc871d0847a33744a32c171f96435"
     },
     {
       "id": "minerva-model-en",
@@ -150,8 +150,8 @@
         1180
       ],
       "has_transparency": true,
-      "svg_sha256": "50a5730d5ee11f431e0a12ca45a4b7fc4185d70b30622292976f2ab27a7312e6",
-      "png_sha256": "7b7ec0c48a854ec11134406f96f84c036108311baadb73e773b887971429f812"
+      "svg_sha256": "003c7181c1a4bc13af8586e14400a3d814c94156953b01955d1cf9e69f56dcc0",
+      "png_sha256": "693e61a9711b1cb91b3d07029740ba4b4a44b9afe5cab82c60843ddfd566cb71"
     },
     {
       "id": "minerva-model-pt-br",
@@ -164,8 +164,8 @@
         1180
       ],
       "has_transparency": true,
-      "svg_sha256": "9ad9d16a2323eb97fc087c043650fd55412e58087b8797c053d9a649eb2e5500",
-      "png_sha256": "98cf974e29d5f4217eac9d363f16ffae36b8ac1a5cefc3d1377b6a5579862e27"
+      "svg_sha256": "035edbdb9c3f5090ef15036bc0f589569dafcde3e6cf4440777b23033468a8e0",
+      "png_sha256": "7f1bfacfd0d60296610e41e75b57270b7228b263cb7c1e4155df5c5b083cb929"
     },
     {
       "id": "minerva-workflow-en",
@@ -178,8 +178,8 @@
         1230
       ],
       "has_transparency": true,
-      "svg_sha256": "f17293f45bc77c05671ffbe9cf3b28c0078d142c9bcdf9fe07f9c8f483122aa4",
-      "png_sha256": "e04a1814a6e979ed8329fbefac6f56a1132311ca18ea7777b9c3dd80a6e01c06"
+      "svg_sha256": "b035a2c92489f09e97568ee36e1207525632218c138cf5ae4fcab5d0aa62a307",
+      "png_sha256": "f324c4c11d0551847e92c05676efd60df330e0ffc3c5fd8c11a0f2fe105d5126"
     },
     {
       "id": "minerva-workflow-pt-br",
@@ -192,8 +192,8 @@
         1230
       ],
       "has_transparency": true,
-      "svg_sha256": "2b53a3ebe38be5ad6bd3630d50562a1edd87f0758992a93f736c8dd99644e578",
-      "png_sha256": "ccaf39c482bfbd521f9f4685e13fe0a9e6397d1578dea47be0c2b16e4ff26c7f"
+      "svg_sha256": "8873caec83b2f6dfc2ff2a7b4e7be64b17b3810bf183da9930cd030c229038ef",
+      "png_sha256": "3b59fd9c701007e5b6305a5c63979bf4a58155b598bb2890acb80f8083301900"
     }
   ],
   "quality_review": {
